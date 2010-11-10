@@ -1,0 +1,50 @@
+package org.aimas.craftingquest.state;
+
+import java.io.Serializable;
+
+/**
+ * 
+ * @author Razvan
+ */
+public class Point2i implements Serializable {
+
+	public int x;
+	public int y;
+
+	public Point2i(){
+	}
+	
+	public Point2i(int x, int y) {
+		this.x = x;
+		this.y = y;
+	}
+	
+	@Override
+	public String toString() {
+		String info = "(" + x + ", " + y + ")";
+		return info;
+	}
+
+	public int getX() {
+		return x;
+	}
+
+	public void setX(int x) {
+		this.x = x;
+	}
+
+	public int getY() {
+		return y;
+	}
+
+	public void setY(int y) {
+		this.y = y;
+	}
+	
+	public boolean isEqual(Point2i point) {
+		if (point.x == x && point.y == y) {
+			return true;
+		}
+		return false;
+	}
+}

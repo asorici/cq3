@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Root xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="aiwogp.framework">
+	<parameters>
+		<!-- general server configurations -->
+		<nrPlayers>2</nrPlayers>
+		<playerActionTime>1000</playerActionTime>
+		<playerLateTime>100</playerLateTime>
+		<updateTime>0</updateTime>
+		<nrTurns>400</nrTurns>
+		<nrPlayerUnits>3</nrPlayerUnits>
+		<mapsize>60</mapsize>
+		
+		<!-- scenario specific configurations -->
+		<scanAttributeCount>5</scanAttributeCount>
+		<unitEnergy>100</unitEnergy>
+		<baseObjectValue>100</baseObjectValue>
+		<valueIncrement>10</valueIncrement>
+		
+		<moveBaseCost>20</moveBaseCost>
+		<resourceMoveCost>1</resourceMoveCost>
+		<pickupCost>5</pickupCost>
+		<dropCost>0</dropCost>
+		<scanCost>10</scanCost>
+		<digCost>10</digCost>
+		<buildCost>0</buildCost>
+		<towerBuildCost>75</towerBuildCost>
+		<scanRadius>5</scanRadius>
+		<sightRadius>4</sightRadius>
+		<towerCutoffRadius>4</towerCutoffRadius>
+		<towerDrainBase>60</towerDrainBase>
+		
+	</parameters>
+	
+	<rules>
+		<movePenalties>
+			<penalty>
+				<terrain>Grass</terrain>
+				<value>0.0</value>
+			</penalty>
+			<penalty>
+				<terrain>Dirt</terrain>
+				<value>0.2</value>
+			</penalty>
+			<penalty>
+				<terrain>Sand</terrain>
+				<value>0.1</value>
+			</penalty>
+			<penalty>
+				<terrain>Snow</terrain>
+				<value>0.25</value>
+			</penalty>
+			<penalty>
+				<terrain>Rock</terrain>
+				<value>-1</value>
+			</penalty>
+			<penalty>
+				<terrain>Swamp</terrain>
+				<value>0.25</value>
+			</penalty>
+			<penalty>
+				<terrain>Water</terrain>
+				<value>0.0</value>
+			</penalty>
+			<penalty>
+				<terrain>DeepWater</terrain>
+				<value>0.1</value>
+			</penalty>
+		</movePenalties>
+		
+		<abilities>
+			<movement>
+				<unit>Any</unit>
+				<terrain>Grass</terrain>
+			</movement>
+			<movement>
+				<unit>Any</unit>
+				<terrain>Sand</terrain>
+			</movement>
+			<movement>
+				<unit>Any</unit>
+				<terrain>Swamp</terrain>
+			</movement>
+			<movement>
+				<unit>Tazmanian</unit>
+				<terrain>Dirt</terrain>
+			</movement>
+			<movement>
+				<unit>Fox</unit>
+				<terrain>Snow</terrain>
+			</movement>
+			<movement>
+				<unit>Crocodile</unit>
+				<terrain>Water</terrain>
+			</movement>
+			<movement>
+				<unit>Crocodile</unit>
+				<terrain>DeepWater</terrain>
+			</movement>
+		</abilities>
+	</rules>
+</Root>
