@@ -7,7 +7,9 @@ public class MapState implements Serializable {
 
 	public Point2i minAnchor; // upper left min point of array on the real map
 	public CellState[][] cells;
-
+	public int mapWidth;
+	public int mapHeight;
+	
 	@Override
 	public String toString() {
 		String info = "MapState\n ";

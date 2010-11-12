@@ -17,14 +17,16 @@ public class GameState implements Serializable {
 	public MapState map;
 	public RoundState round;
 	
-	public List<PlayerState> playerStates;
+	//public List<PlayerState> playerStates;
+	public HashMap<Integer, PlayerState> playerStates;
 	public HashMap<Integer, List<Tower>> playerTowers;
 	public List<Merchant> merchantList;
 	public List<Blueprint> blueprints;
 	public HashMap<BasicResourceType, Integer> resourceAmountsByType;
 	
 	public GameState() {
-		playerStates = new ArrayList<PlayerState>();
+		//playerStates = new ArrayList<PlayerState>();
+		playerStates = new HashMap<Integer, PlayerState>();
 		playerTowers = new HashMap<Integer, List<Tower>>();
 		merchantList = new ArrayList<Merchant>();
 		blueprints = new ArrayList<Blueprint>();
@@ -69,10 +71,17 @@ public class GameState implements Serializable {
 	public void setTurn(int turn) {
 		round.currentRound = turn;
 	}
-
+	
+	public void initializeTowerLists(){
+		List<Integer> playerIds = getPlayerIds();
+		for (Integer pId : playerIds) {
+			playerTowers.put(pId, new ArrayList<Tower>());
+		}
+	}
+	
 	public List<Integer> getPlayerIds() {
 		List<Integer> playerIds = new ArrayList<Integer>();
-		for (PlayerState ps : playerStates) {
+		for (PlayerState ps : playerStates.values()) {
 			playerIds.add(ps.id);
 		}
 		

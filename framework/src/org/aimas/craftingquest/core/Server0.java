@@ -12,7 +12,6 @@ import java.util.logging.Logger;
 
 import javax.swing.SwingUtilities;
 
-import org.aimas.craftingquest.gui.DisplayerFrame;
 import org.aimas.craftingquest.gui.GraphicInterface;
 import org.aimas.craftingquest.state.GameState;
 import org.aimas.craftingquest.state.PlayerState;
@@ -126,6 +125,10 @@ public class Server0 implements IServer {
 					// replenish player's units with their energy supplies
 					actionEngine.replenishEnergy();
 					
+					// then subtract specific energy amount if the player is near some towers
+					
+					actionEngine.doTowerDrain(state, state.getPlayerIds().get(clientID));
+					
 					// send the NEW ROUND event to client
 					sendEvent(client, new Event(Event.EventType.NewRound));
 				}
@@ -195,7 +198,6 @@ public class Server0 implements IServer {
 		int playerID = secretToOrder(action.secret);
 		PlayerState player = state.playerStates.get(playerID);
 		actionEngine.process(player, action);
-		player = state.playerStates.get(playerID);
 		player.round.currentRound++;
 		return player;
 	}

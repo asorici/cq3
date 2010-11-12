@@ -16,8 +16,8 @@ import org.aimas.craftingquest.state.CellState.CellType;
 public class ResourceGenerator {
 	private static Random randGen = new Random();
 	private static int objectCountExpectancy = 20;
-	private static int maxRequiredResPerObject = GamePolicy.unitEnergy / 3;
-	private static int maxRequiredCraftedObjects = GamePolicy.unitEnergy / 10;
+	private static int maxRequiredResPerObject = GamePolicy.unitEnergy / 5;
+	private static int maxRequiredCraftedObjects = GamePolicy.unitEnergy / 12;
 	
 	private static List<PlacementRegion> placementRegions = new ArrayList<PlacementRegion>();
 	
@@ -182,9 +182,24 @@ public class ResourceGenerator {
 			objectRecipeAlternatives.add(recipe1);
 			objectRecipeAlternatives.add(recipe2);
 			
-			int value = computeComplexValue(alternative1, alternative2);
+			int value = computeComplexValue(recipe1, recipe2);		// compute crafted object value
 			CraftedObject craftedObj = new CraftedObject(objType.ordinal(), value, objectRecipeAlternatives, null);
-			Blueprint bp = new Blueprint(value / 4, craftedObj);
+			
+			// set blueprint value to the same price as the most expensive ingredient object
+			int maxBlueprintValue = 0;
+			for (CraftedObject obj : recipe1.keySet()) {
+				if (obj.getValue() > maxBlueprintValue) {
+					maxBlueprintValue = obj.getValue();
+				}
+			}
+			
+			for (CraftedObject obj : recipe2.keySet()) {
+				if (obj.getValue() > maxBlueprintValue) {
+					maxBlueprintValue = obj.getValue();
+				}
+			}
+			
+			Blueprint bp = new Blueprint(maxBlueprintValue, craftedObj);
 			
 			complexBlueprints.add(bp);
 		}
@@ -193,20 +208,21 @@ public class ResourceGenerator {
 	}
 
 	
-	private static int computeComplexValue(ArrayList<CraftedObject> alternative1, ArrayList<CraftedObject> alternative2) {
+	private static int computeComplexValue(HashMap<CraftedObject, Integer> recipe1, HashMap<CraftedObject, Integer> recipe2) {
 		int baseValue = GamePolicy.baseObjectValue;
-		int incValue = 0;
-		for (CraftedObject obj : alternative1) {
-			incValue += obj.getValue();
+		int value1 = 0, value2 = 0;
+		int totalValue = 0;
+		
+		for (CraftedObject obj : recipe1.keySet()) {
+			value1 += (2 * baseValue + obj.getValue()) * recipe1.get(obj);
 		}
 		
-		for (CraftedObject obj : alternative2) {
-			incValue += obj.getValue();
+		for (CraftedObject obj : recipe2.keySet()) {
+			value2 += (2 * baseValue + obj.getValue()) * recipe2.get(obj);
 		}
 		
-		incValue /= (alternative1.size() + alternative2.size());	// incValue is the average of the values of
-																	// the component objects
-		return baseValue + incValue;
+		totalValue = (value1 + value2) / 2;		// total value is the average of the value for the two recipes
+		return totalValue;
 	}
 
 

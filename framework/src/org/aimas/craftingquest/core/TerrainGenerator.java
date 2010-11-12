@@ -35,6 +35,8 @@ public class TerrainGenerator {
 		MapState t = new MapState();
 		int sizex = GamePolicy.mapsize.x;
 		int sizey = GamePolicy.mapsize.y;
+		t.mapWidth = sizex;
+		t.mapHeight = sizey;
 		
 		t.cells = new CellState[sizey][sizex];
 

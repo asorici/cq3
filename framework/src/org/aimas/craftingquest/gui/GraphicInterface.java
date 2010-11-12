@@ -68,10 +68,12 @@ public class GraphicInterface extends JFrame implements ActionListener {
 		btnPnl.add(cellInfoBtn);
 		
 		JPanel selectorPanel = new JPanel();
-		Integer[] playerIDs = new Integer[game.playerStates.size()];  
-		for (int i = 0; i < game.playerStates.size(); i++) {
-			playerIDs[i] = game.playerStates.get(i).id;
-		}
+		//Integer[] playerIDs = new Integer[game.playerStates.size()];
+		//for (int i = 0; i < game.playerStates.size(); i++) {
+			//playerIDs[i] = game.playerStates.get(i).id;
+		//}
+		Integer[] playerIDs = game.getPlayerIds().toArray(new Integer[0]);
+		
 		String[] resourceNames = new String[GamePolicy.BasicResourceType.values().length + 1];
 		resourceNames[0] = "ALL";
 		for (int i = 0; i < resourceNames.length - 1; i++) {
@@ -184,13 +186,8 @@ public class GraphicInterface extends JFrame implements ActionListener {
 		
 		@Override
 		public String getInfo() {
-			for (PlayerState ps : game.playerStates) {
-				if (ps.id == playerID) {
-					return ps.toString();
-				}
-			}
-			
-			return "";
+			PlayerState ps = game.playerStates.get(playerID);
+			return ps.toString();
 		}
 	}
 	

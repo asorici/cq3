@@ -47,9 +47,9 @@ public class GamePolicy {
 	public static int moveBase = 20;
 	public static int resourceMoveCost = 1;
 	public static int initialTeamCredit = 100;
-	public static int unitEnergy = 100;
+	public static int unitEnergy = 150;
 	public static int baseObjectValue = 100;
-	public static int valueIncrement = 30;
+	public static int valueIncrement = 20;
 
 	// Grass, Dirt, Sand, Snow, Rock, Swamp, Lake, DeepSea
 	// public static double[] movePenalty = {0, 0.2, 0.1, 0.25, -1, 0.25, 0, 0};
@@ -62,12 +62,13 @@ public class GamePolicy {
 	public static int scanCost = 10;
 	public static int digCost = 10;
 	public static int buildCost = 0;
-	public static int scanRadius = 5;
-	public static int sightRadius = 4;
+	public static int scanRadius = 7;
+	public static int sightRadius = 5;
 
 	public static int towerBuildCost = 75;
 	public static int towerCutoffRadius = 4;
 	public static int towerDrainBase = 100;
+	public static int towerEnergy = 250;
 	// drain = towerDrainBase / min(abs(tower.pos.x - player.pos.x), abs(..y))
 	
 	public static HashMap<CellType, List<UnitType>> terrainMovePossibilities = new HashMap<CellType, List<UnitType>>();
@@ -157,7 +158,7 @@ public class GamePolicy {
 		sightRadius = Integer.parseInt(parametersNode.getElementsByTagName("sightRadius").item(0).getTextContent());
 		towerCutoffRadius = Integer.parseInt(parametersNode.getElementsByTagName("towerCutoffRadius").item(0).getTextContent());
 		towerDrainBase = Integer.parseInt(parametersNode.getElementsByTagName("towerDrainBase").item(0).getTextContent());
-		
+		towerEnergy = Integer.parseInt(parametersNode.getElementsByTagName("towerEnergy").item(0).getTextContent());
 	}
 	
 	private static void readScenarioRules(Element ruleNode) {

@@ -423,7 +423,7 @@ public class ActionEngine {
 			
 			// check that player holds corresponding blueprint
 			boolean foundBlueprint = false;
-			for (Blueprint bp : player.knownBlueprints) {
+			for (Blueprint bp : player.boughtBlueprints) {
 				if (bp.getDescribedObject().getType() == target.getType()) {
 					foundBlueprint = true;
 				}
@@ -500,8 +500,24 @@ public class ActionEngine {
 				return res;
 			}
 			
-			// all is ok - build tower and update energy and credit levels
+			// check to see if any resources are left in the cell
 			CellState unitCell = game.map.cells[playerUnit.pos.y][playerUnit.pos.x];
+			boolean emptyCell = true;
+			for (BasicResourceType restype : unitCell.resources.keySet()) {
+				if (unitCell.resources.get(restype) > 0) {
+					emptyCell = false;
+					break;
+				}
+			}
+			
+			if (emptyCell) {
+				TransitionResult res = new TransitionResult(transition.id);
+				res.errorType = TransitionResult.TransitionError.BuildError;
+				res.errorReason = "Cannot build a tower in a cell that still contains unmined resources";
+				return res;
+			}
+			
+			// all is ok - build tower and update energy and credit levels
 			Tower tower = new Tower(player.id, playerUnit.pos);
 			unitCell.strategicResource = tower;								// place tower in cell
 			
@@ -510,6 +526,7 @@ public class ActionEngine {
 				playerTowers = new ArrayList<Tower>();
 				playerTowers.add(tower);
 				game.playerTowers.put(player.id, playerTowers);
+				player.availableTowers.put(tower, true);		// this tower is newly available
 			}
 			else {
 				playerTowers.add(tower);
@@ -565,7 +582,7 @@ public class ActionEngine {
 			}
 			
 			// all is ok - subtract credit, add blueprint to knownBlueprints
-			player.knownBlueprints.add(blueprint);
+			player.boughtBlueprints.add(blueprint);
 			player.credit -= blueprint.getValue();
 			
 			TransitionResult blueprintres = new TransitionResult(transition.id);
@@ -721,56 +738,55 @@ public class ActionEngine {
 		return false;
 	}
 	
-	protected static void doTowerDrain(GameState state, Integer playerID) {
+	protected void doTowerDrain(GameState state, Integer playerID) {
 		PlayerState playerState = state.playerStates.get(playerID);
 		
 		for (UnitState unit : playerState.units) {
-			Tower oppTower = null;
 			List<Tower> opponentTowers = state.getOpponentTowers(playerID);
 			
-			for (Tower t : opponentTowers) {
-				if (Math.abs(t.getPosition().x - unit.pos.x) <= GamePolicy.towerCutoffRadius && 
-					Math.abs(t.getPosition().y - unit.pos.y) <= GamePolicy.towerCutoffRadius) {
-					oppTower = t;
-					break;
-				}
-			}
-				
-			if (oppTower != null) {
-				int distance = Math.min( Math.abs(oppTower.getPosition().x - unit.pos.x), Math.abs(oppTower.getPosition().y - unit.pos.y) );
-				int drainAmount = GamePolicy.towerDrainBase / distance;
-				
-				unit.energy -= drainAmount;						// drain unit energy
-				oppTower.weakenTower(drainAmount);				// and also weaken tower with the same amount
-				
-				if (oppTower.getRemainingStrength() <= 0) {		// if the tower has been weakened enough => destroy it
-					List<Integer> playerIds = state.getPlayerIds();
-					for (Integer pId : playerIds) {
-						boolean foundTower = false;
-						
-						if (pId != playerID) {
-							List<Tower> pTowers = state.playerTowers.get(pId);	// get opponent tower list
+			for (Tower oppTower : opponentTowers) {
+				if (Math.abs(oppTower.getPosition().x - unit.pos.x) <= GamePolicy.towerCutoffRadius && 
+					Math.abs(oppTower.getPosition().y - unit.pos.y) <= GamePolicy.towerCutoffRadius) {
+					
+					int distance = Math.min( Math.abs(oppTower.getPosition().x - unit.pos.x), Math.abs(oppTower.getPosition().y - unit.pos.y) );
+					int drainAmount = GamePolicy.towerDrainBase / distance;
+					
+					unit.energy -= drainAmount;						// drain unit energy
+					oppTower.weakenTower(drainAmount);				// and also weaken tower with the same amount
+					
+					if (oppTower.getRemainingStrength() <= 0) {		// if the tower has been weakened enough => destroy it
+						List<Integer> playerIds = state.getPlayerIds();
+						for (Integer pId : playerIds) {
+							boolean foundTower = false;
 							
-							for (Tower t : pTowers) {			// see if it contains 
-								if (t.getPosition().isEqual(oppTower.getPosition())) {
-									pTowers.remove(t);			// the weakened tower and remove it
-									foundTower = true;
-									break;
+							if (pId != playerID) {
+								List<Tower> pTowers = state.playerTowers.get(pId);	// get opponent tower list
+								
+								for (Tower t : pTowers) {			// see if it contains 
+									if (t.getPosition().isEqual(oppTower.getPosition())) {
+										PlayerState opponentState = state.playerStates.get(pId);
+										opponentState.availableTowers.put(t, false);	// tower is no longer available
+										pTowers.remove(t);			// the weakened tower and remove it
+										foundTower = true;
+										break;
+									}
 								}
 							}
-						}
-						
-						if (foundTower) {		// there can't be more than one tower in that position
-							break;
+							
+							if (foundTower) {		// there can't be more than one tower in that position
+								break;
+							}
 						}
 					}
+					
 				}
 			}
+				
 		}
 	}
 	
 	protected void replenishEnergy() {
-		for (PlayerState pState : game.playerStates) {
+		for (PlayerState pState : game.playerStates.values()) {
 			for (UnitState unit : pState.units) {
 				unit.energy = GamePolicy.unitEnergy;
 			}

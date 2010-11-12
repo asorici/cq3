@@ -7,7 +7,6 @@ import java.util.Random;
 import org.aimas.craftingquest.core.Client0;
 import org.aimas.craftingquest.core.GamePolicy;
 import org.aimas.craftingquest.core.Logger2;
-import org.aimas.craftingquest.gui.DisplayerFrame;
 import org.aimas.craftingquest.state.CellState;
 import org.aimas.craftingquest.state.PlayerState;
 import org.aimas.craftingquest.state.Point2i;
@@ -22,12 +21,9 @@ public class MonkeyAI implements IPlayerHooks {
 	/* game */
 	// Scenario scenario;
 	IPlayerActions cmd;
-	/* gui */
-	DisplayerFrame displayer;
 
 	public MonkeyAI(IPlayerActions cmd) {
 		this.cmd = cmd;
-		this.displayer = new DisplayerFrame();
 	}
 
 	/*

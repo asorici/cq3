@@ -20,20 +20,6 @@ public class GameGenerator {
 	public static Configuration readConfigFromFile(){
 		return new Configuration();
 	}
-	
-	public static GameState hardcoded1(int noPlayers) {
-		GameState g = new GameState();
-
-		// maximum number of turns
-		// g.lastTurn = 3;
-
-		g.map = new TerrainGenerator().hardcoded1();
-		for (int i = 0; i < noPlayers; i++) {
-			g.playerStates.add(hardcoded2(i, 3));
-		}
-
-		return g;
-	}
 
 	public static PlayerState hardcoded2(int id, int noUnits) {
 		PlayerState p = new PlayerState();
@@ -70,13 +56,20 @@ public class GameGenerator {
 		for (int i = 0; i < GamePolicy.noPlayers; i++) {
 			if (i % 2 == 0) {
 				PlayerState player = setupPlayerState(i + 1, GamePolicy.nrPlayerUnits, new Point2i(5, 5), game.map);
-				game.playerStates.add(player);
+				player.availableBlueprints = game.blueprints;	// all available blueprints are known at the start
+				//game.playerStates.add(player);
+				game.playerStates.put(player.id, player);
 			}
 			else {
 				PlayerState player = setupPlayerState(i + 1, GamePolicy.nrPlayerUnits, new Point2i(GamePolicy.mapsize.x - 5, GamePolicy.mapsize.y - 5), game.map);
-				game.playerStates.add(player);
+				player.availableBlueprints = game.blueprints;	// all available blueprints are known at the start
+				//game.playerStates.add(player);
+				game.playerStates.put(player.id, player);
 			}
 		}
+		
+		/* initialize tower list for every player */
+		game.initializeTowerLists();
 		
 		/* TODO: setup merchant list */
 		
@@ -89,7 +82,8 @@ public class GameGenerator {
 		pState.credit = GamePolicy.initialTeamCredit;
 		pState.totalScore = 0;
 		pState.round.currentRound = 1;
-		
+		pState.mapHeight = map.mapHeight;
+		pState.mapWidth = map.mapWidth;
 		
 		// setup player units
 		for (int i = 0; i < nrUnits; i++) {
@@ -159,11 +153,4 @@ public class GameGenerator {
 		return null;
 	}
 	
-	/*
-	public static GamePolicy hardcoded3() {// int noPlayers) {
-		int noPlayers = 2;
-		int noTurns = 10;
-		return new GamePolicy(noPlayers, 1000, 100, 0, noTurns);
-	}
-	*/
 }

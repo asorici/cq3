@@ -6,15 +6,15 @@
 		<playerActionTime>1000</playerActionTime>
 		<playerLateTime>100</playerLateTime>
 		<updateTime>0</updateTime>
-		<nrTurns>400</nrTurns>
+		<nrTurns>160</nrTurns>
 		<nrPlayerUnits>3</nrPlayerUnits>
 		<mapsize>60</mapsize>
 		
 		<!-- scenario specific configurations -->
 		<scanAttributeCount>5</scanAttributeCount>
-		<unitEnergy>100</unitEnergy>
+		<unitEnergy>150</unitEnergy>
 		<baseObjectValue>100</baseObjectValue>
-		<valueIncrement>10</valueIncrement>
+		<valueIncrement>20</valueIncrement>
 		
 		<moveBaseCost>20</moveBaseCost>
 		<resourceMoveCost>1</resourceMoveCost>
@@ -24,10 +24,11 @@
 		<digCost>10</digCost>
 		<buildCost>0</buildCost>
 		<towerBuildCost>75</towerBuildCost>
-		<scanRadius>5</scanRadius>
-		<sightRadius>4</sightRadius>
+		<scanRadius>7</scanRadius>
+		<sightRadius>5</sightRadius>
 		<towerCutoffRadius>4</towerCutoffRadius>
 		<towerDrainBase>60</towerDrainBase>
+		<towerEnergy>250</towerEnergy>
 		
 	</parameters>
 	

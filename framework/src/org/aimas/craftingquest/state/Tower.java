@@ -23,23 +23,4 @@ public class Tower extends StrategicResource {
 	public void weakenTower(int amount) {
 		remainingStrength -= amount;
 	}
-	
-	@Override
-	public boolean equals(Object obj) {
-		if (!(obj instanceof Tower)) {
-			return false;
-		}
-		
-		final Tower other = (Tower)obj;
-		
-		if (type != other.type) {
-			return false;
-		}
-		
-		if (position.x != other.position.x || position.y != other.position.y) {
-			return false;
-		}
-		
-		return true;
-	}
 }

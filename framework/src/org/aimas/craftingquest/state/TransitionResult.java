@@ -9,7 +9,7 @@ import java.io.Serializable;
 public class TransitionResult implements Serializable {
 
 	public enum TransitionError {
-		NoError, MoveError, TerrainError, ObstacleError, NoEnergyError, PickupError, CraftingError, ResourceMissingError, NoCreditError, BuyRequestError, SellRequestError, GuardError
+		NoError, MoveError, TerrainError, ObstacleError, NoEnergyError, PickupError, BuildError, CraftingError, ResourceMissingError, NoCreditError, BuyRequestError, SellRequestError, GuardError
 	};
 
 	public int id; // egal cu cel trimis
