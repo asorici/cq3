@@ -86,12 +86,6 @@ public final class Client0 implements IClient, IPlayerActions {
 		this.state = doGenericAction(new Transition(Transition.ActionType.PlayerReady, null));
 		this.player.initGame();
 	}
-
-	/*
-	public Scenario getScenario() {
-		return scenario;
-	}
-	*/
 	
 	public PlayerState getPlayerState() {
 		return state;

@@ -1,13 +1,19 @@
 package org.aimas.craftingquest.core;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Random;
 
 import org.aimas.craftingquest.core.GamePolicy.BasicResourceType;
+import org.aimas.craftingquest.state.Blueprint;
 import org.aimas.craftingquest.state.CellState;
 import org.aimas.craftingquest.state.GameState;
 import org.aimas.craftingquest.state.MapState;
+import org.aimas.craftingquest.state.Merchant;
 import org.aimas.craftingquest.state.PlayerState;
 import org.aimas.craftingquest.state.Point2i;
+import org.aimas.craftingquest.state.StrategicResource;
 import org.aimas.craftingquest.state.UnitState;
 import org.aimas.craftingquest.state.UnitState.UnitType;
 
@@ -42,14 +48,21 @@ public class GameGenerator {
 		
 		/* create initial game state */
 		GameState game = new GameState();
-		game.map = new TerrainGenerator().hardcoded1();
+		// game.map = new TerrainGenerator().hardcoded1();
+		game.map = GamePolicy.map;
+		
+		/* set merchant list */
+		game.merchantList = setupMerchantList(game.map);
 		
 		/* set map resources */
 		HashMap<BasicResourceType, Integer> resourceAmountsByType = ResourceGenerator.placeResources(game.map);
 		game.blueprints = ResourceGenerator.generateBlueprints(resourceAmountsByType);		// generate blueprints
 		game.resourceAmountsByType = resourceAmountsByType;
 		
-		// TODO - blueprint-urile trebuie distribuite la merchants 
+		// TODO - blueprint-urile trebuie distribuite la merchants
+		/* distribute blueprints to merchants */
+		distributeBlueprints(game);
+		 
 		ScanAttributeGenerator.setupScanAttributes(game.map);		// generate scan attributes for each map cell
 		
 		/* setup initial player states - there should be only 2 players */
@@ -71,17 +84,95 @@ public class GameGenerator {
 		/* initialize tower list for every player */
 		game.initializeTowerLists();
 		
-		/* TODO: setup merchant list */
 		
 		return game;
 	}
 	
+	private static void distributeBlueprints(GameState game) throws IllegalArgumentException {
+		List<Blueprint> blueprints = game.blueprints;
+		List<Merchant> merchants = game.merchantList;
+		Random randGen = new Random();
+		
+		// we rely on the premise that merchant camps are symmetrically distributed across the map
+		List<Merchant> topSideMerchants = new ArrayList<Merchant>();		// these two lists
+		List<Merchant> bottomSideMerchants = new ArrayList<Merchant>();		// must have the same size
+		
+		
+		for (Merchant m : merchants) {
+			Point2i pos = m.getPosition();
+			if (pos.x + pos.y < game.map.mapWidth) {
+				topSideMerchants.add(m);
+			}
+			else {
+				bottomSideMerchants.add(m);
+			}
+		}
+		
+		if (topSideMerchants.size() != bottomSideMerchants.size()) {
+			System.out.println(topSideMerchants.size() - bottomSideMerchants.size());
+			throw new IllegalArgumentException("The merchant camps are not evenly distributed");
+		}
+		
+		// step 1 - ensure that each blueprint is present in at least half the merchant camps
+		for (Blueprint bp : blueprints) {
+			int count = topSideMerchants.size() / 2;
+			ArrayList<Merchant> auxListTop = new ArrayList<Merchant>(topSideMerchants);
+			ArrayList<Merchant> auxListBottom = new ArrayList<Merchant>(bottomSideMerchants);
+			
+			for (int i = 0; i < count; i++) {
+				int index = randGen.nextInt(auxListTop.size());
+				Merchant mTop = auxListTop.remove(index);
+				Merchant mBottom = auxListBottom.remove(index);
+				
+				mTop.getBlueprints().add(bp);
+				mBottom.getBlueprints().add(bp);
+			}
+		}
+		
+		// step 2 - ensure that every merchant has at least 1/4 blueprints
+		int count = blueprints.size() / 4;
+		for (int k = 0; k < topSideMerchants.size(); k++) {
+			Merchant mTop = topSideMerchants.get(k);
+			Merchant mBottom = bottomSideMerchants.get(k);
+			
+			ArrayList<Blueprint> auxList = new ArrayList<Blueprint>(blueprints);
+			for (int i = 0; i < count; i++) {
+				int index = randGen.nextInt(auxList.size());
+				Blueprint bp = auxList.remove(index);
+				
+				if (!mTop.getBlueprints().contains(bp)) {
+					mTop.getBlueprints().add(bp);
+				}
+				
+				if (!mBottom.getBlueprints().contains(bp)) {
+					mBottom.getBlueprints().add(bp);
+				}
+			}
+		}
+	}
+
+	private static List<Merchant> setupMerchantList(MapState map) {
+		List<Merchant> merchantList = new ArrayList<Merchant>();
+		
+		for (int i = 0; i < map.mapHeight; i++) {
+			for (int j = 0; j < map.mapWidth; j++) {
+				StrategicResource strRes = map.cells[i][j].strategicResource;
+				if (strRes != null && strRes instanceof Merchant) {
+					merchantList.add((Merchant)strRes);
+				}
+			}
+		}
+		
+		return merchantList;
+	}
+
 	private static PlayerState setupPlayerState(int playerID, int nrUnits, Point2i initPos, MapState map) {
 		PlayerState pState = new PlayerState();
 		pState.id = playerID;
 		pState.credit = GamePolicy.initialTeamCredit;
 		pState.totalScore = 0;
 		pState.round.currentRound = 1;
+		pState.round.noRounds = GamePolicy.lastTurn;
 		pState.mapHeight = map.mapHeight;
 		pState.mapWidth = map.mapWidth;
 		

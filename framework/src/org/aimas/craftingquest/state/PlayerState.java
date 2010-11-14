@@ -13,7 +13,6 @@ public class PlayerState implements Serializable {
 
 	/* state */
 	public Integer id;
-	public int testCounter;
 	
 	public List<UnitState> units;
 	public List<Blueprint> availableBlueprints;		// list of all available blueprints in the game - set at game start 

@@ -11,6 +11,7 @@ import org.aimas.craftingquest.core.GamePolicy.ObjectType;
 import org.aimas.craftingquest.state.Blueprint;
 import org.aimas.craftingquest.state.CraftedObject;
 import org.aimas.craftingquest.state.MapState;
+import org.aimas.craftingquest.state.Point2i;
 import org.aimas.craftingquest.state.CellState.CellType;
 
 public class ResourceGenerator {
@@ -19,7 +20,8 @@ public class ResourceGenerator {
 	private static int maxRequiredResPerObject = GamePolicy.unitEnergy / 5;
 	private static int maxRequiredCraftedObjects = GamePolicy.unitEnergy / 12;
 	
-	private static List<PlacementRegion> placementRegions = new ArrayList<PlacementRegion>();
+	private static List<PlacementRegion> topPlacementRegions = new ArrayList<PlacementRegion>();
+	private static List<PlacementRegion> bottomPlacementRegions = new ArrayList<PlacementRegion>();
 	
 	public static List<Blueprint> generateBlueprints(HashMap<BasicResourceType, Integer> resourceAmountsByType) {
 		List<Blueprint> blueprints = new ArrayList<Blueprint>();
@@ -291,8 +293,12 @@ public class ResourceGenerator {
 				int ymax = (y + 1) * maxSize;
 				
 				PlacementRegion pr = new PlacementRegion(xmin, xmax, ymin, ymax);
-				if (pr.ycenter <= GamePolicy.mapsize.x - pr.xcenter) {
-					placementRegions.add(pr);
+				
+				if (pr.ycenter < GamePolicy.mapsize.x - pr.xcenter) {
+					topPlacementRegions.add(pr);
+				}
+				else {
+					bottomPlacementRegions.add(pr);
 				}
 			}
 		}
@@ -321,6 +327,7 @@ public class ResourceGenerator {
 		
 		return resourceAmountsByType;
 	}
+	
 	
 	private static int placeResourceType(BasicResourceType resType, MapState map) {
 		int placedResCount = 0;
@@ -352,10 +359,8 @@ public class ResourceGenerator {
 		return placedResCount;
 	}
 	
-	private static int discResourcePlacement(BasicResourceType resType, MapState map, int radius, DiscDistribution dd) {
-		int placedResCt = 0;
-		
-		int[][] ddist = dd.generateDisc();
+	
+	private static Point2i getPlacementPosition(List<PlacementRegion> placementRegions) {
 		
 		// first search for empty placement region
 		ArrayList<PlacementRegion> emptyRegions = new ArrayList<PlacementRegion>();
@@ -379,20 +384,55 @@ public class ResourceGenerator {
 		
 		int lowx = chosenPlacement.xmin, highx = chosenPlacement.xmax;
 		int posx = lowx + randGen.nextInt(highx - lowx);
+		if (posx < 4) { posx = 4; }
+		if (posx > GamePolicy.mapsize.x - 5) { posx = GamePolicy.mapsize.x - 5; }
 		
 		int lowy = chosenPlacement.ymin, highy = chosenPlacement.ymax;
 		int posy = lowy + randGen.nextInt(highy - lowy);
+		if (posy < 4) { posy = 4; }
+		if (posy > GamePolicy.mapsize.y - 5) { posy = GamePolicy.mapsize.y - 5; }
 		
-		//int lowx = radius + 2, highx = GamePolicy.mapsize.x/2 - radius - 2;
-		//int lowy = radius + 2, highy = GamePolicy.mapsize.y/2 - radius - 2;
+		return new Point2i(posx, posy);
+	}
+	
+	
+	private static int discResourcePlacement(BasicResourceType resType, MapState map, int radius, DiscDistribution dd) {
+		int placedResCt = 0;
 		
-		/*
-		int lowx = radius + 1, highx = GamePolicy.mapsize.x - radius - 1;
-		int posx = lowx + randGen.nextInt(highx - lowx);
+		Point2i topPlacementPos = getPlacementPosition(topPlacementRegions);
+		// Point2i bottomPlacementPos = getPlacementPosition(bottomPlacementRegions);
 		
-		int lowy = radius + 1, highy = GamePolicy.mapsize.y - posx;
-		int posy = lowy + randGen.nextInt(highy - lowy);
-		*/
+		int posy = topPlacementPos.y;
+		int posx = topPlacementPos.x;
+		placedResCt += placeDiscRes(posx, posy, resType, map, dd);
+		
+		int auxPosy = GamePolicy.mapsize.y - 1 - posy;		
+		int auxPosx = GamePolicy.mapsize.x - 1 - posx;
+		int displacement = 7;
+		
+		int lowx = auxPosx - displacement;
+		int lowy = auxPosy - displacement;
+		int diagDiff = GamePolicy.mapsize.x - 1 - (lowx + lowy);
+		if (diagDiff >= 0) {
+			lowy += diagDiff;
+		}
+		
+		posx = lowx + randGen.nextInt(2 * displacement);
+		posy = lowy + randGen.nextInt(2 * displacement);
+		if (posx < 4) { posx = 4; }
+		if (posx > GamePolicy.mapsize.x - 5) { posx = GamePolicy.mapsize.x - 5; }
+		if (posy < 4) { posy = 4; }
+		if (posy > GamePolicy.mapsize.y - 5) { posy = GamePolicy.mapsize.y - 5; }
+		
+		placedResCt += placeDiscRes(posx, posy, resType, map, dd);
+		
+		return placedResCt;
+	}
+	
+	private static int placeDiscRes(int posx, int posy, BasicResourceType resType, MapState map, DiscDistribution dd) {
+		int placedResCt = 0;
+		int[][] ddist = dd.getDisc();
+		int radius = dd.radius;
 		
 		for (int y = posy - radius; y <= posy + radius; y++) {
 			for (int x = posx - radius; x <= posx + radius; x++) {
@@ -406,74 +446,72 @@ public class ResourceGenerator {
 	
 	private static int veinResourcePlacement(BasicResourceType resType, MapState map, int radius, VeinDistribution vd) {
 		int placedResCt = 0;
-		int[][] vdist = vd.generateVein();
 		
-		// first search for empty placement region
-		ArrayList<PlacementRegion> emptyRegions = new ArrayList<PlacementRegion>();
-		for (PlacementRegion pr : placementRegions) {
-			if (pr.containedComponents == 0) {
-				emptyRegions.add(pr);
-			}
-		}
-		
-		PlacementRegion chosenPlacement = null;
-		if (emptyRegions.isEmpty()) {
-			int index = randGen.nextInt(placementRegions.size());
-			chosenPlacement = placementRegions.get(index);
-			chosenPlacement.containedComponents++;
-		}
-		else {
-			int index = randGen.nextInt(emptyRegions.size());
-			chosenPlacement = emptyRegions.get(index);
-			chosenPlacement.containedComponents++;
-		}
-		
-		int lowx = chosenPlacement.xmin, highx = chosenPlacement.xmax;
-		int posx = lowx + randGen.nextInt(highx - lowx);
-		
-		int lowy = chosenPlacement.ymin, highy = chosenPlacement.ymax;
-		int posy = lowy + randGen.nextInt(highy - lowy);
-		
-		//int lowx = radius + 1, highx = GamePolicy.mapsize.x/2 - radius - 1;
-		//int lowy = radius + 1, highy = GamePolicy.mapsize.y/2 - radius - 1;
-		
-		/*
-		int lowx = radius + 2, highx = GamePolicy.mapsize.x - radius - 2;
-		int posx = lowx + randGen.nextInt(highx - lowx);
-		
-		int lowy = radius + 2, highy = GamePolicy.mapsize.y - posx;
-		int posy = lowy + randGen.nextInt(highy - lowy);
-		*/
-		
+		Point2i topPlacementPos = getPlacementPosition(topPlacementRegions);
+		// Point2i bottomPlacementPos = getPlacementPosition(bottomPlacementRegions);
 		int option = randGen.nextInt(4);
+		
+		int posy = topPlacementPos.y;
+		int posx = topPlacementPos.x;
+		placedResCt += placeVeinRes(posx, posy, resType, map, vd, option);
+		
+		int auxPosy = GamePolicy.mapsize.y - 1 - posy;		
+		int auxPosx = GamePolicy.mapsize.x - 1 - posx;
+		int displacement = 7;
+		
+		int lowx = auxPosx - displacement;
+		int lowy = auxPosy - displacement;
+		int diagDiff = GamePolicy.mapsize.x - 1 - (lowx + lowy);
+		if (diagDiff >= 0) {
+			lowy += diagDiff;
+		}
+		
+		posx = lowx + randGen.nextInt(2 * displacement);
+		posy = lowy + randGen.nextInt(2 * displacement);
+		if (posx < 4) { posx = 4; }
+		if (posx > GamePolicy.mapsize.x - 5) { posx = GamePolicy.mapsize.x - 5; }
+		if (posy < 4) { posy = 4; }
+		if (posy > GamePolicy.mapsize.y - 5) { posy = GamePolicy.mapsize.y - 5; }
+		
+		placedResCt += placeVeinRes(posx, posy, resType, map, vd, option);
+		
+		return placedResCt;
+	}
+	
+	private static int placeVeinRes(int posx, int posy, BasicResourceType resType, MapState map, VeinDistribution vd, int option) {
+		int placedResCt = 0;
+		int[][] vdist = vd.getVein();
+		int lengthRadius = vd.lengthRadius;
+		int widthRadius = vd.widthRadius;
+		
 		switch(option){						//			 x	y	
 		case 0:								// directia (1, 0)
-			for (int y = posy - vd.widthRadius; y <= posy + vd.widthRadius; y++) {
-				for (int x = posx - vd.lengthRadius; x <= posx + vd.lengthRadius; x++) {
-					int amount = vdist[y + vd.widthRadius - posy][x + vd.lengthRadius - posx];
+			for (int y = posy - widthRadius; y <= posy + widthRadius; y++) {
+				for (int x = posx - lengthRadius; x <= posx + lengthRadius; x++) {
+					int amount = vdist[y + widthRadius - posy][x + lengthRadius - posx];
 					placedResCt += placeResourceInCell(resType, map, x, y, amount);
 				}
 			}
 			break;
 		case 1:								// directia (0, 1)
-			for (int y = posy - vd.lengthRadius; y <= posy + vd.lengthRadius; y++) {
-				for (int x = posx - vd.widthRadius; x <= posx + vd.widthRadius; x++) {
-					int amount = vdist[x + vd.widthRadius - posx][y + vd.lengthRadius - posy];
+			for (int y = posy - lengthRadius; y <= posy + lengthRadius; y++) {
+				for (int x = posx - widthRadius; x <= posx + widthRadius; x++) {
+					int amount = vdist[x + widthRadius - posx][y + lengthRadius - posy];
 					placedResCt += placeResourceInCell(resType, map, x, y, amount);
 				}
 			}
 			break;
 		case 2:								// directia (1, 1)
-			for (int d = 0; d <= vd.widthRadius; d++) {
-				for (int j = 0; j < 2 * vd.lengthRadius + 1; j++) {
-					int amount1 = vdist[vd.widthRadius - d][j];
-					int y1 = posy - vd.lengthRadius + j;
-					int x1 = posx - vd.lengthRadius + d + j;
+			for (int d = 0; d <= widthRadius; d++) {
+				for (int j = 0; j < 2 * lengthRadius + 1; j++) {
+					int amount1 = vdist[widthRadius - d][j];
+					int y1 = posy - lengthRadius + j;
+					int x1 = posx - lengthRadius + d + j;
 					placedResCt += placeResourceInCell(resType, map, x1, y1, amount1);
 					
-					int amount2 = vdist[vd.widthRadius + d][j];
-					int y2 = posy - vd.lengthRadius + d + j;
-					int x2 = posx - vd.lengthRadius + j; 
+					int amount2 = vdist[widthRadius + d][j];
+					int y2 = posy - lengthRadius + d + j;
+					int x2 = posx - lengthRadius + j; 
 					if (d != 0) {
 						placedResCt += placeResourceInCell(resType, map, x2, y2, amount2);
 					}
@@ -482,16 +520,16 @@ public class ResourceGenerator {
 			
 			break;
 		case 3:								// directia (1, -1)
-			for (int d = 0; d <= vd.widthRadius; d++) {
-				for (int j = 0; j < 2 * vd.lengthRadius + 1; j++) {
-					int amount1 = vdist[vd.widthRadius - d][j];
-					int y1 = posy + vd.lengthRadius - j + d;
-					int x1 = posx - vd.lengthRadius + j;
+			for (int d = 0; d <= widthRadius; d++) {
+				for (int j = 0; j < 2 * lengthRadius + 1; j++) {
+					int amount1 = vdist[widthRadius - d][j];
+					int y1 = posy + lengthRadius - j - d;
+					int x1 = posx - lengthRadius + j;
 					placedResCt += placeResourceInCell(resType, map, x1, y1, amount1);
 					
-					int amount2 = vdist[vd.widthRadius + d][j];
-					int y2 = posy + vd.lengthRadius - j;
-					int x2 = posx - vd.lengthRadius + j + d; 
+					int amount2 = vdist[widthRadius + d][j];
+					int y2 = posy + lengthRadius - j;
+					int x2 = posx - lengthRadius + j + d; 
 					if (d != 0) {
 						placedResCt += placeResourceInCell(resType, map, x2, y2, amount2);
 					}
@@ -523,55 +561,6 @@ public class ResourceGenerator {
 				placedAmount += amount;
 			}
 			
-			/*
-			// reflect in upper right quadrant
-			xx = GamePolicy.mapsize.x - 1 - x;
-			yy = y;
-			if (map.cells[yy][xx] != null && map.cells[yy][xx].type != CellType.Rock && map.cells[yy][xx].strategicResource == null) {
-				// if nothing occupies this cell then put resources in it
-				Integer contents = map.cells[yy][xx].resources.get(resType);
-				if (contents == null) {
-					map.cells[yy][xx].resources.put(resType, amount);
-				}
-				else {
-					map.cells[yy][xx].resources.put(resType, amount + contents);
-				}
-				
-				placedAmount += amount;
-			}
-			
-			// reflect in lower left quadrant
-			xx = x;
-			yy = GamePolicy.mapsize.y - 1 - y;
-			if (map.cells[yy][xx] != null && map.cells[yy][xx].type != CellType.Rock && map.cells[yy][xx].strategicResource == null) {
-				// if nothing occupies this cell then put resources in it
-				Integer contents = map.cells[yy][xx].resources.get(resType);
-				if (contents == null) {
-					map.cells[yy][xx].resources.put(resType, amount);
-				}
-				else {
-					map.cells[yy][xx].resources.put(resType, amount + contents);
-				}
-				
-				placedAmount += amount;
-			}
-			*/
-			
-			// reflect in lower right quadrant
-			xx = GamePolicy.mapsize.x - 1 - x;
-			yy = GamePolicy.mapsize.y - 1 - y;
-			if (map.cells[yy][xx] != null && map.cells[yy][xx].type != CellType.Rock && map.cells[yy][xx].strategicResource == null) {
-				// if nothing occupies this cell then put resources in it
-				Integer contents = map.cells[yy][xx].resources.get(resType);
-				if (contents == null) {
-					map.cells[yy][xx].resources.put(resType, amount);
-				}
-				else {
-					map.cells[yy][xx].resources.put(resType, amount + contents);
-				}
-				
-				placedAmount += amount;
-			}
 		}
 		
 		return placedAmount;
@@ -616,8 +605,8 @@ public class ResourceGenerator {
 	public static void main(String[] args) {
 		VeinDistribution vd = new VeinDistribution(8, 4, 10);
 		DiscDistribution dd = new DiscDistribution(5, 10);
-		int [][] vdist = vd.generateVein();
-		int [][] ddist = dd.generateDisc();
+		int [][] vdist = vd.getVein();
+		int [][] ddist = dd.getDisc();
 		
 		for (int i = 0; i < vdist.length; i++) {
 			for (int j = 0; j < vdist[i].length; j++) {
@@ -708,6 +697,7 @@ public class ResourceGenerator {
 class VeinDistribution {
 	int lengthRadius;
 	int widthRadius;
+	private int[][] dist; 
 	
 	public int peak;
 	
@@ -718,9 +708,11 @@ class VeinDistribution {
 		this.lengthRadius = lengthRadius;
 		this.widthRadius = widthRadius;
 		this.peak = peak;
+	
+		dist = generateVein();
 	}
 	
-	public int[][] generateVein() {
+	private int[][] generateVein() {
 		int n = 2 * widthRadius + 1;
 		int m = 2 * lengthRadius + 1;
 		
@@ -739,6 +731,10 @@ class VeinDistribution {
 		return distribution;
 	}
 	
+	public int[][] getVein() {
+		return dist;
+	}
+	
 	private int getGaussian(double diff, double sigma, double peak) {		// diff is x - miu
 		double gaussVal = 0;
 		double fraction = peak;
@@ -753,6 +749,7 @@ class VeinDistribution {
 class DiscDistribution {
 	int radius;
 	int peak;
+	private int[][] dist; 
 	
 	public DiscDistribution() {
 	}
@@ -760,9 +757,14 @@ class DiscDistribution {
 	public DiscDistribution(int radius, int peak) {
 		this.radius = radius;
 		this.peak = peak;
+		dist = generateDisc();
 	}
 	
-	public int[][] generateDisc() {
+	public int[][] getDisc() {
+		return dist;
+	}
+	
+	private int[][] generateDisc() {
 		int n = 2 * radius + 1;
 		int [][] distribution = new int[n][n];
 		

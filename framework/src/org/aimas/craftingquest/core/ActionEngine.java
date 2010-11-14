@@ -101,8 +101,15 @@ public class ActionEngine {
 			}
 			
 			// check enough energy for action
+			int carriedResourcesAmount = 0;
+			for (Integer quant : playerUnit.carriedResources.values()) {
+				carriedResourcesAmount += quant;
+			}
+			for (Integer quant : playerUnit.carriedObjects.values()) {
+				carriedResourcesAmount += quant;
+			}
 			int requiredEnergy = (int)(GamePolicy.moveBase * (1.0 + GamePolicy.movePenalty.get(toCellType)) 
-					+ GamePolicy.resourceMoveCost * ( playerUnit.carriedResources.size() + playerUnit.carriedObjects.size()) );
+					+ GamePolicy.resourceMoveCost * carriedResourcesAmount / 2);
 			
 			if ( playerUnit.energy < requiredEnergy) {
 				//TransitionResult res = new TransitionResult(transition.id, transition);

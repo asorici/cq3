@@ -137,7 +137,7 @@ public class ScanAttributeGenerator {
 		int generatedNodes = classNodeList.size();
 		
 		int dimDiff = targetClassNum - generatedNodes;
-		if (dimDiff == 0) {
+		if (dimDiff <= 0) {
 			return;
 		}
 		System.out.println("Initial diff is:" + dimDiff);
@@ -243,13 +243,15 @@ public class ScanAttributeGenerator {
 				}
 			}
 			
-			Random randGen = new Random();
-			int index = randGen.nextInt(resTypes.size());
-			BasicResourceType selectedRes = resTypes.remove(index);
-			List<ResourceAttributes> generatedResAttributes = new ArrayList<ResourceAttributes>();
-			generated.put(selectedRes, generatedResAttributes);
-			
-			fill(selectedRes, attrPath, remainingAttrTypes, generatedResAttributes);
+			if (!resTypes.isEmpty()) {
+				Random randGen = new Random();
+				int index = randGen.nextInt(resTypes.size());
+				BasicResourceType selectedRes = resTypes.remove(index);
+				List<ResourceAttributes> generatedResAttributes = new ArrayList<ResourceAttributes>();
+				generated.put(selectedRes, generatedResAttributes);
+				
+				fill(selectedRes, attrPath, remainingAttrTypes, generatedResAttributes);
+			}
 		}
 	}
 	

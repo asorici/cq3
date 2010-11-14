@@ -24,25 +24,29 @@ import org.aimas.craftingquest.state.Transition;
 public class Server0 implements IServer {
 
 	/* communication */
-	private List<Object> clients;
-	//DisplayerFrame displayer;
+	//private List<Object> clients;
+	private Object[] clients;
 	private GraphicInterface displayer;
 	
 	/* game */
 	private GameState state;
-	// private Scenario scenario;
-
 	private Configuration cfg;
 	private ActionEngine actionEngine;
 	private Timer timer;
-	private long[] secrets = new long[] { 1, 2, 3 };
+	private long[] secrets;
 
-	public Server0() {
-		clients = new LinkedList<Object>();
+	public Server0(long[] secrets) throws Exception {
+		this.secrets = secrets;
+		
+		clients = new Object[secrets.length];
 		cfg = GameGenerator.readConfigFromFile();
 		state = GameGenerator.setupGame();
 		actionEngine = new ActionEngine(state);
 		timer = new Timer();
+		
+		if(state.playerStates.size() != secrets.length){
+		    throw new Exception("each client must have a secret");
+		}
 		
 		//displayer = new DisplayerFrame();
 		displayer = new GraphicInterface(state);
@@ -54,12 +58,21 @@ public class Server0 implements IServer {
 			}
 		});
 		
-		//displayer.beginDisplay(state);
 	}
 
 	public static void main(String[] args) throws Exception {
+		// treat args as secrets
+		if(args.length < 1) {
+		    throw new Exception("not enough secrets");
+		}
+		
+		long[] secrets = new long[args.length];
+		for(int i=0; i< args.length; i++){
+		    secrets[i] = Long.parseLong(args[i]);
+		}
+		
 		Logger2.start();
-		Server0 server = new Server0();
+		Server0 server = new Server0(secrets);
 
 		Remote.config(null, 1198, null, 0);
 		ItemServer.bind(server, "CraftingQuest");
@@ -114,11 +127,12 @@ public class Server0 implements IServer {
 		// player time
 		// end
 		// declare winner
-		for (int i = 0; i < clients.size(); i++) {
+		for (int i = 0; i < clients.length; i++) {
 			final int clientID = i;
 			timer.scheduleAtFixedRate(new TimerTask() {
 
-				Object client = clients.get(clientID);
+				//Object client = clients.get(clientID);
+				Object client = clients[clientID];
 
 				@Override
 				public void run() {
@@ -156,19 +170,16 @@ public class Server0 implements IServer {
 
 	}
 
-	private boolean allowedSecret(long secret) {
+	private int allowedSecret(long secret) {
 		for (int i = 0; i < secrets.length; i++) {
 			if (secret == secrets[i]) {
-				return true;
+				return i;
 			}
 		}
-		return false;
+		return -1;
 	}
 
-	private int secretToOrder(long secret) {
-		return (int) secret / 100;
-	}
-
+	
 	/* communication */
 	public synchronized int addRemoteClient(Object client) {
 		Long secret = null;
@@ -178,27 +189,37 @@ public class Server0 implements IServer {
 			Logger.getLogger(Server0.class.getName()).log(Level.SEVERE, null,
 					ex);
 		}
-		Logger2.log("srv", "register", "newclient_" + secret);
-		if (!clients.contains(client)) {
-			clients.add(client);
+		
+		int clientNo = allowedSecret(secret);
+		
+		if(clientNo == -1){
+		    Logger2.log("srv", "register", "newclient not authorized: secret = " + secret);
+		    return -1;
 		}
-		int size = clients.size();
-
-		return size - 1;
+		
+		Logger2.log("srv", "register", "newclient_" + secret);
+		if (clients[clientNo] == null) {
+		    clients[clientNo] = client;
+		}
+		
+		return clientNo;	
 	}
-
-	/*
-	public Scenario getScenario() {
-		return this.scenario;
-	}
-	*/
 	
 	public synchronized PlayerState process(Transition action) {
 		Logger2.log("srv", "process", "");
-		int playerID = secretToOrder(action.secret);
+		int clientID = allowedSecret(action.secret);
+		if (clientID == -1) {
+			return null;
+		}
+		
+		Integer playerID = state.getPlayerIds().get(clientID);
+		
 		PlayerState player = state.playerStates.get(playerID);
+		if (player.round.currentRound < state.round.currentRound) {
+			player.round.currentRound = state.round.currentRound;
+		}
+		
 		actionEngine.process(player, action);
-		player.round.currentRound++;
 		return player;
 	}
 }

@@ -5,16 +5,16 @@ import java.io.Serializable;
 public class RoundState implements Serializable {
 
 	public int currentRound;
-	public int lastRound;
+	public int noRounds;
 	public long startTime; // of the currentRound
 	public long endTime; // of the currentRound
 
 	public RoundState() {
 	}
 	
-	public RoundState(int currentRound, int lastRound, int startTime, int endTime) {
+	public RoundState(int currentRound, int noRounds, int startTime, int endTime) {
 		this.currentRound = currentRound;
-		this.lastRound = lastRound;
+		this.noRounds = noRounds;
 		this.startTime = startTime;
 		this.endTime = endTime;
 	}
@@ -27,7 +27,7 @@ public class RoundState implements Serializable {
 	public String toString() {
 		String info = "RoundState:\n";
 		info += "currentRound: " + currentRound + "\n";
-		info += "lastRound: " + lastRound + "\n";
+		info += "noRounds: " + noRounds + "\n";
 		info += "startTime: " + startTime + "\n";
 		info += "endTime: " + endTime + "\n";
 		return info;

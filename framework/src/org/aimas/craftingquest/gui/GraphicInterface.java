@@ -68,16 +68,13 @@ public class GraphicInterface extends JFrame implements ActionListener {
 		btnPnl.add(cellInfoBtn);
 		
 		JPanel selectorPanel = new JPanel();
-		//Integer[] playerIDs = new Integer[game.playerStates.size()];
-		//for (int i = 0; i < game.playerStates.size(); i++) {
-			//playerIDs[i] = game.playerStates.get(i).id;
-		//}
 		Integer[] playerIDs = game.getPlayerIds().toArray(new Integer[0]);
 		
-		String[] resourceNames = new String[GamePolicy.BasicResourceType.values().length + 1];
+		String[] resourceNames = new String[GamePolicy.BasicResourceType.values().length + 2];
 		resourceNames[0] = "ALL";
-		for (int i = 0; i < resourceNames.length - 1; i++) {
-			resourceNames[i + 1] = GamePolicy.getResTypeByOrdinal(i).name();
+		resourceNames[1] = "NONE";
+		for (int i = 0; i < resourceNames.length - 2; i++) {
+			resourceNames[i + 2] = GamePolicy.getResTypeByOrdinal(i).name();
 		}
 		resourceSelector = new JComboBox(resourceNames);
 		
@@ -201,16 +198,19 @@ public class GraphicInterface extends JFrame implements ActionListener {
 		@Override
 		public String getInfo() {
 			String info = "Selected resource: " + selectedRes + "\n";
-			if (!selectedRes.equals("ALL")){
-				info += "Total quantity: " + game.resourceAmountsByType.get(BasicResourceType.valueOf(selectedRes));
-			}
-			else {
-				int amount = 0;
-				for (BasicResourceType br : BasicResourceType.values()) {
-					amount += game.resourceAmountsByType.get(br);
+			if (!selectedRes.equals("NONE")) {
+				if (!selectedRes.equals("ALL")){
+					info += "Total quantity: " + game.resourceAmountsByType.get(BasicResourceType.valueOf(selectedRes));
 				}
-				info += "Total quantity: " + amount;
+				else {
+					int amount = 0;
+					for (BasicResourceType br : BasicResourceType.values()) {
+						amount += game.resourceAmountsByType.get(br);
+					}
+					info += "Total quantity: " + amount;
+				}
 			}
+			
 			return info;
 		}
 	}

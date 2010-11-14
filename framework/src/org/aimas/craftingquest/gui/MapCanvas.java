@@ -251,15 +251,23 @@ public class MapCanvas extends Canvas implements MouseListener, MouseMotionListe
     	bufferGraphics.setColor(Color.BLACK);
     	bufferGraphics.drawRect(j * CELL_DIM + offsetX, i * CELL_DIM + offsetY, CELL_DIM, CELL_DIM);
     	
-    	if (cell.resources.size() > 0) {
+    	boolean noResources = true;
+    	for (Integer quant : cell.resources.values()) {
+    		if (quant > 0) {
+    			noResources = false;
+    			break;
+    		}
+    	}
+    	
+    	if (!selectedResource.equals("NONE") && !noResources) {
     		if (selectedResource.equals("ALL")) {
     			bufferGraphics.drawImage(resource, j * CELL_DIM + offsetX, i * CELL_DIM + offsetY, null);
         	}
     		else {
     			BasicResourceType selectedType = BasicResourceType.valueOf(selectedResource);
-    			if (cell.resources.containsKey(selectedType)) {
-    				bufferGraphics.drawImage(resource, j * CELL_DIM + offsetX, i * CELL_DIM + offsetY, null);
-    			}
+        		if (cell.resources.containsKey(selectedType)) {
+        			bufferGraphics.drawImage(resource, j * CELL_DIM + offsetX, i * CELL_DIM + offsetY, null);
+        		}
     		}
     	}
     }	

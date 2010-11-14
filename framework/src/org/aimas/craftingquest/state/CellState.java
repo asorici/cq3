@@ -18,13 +18,8 @@ public class CellState implements Serializable {
 		Grass, Dirt, Sand, Snow, Rock, Swamp, Water, DeepWater
 	};
 	
-	public static enum CellOcupation {
-		None, Unit, Building
-	}
-	
 	public CellType type;
 	public Point2i pos;
-	public CellOcupation entity;
 	
 	public HashMap<BasicResourceType, Integer> visibleResources = new HashMap<BasicResourceType, Integer>();
 	public HashMap<CraftedObject, Integer> craftedObjects = new HashMap<CraftedObject, Integer>();
@@ -41,5 +36,15 @@ public class CellState implements Serializable {
 	public CellState(CellType type, Point2i pos) {
 		this.type = type;
 		this.pos = pos;
+	}
+	
+	public static CellType getCellTypeByOrdinal(int ord) {
+		for (CellType ct : CellType.values()) {
+			if (ct.ordinal() == ord) {
+				return ct;
+			}
+		}
+		
+		throw new IllegalArgumentException("No existing CellType for given ordinal.");
 	}
 }

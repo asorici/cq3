@@ -91,7 +91,7 @@ public class MonkeyAI implements IPlayerHooks {
 	}
 
 	public static void main(String[] args) throws Exception {
-		Client0 client = new Client0(100);
+		Client0 client = new Client0(Long.parseLong(args[0]));
 		MonkeyAI ai = new MonkeyAI(client);
 		client.addArtificialIntelligence(ai);
 	}

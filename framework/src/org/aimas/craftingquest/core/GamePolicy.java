@@ -1,12 +1,18 @@
 package org.aimas.craftingquest.core;
 
+import java.io.DataInputStream;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Random;
 
 import org.aimas.craftingquest.state.CellState;
+import org.aimas.craftingquest.state.MapState;
+import org.aimas.craftingquest.state.Merchant;
 import org.aimas.craftingquest.state.Point2i;
-import org.aimas.craftingquest.state.UnitState;
 import org.aimas.craftingquest.state.CellState.CellType;
 import org.aimas.craftingquest.state.UnitState.UnitType;
 import org.w3c.dom.Document;
@@ -39,7 +45,11 @@ public class GamePolicy {
 	public static long roundTime;
 
 	/* number of turns */
-	public static int lastTurn = 400;
+	public static int lastTurn = 160;
+	
+	/* game map */
+	public static String mapName = "map_v1.cqm";
+	public static MapState map;
 	
 	/* general */
 	public static int scanAttributeCount = 5;
@@ -114,7 +124,16 @@ public class GamePolicy {
 		playerTotalTime = playerActionTime + playerLateTime;
 		PLAYERSTotalTime = noPlayers * playerTotalTime;
 		roundTime = PLAYERSTotalTime + updateTime;
+		
+		MapReader.readMap("maps/" + mapName);
+		mapsize = new Point2i(MapReader.mapWidth, MapReader.mapHeight);
+		lastTurn = MapReader.nrTurns;
+		map = new MapState();
+		map.cells = MapReader.cells;
+		map.mapHeight = MapReader.mapHeight;
+		map.mapWidth = MapReader.mapWidth;
 	}
+	
 	
 	public static void readParametersFrom(Document doc) {
 		Element root = (Element)doc.getDocumentElement();
@@ -137,6 +156,7 @@ public class GamePolicy {
 		
 		int size = Integer.parseInt(parametersNode.getElementsByTagName("mapsize").item(0).getTextContent());
 		mapsize = new Point2i(size, size);
+		mapName = parametersNode.getElementsByTagName("mapName").item(0).getTextContent();
 	}
 	
 	private static void readScenarioParameters(Element parametersNode) {
@@ -215,3 +235,47 @@ public class GamePolicy {
 
 }
 
+class MapReader {
+	public static int mapWidth;
+	public static int mapHeight;
+	public static int nrTurns;
+	public static CellState[][] cells;
+	
+	public static void readMap(String mapFile) {
+		try {
+			FileInputStream fis = new FileInputStream(mapFile);
+			DataInputStream dis = new DataInputStream(fis);
+			
+			// read general info
+			mapHeight = dis.readInt();
+			mapWidth = dis.readInt();
+			nrTurns = dis.readInt();
+			
+			// read terrain info
+			cells = new CellState[mapHeight][mapWidth];
+			for (int i = 0; i < mapHeight; i++) {
+				for (int j = 0; j < mapWidth; j++) {
+					int cellTypeOrdinal = dis.readByte();
+					CellType ct = CellState.getCellTypeByOrdinal(cellTypeOrdinal);
+					cells[i][j] = new CellState(ct, new Point2i(j, i));
+				}
+			}
+			
+			// read merchant positions
+			int ct = dis.readByte();	// merchant count
+			for (int i = 0; i < ct; i++) {
+				int x = dis.readByte();
+				int y = dis.readByte();
+				
+				cells[y][x].strategicResource = new Merchant(new Point2i(x, y));
+			}
+			
+			dis.close();
+			fis.close();
+		} catch(FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+}

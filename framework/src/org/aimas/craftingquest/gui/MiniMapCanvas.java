@@ -123,7 +123,15 @@ public class MiniMapCanvas extends Canvas implements MouseListener, MouseMotionL
     		}
     	}
     	
-    	if (!cell.resources.isEmpty()) {
+    	boolean noResources = true;
+    	for (Integer quant : cell.resources.values()) {
+    		if (quant > 0) {
+    			noResources = false;
+    			break;
+    		}
+    	}
+    	
+    	if (!map.getSelectedResource().equals("NONE") && !noResources) {
     		g.setFont(font);
     		g.setColor(Color.RED);
     		
