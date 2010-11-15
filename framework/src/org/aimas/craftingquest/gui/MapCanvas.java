@@ -89,22 +89,22 @@ public class MapCanvas extends Canvas implements MouseListener, MouseMotionListe
 		vs.addAdjustmentListener(this);
 
 		try {
-			rockTile = ImageIO.read(new File("images\\rock.jpg")).getScaledInstance(CELL_DIM, CELL_DIM, Image.SCALE_FAST);
-			grassTile = ImageIO.read(new File("images\\grass.jpg")).getScaledInstance(CELL_DIM, CELL_DIM, Image.SCALE_FAST);
-			waterTile = ImageIO.read(new File("images\\water.jpg")).getScaledInstance(CELL_DIM, CELL_DIM, Image.SCALE_FAST);
-			deepWaterTile = ImageIO.read(new File("images\\deepWater.jpg")).getScaledInstance(CELL_DIM, CELL_DIM, Image.SCALE_FAST);
-			snowTile = ImageIO.read(new File("images\\snow.jpg")).getScaledInstance(CELL_DIM, CELL_DIM, Image.SCALE_FAST);
-			sandTile = ImageIO.read(new File("images\\sand.jpg")).getScaledInstance(CELL_DIM, CELL_DIM, Image.SCALE_FAST);
-			swampTile = ImageIO.read(new File("images\\swamp.jpg")).getScaledInstance(CELL_DIM, CELL_DIM, Image.SCALE_FAST);
-			dirtTile = ImageIO.read(new File("images\\dirt.jpg")).getScaledInstance(CELL_DIM, CELL_DIM, Image.SCALE_FAST);
+			rockTile = ImageIO.read(new File("images/rock.jpg")).getScaledInstance(CELL_DIM, CELL_DIM, Image.SCALE_FAST);
+			grassTile = ImageIO.read(new File("images/grass.jpg")).getScaledInstance(CELL_DIM, CELL_DIM, Image.SCALE_FAST);
+			waterTile = ImageIO.read(new File("images/water.jpg")).getScaledInstance(CELL_DIM, CELL_DIM, Image.SCALE_FAST);
+			deepWaterTile = ImageIO.read(new File("images/deepWater.jpg")).getScaledInstance(CELL_DIM, CELL_DIM, Image.SCALE_FAST);
+			snowTile = ImageIO.read(new File("images/snow.jpg")).getScaledInstance(CELL_DIM, CELL_DIM, Image.SCALE_FAST);
+			sandTile = ImageIO.read(new File("images/sand.jpg")).getScaledInstance(CELL_DIM, CELL_DIM, Image.SCALE_FAST);
+			swampTile = ImageIO.read(new File("images/swamp.jpg")).getScaledInstance(CELL_DIM, CELL_DIM, Image.SCALE_FAST);
+			dirtTile = ImageIO.read(new File("images/dirt.jpg")).getScaledInstance(CELL_DIM, CELL_DIM, Image.SCALE_FAST);
 			
-			tower = ImageIO.read(new File("images\\tower.jpg")).getScaledInstance(CELL_DIM, CELL_DIM, Image.SCALE_FAST);
-			merchant = ImageIO.read(new File("images\\merchant.jpg")).getScaledInstance(CELL_DIM, CELL_DIM, Image.SCALE_FAST);
-			resource = ImageIO.read(new File("images\\resource.gif")).getScaledInstance(CELL_DIM / 2, CELL_DIM / 2, Image.SCALE_FAST);
-			recipe = ImageIO.read(new File("images\\recipe.png")).getScaledInstance(CELL_DIM / 2, CELL_DIM / 2, Image.SCALE_FAST);
-			crocImage = ImageIO.read(new File("images\\crocodile.png")).getScaledInstance(CELL_DIM, CELL_DIM, Image.SCALE_FAST);
-			devilImage = ImageIO.read(new File("images\\devil.png")).getScaledInstance(CELL_DIM, CELL_DIM, Image.SCALE_FAST);
-			foxImage = ImageIO.read(new File("images\\fox.png")).getScaledInstance(CELL_DIM, CELL_DIM, Image.SCALE_FAST);
+			tower = ImageIO.read(new File("images/tower.jpg")).getScaledInstance(CELL_DIM, CELL_DIM, Image.SCALE_FAST);
+			merchant = ImageIO.read(new File("images/merchant.jpg")).getScaledInstance(CELL_DIM, CELL_DIM, Image.SCALE_FAST);
+			resource = ImageIO.read(new File("images/resource.gif")).getScaledInstance(CELL_DIM / 2, CELL_DIM / 2, Image.SCALE_FAST);
+			recipe = ImageIO.read(new File("images/recipe.png")).getScaledInstance(CELL_DIM / 2, CELL_DIM / 2, Image.SCALE_FAST);
+			crocImage = ImageIO.read(new File("images/crocodile.png")).getScaledInstance(CELL_DIM, CELL_DIM, Image.SCALE_FAST);
+			devilImage = ImageIO.read(new File("images/devil.png")).getScaledInstance(CELL_DIM, CELL_DIM, Image.SCALE_FAST);
+			foxImage = ImageIO.read(new File("images/fox.png")).getScaledInstance(CELL_DIM, CELL_DIM, Image.SCALE_FAST);
 		
 			entityToImage.put(CellType.Grass.name(), grassTile);
 			entityToImage.put(CellType.Water.name(), waterTile);
@@ -162,7 +162,7 @@ public class MapCanvas extends Canvas implements MouseListener, MouseMotionListe
 		
 		StrategicResource res = crtCell.strategicResource;
 		if (res != null) {
-			info += "Strategic resource = " + res.getType().name() + "\n";
+			info += "Strategic resource = " + res + "\n";
 		}
 		
 		if (!crtCell.resources.isEmpty()) {

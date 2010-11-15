@@ -19,25 +19,17 @@ public class MonkeyAI implements IPlayerHooks {
 	Random rnd;
 
 	/* game */
-	// Scenario scenario;
 	IPlayerActions cmd;
 
 	public MonkeyAI(IPlayerActions cmd) {
 		this.cmd = cmd;
-	}
-
-	/*
-	public void start() {
 		cmd.addArtificialIntelligence(this);
 	}
-	*/
 	
 	@Override
 	public void initGame() {
 		log("initGame", "");
 		rnd = new Random(System.currentTimeMillis());
-		//scenario = cmd.getScenario();
-		//displayer.beginDisplay(cmd);
 	}
 
 	public void finishGame() {
@@ -48,8 +40,10 @@ public class MonkeyAI implements IPlayerHooks {
 	public void beginRound() {
 		log("beginRound", "state  + cmd.getPlayerState()");
 		PlayerState state = cmd.getPlayerState();
-
-		for (int i = 0; i < state.units.size(); i++) {
+		
+		int nrUnits = state.units.size();
+		
+		for (int i = 0; i < nrUnits; i++) {
 			UnitState unit = state.units.get(i);
 			log("unit state", unit.toString());
 			state = cmd.move(unit, smartChoiceDst(getValidPoints(unit)));
@@ -93,6 +87,5 @@ public class MonkeyAI implements IPlayerHooks {
 	public static void main(String[] args) throws Exception {
 		Client0 client = new Client0(Long.parseLong(args[0]));
 		MonkeyAI ai = new MonkeyAI(client);
-		client.addArtificialIntelligence(ai);
 	}
 }

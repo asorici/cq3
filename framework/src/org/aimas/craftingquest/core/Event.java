@@ -11,6 +11,7 @@ import java.io.Serializable;
  * 
  * @author Razvan
  */
+@SuppressWarnings("serial")
 public class Event implements Serializable {
 
 	public enum EventType {

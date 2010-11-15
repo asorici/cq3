@@ -2,6 +2,7 @@ package org.aimas.craftingquest.state;
 
 import java.io.Serializable;
 
+@SuppressWarnings("serial")
 public class Blueprint implements Serializable {
 	int value;
 	CraftedObject describedObject;
@@ -34,5 +35,15 @@ public class Blueprint implements Serializable {
 		}
 		
 		return true;
+	}
+	
+	@Override
+	public String toString() {
+		String info = "";
+		
+		info += "DescribedObj: " + describedObject.getType().name() + "\n";
+		info += "    value: " + value + "\n";
+		
+		return info;
 	}
 }

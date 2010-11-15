@@ -6,12 +6,12 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.aimas.craftingquest.core.GamePolicy.BasicResourceType;
-import org.aimas.craftingquest.core.GamePolicy.ObjectType;
 
 /**
  * 
  * @author Razvan
  */
+@SuppressWarnings("serial")
 public class CellState implements Serializable {
 	
 	public static enum CellType {

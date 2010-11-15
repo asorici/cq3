@@ -11,6 +11,7 @@ import org.aimas.craftingquest.core.GamePolicy.BasicResourceType;
  * 
  * @author Razvan
  */
+@SuppressWarnings("serial")
 public class GameState implements Serializable {
 
 	/* state */

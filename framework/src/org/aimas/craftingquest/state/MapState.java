@@ -1,8 +1,8 @@
 package org.aimas.craftingquest.state;
 
 import java.io.Serializable;
-import java.util.Arrays;
 
+@SuppressWarnings("serial")
 public class MapState implements Serializable {
 
 	public Point2i minAnchor; // upper left min point of array on the real map

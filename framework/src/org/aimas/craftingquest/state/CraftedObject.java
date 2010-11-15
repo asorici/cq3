@@ -7,9 +7,11 @@ import java.util.List;
 import java.util.Set;
 
 import org.aimas.craftingquest.core.GamePolicy.BasicResourceType;
+import org.aimas.craftingquest.core.GamePolicy.ObjectType;
 
+@SuppressWarnings("serial")
 public class CraftedObject implements Serializable {
-	private int type;
+	private ObjectType type;
 	private int value;
 	private List<HashMap<CraftedObject, Integer>> requiredObjects;
 	private List<HashMap<BasicResourceType, Integer>> requiredResources;
@@ -17,7 +19,7 @@ public class CraftedObject implements Serializable {
 	public CraftedObject() {
 	}
 	
-	public CraftedObject(int type, int value, List<HashMap<CraftedObject, Integer>> requiredObjects, List<HashMap<BasicResourceType, Integer>> requiredResources) {
+	public CraftedObject(ObjectType type, int value, List<HashMap<CraftedObject, Integer>> requiredObjects, List<HashMap<BasicResourceType, Integer>> requiredResources) {
 		this.type = type;
 		this.value = value;
 		this.requiredObjects = requiredObjects;
@@ -45,7 +47,7 @@ public class CraftedObject implements Serializable {
 		return list;
 	}
 	
-	public int getType() {
+	public ObjectType getType() {
 		return type;
 	}
 
@@ -70,5 +72,36 @@ public class CraftedObject implements Serializable {
 		}
 		
 		return true;
+	}
+	
+	public String toString() {
+		String info = "";
+		
+		info += "Obj: " + type.name() + "\n";
+		info += "    value: " + value + "\n";
+		
+		if (requiredResources != null && !requiredResources.isEmpty()) {
+			info += "    construction alternatives \n"; 
+			for (HashMap<BasicResourceType, Integer> alternative : requiredResources) {
+				info += "        ";
+				for (BasicResourceType br : alternative.keySet()) {
+					info += br.name() + ":" + alternative.get(br) + " "; 
+				}
+				info += "\n";
+			}
+		}
+		
+		if (requiredObjects != null && !requiredObjects.isEmpty()) {
+			info += "    construction alternatives \n"; 
+			for (HashMap<CraftedObject, Integer> alternative : requiredObjects) {
+				info += "        ";
+				for (CraftedObject o : alternative.keySet()) {
+					info += o.type.name() + ":" + alternative.get(o) + " "; 
+				}
+				info += "\n";
+			}
+		}
+		
+		return info;
 	}
 }

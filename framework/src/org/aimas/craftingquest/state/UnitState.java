@@ -1,7 +1,6 @@
 package org.aimas.craftingquest.state;
 
 import java.io.Serializable;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -12,6 +11,7 @@ import org.aimas.craftingquest.core.GamePolicy.BasicResourceType;
  * 
  * @author Razvan
  */
+@SuppressWarnings("serial")
 public class UnitState implements Serializable {
 
 	public enum UnitType {
@@ -44,7 +44,8 @@ public class UnitState implements Serializable {
 		sight = new CellState[sightDim][sightDim];
 	}
 
-	public UnitState(int playerID, UnitType type, Point2i pos, int energy) {
+	public UnitState(int id, int playerID, UnitType type, Point2i pos, int energy) {
+		this.id = id;
 		this.playerID = playerID;
 		this.type = type;
 		this.pos = pos;
@@ -57,9 +58,21 @@ public class UnitState implements Serializable {
 	@Override
 	public String toString() {
 		String info = "";
-		info += "UnitState: ";
-		info += " playerID=" + playerID + " type=" + type + " pos=" + pos + " energy=" + energy;
+		info += "playerID=" + playerID + " type=" + type + " pos=" + pos + " energy=" + energy + "\n";
+		info += "    carried resources: \n";
+		info += "        ";
+		for (BasicResourceType br : carriedResources.keySet()) {
+			info += br.name() + ":" + carriedResources.get(br) + " ";
+		}
 		info += "\n";
+		
+		info += "    carried objects: \n";
+		info += "        ";
+		for (CraftedObject o : carriedObjects.keySet()) {
+			info += o.getType().name() + ":" + carriedObjects.get(o) + " ";
+		}
+		info += "\n";
+		
 
 		return info;
 	}

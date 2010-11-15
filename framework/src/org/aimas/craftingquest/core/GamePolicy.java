@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Random;
 
 import org.aimas.craftingquest.state.CellState;
 import org.aimas.craftingquest.state.MapState;
@@ -119,6 +118,11 @@ public class GamePolicy {
 	};
 	
 	public static void initScenario() {
+		for (CellType ct : CellType.values()) {
+			terrainMovePossibilities.put(ct, new ArrayList<UnitType>());
+			movePenalty.put(ct, 0.0);
+		}
+		
 		readParametersFrom(GameUtils.readXMLDocument("GamePolicy.xml"));
 		
 		playerTotalTime = playerActionTime + playerLateTime;

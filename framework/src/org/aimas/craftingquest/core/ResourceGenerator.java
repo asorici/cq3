@@ -16,7 +16,6 @@ import org.aimas.craftingquest.state.CellState.CellType;
 
 public class ResourceGenerator {
 	private static Random randGen = new Random();
-	private static int objectCountExpectancy = 20;
 	private static int maxRequiredResPerObject = GamePolicy.unitEnergy / 5;
 	private static int maxRequiredCraftedObjects = GamePolicy.unitEnergy / 12;
 	
@@ -75,7 +74,7 @@ public class ResourceGenerator {
 			recipeAlternatives.add(recipe2);
 			
 			int value = computeSimpleValue(alternative1, alternative2, resourceAmountsByType);
-			CraftedObject craftedObj = new CraftedObject(objType.ordinal(), value, null, recipeAlternatives);
+			CraftedObject craftedObj = new CraftedObject(objType, value, null, recipeAlternatives);
 			Blueprint bp = new Blueprint(value / 4, craftedObj);
 			
 			simpleBlueprints.add(bp);
@@ -185,7 +184,7 @@ public class ResourceGenerator {
 			objectRecipeAlternatives.add(recipe2);
 			
 			int value = computeComplexValue(recipe1, recipe2);		// compute crafted object value
-			CraftedObject craftedObj = new CraftedObject(objType.ordinal(), value, objectRecipeAlternatives, null);
+			CraftedObject craftedObj = new CraftedObject(objType, value, objectRecipeAlternatives, null);
 			
 			// set blueprint value to the same price as the most expensive ingredient object
 			int maxBlueprintValue = 0;
@@ -652,7 +651,7 @@ public class ResourceGenerator {
 			CraftedObject obj = bp.getDescribedObject();
 			int bpvalue = bp.getValue();
 			
-			System.out.println("==== Blueprint for object of type: " + GamePolicy.getObjectTypeByOrdinal(obj.getType()).name() + "====");
+			System.out.println("==== Blueprint for object of type: " + obj.getType().name() + "====");
 			System.out.println("	- blueprint value: " + bpvalue);
 			System.out.println("	- object value: " + obj.getValue());
 			System.out.println("	- construction alternatives: ");
@@ -681,7 +680,7 @@ public class ResourceGenerator {
 					Iterator<CraftedObject> objIt = alternative.keySet().iterator();
 					while(objIt.hasNext()) {
 						CraftedObject o = objIt.next();
-						System.out.println("			- " + GamePolicy.getObjectTypeByOrdinal(o.getType()) + ": " + alternative.get(o));
+						System.out.println("			- " + o.getType() + ": " + alternative.get(o));
 					}
 					
 					System.out.println();

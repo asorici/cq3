@@ -10,8 +10,8 @@ import java.awt.event.WindowEvent;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
 import org.aimas.craftingquest.core.GamePolicy;
@@ -97,8 +97,11 @@ public class GraphicInterface extends JFrame implements ActionListener {
 		infoArea = new JTextArea();
 		infoArea.setEditable(false);
 		infoArea.setText(getMapInfo());
+		JScrollPane infoPanel = new JScrollPane(infoArea);
+		
 		mapCanvas.setInfoArea(infoArea);
-		rightPanel.add(BorderLayout.CENTER, infoArea);
+		//rightPanel.add(BorderLayout.CENTER, infoArea);
+		rightPanel.add(BorderLayout.CENTER, infoPanel);
 		
 		add(BorderLayout.CENTER, mapPanel);
 		add(BorderLayout.EAST, rightPanel);
@@ -119,7 +122,7 @@ public class GraphicInterface extends JFrame implements ActionListener {
 		mapCanvas.repaint();
 		miniMapCanvas.createMiniMapImage();
 		miniMapCanvas.repaint();
-		if (infoProvider != null) {
+		if (infoProvider != null && infoProvider.needsUpdate()) {
 			infoArea.setText(infoProvider.getInfo());
 		}
 	}
@@ -157,20 +160,47 @@ public class GraphicInterface extends JFrame implements ActionListener {
 	}
 
 	interface InfoProvider {
+		public boolean needsUpdate();
 		public String getInfo();
 	}
 
 	private class MapInfoProvider implements InfoProvider {
+		private boolean wasPrinted = false;
+		
 		@Override
 		public String getInfo() {
 			return getMapInfo();
 		}
+
+		@Override
+		public boolean needsUpdate() {
+			if (wasPrinted) {
+				return false;
+			}
+			else {
+				wasPrinted = true;
+				return true;
+			}
+		}
 	}
 	
 	private class CellInfoProvider implements InfoProvider {
+		private boolean wasPrinted = false;
+		
 		@Override
 		public String getInfo() {
 			return mapCanvas.getCrtCellInfo();
+		}
+
+		@Override
+		public boolean needsUpdate() {
+			if (wasPrinted) {
+				return false;
+			}
+			else {
+				wasPrinted = true;
+				return true;
+			}
 		}
 	}
 	
@@ -185,6 +215,11 @@ public class GraphicInterface extends JFrame implements ActionListener {
 		public String getInfo() {
 			PlayerState ps = game.playerStates.get(playerID);
 			return ps.toString();
+		}
+
+		@Override
+		public boolean needsUpdate() {
+			return true;
 		}
 	}
 	
@@ -212,6 +247,11 @@ public class GraphicInterface extends JFrame implements ActionListener {
 			}
 			
 			return info;
+		}
+
+		@Override
+		public boolean needsUpdate() {
+			return true;
 		}
 	}
 }

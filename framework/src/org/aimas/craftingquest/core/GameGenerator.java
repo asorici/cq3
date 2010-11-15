@@ -27,21 +27,6 @@ public class GameGenerator {
 		return new Configuration();
 	}
 
-	public static PlayerState hardcoded2(int id, int noUnits) {
-		PlayerState p = new PlayerState();
-
-		p.id = new Integer(id);
-		for (int i = 0; i < noUnits; i++) {
-			UnitState unit = new UnitState();
-			unit.playerID = id;
-			unit.type = UnitType.values()[i];
-			unit.pos = new Point2i();
-			p.units.add(unit);
-		}
-
-		return p;
-	}
-
 	public static GameState setupGame() {
 		/* initialize scenario */
 		GamePolicy.initScenario();
@@ -170,7 +155,6 @@ public class GameGenerator {
 		PlayerState pState = new PlayerState();
 		pState.id = playerID;
 		pState.credit = GamePolicy.initialTeamCredit;
-		pState.totalScore = 0;
 		pState.round.currentRound = 1;
 		pState.round.noRounds = GamePolicy.lastTurn;
 		pState.mapHeight = map.mapHeight;
@@ -208,8 +192,9 @@ public class GameGenerator {
 			if (unitPos == null) { // it should never come to this
 				throw new NullPointerException("Unit initial position error: " + utype.name());
 			}
-
-			UnitState unit = new UnitState(playerID, utype, unitPos, GamePolicy.unitEnergy);
+			
+			int unitID = playerID * nrUnits + i;
+			UnitState unit = new UnitState(unitID, playerID, utype, unitPos, GamePolicy.unitEnergy);
 			pState.units.add(unit); // add unit to player's list
 			map.cells[unit.pos.y][unit.pos.x].cellUnits.add(unit.getOpponentPerspective()); // add unit to its cell
 			

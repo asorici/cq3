@@ -9,6 +9,7 @@ import java.util.List;
  * 
  * @author Razvan
  */
+@SuppressWarnings("serial")
 public class PlayerState implements Serializable {
 
 	/* state */
@@ -18,7 +19,6 @@ public class PlayerState implements Serializable {
 	public List<Blueprint> availableBlueprints;		// list of all available blueprints in the game - set at game start 
 	public List<Blueprint> boughtBlueprints;		// blueprints that have been bought by the player
 	public HashMap<Tower, Boolean> availableTowers; // stores the state of all the towers built by the player
-	public int totalScore;
 	public int credit;
 	
 	/* map dimensions */
@@ -52,18 +52,20 @@ public class PlayerState implements Serializable {
 	public String toString() {
 		String info = "";
 		info += "PlayerState: \n";
-		info += "\t id: " + id + "\n";
-		info += "\t Units: \n" + units;
-		info += "\n";
+		info += "    id:" + id + "\n";
+		info += "    credit:" + credit + "\n";
+		info += "    round:" + round.currentRound + " of " + round.noRounds + "\n";
+		info += "    Blueprints: \n";
+		for (Blueprint bp: boughtBlueprints) {
+			info += "        " + bp + "\n";
+		}
+		
+		info += "    Units:" + units.size() + "\n";
+		for (UnitState unit : units) {
+			info += "        " + unit + "\n";
+		}
+		
 		return info;
-	}
-
-	public int getTotalScore() {
-		return totalScore;
-	}
-
-	public void setTotalScore(int totalScore) {
-		this.totalScore = totalScore;
 	}
 
 	public int getCredit() {

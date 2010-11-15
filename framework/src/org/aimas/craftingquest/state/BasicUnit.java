@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import org.aimas.craftingquest.state.UnitState.UnitType;
 
+@SuppressWarnings("serial")
 public class BasicUnit implements Serializable {
 	public int id;
 	public UnitType type;

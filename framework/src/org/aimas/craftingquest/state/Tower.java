@@ -2,6 +2,7 @@ package org.aimas.craftingquest.state;
 
 import org.aimas.craftingquest.core.GamePolicy;
 
+@SuppressWarnings("serial")
 public class Tower extends StrategicResource {
 	private int playerID;
 	private int remainingStrength;
@@ -22,5 +23,14 @@ public class Tower extends StrategicResource {
 	
 	public void weakenTower(int amount) {
 		remainingStrength -= amount;
+	}
+	
+	@Override
+	public String toString() {
+		String info = "";
+		
+		info += "Tower of player(" + playerID + ") - strength:" + remainingStrength + "\n";
+		
+		return info;
 	}
 }
