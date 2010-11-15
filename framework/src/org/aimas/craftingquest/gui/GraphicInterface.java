@@ -96,7 +96,7 @@ public class GraphicInterface extends JFrame implements ActionListener {
 
 		infoArea = new JTextArea();
 		infoArea.setEditable(false);
-		infoArea.setText(getMapInfo());
+		infoProvider = new MapInfoProvider();
 		JScrollPane infoPanel = new JScrollPane(infoArea);
 		
 		mapCanvas.setInfoArea(infoArea);
@@ -165,7 +165,6 @@ public class GraphicInterface extends JFrame implements ActionListener {
 	}
 
 	private class MapInfoProvider implements InfoProvider {
-		private boolean wasPrinted = false;
 		
 		@Override
 		public String getInfo() {
@@ -174,13 +173,7 @@ public class GraphicInterface extends JFrame implements ActionListener {
 
 		@Override
 		public boolean needsUpdate() {
-			if (wasPrinted) {
-				return false;
-			}
-			else {
-				wasPrinted = true;
-				return true;
-			}
+			return true;
 		}
 	}
 	

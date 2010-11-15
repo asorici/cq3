@@ -28,7 +28,6 @@ public final class Client0 implements IClient, IPlayerActions {
 	/* game */
 	private PlayerState state;
 	private IPlayerHooks player;
-	// private Scenario scenario;
 	private PausableThreadPoolExecutor ptpe;
 
 	/* public */
@@ -36,12 +35,12 @@ public final class Client0 implements IClient, IPlayerActions {
 		this.secret = secret;
 		ptpe = new PausableThreadPoolExecutor();
 
-		Configuration cfg = GameGenerator.readConfigFromFile();
-		server = Remote.getItem("//localhost:1198/" + cfg.servername);
+		//Configuration cfg = GameGenerator.readConfigFromFile();
+		//server = Remote.getItem("//localhost:1198/" + cfg.servername);
+		server = Remote.getItem("//localhost:1198/" + "CraftingQuest");
 		client = new Remote(this);
 
 		id = (Integer) Remote.invoke(server, "addRemoteClient", client);
-		//scenario = (Scenario) Remote.invoke(server, "getScenario", null);
 	}
 
 	/* communication */

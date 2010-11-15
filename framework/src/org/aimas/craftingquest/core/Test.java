@@ -22,7 +22,7 @@ public class Test {
 		Random rnd = new Random();
 		long[] secrets = new long[GamePolicy.noPlayers];
 		
-		for(int i=0; i < secrets.length; i++){
+		for(int i=0; i < secrets.length; i++) {
 		    secrets[i] = rnd.nextLong();
 		}
 		
@@ -32,7 +32,7 @@ public class Test {
 	
 	private static String[] getSecretsStrings(long[] secrets) {
 		String[] r = new String[secrets.length];
-		for(int i=0; i< secrets.length; i++){
+		for (int i=0; i< secrets.length; i++) {
 			  r[i] = secrets[i]+"";
 		}
 		
@@ -65,7 +65,7 @@ public class Test {
 
 				public void run() {
 					try {
-						MonkeyAI.main(new String[]{secrets[holdi]+""});
+						MonkeyAI.main(new String[]{holdi + ""});
 					} catch (Exception ex) {
 						Logger.getLogger(Test.class.getName()).log(Level.SEVERE, null, ex);
 					}

@@ -3,8 +3,10 @@ package org.aimas.craftingquest.core;
 import gnu.cajo.invoke.Remote;
 import gnu.cajo.utils.ItemServer;
 
-import java.util.LinkedList;
-import java.util.List;
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.logging.Level;
@@ -35,20 +37,23 @@ public class Server0 implements IServer {
 	private Timer timer;
 	private long[] secrets;
 
-	public Server0(long[] secrets) throws Exception {
-		this.secrets = secrets;
-		
-		clients = new Object[secrets.length];
+	public Server0() throws Exception {
 		cfg = GameGenerator.readConfigFromFile();
 		state = GameGenerator.setupGame();
 		actionEngine = new ActionEngine(state);
 		timer = new Timer();
+		secrets = readSecrets("secrets.txt");
+		
+		if (secrets == null) {
+			throw new Exception("could not retrieve secrets");
+		}
 		
 		if(state.playerStates.size() != secrets.length){
 		    throw new Exception("each client must have a secret");
 		}
 		
-		//displayer = new DisplayerFrame();
+		clients = new Object[secrets.length];
+		
 		displayer = new GraphicInterface(state);
 		SwingUtilities.invokeLater(new Runnable() {
 			
@@ -60,19 +65,48 @@ public class Server0 implements IServer {
 		
 	}
 
+	private long[] readSecrets(String fileName) {
+		long[] secrets = null;
+		
+		try {
+			BufferedReader br = new BufferedReader(new FileReader(fileName));
+			int len = Integer.parseInt(br.readLine());
+			secrets = new long[len];
+			
+			for (int i = 0; i < len; i++) {
+				secrets[i] = Long.parseLong(br.readLine());
+			}
+			
+			br.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+			return null;
+		} catch (IOException e) {
+			e.printStackTrace();
+			return null;
+		} catch (NumberFormatException e) {
+			e.printStackTrace();
+			return null;
+		}
+		
+		return secrets;
+	}
+
 	public static void main(String[] args) throws Exception {
 		// treat args as secrets
+		/*
 		if(args.length < 1) {
 		    throw new Exception("not enough secrets");
 		}
 		
 		long[] secrets = new long[args.length];
-		for(int i=0; i< args.length; i++){
+		for (int i=0; i< args.length; i++) {
 		    secrets[i] = Long.parseLong(args[i]);
 		}
+		*/
 		
 		Logger2.start();
-		Server0 server = new Server0(secrets);
+		Server0 server = new Server0();
 
 		Remote.config(null, 1198, null, 0);
 		ItemServer.bind(server, "CraftingQuest");
