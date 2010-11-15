@@ -6,11 +6,9 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-import org.aimas.craftingquest.core.GamePolicy.StrategicResourceType;
 import org.aimas.craftingquest.state.CellState;
-import org.aimas.craftingquest.state.Merchant;
-import org.aimas.craftingquest.state.Point2i;
 import org.aimas.craftingquest.state.CellState.CellType;
+import org.aimas.craftingquest.state.StrategicResource.StrategicResourceType;
 
 public class MapReader {
 	public static int mapWidth;

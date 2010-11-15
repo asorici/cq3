@@ -10,11 +10,11 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
-import org.aimas.craftingquest.core.GamePolicy.BasicResourceType;
-import org.aimas.craftingquest.core.GamePolicy.StrategicResourceType;
 import org.aimas.craftingquest.state.CellState;
 import org.aimas.craftingquest.state.GameState;
 import org.aimas.craftingquest.state.StrategicResource;
+import org.aimas.craftingquest.state.CraftedObject.BasicResourceType;
+import org.aimas.craftingquest.state.StrategicResource.StrategicResourceType;
 
 @SuppressWarnings("serial")
 public class MiniMapCanvas extends Canvas implements MouseListener, MouseMotionListener {

@@ -2,12 +2,12 @@ package org.aimas.craftingquest.user;
 
 import java.util.HashMap;
 
-import org.aimas.craftingquest.core.GamePolicy.BasicResourceType;
 import org.aimas.craftingquest.state.Blueprint;
 import org.aimas.craftingquest.state.CraftedObject;
 import org.aimas.craftingquest.state.PlayerState;
 import org.aimas.craftingquest.state.Point2i;
 import org.aimas.craftingquest.state.UnitState;
+import org.aimas.craftingquest.state.CraftedObject.BasicResourceType;
 
 
 public interface IPlayerActions {

@@ -13,6 +13,8 @@ import org.aimas.craftingquest.state.MapState;
 import org.aimas.craftingquest.state.Merchant;
 import org.aimas.craftingquest.state.Point2i;
 import org.aimas.craftingquest.state.CellState.CellType;
+import org.aimas.craftingquest.state.CraftedObject.BasicResourceType;
+import org.aimas.craftingquest.state.CraftedObject.ObjectType;
 import org.aimas.craftingquest.state.UnitState.UnitType;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -83,9 +85,6 @@ public class GamePolicy {
 	public static HashMap<CellType, List<UnitType>> terrainMovePossibilities = new HashMap<CellType, List<UnitType>>();
 	
 	public static int maxResourceSpots = 5;
-	public enum BasicResourceType {
-		R1, R2, R3, R4, R5, R6, R7, R8, R9, R10, R11, R12
-	}
 	
 	public static BasicResourceType getResTypeByOrdinal(int ord) {
 		BasicResourceType[] vals = BasicResourceType.values();
@@ -98,10 +97,6 @@ public class GamePolicy {
 		return null;		// will never actually get here
 	}
 	
-	public enum ObjectType {
-		O1, O2, O3, O4, O5, O6, O7, O8, O9, O10, O11, O12
-	}
-	
 	public static ObjectType getObjectTypeByOrdinal(int ord) {
 		ObjectType[] vals = ObjectType.values();
 		for (int i = 0; i < vals.length; i++) {
@@ -112,10 +107,6 @@ public class GamePolicy {
 		
 		return null;		// will never actually get here
 	}
-	
-	public enum StrategicResourceType {
-		Tower, Merchant
-	};
 	
 	public static void initScenario() {
 		for (CellType ct : CellType.values()) {

@@ -18,8 +18,8 @@ import java.util.HashMap;
 import javax.imageio.ImageIO;
 import javax.swing.JTextArea;
 
-import org.aimas.craftingquest.core.GamePolicy.StrategicResourceType;
 import org.aimas.craftingquest.state.CellState.CellType;
+import org.aimas.craftingquest.state.StrategicResource.StrategicResourceType;
 import org.aimas.craftingquest.state.UnitState.UnitType;
 
 

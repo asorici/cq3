@@ -1,8 +1,7 @@
 package org.aimas.craftingquest.mapeditor;
 
-import org.aimas.craftingquest.core.GamePolicy.StrategicResourceType;
-import org.aimas.craftingquest.state.StrategicResource;
 import org.aimas.craftingquest.state.CellState.CellType;
+import org.aimas.craftingquest.state.StrategicResource.StrategicResourceType;
 
 public class MapCell {
 	public CellType cellType;

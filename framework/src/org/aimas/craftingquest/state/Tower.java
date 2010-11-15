@@ -1,6 +1,5 @@
 package org.aimas.craftingquest.state;
 
-import org.aimas.craftingquest.core.GamePolicy;
 
 @SuppressWarnings("serial")
 public class Tower extends StrategicResource {
@@ -8,7 +7,7 @@ public class Tower extends StrategicResource {
 	private int remainingStrength;
 	
 	public Tower(int playerID, Point2i pos) {
-		super(GamePolicy.StrategicResourceType.Tower, pos);
+		super(StrategicResourceType.Tower, pos);
 		this.playerID = playerID;
 		this.remainingStrength = 300;
 	}

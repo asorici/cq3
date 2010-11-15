@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.Random;
 
 import org.aimas.craftingquest.core.Client0;
-import org.aimas.craftingquest.core.GamePolicy;
 import org.aimas.craftingquest.core.Logger2;
 import org.aimas.craftingquest.state.CellState;
 import org.aimas.craftingquest.state.PlayerState;

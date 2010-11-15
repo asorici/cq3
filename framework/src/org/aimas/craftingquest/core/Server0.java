@@ -144,13 +144,13 @@ public class Server0 implements IServer {
 		System.exit(1234);
 	}
 
-	private void gameLoop() {
+	public void gameLoop() {
 		long delay = 1000;// 4000 - (System.currentTimeMillis() % 1000);
 		long delayPlayer = GamePolicy.playerTotalTime;
 		long period = GamePolicy.roundTime;
 
 		try {
-			Thread.sleep(2000 - ((System.currentTimeMillis() - Logger2.t0) % 1000));
+			Thread.sleep(8000 - ((System.currentTimeMillis() - Logger2.t0) % 1000));
 		} catch (InterruptedException ex) {
 			Logger.getLogger(Server0.class.getName()).log(Level.SEVERE, null, ex);
 		}

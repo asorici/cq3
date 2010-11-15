@@ -10,7 +10,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
-import org.aimas.craftingquest.core.GamePolicy.StrategicResourceType;
+import org.aimas.craftingquest.state.StrategicResource.StrategicResourceType;
 
 @SuppressWarnings("serial")
 public class MiniEditorCanvas extends Canvas implements MouseListener, MouseMotionListener {

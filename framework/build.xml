@@ -38,23 +38,26 @@
 			<include name="org/aimas/craftingquest/state/*.class" />
 		</fileset>
 		
-		<!-- include resources -->
+		<!-- include resources 
 		<fileset dir=".">
-            <include name="GamePolicy.xml" />
             <include name="images/**" />
-		    <include name="maps/**" />
 		</fileset>
+		-->
 	</jar>
 	
 	<!-- Create client jar -->
 	<jar jarfile="${dist}/cqclient.jar" >
 		<fileset dir="${build}">
 			<!-- include classes -->
-			<include name="org/aimas/craftingquest/user/*.class" />
+			<include name="org/aimas/craftingquest/user/IPlayerActions.class" />
+			<include name="org/aimas/craftingquest/user/IPlayerHooks.class" />
+			
 			<include name="org/aimas/craftingquest/state/*.class" />
 			<include name="org/aimas/craftingquest/core/IClient.class" />
-			<include name="org/aimas/craftingquest/core/Event.class" />
+			<include name="org/aimas/craftingquest/core/Event*.class" />
 			<include name="org/aimas/craftingquest/core/Client0*.class" />
+			<include name="org/aimas/craftingquest/core/Logger2.class" />
+			<include name="org/aimas/craftingquest/core/PausableThreadPoolExecutor.class" />
 		</fileset>
 	</jar>
 	

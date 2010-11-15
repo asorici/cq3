@@ -20,13 +20,13 @@ import java.util.Iterator;
 import javax.imageio.ImageIO;
 import javax.swing.JTextArea;
 
-import org.aimas.craftingquest.core.GamePolicy.BasicResourceType;
-import org.aimas.craftingquest.core.GamePolicy.StrategicResourceType;
 import org.aimas.craftingquest.state.BasicUnit;
 import org.aimas.craftingquest.state.CellState;
 import org.aimas.craftingquest.state.GameState;
 import org.aimas.craftingquest.state.StrategicResource;
 import org.aimas.craftingquest.state.CellState.CellType;
+import org.aimas.craftingquest.state.CraftedObject.BasicResourceType;
+import org.aimas.craftingquest.state.StrategicResource.StrategicResourceType;
 import org.aimas.craftingquest.state.UnitState.UnitType;
 
 

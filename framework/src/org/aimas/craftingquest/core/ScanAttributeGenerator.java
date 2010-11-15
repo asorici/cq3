@@ -6,10 +6,10 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
-import org.aimas.craftingquest.core.GamePolicy.BasicResourceType;
 import org.aimas.craftingquest.state.CellState;
 import org.aimas.craftingquest.state.MapState;
 import org.aimas.craftingquest.state.ResourceAttributes;
+import org.aimas.craftingquest.state.CraftedObject.BasicResourceType;
 
 public class ScanAttributeGenerator {
 	private static HashMap<Integer, int[]> attrValues;
@@ -49,7 +49,7 @@ public class ScanAttributeGenerator {
 	}
 	
 	private static AttributeNode buildAttributeTree() {
-		int targetClassNumber = GamePolicy.BasicResourceType.values().length;
+		int targetClassNumber = BasicResourceType.values().length;
 		List<AttributeNode> nodeList = new ArrayList<AttributeNode>();
 		
 		int attrNum = randomGen.nextInt(GamePolicy.scanAttributeCount);

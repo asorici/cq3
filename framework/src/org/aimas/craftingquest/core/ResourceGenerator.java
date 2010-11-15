@@ -6,13 +6,13 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
-import org.aimas.craftingquest.core.GamePolicy.BasicResourceType;
-import org.aimas.craftingquest.core.GamePolicy.ObjectType;
 import org.aimas.craftingquest.state.Blueprint;
 import org.aimas.craftingquest.state.CraftedObject;
 import org.aimas.craftingquest.state.MapState;
 import org.aimas.craftingquest.state.Point2i;
 import org.aimas.craftingquest.state.CellState.CellType;
+import org.aimas.craftingquest.state.CraftedObject.BasicResourceType;
+import org.aimas.craftingquest.state.CraftedObject.ObjectType;
 
 public class ResourceGenerator {
 	private static Random randGen = new Random();

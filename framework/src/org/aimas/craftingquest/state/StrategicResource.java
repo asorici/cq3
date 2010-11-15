@@ -2,10 +2,12 @@ package org.aimas.craftingquest.state;
 
 import java.io.Serializable;
 
-import org.aimas.craftingquest.core.GamePolicy.StrategicResourceType;
-
 
 public class StrategicResource implements Serializable {
+	public enum StrategicResourceType {
+		Tower, Merchant
+	};
+	
 	Point2i position;
 	StrategicResourceType type;
 	

@@ -1,6 +1,6 @@
 package org.aimas.craftingquest.state;
 
-import org.aimas.craftingquest.core.GamePolicy.BasicResourceType;
+import org.aimas.craftingquest.state.CraftedObject.BasicResourceType;
 
 public class ResourceAttributes {
 	public BasicResourceType resourceType;

@@ -16,8 +16,8 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.SwingUtilities;
 
-import org.aimas.craftingquest.core.GamePolicy.StrategicResourceType;
 import org.aimas.craftingquest.state.CellState.CellType;
+import org.aimas.craftingquest.state.StrategicResource.StrategicResourceType;
 
 
 @SuppressWarnings("serial")

@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import org.aimas.craftingquest.core.GamePolicy.BasicResourceType;
+import org.aimas.craftingquest.state.CraftedObject.BasicResourceType;
 
 /**
  * 

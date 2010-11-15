@@ -15,9 +15,9 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
 import org.aimas.craftingquest.core.GamePolicy;
-import org.aimas.craftingquest.core.GamePolicy.BasicResourceType;
 import org.aimas.craftingquest.state.GameState;
 import org.aimas.craftingquest.state.PlayerState;
+import org.aimas.craftingquest.state.CraftedObject.BasicResourceType;
 
 
 @SuppressWarnings("serial")
@@ -70,7 +70,7 @@ public class GraphicInterface extends JFrame implements ActionListener {
 		JPanel selectorPanel = new JPanel();
 		Integer[] playerIDs = game.getPlayerIds().toArray(new Integer[0]);
 		
-		String[] resourceNames = new String[GamePolicy.BasicResourceType.values().length + 2];
+		String[] resourceNames = new String[BasicResourceType.values().length + 2];
 		resourceNames[0] = "ALL";
 		resourceNames[1] = "NONE";
 		for (int i = 0; i < resourceNames.length - 2; i++) {
