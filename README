@@ -1,4 +1,25 @@
 AI-MAS Winter Olympics 2011
 Crafting Quest
 
-TODO
+Aceasta arhiva contine platforma de concurs pentru proba Crafring Quest din cadrul AI-MAS Winter Olympics 2011.
+In folderul framework se afla intreg proiectul (asa cum e structurat in eclipse), stadiul acestuia fiind practic
+cel de versiune alpha (dezvoltarea s-a incheiat, urmeaza testarea detaliata a functionalitatii).
+
+Pentru a rula un exemplu de baza - (caracterele celor doua echipe executa miscari random pe harta), trebuie
+rulat Test.class din directorul bin/org/aimas/craftingquest/core (o compilare proprie a proiectului ar fi de
+preferat, in prealabil). 
+Packaging-ul acesta nu este final. In decursul zilei de luni va fi elaborat un ant script pentru build si va fi
+facut si jarul care va fi trimis concurentilor ca platforma efectiva (in afara codului sursa). 
+Tot in decursul zilei de maine va fi scris si un test amplu care va verifica functionlitatile jocului - acest test va fi inclus apoi 
+ca schelet de solutie ptr concurenti - va exemplifica practic un mod de scriere (din pct de vedere tehnic) a unei solutii si va
+arata modul in care trebuie apelate functiile din cadrul API-ului pus la dispozitie jucatorilor.
+
+In folderul din arhiva este continut si un map editor (cu o interfata similara celei a jocului), care insa nu va fi trimis
+la final concurentilor. Acestia vor avea la dispozitie 2-3 harti pe care isi vor putea rula solutiile.
+Map Editorul poate fi pornit ruland clasa EditorInterface.class din folderul framework/bin/org/aimas/craftingquest/mapeditor.
+Folosirea acestuia e intuitiva: 
+  - se face panning pe harta cu left-mouse button
+  - tipul de teren sau merchant camps sunt setate folosind right mouse button ( alegand tipul din panoul de selectie, in prealabil )
+  - ptr a crea o harta simetrica e de ajuns sa se editeze coltul stanga sus - se poate folosi apoi butonul mirror map
+  - hartile pot fi incarcate si salvate  
+
