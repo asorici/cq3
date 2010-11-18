@@ -8,7 +8,6 @@
 		<updateTime>0</updateTime>
 		<nrTurns>160</nrTurns>
 		<nrPlayerUnits>3</nrPlayerUnits>
-		<mapsize>60</mapsize>
 		<mapName>map_v1.cqm</mapName>
 		
 		<!-- scenario specific configurations -->

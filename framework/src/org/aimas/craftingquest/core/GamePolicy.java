@@ -119,19 +119,20 @@ public class GamePolicy {
 			movePenalty.put(ct, 0.0);
 		}
 		
-		readParametersFrom(GameUtils.readXMLDocument("GamePolicy.xml"));
-		
-		playerTotalTime = playerActionTime + playerLateTime;
-		PLAYERSTotalTime = noPlayers * playerTotalTime;
-		roundTime = PLAYERSTotalTime + updateTime;
-		
-		MapReader.readMap("maps/" + mapName);
+		Document paramDoc = GameUtils.readXMLDocument("GamePolicy.xml");
+		MapReader.readMap(paramDoc);
 		mapsize = new Point2i(MapReader.mapWidth, MapReader.mapHeight);
 		lastTurn = MapReader.nrTurns;
 		map = new MapState();
 		map.cells = MapReader.cells;
 		map.mapHeight = MapReader.mapHeight;
 		map.mapWidth = MapReader.mapWidth;
+		
+		readParametersFrom(paramDoc);
+		
+		playerTotalTime = playerActionTime + playerLateTime;
+		PLAYERSTotalTime = noPlayers * playerTotalTime;
+		roundTime = PLAYERSTotalTime + updateTime;
 	}
 	
 	
@@ -153,9 +154,6 @@ public class GamePolicy {
 		updateTime = Integer.parseInt(parametersNode.getElementsByTagName("updateTime").item(0).getTextContent());
 		lastTurn = Integer.parseInt(parametersNode.getElementsByTagName("nrTurns").item(0).getTextContent());
 		nrPlayerUnits = Integer.parseInt(parametersNode.getElementsByTagName("nrPlayerUnits").item(0).getTextContent());
-		
-		int size = Integer.parseInt(parametersNode.getElementsByTagName("mapsize").item(0).getTextContent());
-		mapsize = new Point2i(size, size);
 		mapName = parametersNode.getElementsByTagName("mapName").item(0).getTextContent();
 	}
 	
@@ -242,7 +240,11 @@ class MapReader {
 	public static int nrTurns;
 	public static CellState[][] cells;
 	
-	public static void readMap(String mapFile) {
+	public static void readMap(Document paramDoc) {
+		Element root = (Element)paramDoc.getDocumentElement();
+		Element parametersNode = (Element)root.getElementsByTagName("parameters").item(0);
+		String mapFile = "maps/" + parametersNode.getElementsByTagName("mapName").item(0).getTextContent();
+		
 		try {
 			FileInputStream fis = new FileInputStream(mapFile);
 			DataInputStream dis = new DataInputStream(fis);
