@@ -60,12 +60,12 @@ public class Test {
 
 		Thread[] clients = new Thread[GamePolicy.noPlayers];
 		for (int i = 0; i < clients.length; i++) {
-			final int holdi = i;
+			final int holdi = i + 1;
 			clients[i] = new Thread(new Runnable() {
 
 				public void run() {
 					try {
-						MonkeyAI.main(new String[]{holdi + ""});
+						MonkeyAI.main(new String[]{"localhost", "1198", "CraftingQuest", "" + holdi});
 					} catch (Exception ex) {
 						Logger.getLogger(Test.class.getName()).log(Level.SEVERE, null, ex);
 					}

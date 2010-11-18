@@ -91,15 +91,24 @@ public class MonkeyAI implements IPlayerHooks {
 	}
 	
 	public static void main(String[] args) throws Exception {
-		int clientNum = Integer.parseInt(args[0]);
+		if (args == null || args.length != 4) {
+			System.out.println("Insufficient arguments given. Ending client!");
+			System.exit(1);
+		}
 		
-		long secret = readSecret("secrets.txt", clientNum);
+		//int clientNum = Integer.parseInt(args[0]);
+		//long secret = readSecret("secrets.txt", clientNum);
+		
+		String host = args[0];
+		int port = Integer.parseInt(args[1]);
+		String serverName = args[2];
+		long secret = Long.parseLong(args[3]); 
+		
 		if (secret == -1) {
 			throw new Exception("client cannot retrieve secret");
 		}
 		
-		//Client0 client = new Client0(Long.parseLong(args[0]));
-		Client0 client = new Client0(secret);
+		Client0 client = new Client0(host, port, serverName, secret);
 		MonkeyAI ai = new MonkeyAI(client);
 	}
 }

@@ -23,7 +23,7 @@ import org.aimas.craftingquest.state.UnitState.UnitType;
  */
 public class GameGenerator {
 
-	public static Configuration readConfigFromFile(){
+	public static Configuration readConfigFromFile() {
 		return new Configuration();
 	}
 
@@ -33,7 +33,6 @@ public class GameGenerator {
 		
 		/* create initial game state */
 		GameState game = new GameState();
-		// game.map = new TerrainGenerator().hardcoded1();
 		game.map = GamePolicy.map;
 		
 		/* set merchant list */
@@ -44,7 +43,6 @@ public class GameGenerator {
 		game.blueprints = ResourceGenerator.generateBlueprints(resourceAmountsByType);		// generate blueprints
 		game.resourceAmountsByType = resourceAmountsByType;
 		
-		// TODO - blueprint-urile trebuie distribuite la merchants
 		/* distribute blueprints to merchants */
 		distributeBlueprints(game);
 		 

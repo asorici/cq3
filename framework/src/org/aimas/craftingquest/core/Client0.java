@@ -31,13 +31,12 @@ public final class Client0 implements IClient, IPlayerActions {
 	private PausableThreadPoolExecutor ptpe;
 
 	/* public */
-	public Client0(long secret) throws Exception {
+	public Client0(String host, int port, String serverName, long secret) throws Exception {
 		this.secret = secret;
 		ptpe = new PausableThreadPoolExecutor();
-
-		//Configuration cfg = GameGenerator.readConfigFromFile();
-		//server = Remote.getItem("//localhost:1198/" + cfg.servername);
-		server = Remote.getItem("//localhost:1198/" + "CraftingQuest");
+		
+		//server = Remote.getItem("//localhost:1198/" + "CraftingQuest");
+		server = Remote.getItem("//" + host + ":" + port + "/" + serverName);
 		client = new Remote(this);
 
 		id = (Integer) Remote.invoke(server, "addRemoteClient", client);
