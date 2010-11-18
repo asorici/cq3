@@ -168,6 +168,7 @@ public class Server0 implements IServer {
 			try {
 				BufferedWriter bw = new BufferedWriter(new FileWriter("winner.txt"));
 				bw.write("tied");
+				bw.write("" + maxCredit);
 				bw.close();
 			} catch (IOException e) {
 				e.printStackTrace();

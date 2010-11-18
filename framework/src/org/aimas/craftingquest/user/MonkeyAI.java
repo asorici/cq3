@@ -58,37 +58,6 @@ public class MonkeyAI implements IPlayerHooks {
 	void log(String where, String what) {
 		Logger2.log("AI", where, what);
 	}
-
-	private static long readSecret(String fileName, int clientNum) {
-		long[] secrets = null;
-		
-		try {
-			BufferedReader br = new BufferedReader(new FileReader(fileName));
-			int len = Integer.parseInt(br.readLine());
-			secrets = new long[len];
-			
-			for (int i = 0; i < len; i++) {
-				secrets[i] = Long.parseLong(br.readLine());
-			}
-			
-			br.close();
-			if (clientNum >= len) {
-				return -1;
-			}
-			
-			return secrets[clientNum];
-			
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-			return -1;
-		} catch (IOException e) {
-			e.printStackTrace();
-			return -1;
-		} catch (NumberFormatException e) {
-			e.printStackTrace();
-			return -1;
-		}
-	}
 	
 	public static void main(String[] args) throws Exception {
 		if (args == null || args.length != 4) {

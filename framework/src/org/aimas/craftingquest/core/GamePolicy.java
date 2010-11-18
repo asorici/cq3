@@ -62,7 +62,7 @@ public class GamePolicy {
 	public static Point2i mapsize = new Point2i(80, 80);
 	public static int moveBase = 20;
 	public static int resourceMoveCost = 1;
-	public static int initialTeamCredit = 100;
+	public static int initialTeamCredit = 300;
 	public static int unitEnergy = 150;
 	public static int baseObjectValue = 100;
 	public static int valueIncrement = 20;
@@ -164,6 +164,7 @@ public class GamePolicy {
 		unitEnergy = Integer.parseInt(parametersNode.getElementsByTagName("unitEnergy").item(0).getTextContent());
 		baseObjectValue = Integer.parseInt(parametersNode.getElementsByTagName("baseObjectValue").item(0).getTextContent());
 		valueIncrement = Integer.parseInt(parametersNode.getElementsByTagName("valueIncrement").item(0).getTextContent());
+		initialTeamCredit = Integer.parseInt(parametersNode.getElementsByTagName("initialTeamCredit").item(0).getTextContent());
 		
 		moveBase = Integer.parseInt(parametersNode.getElementsByTagName("moveBaseCost").item(0).getTextContent());
 		resourceMoveCost = Integer.parseInt(parametersNode.getElementsByTagName("resourceMoveCost").item(0).getTextContent());
