@@ -43,10 +43,12 @@ public final class Client0 implements IClient, IPlayerActions {
 	}
 
 	/* communication */
+	@Override
 	final public Long getSecret(int n) {
 		return secret;
 	}
 
+	@Override
 	final public void onEvent(Event event) {
 		Logger2.log("cln", "onEvent", "");
 		switch (event.type) {
@@ -106,56 +108,67 @@ public final class Client0 implements IClient, IPlayerActions {
 				+ "][Interface][" + where + "][" + what + "]");
 	}
 	
+	@Override
 	public PlayerState move(UnitState unit, Point2i newPosition) {
 		return doGenericAction(new Transition(Transition.ActionType.Move, new Object[] { unit.id, newPosition }));
 	}
 
+	@Override
 	public PlayerState dig(UnitState unit) {
 		log("dig", "send cmd");
 		return doGenericAction(new Transition(ActionType.Dig, new Object[] {unit.id, unit.pos}));
 	}
 	
+	@Override
 	public PlayerState scan(UnitState unit) {
 		log("scan", "send cmd");
 		return doGenericAction(new Transition(ActionType.ScanLand, new Object[] {unit.id}));
 	}
 	
+	@Override
 	public PlayerState pickupResources(UnitState unit, HashMap<BasicResourceType, Integer> desiredResources) {
 		log("pickup resources", "send cmd");
 		return doGenericAction(new Transition(ActionType.PickupResources, new Object[] {unit.id, desiredResources}));
 	}
 	
+	@Override
 	public PlayerState pickupObjects(UnitState unit, HashMap<CraftedObject, Integer> desiredObjects) {
 		log("pickup objects", "send cmd");
 		return doGenericAction(new Transition(ActionType.PickupObjects, new Object[] {unit.id, desiredObjects}));
 	}
 	
+	@Override
 	public PlayerState dropResources(UnitState unit, HashMap<BasicResourceType, Integer> unwantedResources) {
 		log("drop", "send cmd");
 		return doGenericAction(new Transition(ActionType.DropResources, new Object[] {unit.id, unwantedResources}));
 	}
 	
+	@Override
 	public PlayerState dropObjects(UnitState unit, HashMap<CraftedObject, Integer> unwantedObjects) {
 		log("drop", "send cmd");
 		return doGenericAction(new Transition(ActionType.DropObjects, new Object[] {unit.id, unwantedObjects}));
 	}
 	
+	@Override
 	public PlayerState craftObject(UnitState unit, CraftedObject target, 
 			HashMap<CraftedObject, Integer> usedObjects, HashMap<BasicResourceType, Integer> usedResources) {
 		log("craft", "send cmd");
 		return doGenericAction(new Transition(ActionType.CraftObject, new Object[] {unit.id, target, usedObjects, usedResources}));
 	}
 	
+	@Override
 	public PlayerState sellObject(UnitState unit, CraftedObject craftedObject, Integer quantity) {
 		log("sell", "send cmd");
 		return doGenericAction(new Transition(ActionType.SellObject, new Object[] {unit.id, craftedObject, quantity}));
 	}
 	
+	@Override
 	public PlayerState placeTower(UnitState unit) {
 		log("build tower", "send cmd");
 		return doGenericAction(new Transition(ActionType.PlaceTower, new Object[] {unit.id}));
 	}
 	
+	@Override
 	public PlayerState buyBlueprint(UnitState unit, Blueprint blueprint) {
 		log("buy blueprint", "send cmd");
 		return doGenericAction(new Transition(ActionType.BuyBlueprint, new Object[] {unit.id, blueprint}));

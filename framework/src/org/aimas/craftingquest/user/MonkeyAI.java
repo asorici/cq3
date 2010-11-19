@@ -1,9 +1,5 @@
 package org.aimas.craftingquest.user;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -45,6 +41,14 @@ public class MonkeyAI implements IPlayerHooks {
 		synchronized(gameEnd) {
 			gameEnd = true;
 		}
+		
+		try {
+			aithread.join();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		
+		System.exit(0);
 	}
 
 	@Override

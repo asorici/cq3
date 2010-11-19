@@ -152,6 +152,7 @@ public class GamePolicy {
 		playerActionTime = Integer.parseInt(parametersNode.getElementsByTagName("playerActionTime").item(0).getTextContent());
 		playerLateTime = Integer.parseInt(parametersNode.getElementsByTagName("playerLateTime").item(0).getTextContent());
 		updateTime = Integer.parseInt(parametersNode.getElementsByTagName("updateTime").item(0).getTextContent());
+		connectWaitTime = Integer.parseInt(parametersNode.getElementsByTagName("connectWaitTime").item(0).getTextContent());
 		lastTurn = Integer.parseInt(parametersNode.getElementsByTagName("nrTurns").item(0).getTextContent());
 		nrPlayerUnits = Integer.parseInt(parametersNode.getElementsByTagName("nrPlayerUnits").item(0).getTextContent());
 		mapName = parametersNode.getElementsByTagName("mapName").item(0).getTextContent();

@@ -14,8 +14,6 @@ public interface IPlayerActions {
 
     public void addArtificialIntelligence(IPlayerHooks usercode);
 
-    //public Scenario getScenario();
-
     public PlayerState getPlayerState();
 
     public PlayerState move(UnitState unit, Point2i newPosition);
