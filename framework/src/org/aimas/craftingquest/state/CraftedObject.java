@@ -16,7 +16,6 @@ public class CraftedObject implements Serializable {
 		O1, O2, O3, O4, O5, O6, O7, O8, O9, O10, O11, O12
 	}
 	
-	
 	private ObjectType type;
 	private int value;
 	private List<HashMap<CraftedObject, Integer>> requiredObjects;
@@ -80,6 +79,7 @@ public class CraftedObject implements Serializable {
 		return true;
 	}
 	
+	@Override
 	public String toString() {
 		String info = "";
 		

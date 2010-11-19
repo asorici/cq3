@@ -24,7 +24,6 @@ public class UnitState implements Serializable {
 	public int id;
 	public int playerID;
 	public UnitType type;
-	public int score;
 	public int energy;
 
 	// must be cleared before each transition
@@ -89,6 +88,7 @@ public class UnitState implements Serializable {
 		return opponentPerspective;
 	}
 	
+	@Override
 	public boolean equals(Object obj) {
 		if (!(obj instanceof UnitState)) {
 			return false;
