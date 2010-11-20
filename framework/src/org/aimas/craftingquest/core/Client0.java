@@ -57,7 +57,6 @@ public final class Client0 implements IClient, IPlayerActions {
 		case NewRound:
 			if (player != null) {
 				ptpe.execute(new Runnable() {
-
 					public void run() {
 						player.beginRound();
 					}
@@ -67,7 +66,6 @@ public final class Client0 implements IClient, IPlayerActions {
 		case GameEnd:
 			if (player != null) {
 				ptpe.execute(new Runnable() {
-
 					public void run() {
 						player.finishGame();
 					}

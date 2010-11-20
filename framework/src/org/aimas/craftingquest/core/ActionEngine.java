@@ -610,7 +610,9 @@ public class ActionEngine {
 	
 	// clears transient fields (currentCellResources, scannedAttributes) of each of the players units
 	private void refresh(PlayerState player) {
-		for (UnitState unit : player.units) {
+		player.response = null;							// reset player transition response
+		
+		for (UnitState unit : player.units) {			// reset each unit's dig and scan results
 			unit.currentCellResources.clear();
 			unit.scannedResourceAttributes = null;
 		}

@@ -26,7 +26,8 @@ public class PlayerState implements Serializable {
 	public int mapHeight;
 	
 	/* transition */
-	public List<TransitionResult> responces;
+	// public List<TransitionResult> responces;
+	public TransitionResult response;				// last transition response
 
 	/* game mechanics time */
 	public RoundState round;
@@ -40,7 +41,7 @@ public class PlayerState implements Serializable {
 
 	public PlayerState() {
 		units = new ArrayList<UnitState>();
-		responces = new ArrayList<TransitionResult>();
+		//responces = new ArrayList<TransitionResult>();
 		boughtBlueprints = new ArrayList<Blueprint>();
 		availableBlueprints = new ArrayList<Blueprint>();
 		availableTowers = new HashMap<Tower, Boolean>();
@@ -85,12 +86,33 @@ public class PlayerState implements Serializable {
 	}
 	
 	public boolean validLastTransition() {
+		/*
 		if (!responces.isEmpty()) {
 			TransitionResult tr = responces.get(responces.size() - 1);	// there should always be only one
 			return tr.valid();											// pertaining to the last transition
 		}
+		*/
+		
+		if (response != null) {
+			return response.valid();
+		}
 		
 		return true;
+	}
+	
+	public String getLastTransitionError() {
+		/*
+		if (!responces.isEmpty()) {
+			TransitionResult tr = responces.get(responces.size() - 1);	// there should always be only one
+			return tr.toString();										// pertaining to the last transition
+		}
+		*/
+		
+		if (response != null) {
+			return response.toString();
+		}
+		
+		return "";
 	}
 	
 }

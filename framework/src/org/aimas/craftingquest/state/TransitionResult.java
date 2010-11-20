@@ -6,6 +6,7 @@ import java.io.Serializable;
  * 
  * @author Razvan
  */
+@SuppressWarnings("serial")
 public class TransitionResult implements Serializable {
 
 	public enum TransitionError {
@@ -15,17 +16,10 @@ public class TransitionResult implements Serializable {
 	public int id; // egal cu cel trimis
 	public TransitionError errorType;
 	public String errorReason;
-
-	// public Transition attemptedTransition;
-
+	
 	public TransitionResult(int id) {
 		this.id = id;
 	}
-
-	/*
-	 * public TransitionResult(int id, Transition transition) { this.id = id;
-	 * this.attemptedTransition = transition; }
-	 */
 	
 	public boolean valid() {
 		if (errorType == TransitionError.NoError) {
@@ -34,5 +28,12 @@ public class TransitionResult implements Serializable {
 		
 		return false;
 	}
-
+	
+	@Override
+	public String toString() {
+		String info = "";
+		info += "errorType: " + errorType.name() + "\n";
+		info += "errorReason: " + errorReason + "\n";
+		return info;
+	}
 }

@@ -38,14 +38,14 @@ public class GamePolicy {
 
 	/* durations associated with a player */
 	public static long playerActionTime = 1000;
-	public static long playerLateTime = 100;
+	public static long playerLateTime = 0;
 	public static long playerTotalTime;
 
 	/* total duration of all players during a round */
 	public static long PLAYERSTotalTime;
 
 	/* total duration of server update time during a round */
-	public static long updateTime = 0;
+	public static long updateTime = 100;
 
 	/* duration of an entire round */
 	public static long roundTime;

@@ -23,10 +23,6 @@ import org.aimas.craftingquest.state.UnitState.UnitType;
  */
 public class GameGenerator {
 
-	public static Configuration readConfigFromFile() {
-		return new Configuration();
-	}
-
 	public static GameState setupGame() {
 		/* initialize scenario */
 		GamePolicy.initScenario();
@@ -153,8 +149,11 @@ public class GameGenerator {
 		PlayerState pState = new PlayerState();
 		pState.id = playerID;
 		pState.credit = GamePolicy.initialTeamCredit;
-		pState.round.currentRound = 1;
+		
+		pState.round.currentRound = 0;
 		pState.round.noRounds = GamePolicy.lastTurn;
+		pState.round.roundDuration = GamePolicy.playerActionTime;
+		
 		pState.mapHeight = map.mapHeight;
 		pState.mapWidth = map.mapWidth;
 		

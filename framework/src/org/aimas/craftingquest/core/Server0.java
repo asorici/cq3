@@ -180,6 +180,9 @@ public class Server0 implements IServer {
 		// increment turn number
 		state.round.currentRound++;
 		
+		long roundStartTime = GamePolicy.connectWaitTime + state.round.currentRound * GamePolicy.roundTime;
+		state.round.startTime = roundStartTime;
+		
 		// update graphics
 		SwingUtilities.invokeLater(new Runnable() {
 			
@@ -201,11 +204,12 @@ public class Server0 implements IServer {
 	}
 
 	public void gameLoop() {
-		long delay = 1000;// 4000 - (System.currentTimeMillis() % 1000);
+		long delay = 1000;
 		long delayPlayer = GamePolicy.playerTotalTime;
 		long period = GamePolicy.roundTime;
 		int connectWaitTime = GamePolicy.connectWaitTime;
-
+		state.round.startTime = GamePolicy.connectWaitTime;
+		
 		try {
 			Thread.sleep(connectWaitTime - ((System.currentTimeMillis() - Logger2.t0) % 1000));
 		} catch (InterruptedException ex) {
@@ -232,6 +236,13 @@ public class Server0 implements IServer {
 					actionEngine.replenishEnergy();
 					
 					// then subtract specific energy amount if the player is near some towers
+					Integer playerID = state.getPlayerIds().get(clientID);
+					PlayerState player = state.playerStates.get(playerID);
+					int currentRound = state.round.currentRound;
+					
+					player.round.currentRound = currentRound;
+					player.round.startTime = GamePolicy.connectWaitTime + 
+						currentRound * GamePolicy.roundTime + clientID * GamePolicy.playerActionTime;
 					
 					actionEngine.doTowerDrain(state, state.getPlayerIds().get(clientID));
 					
@@ -278,8 +289,7 @@ public class Server0 implements IServer {
 		try {
 			secret = (Long) Remote.invoke(client, "getSecret", 0);
 		} catch (Exception ex) {
-			Logger.getLogger(Server0.class.getName()).log(Level.SEVERE, null,
-					ex);
+			Logger.getLogger(Server0.class.getName()).log(Level.SEVERE, null, ex);
 		}
 		
 		int clientNo = allowedSecret(secret);
@@ -310,9 +320,11 @@ public class Server0 implements IServer {
 		PlayerState player = state.playerStates.get(playerID);
 		if (player.round.currentRound < state.round.currentRound) {
 			player.round.currentRound = state.round.currentRound;
+			player.round.startTime = GamePolicy.connectWaitTime + 
+				state.round.currentRound * GamePolicy.roundTime + clientID * GamePolicy.playerActionTime;
 		}
 		
-		actionEngine.process(player, action);
+		player.response = actionEngine.process(player, action);
 		return player;
 	}
 

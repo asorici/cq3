@@ -4,7 +4,7 @@ import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.aimas.craftingquest.user.MonkeyAI;
+import org.aimas.craftingquest.user.MainAI;
 
 public class Test {
 
@@ -65,7 +65,7 @@ public class Test {
 
 				public void run() {
 					try {
-						MonkeyAI.main(new String[]{"localhost", "1198", "CraftingQuest", "" + holdi});
+						MainAI.main(new String[]{"localhost", "1198", "CraftingQuest", "" + holdi});
 					} catch (Exception ex) {
 						Logger.getLogger(Test.class.getName()).log(Level.SEVERE, null, ex);
 					}

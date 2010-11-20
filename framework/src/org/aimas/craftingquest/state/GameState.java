@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import org.aimas.craftingquest.core.GamePolicy;
 import org.aimas.craftingquest.state.CraftedObject.BasicResourceType;
 
 /**
@@ -33,7 +34,9 @@ public class GameState implements Serializable {
 		blueprints = new ArrayList<Blueprint>();
 		
 		round = new RoundState();
-		round.currentRound = 1;
+		round.currentRound = 0;
+		round.roundDuration = GamePolicy.playerActionTime;
+		round.noRounds = GamePolicy.lastTurn;
 	}
 
 	/**
@@ -44,25 +47,10 @@ public class GameState implements Serializable {
 	}
 
 	/**
-	 * @param gameStartTime
-	 *            the gameStartTime to set
+	 * @param gameStartTime the gameStartTime to set
 	 */
 	public synchronized void setGameRoundStartTime(long gameRoundStartTime) {
 		round.startTime = gameRoundStartTime;
-	}
-
-	/**
-	 * @return the gameRoundEndTime
-	 */
-	public synchronized long getGameRoundEndTime() {
-		return round.endTime;
-	}
-
-	/**
-	 * @param gameRoundEndTime the gameRoundEndTime to set
-	 */
-	public synchronized void setGameRoundEndTime(long gameRoundEndTime) {
-		round.endTime = gameRoundEndTime;
 	}
 
 	public int getTurn() {
