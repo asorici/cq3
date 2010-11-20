@@ -7,4 +7,6 @@ public interface IPlayerHooks {
     public void finishGame();
 
     public void beginRound();
+
+	public void initPlayer();
 }

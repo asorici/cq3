@@ -204,10 +204,11 @@ public class Server0 implements IServer {
 	}
 
 	public void gameLoop() {
-		long delay = 1000;
+		long delay = 200;
 		long delayPlayer = GamePolicy.playerTotalTime;
 		long period = GamePolicy.roundTime;
 		int connectWaitTime = GamePolicy.connectWaitTime;
+		int initializationWaitTime = GamePolicy.initializationWaitTime;
 		state.round.startTime = GamePolicy.connectWaitTime;
 		
 		try {
@@ -220,6 +221,18 @@ public class Server0 implements IServer {
 			System.out.println("Insufficient number of clients connected. Expected=" + clients.length + 
 					", connected=" + connectedClients + ". Game will end!");
 			System.exit(1);
+		}
+		
+		// initialization period
+		for (int i = 0; i < clients.length; i++) {
+			Object client = clients[i];
+			sendEvent(client, new Event(Event.EventType.Initialization));
+		}
+		
+		try {
+			Thread.sleep(initializationWaitTime);		// wait for the specified initialization period
+		} catch (InterruptedException ex) {
+			Logger.getLogger(Server0.class.getName()).log(Level.SEVERE, null, ex);
 		}
 		
 		// player time

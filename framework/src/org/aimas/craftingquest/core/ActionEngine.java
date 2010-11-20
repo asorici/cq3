@@ -194,6 +194,15 @@ public class ActionEngine {
 		case PickupResources:
 		{
 			System.out.println("Action Engine: PICK RESOURCE");
+			HashMap<BasicResourceType, Integer> requiredResources = (HashMap<BasicResourceType, Integer>)transition.operands[1];
+			
+			// check for valid operand
+			if (requiredResources == null) {
+				TransitionResult res = new TransitionResult(transition.id);
+				res.errorType = TransitionResult.TransitionError.OperandError;
+				res.errorReason = "Submitted operand is not valid (null or wrong type).";
+				return res;
+			}
 			
 			// check that enough energy points are available for this operation
 			if (playerUnit.energy < GamePolicy.pickupCost) {
@@ -232,7 +241,7 @@ public class ActionEngine {
 			// check that the desired (res, quantity) pairs can be satisfied by the current cell
 			// and do the pickup where conditions are met
 			CellState miningCell = game.map.cells[playerUnit.pos.y][playerUnit.pos.x];
-			HashMap<BasicResourceType, Integer> requiredResources = (HashMap<BasicResourceType, Integer>)transition.operands[1];
+			
 			HashMap<BasicResourceType, Integer> cellResources = miningCell.resources;
 			HashMap<BasicResourceType, Integer> carriedResources = playerUnit.carriedResources;
 			
@@ -264,6 +273,15 @@ public class ActionEngine {
 		case PickupObjects:
 		{
 			System.out.println("Action Engine: PICK OBJECTS");
+			HashMap<CraftedObject, Integer> requiredObjects = (HashMap<CraftedObject, Integer>)transition.operands[1];
+			
+			// check for valid operand
+			if (requiredObjects == null) {
+				TransitionResult res = new TransitionResult(transition.id);
+				res.errorType = TransitionResult.TransitionError.OperandError;
+				res.errorReason = "Submitted operand is not valid (null or wrong type).";
+				return res;
+			}
 			
 			// check that enough energy points are available for this operation
 			if (playerUnit.energy < GamePolicy.pickupCost) {
@@ -302,7 +320,6 @@ public class ActionEngine {
 			// check that the desired (res, quantity) pairs can be satisfied by the current cell
 			// and do the pickup where conditions are met
 			CellState miningCell = game.map.cells[playerUnit.pos.y][playerUnit.pos.x];
-			HashMap<CraftedObject, Integer> requiredObjects = (HashMap<CraftedObject, Integer>)transition.operands[1];
 			HashMap<CraftedObject, Integer> cellObjects = miningCell.craftedObjects;
 			HashMap<CraftedObject, Integer> carriedObjects = playerUnit.carriedObjects;
 			
@@ -334,6 +351,15 @@ public class ActionEngine {
 		case DropResources:
 		{
 			System.out.println("Action Engine: DROP RESOURCES");
+			HashMap<BasicResourceType, Integer> unwantedResources = (HashMap<BasicResourceType, Integer>)transition.operands[1];
+			
+			// check for valid operand
+			if (unwantedResources == null) {
+				TransitionResult res = new TransitionResult(transition.id);
+				res.errorType = TransitionResult.TransitionError.OperandError;
+				res.errorReason = "Submitted operand is not valid (null or wrong type).";
+				return res;
+			}
 			
 			// check for enough energy points
 			if (playerUnit.energy < GamePolicy.dropCost) {
@@ -343,7 +369,6 @@ public class ActionEngine {
 				return res;
 			}
 			
-			HashMap<BasicResourceType, Integer> unwantedResources = (HashMap<BasicResourceType, Integer>)transition.operands[1];
 			HashMap<BasicResourceType, Integer> visibleCellResources = game.map.cells[playerUnit.pos.y][playerUnit.pos.x].visibleResources;  
 			HashMap<BasicResourceType, Integer> carriedResources = playerUnit.carriedResources;
 			
@@ -375,6 +400,15 @@ public class ActionEngine {
 		case DropObjects:
 		{
 			System.out.println("Action Engine: DROP OBJECTS");
+			HashMap<CraftedObject, Integer> unwantedObjects = (HashMap<CraftedObject, Integer>)transition.operands[1];
+			
+			// check for valid operand
+			if (unwantedObjects == null) {
+				TransitionResult res = new TransitionResult(transition.id);
+				res.errorType = TransitionResult.TransitionError.OperandError;
+				res.errorReason = "Submitted operand is not valid (null or wrong type).";
+				return res;
+			}
 			
 			// check for enough energy points
 			if (playerUnit.energy < GamePolicy.dropCost) {
@@ -384,7 +418,6 @@ public class ActionEngine {
 				return res;
 			}
 			
-			HashMap<CraftedObject, Integer> unwantedObjects = (HashMap<CraftedObject, Integer>)transition.operands[1];
 			HashMap<CraftedObject, Integer> cellObjects = game.map.cells[playerUnit.pos.y][playerUnit.pos.x].craftedObjects;  
 			HashMap<CraftedObject, Integer> carriedObjects = playerUnit.carriedObjects;
 			
@@ -415,6 +448,18 @@ public class ActionEngine {
 		
 		case CraftObject:
 		{
+			
+			HashMap<CraftedObject, Integer> usedObjects = (HashMap<CraftedObject, Integer>)transition.operands[2];
+			HashMap<BasicResourceType, Integer> usedResources = (HashMap<BasicResourceType, Integer>)transition.operands[3];
+			
+			// check for valid operand
+			if (usedObjects == null || usedResources == null) {
+				TransitionResult res = new TransitionResult(transition.id);
+				res.errorType = TransitionResult.TransitionError.OperandError;
+				res.errorReason = "Submitted operands are not valid (null or wrong type).";
+				return res;
+			}
+			
 			// check for enough energy points
 			if (playerUnit.energy < GamePolicy.buildCost) {
 				TransitionResult res = new TransitionResult(transition.id);
@@ -425,8 +470,6 @@ public class ActionEngine {
 			
 			// check that the unit has the required resources/objects required for making the object
 			CraftedObject target = (CraftedObject)transition.operands[1];
-			HashMap<CraftedObject, Integer> usedObjects = (HashMap<CraftedObject, Integer>)transition.operands[2];
-			HashMap<BasicResourceType, Integer> usedResources = (HashMap<BasicResourceType, Integer>)transition.operands[3];
 			
 			// check that player holds corresponding blueprint
 			boolean foundBlueprint = false;
@@ -470,6 +513,15 @@ public class ActionEngine {
 		{
 			CraftedObject obj = (CraftedObject)transition.operands[1];
 			Integer quantity = (Integer)transition.operands[2];
+			
+			// check for valid operand
+			if (obj == null || quantity == null) {
+				TransitionResult res = new TransitionResult(transition.id);
+				res.errorType = TransitionResult.TransitionError.OperandError;
+				res.errorReason = "Submitted operands are not valid (null or wrong type).";
+				return res;
+			}
+			
 			HashMap<CraftedObject, Integer> carriedObjects = playerUnit.carriedObjects;
 			
 			Integer carried = carriedObjects.get(obj);
@@ -547,6 +599,14 @@ public class ActionEngine {
 		case BuyBlueprint:
 		{
 			Blueprint blueprint = (Blueprint)transition.operands[1];
+			
+			// check for valid operand
+			if (blueprint == null) {
+				TransitionResult res = new TransitionResult(transition.id);
+				res.errorType = TransitionResult.TransitionError.OperandError;
+				res.errorReason = "Submitted operand is not valid (null or wrong type).";
+				return res;
+			}
 			
 			// check if the unit is near a merchant
 			Merchant nearMerchant = null;

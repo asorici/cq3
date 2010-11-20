@@ -30,8 +30,9 @@ public class GamePolicy {
 	/* server configuration */
 	public static String servername = "CraftingQuest";
     public static int serverPort = 1198;
-	public static int connectWaitTime = 8000;
-    
+	public static int connectWaitTime = 5000;
+    public static int initializationWaitTime = 3000;
+	
 	/* number of players */
 	public static int noPlayers = 2;
 	public static int nrPlayerUnits = 3;

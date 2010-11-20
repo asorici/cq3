@@ -3,6 +3,9 @@ package org.aimas.craftingquest.user;
 import org.aimas.craftingquest.core.Client0;
 import org.aimas.craftingquest.core.Logger2;
 
+/**
+ *
+ */
 public class MainAI implements IPlayerHooks {
 
 	/* game */
@@ -10,9 +13,11 @@ public class MainAI implements IPlayerHooks {
 	private Object roundSync = new Object();
 	private Boolean gameEnd = new Boolean(false);
 	private Thread thread;
+	private AIThread aiThread;
 	private String playerClassName;
 	
-	public MainAI(IPlayerActions cmd) {
+	public MainAI(String playerClassName, IPlayerActions cmd) {
+		this.playerClassName = playerClassName;
 		this.cmd = cmd;
 		cmd.addArtificialIntelligence(this);
 	}
@@ -20,16 +25,35 @@ public class MainAI implements IPlayerHooks {
 	@Override
 	public void initGame() {
 		log("initGame", "");
-		
+
 		try {
-			AIThread aiThread = (AIThread)Class.forName(playerClassName).getConstructor(new Class[] {Object.class, Boolean.class, IPlayerActions.class}).newInstance(roundSync, gameEnd, cmd);
-			thread = new Thread(aiThread);
-			thread.start();
+			aiThread = (AIThread) Class.forName(playerClassName).newInstance();
+			aiThread.init(roundSync, gameEnd, cmd);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
+	@Override
+	public void initPlayer() {
+		log("initPlayer", "begin");
+		if (aiThread != null) {
+			aiThread.initPlayer();
+			thread = new Thread(aiThread);
+			thread.start();
+		}
+		
+		log("initPlayer", "end");
+	}
+	
+	@Override
+	public void beginRound() {
+		// signal beginning of new round
+		synchronized(roundSync) {
+			roundSync.notify();
+		}
+	}
+	
 	public void finishGame() {
 		log("finishGame", "");
 		
@@ -47,14 +71,6 @@ public class MainAI implements IPlayerHooks {
 		System.exit(0);
 	}
 
-	@Override
-	public void beginRound() {
-		// signal beginning of new round
-		synchronized(roundSync) {
-			roundSync.notify();
-		}
-	}
-
 	void log(String where, String what) {
 		Logger2.log("AI", where, what);
 	}
@@ -65,17 +81,18 @@ public class MainAI implements IPlayerHooks {
 			System.exit(1);
 		}
 		
-		String host = args[0];
-		int port = Integer.parseInt(args[1]);
-		String serverName = args[2];
-		long secret = Long.parseLong(args[3]); 
+		String playerClassName = args[0];
+		String host = args[1];
+		int port = Integer.parseInt(args[2]);
+		String serverName = args[3];
+		long secret = Long.parseLong(args[4]); 
 		
 		if (secret == -1) {
 			throw new Exception("client cannot retrieve secret");
 		}
 		
 		Client0 client = new Client0(host, port, serverName, secret);
-		MainAI ai = new MainAI(client);
+		MainAI ai = new MainAI(playerClassName, client);
 	}
-}
 
+}

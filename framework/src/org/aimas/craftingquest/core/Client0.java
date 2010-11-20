@@ -50,10 +50,19 @@ public final class Client0 implements IClient, IPlayerActions {
 
 	@Override
 	final public void onEvent(Event event) {
-		Logger2.log("cln", "onEvent", "");
+		Logger2.log("cln", "onEvent", event.type.name());
 		switch (event.type) {
 		case Nothing:
 			break;
+		case Initialization:
+			if (player != null) {
+				ptpe.execute(new Runnable() {
+					public void run() {
+						player.initGame();
+						player.initPlayer();
+					}
+				});
+			}
 		case NewRound:
 			if (player != null) {
 				ptpe.execute(new Runnable() {
@@ -82,7 +91,6 @@ public final class Client0 implements IClient, IPlayerActions {
 		// assume object was initalized do a check
 		this.player = usercode;
 		this.state = doGenericAction(new Transition(Transition.ActionType.PlayerReady, null));
-		this.player.initGame();
 	}
 	
 	public PlayerState getPlayerState() {
@@ -101,9 +109,7 @@ public final class Client0 implements IClient, IPlayerActions {
 	}
 
 	void log(String where, String what) {
-		System.out.println("["
-				+ (System.currentTimeMillis() - Test.getStartTime())
-				+ "][Interface][" + where + "][" + what + "]");
+		System.out.println("[Interface][" + where + "][" + what + "]");
 	}
 	
 	@Override

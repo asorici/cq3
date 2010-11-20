@@ -1,6 +1,7 @@
 package org.aimas.craftingquest.user;
 
 import org.aimas.craftingquest.core.Logger2;
+import org.aimas.craftingquest.state.PlayerState;
 
 public abstract class AIThread implements Runnable {
 	// sync stuff
@@ -8,32 +9,32 @@ public abstract class AIThread implements Runnable {
 	private Boolean gameEnd;
 	private long roundDuration;
 	private long roundStartTime;
-	
+
 	// communication
 	private IPlayerActions cmd;
-	
-	public AIThread(Object roundSync, Boolean gameEnd, IPlayerActions cmd) {
+
+	public AIThread() {
+	}
+
+	void init(Object roundSync, Boolean gameEnd, IPlayerActions cmd) {
 		this.roundSync = roundSync;
 		this.gameEnd = gameEnd;
 		this.cmd = cmd;
-		this.roundDuration = cmd.getPlayerState().round.roundDuration; 
+		this.roundDuration = cmd.getPlayerState().round.roundDuration;
 	}
-	
+
 	@Override
 	public final void run() {
-		while(true) {
+		while (true) {
 			// first check for gameEnd
-			synchronized(gameEnd) {
+			synchronized (gameEnd) {
 				if (gameEnd) {
 					break;
 				}
 			}
-			
-			// do actions
-			actIntelligently();
-			
+
 			// wait for new round
-			synchronized(roundSync) {
+			synchronized (roundSync) {
 				try {
 					roundSync.wait();
 					roundStartTime = System.currentTimeMillis();
@@ -42,9 +43,12 @@ public abstract class AIThread implements Runnable {
 					break;
 				}
 			}
+			
+			// do actions
+			actIntelligently();
 		}
 	}
-	
+
 	protected void log(String where, String what) {
 		Logger2.log("AI", where, what);
 	}
@@ -52,11 +56,17 @@ public abstract class AIThread implements Runnable {
 	protected IPlayerActions getCmd() {
 		return cmd;
 	}
-	
+
+	protected PlayerState getPlayerState() {
+		return cmd.getPlayerState();
+	}
+
 	protected final long getRemainingRoundTime() {
 		return roundStartTime + roundDuration - System.currentTimeMillis();
 	}
-	
+
+	protected abstract void initPlayer();
+
 	protected abstract void actIntelligently();
-	
+
 }

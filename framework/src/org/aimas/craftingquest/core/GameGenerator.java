@@ -22,7 +22,9 @@ import org.aimas.craftingquest.state.UnitState.UnitType;
  * @author Razvan
  */
 public class GameGenerator {
-
+	private static Random randGen = new Random();
+	
+	
 	public static GameState setupGame() {
 		/* initialize scenario */
 		GamePolicy.initScenario();
@@ -70,7 +72,6 @@ public class GameGenerator {
 	private static void distributeBlueprints(GameState game) throws IllegalArgumentException {
 		List<Blueprint> blueprints = game.blueprints;
 		List<Merchant> merchants = game.merchantList;
-		Random randGen = new Random();
 		
 		// we rely on the premise that merchant camps are symmetrically distributed across the map
 		List<Merchant> topSideMerchants = new ArrayList<Merchant>();		// these two lists
