@@ -39,7 +39,7 @@ public class ActionEngine {
 		
 		// first check if the operator is of Nothing or PlayerReady type
 		// these are just for filling up and synchronization - so return the OK
-		if(transition.operator == ActionType.Nothing || transition.operator == ActionType.PlayerReady) {
+		if(transition.operator == ActionType.Nothing) {
 			TransitionResult res = new TransitionResult(transition.id);
 			res.errorType = TransitionResult.TransitionError.NoError;
 			return res;

@@ -100,7 +100,12 @@ public final class Client0 implements IClient, IPlayerActions {
 	private synchronized PlayerState doGenericAction(Transition action) {
 		try {
 			action.secret = secret;
-			this.state = (PlayerState) Remote.invoke(server, "process", action);
+			
+			PlayerState responseState = (PlayerState) Remote.invoke(server, "process", action);
+			if (responseState != null) {
+				this.state = responseState;
+			}
+			
 			return getPlayerState();
 		} catch (Exception ex) {
 			Logger.getLogger(Client0.class.getName()).log(Level.SEVERE, null,ex);
