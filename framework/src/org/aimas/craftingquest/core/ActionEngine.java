@@ -243,6 +243,7 @@ public class ActionEngine {
 			CellState miningCell = game.map.cells[playerUnit.pos.y][playerUnit.pos.x];
 			
 			HashMap<BasicResourceType, Integer> cellResources = miningCell.resources;
+			HashMap<BasicResourceType, Integer> visibleCellResources = miningCell.visibleResources;
 			HashMap<BasicResourceType, Integer> carriedResources = playerUnit.carriedResources;
 			
 			Iterator<BasicResourceType> it = requiredResources.keySet().iterator();
@@ -250,8 +251,17 @@ public class ActionEngine {
 				BasicResourceType res = it.next();
 				Integer required = requiredResources.get(res);
 				Integer available = cellResources.get(res);
+				Integer availableVisible = visibleCellResources.get(res);
+				Integer total = new Integer(0); 
+				if (available != null) {
+					total += available;
+				}
 				
-				if (available != null && required <= available) {
+				if (availableVisible != null) {
+					total += availableVisible;
+				}
+				
+				if (required <= total) {
 					Integer carried = carriedResources.get(res);
 					if (carried == null) {
 						carriedResources.put(res, required);
@@ -260,7 +270,18 @@ public class ActionEngine {
 						carriedResources.put(res, carried + required);
 					}
 					
-					cellResources.put(res, available - required);
+					if (availableVisible != null) {				// first try and take all resources from
+						if (required <= availableVisible) {		// the visible ones
+							visibleCellResources.put(res, availableVisible - required);
+						}
+						else {
+							visibleCellResources.put(res, 0);  	// consume all visible resources
+							cellResources.put(res, available - (required - availableVisible));
+						}
+					}
+					else {									// otherwise take them from the ones in the soil 
+						cellResources.put(res, available - required);
+					}
 				}
 			}
 			
@@ -448,12 +469,12 @@ public class ActionEngine {
 		
 		case CraftObject:
 		{
-			
+			CraftedObject target = (CraftedObject)transition.operands[1];
 			HashMap<CraftedObject, Integer> usedObjects = (HashMap<CraftedObject, Integer>)transition.operands[2];
 			HashMap<BasicResourceType, Integer> usedResources = (HashMap<BasicResourceType, Integer>)transition.operands[3];
 			
-			// check for valid operand
-			if (usedObjects == null || usedResources == null) {
+			// check for valid operand; usedObjects and usedResources are tested in checkCraftingRequirements
+			if (target == null) {
 				TransitionResult res = new TransitionResult(transition.id);
 				res.errorType = TransitionResult.TransitionError.OperandError;
 				res.errorReason = "Submitted operands are not valid (null or wrong type).";
@@ -467,9 +488,6 @@ public class ActionEngine {
 				res.errorReason = "Not enough energy points left for building an object";
 				return res;
 			}
-			
-			// check that the unit has the required resources/objects required for making the object
-			CraftedObject target = (CraftedObject)transition.operands[1];
 			
 			// check that player holds corresponding blueprint
 			boolean foundBlueprint = false;
@@ -486,6 +504,7 @@ public class ActionEngine {
 				return res;
 			}
 			
+			// check that the unit has the required resources/objects required for making the object
 			if ( !checkCraftingRequirements(playerUnit, target, usedObjects, usedResources) ) {
 				TransitionResult res = new TransitionResult(transition.id);
 				res.errorType = TransitionResult.TransitionError.CraftingError;
@@ -728,6 +747,10 @@ public class ActionEngine {
 		HashMap<BasicResourceType, Integer> carriedResources = playerUnit.carriedResources;
 		
 		if (target.getRequiredObjects() != null) {		// it is an object made out of sub-objects
+			if (usedObjects == null) {
+				return false;
+			}
+			
 			boolean requirementsMet = false;
 			
 			for (HashMap<CraftedObject, Integer> craftingOption : target.getRequiredObjects()) {
@@ -766,6 +789,10 @@ public class ActionEngine {
 			}
 		}
 		else {												// it is an object made only out of basic resources
+			if (usedResources == null) {
+				return false;
+			}
+			
 			boolean requirementsMet = false;
 			
 			for (HashMap<BasicResourceType, Integer> resourceOption : target.getRequiredResources()) {

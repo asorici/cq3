@@ -1,3 +1,5 @@
+package org.aimas.craftingquest.user;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -6,7 +8,6 @@ import org.aimas.craftingquest.state.CellState;
 import org.aimas.craftingquest.state.PlayerState;
 import org.aimas.craftingquest.state.Point2i;
 import org.aimas.craftingquest.state.UnitState;
-import org.aimas.craftingquest.user.AIThread;
 
 public class DummyAI extends AIThread {
 	Random rnd;
