@@ -9,7 +9,7 @@
 	<property name="build" location="build" />
 	<property name="dist" location="dist" />
 	<property name="server-main-class" value="org.aimas.craftingquest.core.Server0" />
-	<property name="communication-deps" value="lib/cajo.jar lib/grail.jar" />
+	<property name="communication-deps" value="lib/cajo.jar" />
 
 	<path id="compileClasspath">
 		<fileset dir="${lib}" />
