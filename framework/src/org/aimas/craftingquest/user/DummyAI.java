@@ -26,9 +26,6 @@ public class DummyAI extends AIThread {
 		log("beginRound", "state  + cmd.getPlayerState()");
 		PlayerState player = getPlayerState();
 		
-		//boolean doStuff = true;
-		//while(doStuff);
-		
 		int nrUnits = player.units.size();
 		
 		for (int i = 0; i < nrUnits; i++) {
