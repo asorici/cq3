@@ -269,7 +269,7 @@ public class Server0 implements IServer {
 	}
 
 	public synchronized PlayerState process(Transition action) {
-		Logger2.log("srv", "process", "");
+		// Logger2.log("srv", "process", "");
 		int clientID = allowedSecret(action.secret);
 		if (clientID == -1) {
 			return null;
