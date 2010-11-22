@@ -1,8 +1,8 @@
 package org.aimas.craftingquest.state;
 
 import java.io.Serializable;
-import java.util.Arrays;
 
+@SuppressWarnings("serial")
 public class Transition implements Serializable {
 
 	// public enum ActionType implements Serializable{
@@ -18,9 +18,6 @@ public class Transition implements Serializable {
 	public long secret;
 
 	public Transition(ActionType operator, Object[] operands) {
-		// synchronized (Transition.class) {
-		// this.id = count++;
-		// }
 		this.operator = operator;
 		this.operands = operands;
 	}

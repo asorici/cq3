@@ -241,8 +241,15 @@ public class Server0 implements IServer {
 					
 					actionEngine.doTowerDrain(state, state.getPlayerIds().get(clientID));
 					
-					// send the NEW ROUND event to client
+					// send the NEW ROUND event to current client
 					sendEvent(clientID, client, new Event(Event.EventType.NewRound));
+					
+					// send the END ROUND event to all the others
+					for (int cID = 0; cID < clients.length; cID++) {
+						if (cID != clientID) {
+							sendEvent(cID, clients[cID], new Event(Event.EventType.EndRound));
+						}
+					}
 				}
 			}, delay + delayPlayer * i, period);
 		}
@@ -381,8 +388,6 @@ public class Server0 implements IServer {
 				bw.write("winner");
 				bw.newLine();
 				bw.write("" + winnerClient + " " + maxCredit);
-				bw.newLine();
-				// TODO - write team name
 				
 				bw.close();
 			} catch (IOException e) {

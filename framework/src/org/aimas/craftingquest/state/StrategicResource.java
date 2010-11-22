@@ -2,13 +2,24 @@ package org.aimas.craftingquest.state;
 
 import java.io.Serializable;
 
-
+/**
+ * The general type of a strategic resource (either a merchant camp or a defense tower).
+ * Data about the type and position of the strategic resource is given.
+ */
+@SuppressWarnings("serial")
 public class StrategicResource implements Serializable {
 	public enum StrategicResourceType {
 		Tower, Merchant
 	};
 	
+	/**
+	 * the position of this strategic resource
+	 */
 	Point2i position;
+	
+	/**
+	 * the type of this strategic resource
+	 */
 	StrategicResourceType type;
 	
 	public StrategicResource(StrategicResourceType type, Point2i position) {

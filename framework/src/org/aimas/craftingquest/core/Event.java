@@ -15,7 +15,7 @@ import java.io.Serializable;
 public class Event implements Serializable {
 
 	public enum EventType {
-		Nothing, Initialization, NewRound, GameEnd
+		Nothing, Initialization, NewRound, EndRound, GameEnd
 	}
 
 	public EventType type;

@@ -25,6 +25,9 @@ public final class Client0 implements IClient, IPlayerActions {
 	private Object server;
 	private Remote client;
 
+	/* action sync */
+	private Boolean actionSync = new Boolean(true);
+	
 	/* game */
 	private PlayerState state;
 	private IPlayerHooks player;
@@ -35,10 +38,9 @@ public final class Client0 implements IClient, IPlayerActions {
 		this.secret = secret;
 		ptpe = new PausableThreadPoolExecutor();
 		
-		//server = Remote.getItem("//localhost:1198/" + "CraftingQuest");
 		server = Remote.getItem("//" + host + ":" + port + "/" + serverName);
 		client = new Remote(this);
-
+		
 		id = (Integer) Remote.invoke(server, "addRemoteClient", client);
 	}
 
@@ -64,13 +66,24 @@ public final class Client0 implements IClient, IPlayerActions {
 				});
 			}
 		case NewRound:
-			if (player != null) {
-				ptpe.execute(new Runnable() {
-					public void run() {
-						player.beginRound();
-					}
-				});
+			synchronized(actionSync) {
+				actionSync = true;
+				if (player != null) {
+					ptpe.execute(new Runnable() {
+						public void run() {
+							player.beginRound();
+						}
+					});
+				}
 			}
+			
+			break;
+		case EndRound:
+			log("client", "end round");
+			synchronized(actionSync) {
+				actionSync = false;
+			}
+			
 			break;
 		case GameEnd:
 			if (player != null) {
@@ -99,14 +112,23 @@ public final class Client0 implements IClient, IPlayerActions {
 
 	private synchronized PlayerState doGenericAction(Transition action) {
 		try {
-			action.secret = secret;
-			
-			PlayerState responseState = (PlayerState) Remote.invoke(server, "process", action);
-			if (responseState != null) {
-				this.state = responseState;
+			synchronized(actionSync) {
+				if (actionSync) {
+					action.secret = secret;
+					
+					PlayerState responseState = (PlayerState) Remote.invoke(server, "process", action);
+					if (responseState != null) {
+						this.state = responseState;
+					}
+					
+					return getPlayerState();
+				}
+				else {
+					return null;
+				}
 			}
 			
-			return getPlayerState();
+			
 		} catch (Exception ex) {
 			Logger.getLogger(Client0.class.getName()).log(Level.SEVERE, null,ex);
 		}
@@ -125,7 +147,7 @@ public final class Client0 implements IClient, IPlayerActions {
 	 * It will also contain a <code>TransitionResult</code> which gives the reason for the failure.</p>
 	 * @param unit   the unit to be moved
 	 * @param newPosition - the movement target position
-	 * @return the new player state. 
+	 * @return the new player state or null if the player attempts to move outside his turn. 
 	 */
 	@Override
 	public PlayerState move(UnitState unit, Point2i newPosition) {
@@ -140,7 +162,7 @@ public final class Client0 implements IClient, IPlayerActions {
 	 * <p>In case of an error, the returned player state will not be different from the current one. 
 	 * It will also contain a <code>TransitionResult</code> which gives the reason for the failure.</p>
 	 * @param unit   the unit performing the digging operation
-	 * @return the new player state.
+	 * @return the new player state or null if the player attempts to move outside his turn.
 	 */
 	@Override
 	public PlayerState dig(UnitState unit) {
@@ -156,7 +178,7 @@ public final class Client0 implements IClient, IPlayerActions {
 	 * <p>In case of an error, the returned player state will not be different from the current one. 
 	 * It will also contain a <code>TransitionResult</code> which gives the reason for the failure.</p>
 	 * @param unit   the unit performing the scan
-	 * @return the new player state
+	 * @return the new player state or null if the player attempts to move outside his turn.
 	 */
 	@Override
 	public PlayerState scan(UnitState unit) {
@@ -172,7 +194,7 @@ public final class Client0 implements IClient, IPlayerActions {
 	 * It will also contain a <code>TransitionResult</code> which gives the reason for the failure.</p>
 	 * @param unit   the unit performing the operation
 	 * @param desiredResources   the desired resources and their quantity
-	 * @return the new player state
+	 * @return the new player state or null if the player attempts to move outside his turn.
 	 */
 	@Override
 	public PlayerState pickupResources(UnitState unit, HashMap<BasicResourceType, Integer> desiredResources) {
@@ -189,7 +211,7 @@ public final class Client0 implements IClient, IPlayerActions {
 	 * It will also contain a <code>TransitionResult</code> which gives the reason for the failure.</p>
 	 * @param unit   the unit performing the operation
 	 * @param desiredObjects   the desired crafted objects and their quantity
-	 * @return the new player state
+	 * @return the new player state or null if the player attempts to move outside his turn.
 	 */
 	@Override
 	public PlayerState pickupObjects(UnitState unit, HashMap<CraftedObject, Integer> desiredObjects) {
@@ -206,7 +228,7 @@ public final class Client0 implements IClient, IPlayerActions {
 	 * It will also contain a <code>TransitionResult</code> which gives the reason for the failure.</p>
 	 * @param unit   the unit executing the drop action
 	 * @param unwantedResources   the unwanted resources and their quantities
-	 * @return the new player state
+	 * @return the new player state or null if the player attempts to move outside his turn.
 	 */
 	@Override
 	public PlayerState dropResources(UnitState unit, HashMap<BasicResourceType, Integer> unwantedResources) {
@@ -223,7 +245,7 @@ public final class Client0 implements IClient, IPlayerActions {
 	 * It will also contain a <code>TransitionResult</code> which gives the reason for the failure.</p>
 	 * @param unit   the unit executing the drop action
 	 * @param unwantedResources   the unwanted objects and their quantities
-	 * @return the new player state
+	 * @return the new player state or null if the player attempts to move outside his turn.
 	 */
 	@Override
 	public PlayerState dropObjects(UnitState unit, HashMap<CraftedObject, Integer> unwantedObjects) {
@@ -242,7 +264,7 @@ public final class Client0 implements IClient, IPlayerActions {
 	 * @param target   the artifact that is supposed to be built
 	 * @param usedObjects   the list of object ingredients, if any. The value of this parameter may be null if the target object is of a simple type 
 	 * @param usedResources   the list of basic resource ingredients, if any. The value of this parameter may be null if the target object is of a complex type
-	 * @return the new player state
+	 * @return the new player state or null if the player attempts to move outside his turn.
 	 */
 	@Override
 	public PlayerState craftObject(UnitState unit, CraftedObject target, 
@@ -261,7 +283,7 @@ public final class Client0 implements IClient, IPlayerActions {
 	 * @param unit   the unit performing the selling action
 	 * @param craftedObject   the target object to be sold
 	 * @param quantity   the number of target objects to be sold
-	 * @return the new player state
+	 * @return the new player state or null if the player attempts to move outside his turn.
 	 */
 	@Override
 	public PlayerState sellObject(UnitState unit, CraftedObject craftedObject, Integer quantity) {
@@ -277,7 +299,7 @@ public final class Client0 implements IClient, IPlayerActions {
 	 * <p>In case of an error, the returned player state will not be different from the current one. 
 	 * It will also contain a <code>TransitionResult</code> which gives the reason for the failure.</p>
 	 * @param unit   the unit building the tower
-	 * @return the new player state
+	 * @return the new player state or null if the player attempts to move outside his turn.
 	 */
 	@Override
 	public PlayerState placeTower(UnitState unit) {
@@ -293,7 +315,7 @@ public final class Client0 implements IClient, IPlayerActions {
 	 * It will also contain a <code>TransitionResult</code> which gives the reason for the failure.</p>
 	 * @param unit   the unit buying the blueprint
 	 * @param blueprint   the desired blueprint
-	 * @return the new player state
+	 * @return the new player state or null if the player attempts to move outside his turn.
 	 */
 	@Override
 	public PlayerState buyBlueprint(UnitState unit, Blueprint blueprint) {

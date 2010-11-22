@@ -6,7 +6,6 @@ import org.aimas.craftingquest.state.PlayerState;
 public abstract class AIThread implements Runnable {
 	// sync stuff
 	private Object roundSync;
-	private Boolean gameEnd;
 	private long roundDuration;
 	private long roundStartTime;
 
@@ -16,9 +15,8 @@ public abstract class AIThread implements Runnable {
 	public AIThread() {
 	}
 
-	void init(Object roundSync, Boolean gameEnd, IPlayerActions cmd) {
+	void init(Object roundSync, IPlayerActions cmd) {
 		this.roundSync = roundSync;
-		this.gameEnd = gameEnd;
 		this.cmd = cmd;
 		this.roundDuration = cmd.getPlayerState().round.roundDuration;
 	}
@@ -26,13 +24,6 @@ public abstract class AIThread implements Runnable {
 	@Override
 	public final void run() {
 		while (true) {
-			// first check for gameEnd
-			synchronized (gameEnd) {
-				if (gameEnd) {
-					break;
-				}
-			}
-
 			// wait for new round
 			synchronized (roundSync) {
 				try {

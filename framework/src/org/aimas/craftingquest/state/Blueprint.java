@@ -2,9 +2,20 @@ package org.aimas.craftingquest.state;
 
 import java.io.Serializable;
 
+/**
+ * Shows how to construct an artifact.
+ *
+ */
 @SuppressWarnings("serial")
 public class Blueprint implements Serializable {
+	/**
+	 * the value of this blueprint
+	 */
 	int value;
+	
+	/**
+	 * the artifact it describes 
+	 */
 	CraftedObject describedObject;
 	
 	public Blueprint () {

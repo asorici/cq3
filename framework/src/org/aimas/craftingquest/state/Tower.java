@@ -1,9 +1,20 @@
 package org.aimas.craftingquest.state;
 
-
+/**
+ * Describes the characteristics of the defense Tower type of strategic resources.
+ * Towers belong to a player and have an indication of their remaining strength. 
+ * Defense towers will protect cells falling within their radius from being exploited by the adversary.
+ */
 @SuppressWarnings("serial")
 public class Tower extends StrategicResource {
+	/**
+	 * the id of the player that this tower belongs to
+	 */
 	private int playerID;
+	
+	/**
+	 * the remaining strength (expressed in energy points) of this tower
+	 */
 	private int remainingStrength;
 	
 	public Tower(int playerID, Point2i pos) {

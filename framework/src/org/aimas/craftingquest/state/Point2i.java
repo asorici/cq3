@@ -4,8 +4,8 @@ import java.io.Serializable;
 
 /**
  * 
- * @author Razvan
  */
+@SuppressWarnings("serial")
 public class Point2i implements Serializable {
 
 	public int x;

@@ -6,6 +6,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * Description of a crafted object - value and means of construction. 
+ * There are two types of crafted objects:
+ * <ul>
+ * <li>simple objects - are constructed only from basic resources</li>
+ * <li>complex objects - are constructed only from other objects </li>
+ * </ul>
+ *
+ */
 @SuppressWarnings("serial")
 public class CraftedObject implements Serializable {
 	public enum BasicResourceType {
@@ -16,9 +25,26 @@ public class CraftedObject implements Serializable {
 		O1, O2, O3, O4, O5, O6, O7, O8, O9, O10, O11, O12
 	}
 	
+	/**
+	 * the object type
+	 */
 	private ObjectType type;
+	
+	/**
+	 * the object value
+	 */
 	private int value;
+	
+	/**
+	 * If not null, this field gives a list of alternative ways of constructing a complex object.<br/>
+	 * Each alternative is a mapping between <code>CraftedObject</code>s and their required quantities. 
+	 */
 	private List<HashMap<CraftedObject, Integer>> requiredObjects;
+	
+	/**
+	 * If not null, this field gives a list of alternative ways of constructing a simple object. <br/>
+	 * Each alternative is a mapping between <code>BasicResourceType</code>s and their required quantities.
+	 */
 	private List<HashMap<BasicResourceType, Integer>> requiredResources;
 	
 	public CraftedObject() {
@@ -39,6 +65,7 @@ public class CraftedObject implements Serializable {
 		return requiredResources;
 	}
 		
+	
 	public List<List<CraftedObject>> getRequiredObjectsList() {
 		List<List<CraftedObject>> list = new ArrayList<List<CraftedObject>>();
 		

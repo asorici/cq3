@@ -3,9 +3,15 @@ package org.aimas.craftingquest.state;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Describes the strategic resource from which players can buy blueprints.
+ */
 @SuppressWarnings("serial")
 public class Merchant extends StrategicResource {
 	
+	/**
+	 * the list of blueprints held by this merchant
+	 */
 	private List<Blueprint> blueprints = new ArrayList<Blueprint>();
 	
 	public Merchant(Point2i pos) {
