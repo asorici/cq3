@@ -160,7 +160,9 @@ public class ActionEngine {
 			Iterator<BasicResourceType> resIterator = currentCell.resources.keySet().iterator();
 			while(resIterator.hasNext()) {
 				BasicResourceType res = resIterator.next();
-				playerUnit.currentCellResources.put(res, currentCell.resources.get(res));
+				if (currentCell.resources.get(res) > 0) {
+					playerUnit.currentCellResources.put(res, currentCell.resources.get(res));
+				}
 			}
 			playerUnit.energy -= GamePolicy.digCost;
 			
