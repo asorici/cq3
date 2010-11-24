@@ -6,7 +6,7 @@
 		<playerActionTime>1000</playerActionTime>
 		<playerLateTime>100</playerLateTime>
 		<updateTime>0</updateTime>
-		<connectWaitTime>8000</connectWaitTime>
+		<connectWaitTime>5000</connectWaitTime>
 		<nrTurns>160</nrTurns>
 		<nrPlayerUnits>3</nrPlayerUnits>
 		<mapName>map_v1.cqm</mapName>

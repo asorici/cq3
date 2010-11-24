@@ -513,7 +513,6 @@ public class ActionEngine {
 			}
 			
 			playerUnit.energy -= GamePolicy.buildCost;		// update energy levels
-			//player.credit += target.getValue();				// update team score
 			
 			Integer targetObjectCount = playerUnit.carriedObjects.get(target);
 			if (targetObjectCount == null) {				// add new crafted object to the list
@@ -545,8 +544,8 @@ public class ActionEngine {
 			
 			Integer carried = carriedObjects.get(obj);
 			if (carried != null && quantity <= carried) {
-				player.credit += obj.getValue();				// update team score
-				carriedObjects.put(obj, carried - quantity);	// update amount of carried objects
+				player.credit += obj.getValue() * quantity;				// update team score
+				carriedObjects.put(obj, carried - quantity);			// update amount of carried objects
 			}
 			else {
 				TransitionResult res = new TransitionResult(transition.id);
@@ -588,7 +587,7 @@ public class ActionEngine {
 				}
 			}
 			
-			if (emptyCell) {
+			if (!emptyCell) {
 				TransitionResult res = new TransitionResult(transition.id);
 				res.errorType = TransitionResult.TransitionError.BuildError;
 				res.errorReason = "Cannot build a tower in a cell that still contains unmined resources";
@@ -609,6 +608,8 @@ public class ActionEngine {
 			else {
 				playerTowers.add(tower);
 			}
+			
+			player.credit -= GamePolicy.towerBuildCost;			// subtract cost from player credit
 			
 			TransitionResult towerres = new TransitionResult(transition.id);
 			towerres.errorType = TransitionResult.TransitionError.NoError;

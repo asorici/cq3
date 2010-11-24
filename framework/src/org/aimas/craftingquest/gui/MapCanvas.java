@@ -174,6 +174,13 @@ public class MapCanvas extends Canvas implements MouseListener, MouseMotionListe
 			}
 		}
 		
+		if (!crtCell.visibleResources.isEmpty()) {
+			info += "Visible resources: \n";
+			for(BasicResourceType resType : crtCell.visibleResources.keySet()) {
+				info += "\t" + resType.name() + ": " + crtCell.visibleResources.get(resType) + "\n";
+			}
+		}
+		
 		return info;
 	}
 	
