@@ -294,7 +294,7 @@ public class Server0 implements IServer {
 			return null;
 		}
 		
-		Logger2.log("srv", "Executing action for client" , "" + clientID);
+		Logger2.log("srv", "Executing action [" + action.operator.name() + "] for client" , "" + clientID);
 		
 		if (player.round.currentRound < state.round.currentRound) {
 			player.round.currentRound = state.round.currentRound;
