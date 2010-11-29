@@ -14,8 +14,22 @@ public interface IPlayerActions {
 
     public void addArtificialIntelligence(IPlayerHooks usercode);
 
+    /**
+     * Returns the current locally stored player state.
+     * @return the locally stored player state that is the result of the last performed transition
+     */
     public PlayerState getPlayerState();
 
+    /**
+     * Returns the server stored player state. It might be useful to call this method at the beginning
+     * of a turn since tower drains are always performed then. The method thus allows a player to get an 
+     * update on the energy levels of his units and on the remaining strength of his towers right at 
+     * the start of a round.
+     * @return the player state as seen by the server application at the moment of inquiry or null if
+     * the call is made outside the player's turn
+     */
+    public PlayerState requestState();
+    
     /**
 	 * Allows a unit to move to an adjacent cell.
 	 * <p>If the transition is successful, the returned player state will 

@@ -140,6 +140,10 @@ public final class Client0 implements IClient, IPlayerActions {
 	}
 	
 	
+	public PlayerState requestState() {
+		return doGenericAction(new Transition(Transition.ActionType.RequestState, null));
+	}
+	
 	@Override
 	public PlayerState move(UnitState unit, Point2i newPosition) {
 		return doGenericAction(new Transition(Transition.ActionType.Move, new Object[] { unit.id, newPosition }));

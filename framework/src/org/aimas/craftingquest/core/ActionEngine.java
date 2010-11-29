@@ -37,20 +37,18 @@ public class ActionEngine {
 	public TransitionResult process(PlayerState player, Transition transition) {
 		refresh(player);
 		
-		// first check if the operator is of Nothing or PlayerReady type
+		// first check if the operator is of Nothing or RequestState type
 		// these are just for filling up and synchronization - so return the OK
-		if(transition.operator == ActionType.Nothing) {
+		if(transition.operator == ActionType.Nothing || transition.operator == ActionType.RequestState) {
 			TransitionResult res = new TransitionResult(transition.id);
 			res.errorType = TransitionResult.TransitionError.NoError;
 			return res;
 		}
 		
-		//UnitType unitType = (UnitType)transition.operands[0];
 		Integer unitID = (Integer)transition.operands[0];
 		
 		UnitState playerUnit = null;
 		for (UnitState u : player.units) {
-			//if (u.type == unitType && u.playerID == player.id) {
 			if (u.id == unitID && u.playerID == player.id) {
 				playerUnit = u;
 				break;
@@ -65,7 +63,6 @@ public class ActionEngine {
 			Point2i toPos = (Point2i)transition.operands[1];
 			Point2i fromPos = playerUnit.pos;
 			if (Math.abs(toPos.x - fromPos.x) > 1 || Math.abs(toPos.y - fromPos.y) > 1) {
-				//TransitionResult res = new TransitionResult(transition.id, transition);
 				TransitionResult res = new TransitionResult(transition.id);
 				res.errorType = TransitionResult.TransitionError.MoveError;
 				res.errorReason = "Move allowed only to neighboring cells";
@@ -74,7 +71,6 @@ public class ActionEngine {
 			
 			// check position bounds
 			if (toPos.x < 0 || toPos.y < 0 || toPos.x >= game.map.cells.length || toPos.y >= game.map.cells.length) {
-				//TransitionResult res = new TransitionResult(transition.id, transition);
 				TransitionResult res = new TransitionResult(transition.id);
 				res.errorType = TransitionResult.TransitionError.MoveError;
 				res.errorReason = "Move allowed only within map bounds";
@@ -84,7 +80,6 @@ public class ActionEngine {
 			// check allowed terrain type
 			CellType toCellType = game.map.cells[toPos.y][toPos.x].type;
 			if ( !GamePolicy.terrainMovePossibilities.get(toCellType).contains(playerUnit.type) ) {
-				//TransitionResult res = new TransitionResult(transition.id, transition);
 				TransitionResult res = new TransitionResult(transition.id);
 				res.errorType = TransitionResult.TransitionError.TerrainError;
 				res.errorReason = "Move allowed only on appropriate terrain type";
@@ -93,7 +88,6 @@ public class ActionEngine {
 			
 			// check no object is there
 			if ( game.map.cells[toPos.y][toPos.x].strategicResource != null ) {
-				//TransitionResult res = new TransitionResult(transition.id, transition);
 				TransitionResult res = new TransitionResult(transition.id);
 				res.errorType = TransitionResult.TransitionError.ObstacleError;
 				res.errorReason = "Move not allowed to cells containing strategic structures.";
@@ -112,7 +106,6 @@ public class ActionEngine {
 					+ GamePolicy.resourceMoveCost * carriedResourcesAmount / 2);
 			
 			if ( playerUnit.energy < requiredEnergy) {
-				//TransitionResult res = new TransitionResult(transition.id, transition);
 				TransitionResult res = new TransitionResult(transition.id);
 				res.errorType = TransitionResult.TransitionError.NoEnergyError;
 				res.errorReason = "Not enough energy points left for move";
@@ -135,7 +128,6 @@ public class ActionEngine {
 			}
 			game.map.cells[toPos.y][toPos.x].cellUnits.add(playerUnit.getOpponentPerspective());
 			
-			//TransitionResult moveres = new TransitionResult(transition.id, transition);
 			TransitionResult moveres = new TransitionResult(transition.id);
 			moveres.errorType = TransitionResult.TransitionError.NoError;
 			return moveres;
@@ -147,7 +139,6 @@ public class ActionEngine {
 			
 			// check enough energy points
 			if (playerUnit.energy < GamePolicy.digCost) {
-				//TransitionResult res = new TransitionResult(transition.id, transition);
 				TransitionResult res = new TransitionResult(transition.id);
 				res.errorType = TransitionResult.TransitionError.NoEnergyError;
 				res.errorReason = "Not enough energy points left for digging";
@@ -166,7 +157,6 @@ public class ActionEngine {
 			}
 			playerUnit.energy -= GamePolicy.digCost;
 			
-			//TransitionResult digres = new TransitionResult(transition.id, transition);
 			TransitionResult digres = new TransitionResult(transition.id);
 			digres.errorType = TransitionResult.TransitionError.NoError;
 			return digres;
@@ -579,13 +569,39 @@ public class ActionEngine {
 				return res;
 			}
 			
-			// check to see if any resources are left in the cell
+			// check to see if any towers are already in the cell
 			CellState unitCell = game.map.cells[playerUnit.pos.y][playerUnit.pos.x];
+			if (unitCell.strategicResource != null) {
+				TransitionResult res = new TransitionResult(transition.id);
+				res.errorType = TransitionResult.TransitionError.BuildError;
+				res.errorReason = "Cannot build a tower in a cell that already contains a strategic resource";
+				return res;
+			}
+			
+			// check to see if any resources are left in the cell
 			boolean emptyCell = true;
-			for (BasicResourceType restype : unitCell.resources.keySet()) {
+			for (BasicResourceType restype : unitCell.resources.keySet()) {		// first soil resources
 				if (unitCell.resources.get(restype) > 0) {
 					emptyCell = false;
 					break;
+				}
+			}
+			
+			if (emptyCell) {		// if still empty then check for visible resources
+				for (BasicResourceType restype : unitCell.visibleResources.keySet()) {	
+					if (unitCell.visibleResources.get(restype) > 0) {
+						emptyCell = false;
+						break;
+					}
+				}
+			}
+			
+			if (emptyCell) {       // if still empty then check for crafted objects
+				for (CraftedObject obj : unitCell.craftedObjects.keySet()) {
+					if (unitCell.craftedObjects.get(obj) > 0) {
+						emptyCell = false;
+						break;
+					}
 				}
 			}
 			
@@ -848,6 +864,9 @@ public class ActionEngine {
 					Math.abs(oppTower.getPosition().y - unit.pos.y) <= GamePolicy.towerCutoffRadius) {
 					
 					int distance = Math.min( Math.abs(oppTower.getPosition().x - unit.pos.x), Math.abs(oppTower.getPosition().y - unit.pos.y) );
+					if (distance == 0) {	// can happen if a player constructs a tower in a cell
+						distance = 1;		// that contains an opponents unit
+					}
 					int drainAmount = GamePolicy.towerDrainBase / distance;
 					
 					unit.energy -= drainAmount;						// drain unit energy

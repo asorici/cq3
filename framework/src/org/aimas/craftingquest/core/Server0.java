@@ -230,7 +230,7 @@ public class Server0 implements IServer {
 					// replenish player's units with their energy supplies
 					actionEngine.replenishEnergy();
 					
-					// then subtract specific energy amount if the player is near some towers
+					// set round status: currentRound and roundStartTime
 					Integer playerID = state.getPlayerIds().get(clientID);
 					PlayerState player = state.playerStates.get(playerID);
 					int currentRound = state.round.currentRound;
@@ -239,6 +239,7 @@ public class Server0 implements IServer {
 					player.round.startTime = GamePolicy.connectWaitTime + 
 						currentRound * GamePolicy.roundTime + clientID * GamePolicy.playerActionTime;
 					
+					// then subtract specific energy amount if the player is near some towers
 					actionEngine.doTowerDrain(state, state.getPlayerIds().get(clientID));
 					
 					// send the NEW ROUND event to current client
@@ -385,9 +386,9 @@ public class Server0 implements IServer {
 			System.out.println("Winner is: " + winnerClient);
 			try {
 				BufferedWriter bw = new BufferedWriter(new FileWriter("winner.txt"));
-				bw.write("winner");
-				bw.newLine();
-				bw.write("" + winnerClient + " " + maxCredit);
+				bw.write("winner");		// print winner tag
+				bw.newLine();			// then print winner clientID, identifying secret, credit
+				bw.write("" + winnerClient + " " + secrets[winnerClient] + " " + maxCredit);
 				
 				bw.close();
 			} catch (IOException e) {
