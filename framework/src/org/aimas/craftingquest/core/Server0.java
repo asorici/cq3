@@ -196,7 +196,7 @@ public class Server0 implements IServer {
 		state.round.startTime = GamePolicy.connectWaitTime;
 		
 		try {
-			Thread.sleep(connectWaitTime - ((System.currentTimeMillis() - Logger2.t0) % 1000));
+			Thread.sleep(connectWaitTime);
 		} catch (InterruptedException ex) {
 			logger.fatal("ConnectWait interrupted", ex);
 		}

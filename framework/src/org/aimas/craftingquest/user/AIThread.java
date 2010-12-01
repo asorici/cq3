@@ -50,6 +50,10 @@ public abstract class AIThread implements Runnable {
 		logger.log(level, "[AI]: " + message);
 	}
 
+	protected static Logger getLogger() {
+		return logger;
+	}
+	
 	protected IPlayerActions getCmd() {
 		return cmd;
 	}
