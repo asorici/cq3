@@ -52,7 +52,6 @@ public class MapCanvas extends Canvas implements MouseListener, MouseMotionListe
 	private Image tower;
 	private Image merchant;
 	private Image resource;
-	private Image recipe;
 	private Image crocImage;
 	private Image foxImage;
 	private Image devilImage;	
@@ -101,7 +100,6 @@ public class MapCanvas extends Canvas implements MouseListener, MouseMotionListe
 			tower = ImageIO.read(new File("images/tower.jpg")).getScaledInstance(CELL_DIM, CELL_DIM, Image.SCALE_FAST);
 			merchant = ImageIO.read(new File("images/merchant.jpg")).getScaledInstance(CELL_DIM, CELL_DIM, Image.SCALE_FAST);
 			resource = ImageIO.read(new File("images/resource.gif")).getScaledInstance(CELL_DIM / 2, CELL_DIM / 2, Image.SCALE_FAST);
-			recipe = ImageIO.read(new File("images/recipe.png")).getScaledInstance(CELL_DIM / 2, CELL_DIM / 2, Image.SCALE_FAST);
 			crocImage = ImageIO.read(new File("images/crocodile.png")).getScaledInstance(CELL_DIM, CELL_DIM, Image.SCALE_FAST);
 			devilImage = ImageIO.read(new File("images/devil.png")).getScaledInstance(CELL_DIM, CELL_DIM, Image.SCALE_FAST);
 			foxImage = ImageIO.read(new File("images/fox.png")).getScaledInstance(CELL_DIM, CELL_DIM, Image.SCALE_FAST);

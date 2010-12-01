@@ -26,7 +26,6 @@ public class ResourceGenerator {
 		List<Blueprint> blueprints = new ArrayList<Blueprint>();
 		int nrObjectTypes = ObjectType.values().length;
 		int complexObjectCount = nrObjectTypes / 4;						// 1/4 of objects will be built from other objects
-		int simpleObjectCount = nrObjectTypes - complexObjectCount;		// the rest require only basic resources
 		
 		List<ObjectType> complexObjects = new ArrayList<ObjectType>();
 		List<ObjectType> simpleObjects = new ArrayList<ObjectType>();
@@ -565,6 +564,7 @@ public class ResourceGenerator {
 		return placedAmount;
 	}
 	
+	@SuppressWarnings("unused")
 	private static int[] generateUniformResourceQuantityDistribution(int maxSpots) {
 		int nrTypes = BasicResourceType.values().length;
 		int[] quant = new int[nrTypes];

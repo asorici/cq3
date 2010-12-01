@@ -1,7 +1,9 @@
 package org.aimas.craftingquest.user;
 
-import org.aimas.craftingquest.core.Logger2;
 import org.aimas.craftingquest.state.PlayerState;
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
+import org.apache.log4j.PropertyConfigurator;
 
 public abstract class AIThread implements Runnable {
 	// sync stuff
@@ -12,7 +14,11 @@ public abstract class AIThread implements Runnable {
 	// communication
 	private IPlayerActions cmd;
 
+	/* logging */
+	private static Logger logger = Logger.getLogger(AIThread.class);
+	
 	public AIThread() {
+		PropertyConfigurator.configure("logging.properties");
 	}
 
 	void init(Object roundSync, IPlayerActions cmd) {
@@ -40,8 +46,8 @@ public abstract class AIThread implements Runnable {
 		}
 	}
 
-	protected void log(String where, String what) {
-		Logger2.log("AI", where, what);
+	protected void log(String message, Level level) {
+		logger.log(level, "[AI]: " + message);
 	}
 
 	protected IPlayerActions getCmd() {

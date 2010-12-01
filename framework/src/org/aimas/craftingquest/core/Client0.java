@@ -3,8 +3,7 @@ package org.aimas.craftingquest.core;
 import gnu.cajo.invoke.Remote;
 
 import java.util.HashMap;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 
 import org.aimas.craftingquest.state.Blueprint;
 import org.aimas.craftingquest.state.CraftedObject;
@@ -16,6 +15,8 @@ import org.aimas.craftingquest.state.CraftedObject.BasicResourceType;
 import org.aimas.craftingquest.state.Transition.ActionType;
 import org.aimas.craftingquest.user.IPlayerActions;
 import org.aimas.craftingquest.user.IPlayerHooks;
+import org.apache.log4j.Logger;
+import org.apache.log4j.PropertyConfigurator;
 
 public final class Client0 implements IClient, IPlayerActions {
 
@@ -33,6 +34,9 @@ public final class Client0 implements IClient, IPlayerActions {
 	private IPlayerHooks player;
 	private PausableThreadPoolExecutor ptpe;
 
+	/* logging */
+	private static Logger logger = Logger.getLogger(Client0.class); 
+	
 	/* public */
 	public Client0(String host, int port, String serverName, long secret) throws Exception {
 		this.secret = secret;
@@ -42,6 +46,7 @@ public final class Client0 implements IClient, IPlayerActions {
 		client = new Remote(this);
 		
 		id = (Integer) Remote.invoke(server, "addRemoteClient", client);
+		PropertyConfigurator.configure("logging.properties");
 	}
 
 	/* communication */
@@ -52,7 +57,7 @@ public final class Client0 implements IClient, IPlayerActions {
 
 	@Override
 	final public void onEvent(Event event) {
-		Logger2.log("cln", "onEvent", event.type.name());
+		logger.info("[client][onEvent][" + event.type.name() + "]");
 		switch (event.type) {
 		case Nothing:
 			break;
@@ -79,7 +84,6 @@ public final class Client0 implements IClient, IPlayerActions {
 			
 			break;
 		case EndRound:
-			log("client", "end round");
 			synchronized(actionSync) {
 				actionSync = false;
 			}
@@ -130,16 +134,11 @@ public final class Client0 implements IClient, IPlayerActions {
 			
 			
 		} catch (Exception ex) {
-			Logger.getLogger(Client0.class.getName()).log(Level.SEVERE, null,ex);
+			logger.error("Could not send action request.", ex);
 		}
 		return null; // means grail error
 	}
 
-	void log(String where, String what) {
-		System.out.println("[Interface][" + where + "][" + what + "]");
-	}
-	
-	
 	public PlayerState requestState() {
 		return doGenericAction(new Transition(Transition.ActionType.RequestState, null));
 	}
@@ -152,21 +151,18 @@ public final class Client0 implements IClient, IPlayerActions {
 	
 	@Override
 	public PlayerState dig(UnitState unit) {
-		log("dig", "send cmd");
 		return doGenericAction(new Transition(ActionType.Dig, new Object[] {unit.id, unit.pos}));
 	}
 	
 	
 	@Override
 	public PlayerState scan(UnitState unit) {
-		log("scan", "send cmd");
 		return doGenericAction(new Transition(ActionType.ScanLand, new Object[] {unit.id}));
 	}
 	
 	
 	@Override
 	public PlayerState pickupResources(UnitState unit, HashMap<BasicResourceType, Integer> desiredResources) {
-		log("pickup resources", "send cmd");
 		return doGenericAction(new Transition(ActionType.PickupResources, new Object[] {unit.id, desiredResources}));
 	}
 	
@@ -183,21 +179,18 @@ public final class Client0 implements IClient, IPlayerActions {
 	 */
 	@Override
 	public PlayerState pickupObjects(UnitState unit, HashMap<CraftedObject, Integer> desiredObjects) {
-		log("pickup objects", "send cmd");
 		return doGenericAction(new Transition(ActionType.PickupObjects, new Object[] {unit.id, desiredObjects}));
 	}
 	
 	
 	@Override
 	public PlayerState dropResources(UnitState unit, HashMap<BasicResourceType, Integer> unwantedResources) {
-		log("drop", "send cmd");
 		return doGenericAction(new Transition(ActionType.DropResources, new Object[] {unit.id, unwantedResources}));
 	}
 	
 	
 	@Override
 	public PlayerState dropObjects(UnitState unit, HashMap<CraftedObject, Integer> unwantedObjects) {
-		log("drop", "send cmd");
 		return doGenericAction(new Transition(ActionType.DropObjects, new Object[] {unit.id, unwantedObjects}));
 	}
 	
@@ -205,28 +198,24 @@ public final class Client0 implements IClient, IPlayerActions {
 	@Override
 	public PlayerState craftObject(UnitState unit, CraftedObject target, 
 			HashMap<CraftedObject, Integer> usedObjects, HashMap<BasicResourceType, Integer> usedResources) {
-		log("craft", "send cmd");
 		return doGenericAction(new Transition(ActionType.CraftObject, new Object[] {unit.id, target, usedObjects, usedResources}));
 	}
 	
 	
 	@Override
 	public PlayerState sellObject(UnitState unit, CraftedObject craftedObject, Integer quantity) {
-		log("sell", "send cmd");
 		return doGenericAction(new Transition(ActionType.SellObject, new Object[] {unit.id, craftedObject, quantity}));
 	}
 	
 	
 	@Override
 	public PlayerState placeTower(UnitState unit) {
-		log("build tower", "send cmd");
 		return doGenericAction(new Transition(ActionType.PlaceTower, new Object[] {unit.id}));
 	}
 	
 	
 	@Override
 	public PlayerState buyBlueprint(UnitState unit, Blueprint blueprint) {
-		log("buy blueprint", "send cmd");
 		return doGenericAction(new Transition(ActionType.BuyBlueprint, new Object[] {unit.id, blueprint}));
 	}
 }

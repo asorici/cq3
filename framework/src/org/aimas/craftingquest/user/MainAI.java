@@ -1,8 +1,9 @@
 package org.aimas.craftingquest.user;
 
 import org.aimas.craftingquest.core.Client0;
-import org.aimas.craftingquest.core.Logger2;
 import org.aimas.craftingquest.state.PlayerState;
+import org.apache.log4j.Logger;
+import org.apache.log4j.PropertyConfigurator;
 
 /**
  *
@@ -16,6 +17,9 @@ public class MainAI implements IPlayerHooks {
 	private AIThread aiThread;
 	private String playerClassName;
 
+	/* logging */
+	private static Logger logger = Logger.getLogger(MainAI.class);
+	
 	public MainAI(String playerClassName, IPlayerActions cmd) {
 		this.playerClassName = playerClassName;
 		this.cmd = cmd;
@@ -30,7 +34,7 @@ public class MainAI implements IPlayerHooks {
 
 	@Override
 	public void initGame() {
-		log("initGame", "");
+		logger.info("[AI][initGame]");
 
 		try {
 			aiThread = (AIThread) Class.forName(playerClassName).newInstance();
@@ -42,14 +46,14 @@ public class MainAI implements IPlayerHooks {
 
 	@Override
 	public void initPlayer() {
-		log("initPlayer", "begin");
+		logger.info("[AI][initPlayer][begin]");
 		if (aiThread != null) {
 			aiThread.initPlayer();
 			thread = new Thread(aiThread);
 			thread.start();
 		}
 
-		log("initPlayer", "end");
+		logger.info("[AI][initPlayer][end]");
 	}
 
 	@Override
@@ -63,16 +67,12 @@ public class MainAI implements IPlayerHooks {
 	public void finishGame() {
 		PlayerState pState = cmd.getPlayerState();
 		if (pState != null) {
-			log("finishGame", "score: " + pState.credit);
+			logger.info("[AI][finishGame] score: " + pState.credit);
 		} else {
-			log("finishGame", "");
+			logger.info("[AI][finishGame]");
 		}
 
 		System.exit(0);
-	}
-
-	void log(String where, String what) {
-		Logger2.log("AI", where, what);
 	}
 
 	public static void main(String[] args) throws Exception {
@@ -91,11 +91,14 @@ public class MainAI implements IPlayerHooks {
 			throw new Exception("client cannot retrieve secret");
 		}
 
+		// configure loggin
+		PropertyConfigurator.configure("logging.properties");
+		
 		// MainAI ai = new MainAI(playerClassName, host, port, serverName, secret);
 		try {
 			new MainAI(playerClassName, host, port, serverName, secret);
 		} catch (Exception e) {
-			System.out.println("[MainAI], [Connectivity or instantiation error]");
+			logger.fatal("[MainAI][Connectivity or instantiation error]");
 			e.printStackTrace();
 			System.exit(2);
 		}

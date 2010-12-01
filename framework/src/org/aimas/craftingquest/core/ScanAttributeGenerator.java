@@ -39,10 +39,13 @@ public class ScanAttributeGenerator {
 				while(resIt.hasNext()) {
 					BasicResourceType resType = resIt.next();
 					List<ResourceAttributes> resAttributeList = generatedResAttributes.get(resType);
-					int index = randomGen.nextInt(resAttributeList.size());
 					
-					ResourceAttributes resAttr = resAttributeList.get(index);
-					cell.scanAttributes.put(resType, resAttr);
+					if (resAttributeList != null) {
+						int index = randomGen.nextInt(resAttributeList.size());
+						
+						ResourceAttributes resAttr = resAttributeList.get(index);
+						cell.scanAttributes.put(resType, resAttr);
+					}
 				}
 			}
 		}

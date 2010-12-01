@@ -34,6 +34,7 @@ public class ActionEngine {
 		game = gameState;
 	}
 
+	@SuppressWarnings("unchecked")
 	public TransitionResult process(PlayerState player, Transition transition) {
 		refresh(player);
 		
@@ -58,7 +59,6 @@ public class ActionEngine {
 		switch (transition.operator) {
 		case Move:
 		{
-			System.out.println("Action Engine: MOVE");
 			// check allowed distance
 			Point2i toPos = (Point2i)transition.operands[1];
 			Point2i fromPos = playerUnit.pos;
@@ -135,7 +135,6 @@ public class ActionEngine {
 		
 		case Dig:
 		{
-			System.out.println("Action Engine: DIG");
 			
 			// check enough energy points
 			if (playerUnit.energy < GamePolicy.digCost) {
@@ -163,9 +162,7 @@ public class ActionEngine {
 		}
 		
 		case ScanLand:
-		{
-			System.out.println("Action Engine: SCAN");
-			
+		{	
 			// check enough energy points
 			if (playerUnit.energy < GamePolicy.scanCost) {
 				TransitionResult res = new TransitionResult(transition.id);
@@ -185,7 +182,6 @@ public class ActionEngine {
 		
 		case PickupResources:
 		{
-			System.out.println("Action Engine: PICK RESOURCE");
 			HashMap<BasicResourceType, Integer> requiredResources = (HashMap<BasicResourceType, Integer>)transition.operands[1];
 			
 			// check for valid operand
@@ -285,7 +281,6 @@ public class ActionEngine {
 		
 		case PickupObjects:
 		{
-			System.out.println("Action Engine: PICK OBJECTS");
 			HashMap<CraftedObject, Integer> requiredObjects = (HashMap<CraftedObject, Integer>)transition.operands[1];
 			
 			// check for valid operand
@@ -363,7 +358,6 @@ public class ActionEngine {
 		
 		case DropResources:
 		{
-			System.out.println("Action Engine: DROP RESOURCES");
 			HashMap<BasicResourceType, Integer> unwantedResources = (HashMap<BasicResourceType, Integer>)transition.operands[1];
 			
 			// check for valid operand
@@ -412,7 +406,6 @@ public class ActionEngine {
 		
 		case DropObjects:
 		{
-			System.out.println("Action Engine: DROP OBJECTS");
 			HashMap<CraftedObject, Integer> unwantedObjects = (HashMap<CraftedObject, Integer>)transition.operands[1];
 			
 			// check for valid operand
@@ -746,7 +739,6 @@ public class ActionEngine {
 	
 	private void updateUnitSight(UnitState playerUnit, Point2i pos) {
 		int sightRadius = GamePolicy.sightRadius;
-		int dim = 2 * sightRadius + 1;
 		
 		CellState[][] unitSight = playerUnit.sight;
 		for (int i = 0, y = pos.y - sightRadius; y <= pos.y + sightRadius; y++, i++) {

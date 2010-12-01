@@ -8,6 +8,7 @@ import org.aimas.craftingquest.state.CellState;
 import org.aimas.craftingquest.state.PlayerState;
 import org.aimas.craftingquest.state.Point2i;
 import org.aimas.craftingquest.state.UnitState;
+import org.apache.log4j.Level;
 
 public class DummyAI extends AIThread {
 	Random rnd;
@@ -23,22 +24,22 @@ public class DummyAI extends AIThread {
 	
 	@Override
 	protected void actIntelligently() {
-		log("beginRound", "state  + cmd.getPlayerState()");
+		log("beginRound", Level.INFO);
 		PlayerState player = getPlayerState();
 		
 		int nrUnits = player.units.size();
 		
 		for (int i = 0; i < nrUnits; i++) {
 			UnitState unit = player.units.get(i);
-			log("unit state", unit.toString());
+			log("unit state: " + unit.toString(), Level.INFO);
 			
 			player = getCmd().move(unit, smartChoiceDst(getValidPoints(unit)));
 			if (player.validLastTransition()) {
-				System.out.println(" ==== Last transition valid ==== ");
+				log(" ==== Last transition valid ==== ", Level.INFO);
 			}
 			else {
-				System.out.println(" ==== Last transition NOT valid ==== ");
-				System.out.println(player.getLastTransitionError());
+				log(" ==== Last transition NOT valid ==== ", Level.INFO);
+				log(player.getLastTransitionError(), Level.INFO);
 			}
 		}
 

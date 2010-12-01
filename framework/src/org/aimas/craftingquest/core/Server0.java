@@ -12,8 +12,6 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import javax.swing.SwingUtilities;
 
@@ -22,6 +20,8 @@ import org.aimas.craftingquest.state.GameState;
 import org.aimas.craftingquest.state.PlayerState;
 import org.aimas.craftingquest.state.Transition;
 import org.aimas.craftingquest.state.Transition.ActionType;
+import org.apache.log4j.Logger;
+import org.apache.log4j.PropertyConfigurator;
 
 /**
  * 
@@ -46,6 +46,9 @@ public class Server0 implements IServer {
 	private long[] secrets;
 	private long gameStartTime = 0;
 
+	/* logging */
+	private static Logger logger = Logger.getLogger(Server0.class);
+	
 	public Server0(String servername, int portNumber, String secretsFile) throws Exception {
 		this.servername = servername;
 		this.portNumber = portNumber;
@@ -96,7 +99,9 @@ public class Server0 implements IServer {
 			}
 		}
 		
-		Logger2.start();
+		// configure logger
+		PropertyConfigurator.configure("logging.properties");
+		
 		Remote.config(null, server.getPortNumber(), null, 0);
 		ItemServer.bind(server, server.getServername());
 
@@ -111,7 +116,7 @@ public class Server0 implements IServer {
 		} catch (Exception ex) {
 			// mark client as unresponsive
 			unresponsive[clientID] = true;
-			Logger.getLogger(Server0.class.getName()).log(Level.SEVERE, null, ex);
+			logger.fatal("Could not send event to client " + clientID, ex);
 		}
 	}
 
@@ -122,17 +127,17 @@ public class Server0 implements IServer {
 		try {
 			secret = (Long) Remote.invoke(client, "getSecret", 0);
 		} catch (Exception ex) {
-			Logger.getLogger(Server0.class.getName()).log(Level.SEVERE, null, ex);
+			logger.error("Failed adding remote client. Could not invoke getSecret", ex);
 		}
 		
 		int clientNo = allowedSecret(secret);
 		
 		if(clientNo == -1){
-		    Logger2.log("srv", "register", "newclient not authorized: secret = " + secret);
+		    logger.warn("[srv][register] - newclient not authorized: secret = " + secret);
 		    return -1;
 		}
 		
-		Logger2.log("srv", "register", "newclient_" + secret);
+		logger.info("[srv][register] - newclient_" + secret);
 		if (clients[clientNo] == null) {
 		    clients[clientNo] = client;
 		    connectedClients++;				// increase number of connected players 
@@ -193,11 +198,11 @@ public class Server0 implements IServer {
 		try {
 			Thread.sleep(connectWaitTime - ((System.currentTimeMillis() - Logger2.t0) % 1000));
 		} catch (InterruptedException ex) {
-			Logger.getLogger(Server0.class.getName()).log(Level.SEVERE, null, ex);
+			logger.fatal("ConnectWait interrupted", ex);
 		}
 
 		if (connectedClients != clients.length) {
-			System.out.println("Insufficient number of clients connected. Expected=" + clients.length + 
+			logger.info("Insufficient number of clients connected. Expected=" + clients.length + 
 					", connected=" + connectedClients + ". Game will end!");
 			System.exit(1);
 		}
@@ -211,7 +216,7 @@ public class Server0 implements IServer {
 		try {
 			Thread.sleep(initializationWaitTime);		// wait for the specified initialization period
 		} catch (InterruptedException ex) {
-			Logger.getLogger(Server0.class.getName()).log(Level.SEVERE, null, ex);
+			logger.fatal("InitializationWait interrupted", ex);
 		}
 		
 		// mark beginning of game
@@ -294,7 +299,7 @@ public class Server0 implements IServer {
 			return null;
 		}
 		
-		Logger2.log("srv", "Executing action [" + action.operator.name() + "] for client" , "" + clientID);
+		logger.info("[srv]Executing action [" + action.operator.name() + "] for client: " + clientID);
 		
 		if (player.round.currentRound < state.round.currentRound) {
 			player.round.currentRound = state.round.currentRound;
@@ -383,7 +388,7 @@ public class Server0 implements IServer {
 		}
 		
 		if (!tied) { 
-			System.out.println("Winner is: " + winnerClient);
+			logger.info("Winner is: " + winnerClient);
 			try {
 				BufferedWriter bw = new BufferedWriter(new FileWriter("winner.txt"));
 				bw.write("winner");		// print winner tag
@@ -396,7 +401,7 @@ public class Server0 implements IServer {
 			}
 		}
 		else {
-			System.out.println("Teams are tied at " + maxCredit + " credits");
+			logger.info("Teams are tied at " + maxCredit + " credits");
 			try {
 				BufferedWriter bw = new BufferedWriter(new FileWriter("winner.txt"));
 				bw.write("tied");
