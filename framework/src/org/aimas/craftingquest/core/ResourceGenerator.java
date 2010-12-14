@@ -309,7 +309,7 @@ public class ResourceGenerator {
 		
 		for (int i = 0; i < quant.length; i++) {
 			BasicResourceType resType = GamePolicy.getResTypeByOrdinal(i);
-			System.out.println(resType.name() + " has ordinal: " + resType.ordinal() + " and associated quantum of: " + quant[i]);
+			//System.out.println(resType.name() + " has ordinal: " + resType.ordinal() + " and associated quantum of: " + quant[i]);
 			
 			for (int k = 0; k < quant[i]; k++) {
 				int resTypeAmount = placeResourceType(resType, map);

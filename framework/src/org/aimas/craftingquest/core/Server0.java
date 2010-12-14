@@ -35,6 +35,7 @@ public class Server0 implements IServer {
 	
 	//private List<Object> clients;
 	private Object[] clients;
+	private boolean guiOn = false;
 	private GraphicInterface displayer;
 	private int connectedClients = 0;
 	private boolean[] unresponsive;
@@ -72,14 +73,20 @@ public class Server0 implements IServer {
 			unresponsive[i] = false;
 		}
 		
-		displayer = new GraphicInterface(state);
-		SwingUtilities.invokeLater(new Runnable() {
-			
-			@Override
-			public void run() {
-				displayer.setVisible(true);
-			}
-		});
+		if (System.getProperty("gui") != null) {
+			guiOn = Boolean.parseBoolean(System.getProperty("gui"));
+		}
+		
+		if (guiOn) {
+			displayer = new GraphicInterface(state);
+			SwingUtilities.invokeLater(new Runnable() {
+				
+				@Override
+				public void run() {
+					displayer.setVisible(true);
+				}
+			});
+		}
 		
 	}
 
@@ -166,14 +173,16 @@ public class Server0 implements IServer {
 		long roundStartTime = GamePolicy.connectWaitTime + state.round.currentRound * GamePolicy.roundTime;
 		state.round.startTime = roundStartTime;
 		
-		// update graphics
-		SwingUtilities.invokeLater(new Runnable() {
-			
-			@Override
-			public void run() {
-				displayer.updateState();
-			}
-		});
+		if (guiOn) {
+			// update graphics
+			SwingUtilities.invokeLater(new Runnable() {
+				
+				@Override
+				public void run() {
+					displayer.updateState();
+				}
+			});
+		}
 	}
 
 	void endGame() {

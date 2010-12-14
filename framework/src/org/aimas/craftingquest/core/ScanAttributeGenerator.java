@@ -143,7 +143,7 @@ public class ScanAttributeGenerator {
 		if (dimDiff <= 0) {
 			return;
 		}
-		System.out.println("Initial diff is:" + dimDiff);
+		//System.out.println("Initial diff is:" + dimDiff);
 		
 		for (int i = generatedNodes - 1; i >= 0; i--) {
 			AttributeNode leafNode = classNodeList.get(i);
