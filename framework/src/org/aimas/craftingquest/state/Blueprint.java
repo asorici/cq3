@@ -49,6 +49,11 @@ public class Blueprint implements Serializable {
 	}
 	
 	@Override
+	public int hashCode() {
+		return describedObject.hashCode();
+	}
+	
+	@Override
 	public String toString() {
 		String info = "";
 		

@@ -164,4 +164,9 @@ public class UnitState implements Serializable {
 		
 		return true;
 	}
+	
+	@Override
+	public int hashCode() {
+		return playerID * (UnitType.values().length + 1) + type.ordinal();
+	}
 }

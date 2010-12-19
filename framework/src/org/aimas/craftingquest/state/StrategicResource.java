@@ -50,6 +50,11 @@ public class StrategicResource implements Serializable {
 		return true;
 	}
 
+	@Override
+	public int hashCode() {
+		return type.ordinal();
+	}
+	
 	public StrategicResourceType getType() {
 		return type;
 	}

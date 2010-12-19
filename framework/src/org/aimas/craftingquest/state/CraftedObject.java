@@ -107,6 +107,11 @@ public class CraftedObject implements Serializable {
 	}
 	
 	@Override
+	public int hashCode() {
+		return type.ordinal();
+	}
+	
+	@Override
 	public String toString() {
 		String info = "";
 		
