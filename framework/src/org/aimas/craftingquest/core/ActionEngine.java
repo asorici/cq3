@@ -774,7 +774,7 @@ public class ActionEngine {
 					Integer available = usedObjects.get(obj);
 					Integer carried = carriedObjects.get(obj);
 					
-					if(available == null || carried == null || required > available || required > carried) {
+					if(available == null || carried == null || required > available || required > carried || available > carried) {
 						alternativeOk = false;
 						break;
 					}
@@ -816,7 +816,7 @@ public class ActionEngine {
 					Integer available = usedResources.get(res);
 					Integer carried = carriedResources.get(res);
 					
-					if(available == null || carried == null || required > available || required > carried) {
+					if(available == null || carried == null || required > available || required > carried || available > carried) {
 						alternativeOk = false;
 						break;
 					}
