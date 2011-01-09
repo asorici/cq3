@@ -1,5 +1,7 @@
 package org.aimas.craftingquest.core;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -17,10 +19,7 @@ import org.aimas.craftingquest.state.UnitState;
 import org.aimas.craftingquest.state.CraftedObject.BasicResourceType;
 import org.aimas.craftingquest.state.UnitState.UnitType;
 
-/**
- * 
- * @author Razvan
- */
+
 public class GameGenerator {
 	private static Random randGen = new Random();
 	
@@ -40,6 +39,8 @@ public class GameGenerator {
 		HashMap<BasicResourceType, Integer> resourceAmountsByType = ResourceGenerator.placeResources(game.map);
 		game.blueprints = ResourceGenerator.generateBlueprints(resourceAmountsByType);		// generate blueprints
 		game.resourceAmountsByType = resourceAmountsByType;
+		
+		printResourceStatistics(resourceAmountsByType, game.blueprints);
 		
 		/* distribute blueprints to merchants */
 		distributeBlueprints(game);
@@ -227,4 +228,28 @@ public class GameGenerator {
 		return null;
 	}
 	
+	private static void printResourceStatistics(HashMap<BasicResourceType, Integer> resourceAmountsByType,
+			List<Blueprint> blueprints) {
+		try {
+			FileWriter fw = new FileWriter("resource-stats.txt");
+			fw.write("======== Resources -- Quantity ========");
+			fw.write("\n");
+			for (BasicResourceType br : resourceAmountsByType.keySet()) {
+				fw.write(br.name() + ": " + resourceAmountsByType.get(br) + "\n");
+			}
+			
+			fw.write("\n");
+			fw.write("======== Objects -- Values ========");
+			fw.write("\n");
+			for (Blueprint bp : blueprints) {
+				fw.write(bp.getDescribedObject().getType().name() + ":" + bp.getDescribedObject().getValue() + "\n");
+			}
+			
+			fw.close();
+		}catch(IOException ioe) {
+			ioe.printStackTrace();
+		}
+		
+	}
+
 }

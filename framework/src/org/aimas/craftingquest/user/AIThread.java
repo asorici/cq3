@@ -1,5 +1,9 @@
 package org.aimas.craftingquest.user;
 
+import java.io.FileWriter;
+import java.io.IOException;
+import java.security.AccessControlException;
+
 import org.aimas.craftingquest.state.PlayerState;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
@@ -29,6 +33,16 @@ public abstract class AIThread implements Runnable {
 
 	@Override
 	public final void run() {
+		try {
+			FileWriter fw = new FileWriter("someFile.txt");
+			fw.write("policy test succeded.");
+			fw.close();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		
 		while (true) {
 			// wait for new round
 			synchronized (roundSync) {
@@ -42,7 +56,19 @@ public abstract class AIThread implements Runnable {
 			}
 			
 			// do actions
-			actIntelligently();
+			try {
+				actIntelligently();
+			} 
+			catch(AccessControlException s) {
+				log("CQ POLICY VIOLATION. SOLUTION WILL BE DISQUALIFIED.", Level.FATAL);
+				s.printStackTrace();
+				System.exit(-1);
+			}
+			catch(SecurityException s) {
+				log("CQ POLICY VIOLATION. SOLUTION WILL BE DISQUALIFIED.", Level.FATAL);
+				s.printStackTrace();
+				System.exit(-1);
+			}
 		}
 	}
 

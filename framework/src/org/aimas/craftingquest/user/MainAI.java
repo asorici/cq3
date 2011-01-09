@@ -1,7 +1,10 @@
 package org.aimas.craftingquest.user;
 
+import java.security.AccessControlException;
+
 import org.aimas.craftingquest.core.Client0;
 import org.aimas.craftingquest.state.PlayerState;
+import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
@@ -48,7 +51,18 @@ public class MainAI implements IPlayerHooks {
 	public void initPlayer() {
 		logger.info("[AI][initPlayer][begin]");
 		if (aiThread != null) {
-			aiThread.initPlayer();
+			try {
+				aiThread.initPlayer();
+			} 
+			catch(AccessControlException s) {
+				logger.fatal("CQ POLICY VIOLATION. SOLUTION WILL BE DISQUALIFIED.", s);
+				System.exit(-1);
+			}
+			catch(SecurityException s) {
+				logger.fatal("CQ POLICY VIOLATION. SOLUTION WILL BE DISQUALIFIED.", s);
+				System.exit(-1);
+			}
+			
 			thread = new Thread(aiThread);
 			thread.start();
 		}
@@ -76,17 +90,25 @@ public class MainAI implements IPlayerHooks {
 	}
 
 	public static void main(String[] args) throws Exception {
-		if (args == null || args.length != 5) {
+		if (args == null || args.length < 5) {
 			System.out.println("Insufficient arguments given. Ending client!");
 			System.exit(1);
 		}
-
+		
 		String playerClassName = args[0];
 		String host = args[1];
 		int port = Integer.parseInt(args[2]);
 		String serverName = args[3];
 		long secret = Long.parseLong(args[4]);
 
+		if (args.length == 6) {
+			// install a security manager
+			if (System.getSecurityManager() == null) {
+				System.setProperty("java.security.policy", args[5]);
+				System.setSecurityManager( new SecurityManager() );
+			}
+		}
+		
 		if (secret == -1) {
 			throw new Exception("client cannot retrieve secret");
 		}

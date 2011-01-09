@@ -19,6 +19,8 @@ import org.aimas.craftingquest.gui.GraphicInterface;
 import org.aimas.craftingquest.state.GameState;
 import org.aimas.craftingquest.state.PlayerState;
 import org.aimas.craftingquest.state.Transition;
+import org.aimas.craftingquest.state.TransitionResult;
+import org.aimas.craftingquest.state.UnitState;
 import org.aimas.craftingquest.state.Transition.ActionType;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
@@ -49,6 +51,7 @@ public class Server0 implements IServer {
 
 	/* logging */
 	private static Logger logger = Logger.getLogger(Server0.class);
+	private static Logger gui_logger = Logger.getLogger("org.aimas.craftingquest.core.guilogger");
 	
 	public Server0(String servername, int portNumber, String secretsFile) throws Exception {
 		this.servername = servername;
@@ -301,6 +304,7 @@ public class Server0 implements IServer {
 		PlayerState player = state.playerStates.get(playerID);
 		
 		if (action.operator == ActionType.PlayerReady) {
+			printToGuiLog(player, action);
 			return player;
 		}
 		
@@ -317,6 +321,8 @@ public class Server0 implements IServer {
 		}
 		
 		player.response = actionEngine.process(player, action);
+		printToGuiLog(player, action);
+		
 		return player;
 	}
 
@@ -394,6 +400,11 @@ public class Server0 implements IServer {
 				winnerClient = clientID;
 				tied = false;
 			}
+			else {
+				if (pCredit < maxCredit) {
+					tied = false;
+				}
+			}
 		}
 		
 		if (!tied) { 
@@ -403,6 +414,16 @@ public class Server0 implements IServer {
 				bw.write("winner");		// print winner tag
 				bw.newLine();			// then print winner clientID, identifying secret, credit
 				bw.write("" + winnerClient + " " + secrets[winnerClient] + " " + maxCredit);
+				bw.newLine();
+				bw.write("runner-up");
+				bw.newLine();
+				for (int clientID = 0; clientID < clients.length; clientID++) {
+					if (clientID != winnerClient) {
+						Integer pId = playerIDs.get(clientID);
+						bw.write("" + clientID + " " + secrets[clientID] + " " + state.playerStates.get(pId).credit);
+						bw.newLine();
+					}
+				}
 				
 				bw.close();
 			} catch (IOException e) {
@@ -422,4 +443,39 @@ public class Server0 implements IServer {
 		}
 	}
 	
+	private void printToGuiLog(PlayerState player, Transition action) {
+		if (player.validLastTransition()) {
+			// first check if the operator is of Nothing or RequestState type
+			// these are just for filling up and synchronization - so return
+			if(action.operator == ActionType.Nothing || action.operator == ActionType.RequestState) {
+				return;
+			}
+			
+			if (action.operator == ActionType.PlayerReady) {
+				for (UnitState u : player.units) {
+					gui_logger.info(action.operator.name() + " " + player.id + " " + u.type.name() + " " 
+							+ u.pos.x + " " + u.pos.y + " " + player.credit);
+				}
+				
+				return;
+			}
+			
+			Integer unitID = (Integer)action.operands[0];
+			
+			UnitState playerUnit = null;
+			for (UnitState u : player.units) {
+				if (u.id == unitID && u.playerID == player.id) {
+					playerUnit = u;
+					break;
+				}
+			}
+			
+			if (playerUnit == null) {
+				return;
+			}
+			
+			gui_logger.info(action.operator.name() + " " + player.id + " " + playerUnit.type.name() + " " 
+					+ playerUnit.pos.x + " " + playerUnit.pos.y + " " + player.credit);
+		}
+	}
 }
