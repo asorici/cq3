@@ -194,6 +194,17 @@ public class GameGenerator {
 			
 			int unitID = playerID * nrUnits + i;
 			UnitState unit = new UnitState(unitID, playerID, utype, unitPos, GamePolicy.unitEnergy);
+			
+			// set unit's sight
+			for (int ii = 0, y = unit.pos.y - GamePolicy.sightRadius; y <= unit.pos.y + GamePolicy.sightRadius; y++, ii++) {
+				for (int jj = 0, x = unit.pos.x - GamePolicy.sightRadius; x <= unit.pos.x + GamePolicy.sightRadius; x++, jj++) {
+					unit.sight[ii][jj] = null;
+					if (x >= 0 && x < GamePolicy.mapsize.x && y >= 0 && y < GamePolicy.mapsize.y) {
+						unit.sight[ii][jj] = map.cells[y][x];
+					}
+				}
+			}
+			
 			pState.units.add(unit); // add unit to player's list
 			map.cells[unit.pos.y][unit.pos.x].cellUnits.add(unit.getOpponentPerspective()); // add unit to its cell
 			

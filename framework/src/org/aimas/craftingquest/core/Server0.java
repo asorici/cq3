@@ -16,6 +16,7 @@ import java.util.TimerTask;
 import javax.swing.SwingUtilities;
 
 import org.aimas.craftingquest.gui.GraphicInterface;
+import org.aimas.craftingquest.state.CraftedObject;
 import org.aimas.craftingquest.state.GameState;
 import org.aimas.craftingquest.state.PlayerState;
 import org.aimas.craftingquest.state.Transition;
@@ -453,8 +454,8 @@ public class Server0 implements IServer {
 			
 			if (action.operator == ActionType.PlayerReady) {
 				for (UnitState u : player.units) {
-					gui_logger.info(action.operator.name() + " " + player.id + " " + u.type.name() + " " 
-							+ u.pos.x + " " + u.pos.y + " " + player.credit);
+					gui_logger.info(state.round.currentRound + " " + action.operator.name() + " " + player.id + " " + u.type.name() + " " 
+							+ u.pos.x + " " + u.pos.y + " " + player.credit + " " + u.energy);
 				}
 				
 				return;
@@ -474,8 +475,16 @@ public class Server0 implements IServer {
 				return;
 			}
 			
-			gui_logger.info(action.operator.name() + " " + player.id + " " + playerUnit.type.name() + " " 
-					+ playerUnit.pos.x + " " + playerUnit.pos.y + " " + player.credit);
+			if (action.operator == ActionType.CraftObject || action.operator == ActionType.SellObject) {
+				CraftedObject target = (CraftedObject)action.operands[1];
+				gui_logger.info(state.round.currentRound + " " + action.operator.name() + " " + player.id + " " + playerUnit.type.name() + " " 
+						+ playerUnit.pos.x + " " + playerUnit.pos.y + " " + player.credit + " " + playerUnit.energy + " " 
+						+ target.getType().name() + " " + target.getValue());
+			}
+			else {
+				gui_logger.info(state.round.currentRound + " " + action.operator.name() + " " + player.id + " " + playerUnit.type.name() + " " 
+						+ playerUnit.pos.x + " " + playerUnit.pos.y + " " + player.credit + " " + playerUnit.energy);
+			}
 		}
 	}
 }
