@@ -16,7 +16,7 @@ import org.aimas.craftingquest.state.CraftedObject.BasicResourceType;
 @SuppressWarnings("serial")
 public class CellState implements Serializable {
 	
-	public static enum CellType {
+	public static enum CellType implements Serializable {
 		Grass, Dirt, Sand, Snow, Rock, Swamp, Water, DeepWater
 	};
 	

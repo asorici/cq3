@@ -3,19 +3,24 @@ package org.aimas.craftingquest.core;
 import java.io.DataInputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 import org.aimas.craftingquest.state.CellState;
+import org.aimas.craftingquest.state.GameState;
 import org.aimas.craftingquest.state.MapState;
 import org.aimas.craftingquest.state.Merchant;
 import org.aimas.craftingquest.state.Point2i;
+import org.aimas.craftingquest.state.ResourceAttributes;
 import org.aimas.craftingquest.state.CellState.CellType;
 import org.aimas.craftingquest.state.CraftedObject.BasicResourceType;
 import org.aimas.craftingquest.state.CraftedObject.ObjectType;
 import org.aimas.craftingquest.state.UnitState.UnitType;
+import org.json.JSONException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -123,6 +128,7 @@ public class GamePolicy {
 		Document paramDoc = GameUtils.readXMLDocument("GamePolicy.xml");
 		MapReader.readMap(paramDoc);
 		mapsize = new Point2i(MapReader.mapWidth, MapReader.mapHeight);
+		mapName = MapReader.mapName;
 		lastTurn = MapReader.nrTurns;
 		map = new MapState();
 		map.cells = MapReader.cells;
@@ -234,18 +240,60 @@ public class GamePolicy {
 		
 	}
 
+	public static void saveMapResources(GameState state) {
+		MapResourceWriter.saveMapResources(mapName, state); 
+	}
+
+}
+
+class MapResourceWriter {
+	public static void saveMapResources(String mapName, GameState game) {
+		String mapFile = "maps/" + mapName + ".cqres";
+		
+		try {
+			FileOutputStream fout = new FileOutputStream(mapFile);
+			ObjectOutputStream objout = new ObjectOutputStream (fout);
+			
+			HashMap<Point2i, HashMap<BasicResourceType, Integer>> cellResources = new HashMap<Point2i, HashMap<BasicResourceType,Integer>>();
+			HashMap<Point2i, HashMap<BasicResourceType, ResourceAttributes>> cellAttributes = new HashMap<Point2i, HashMap<BasicResourceType,ResourceAttributes>>();
+			
+			for (int i = 0; i < game.map.mapHeight; i++) {
+				for (int j = 0; j < game.map.mapWidth; j++) {
+					cellResources.put(game.map.cells[i][j].pos, new HashMap<BasicResourceType, Integer>(game.map.cells[i][j].resources));
+					cellAttributes.put(game.map.cells[i][j].pos, new HashMap<BasicResourceType, ResourceAttributes>(game.map.cells[i][j].scanAttributes));
+				}
+			}
+			
+			// write game data
+			objout.writeObject(game);
+			
+			// write resource and scan data
+			objout.writeObject(cellResources);
+			objout.writeObject(cellAttributes);
+			
+			objout.flush();
+			objout.close();
+			fout.close();
+		}catch(FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 }
 
 class MapReader {
 	public static int mapWidth;
 	public static int mapHeight;
 	public static int nrTurns;
+	public static String mapName = "map_v1.cqm"; 
 	public static CellState[][] cells;
 	
 	public static void readMap(Document paramDoc) {
 		Element root = (Element)paramDoc.getDocumentElement();
 		Element parametersNode = (Element)root.getElementsByTagName("parameters").item(0);
-		String mapFile = "maps/" + parametersNode.getElementsByTagName("mapName").item(0).getTextContent();
+		mapName = parametersNode.getElementsByTagName("mapName").item(0).getTextContent();
+		String mapFile = "maps/" + mapName;
 		
 		try {
 			FileInputStream fis = new FileInputStream(mapFile);

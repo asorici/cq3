@@ -1,5 +1,7 @@
 package org.aimas.craftingquest.state;
 
+import java.io.Serializable;
+
 import org.aimas.craftingquest.state.CraftedObject.BasicResourceType;
 
 /**
@@ -11,7 +13,7 @@ import org.aimas.craftingquest.state.CraftedObject.BasicResourceType;
  * will be able to determine the correspondence. </p>
  * 
  */
-public class ResourceAttributes {
+public class ResourceAttributes implements Serializable {
 	/**
 	 * the resource type for which the attributes are given
 	 */

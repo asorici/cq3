@@ -47,4 +47,26 @@ public class Point2i implements Serializable {
 		}
 		return false;
 	}
+	
+	public int hashCode() {
+		return y * 512 + x;
+	}
+	
+	public boolean equals(Object obj) {
+		if (obj == null) {
+			return false;
+		}
+		
+		if (!(obj instanceof Point2i)) {
+			return false;
+		}
+		
+		final Point2i other = (Point2i)obj;
+		
+		if (this.x != other.x || this.y != other.y) {
+			return false;
+		}
+		
+		return true;
+	}
 }

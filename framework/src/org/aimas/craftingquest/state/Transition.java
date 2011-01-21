@@ -6,7 +6,7 @@ import java.io.Serializable;
 public class Transition implements Serializable {
 
 	// public enum ActionType implements Serializable{
-	public enum ActionType {
+	public enum ActionType implements Serializable {
 		Nothing, PlayerReady, EndTurn, RequestState, Move, Dig, ScanLand, PickupResources, PickupObjects, DropResources, DropObjects,  
 		RequestBlueprints, BuyBlueprint, CraftObject, SellObject, PlaceTower, Trade, Attack, TuneScanner
 	}

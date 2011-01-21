@@ -28,7 +28,7 @@ import org.aimas.craftingquest.state.CraftedObject.BasicResourceType;
 @SuppressWarnings("serial")
 public class UnitState implements Serializable {
 
-	public enum UnitType {
+	public enum UnitType implements Serializable {
 		Crocodile, Tazmanian, Fox
 	}
 

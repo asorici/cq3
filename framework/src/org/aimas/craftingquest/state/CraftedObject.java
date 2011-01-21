@@ -17,11 +17,11 @@ import java.util.Set;
  */
 @SuppressWarnings("serial")
 public class CraftedObject implements Serializable {
-	public enum BasicResourceType {
+	public enum BasicResourceType implements Serializable {
 		R1, R2, R3, R4, R5, R6, R7, R8, R9, R10, R11, R12
 	}
 	
-	public enum ObjectType {
+	public enum ObjectType implements Serializable {
 		O1, O2, O3, O4, O5, O6, O7, O8, O9, O10, O11, O12
 	}
 	

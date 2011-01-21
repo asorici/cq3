@@ -59,6 +59,7 @@ public class Server0 implements IServer {
 		this.portNumber = portNumber;
 		
 		state = GameGenerator.setupGame();
+		
 		actionEngine = new ActionEngine(state);
 		timer = new Timer();
 		secrets = readSecrets(secretsFile);
@@ -75,6 +76,11 @@ public class Server0 implements IServer {
 		unresponsive = new boolean[secrets.length];
 		for (int i = 0; i < unresponsive.length; i++) {
 			unresponsive[i] = false;
+		}
+		
+		if (System.getProperty("savemap") != null) {
+			boolean savemap = Boolean.parseBoolean(System.getProperty("savemap"));
+			GamePolicy.saveMapResources(state);
 		}
 		
 		if (System.getProperty("gui") != null) {

@@ -8,7 +8,7 @@ import java.io.Serializable;
  */
 @SuppressWarnings("serial")
 public class StrategicResource implements Serializable {
-	public enum StrategicResourceType {
+	public enum StrategicResourceType implements Serializable {
 		Tower, Merchant
 	};
 	
