@@ -1,9 +1,11 @@
 package org.aimas.craftingquest.core;
 
+import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
@@ -20,16 +22,10 @@ import org.aimas.craftingquest.state.CellState.CellType;
 import org.aimas.craftingquest.state.CraftedObject.BasicResourceType;
 import org.aimas.craftingquest.state.CraftedObject.ObjectType;
 import org.aimas.craftingquest.state.UnitState.UnitType;
-import org.json.JSONException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
-
-/**
- * 
- * @author Razvan
- */
 public class GamePolicy {
 
 	/* server configuration */
@@ -126,7 +122,7 @@ public class GamePolicy {
 		}
 		
 		Document paramDoc = GameUtils.readXMLDocument("GamePolicy.xml");
-		MapReader.readMap(paramDoc);
+		MapReader.readMap("mapdata");
 		mapsize = new Point2i(MapReader.mapWidth, MapReader.mapHeight);
 		mapName = MapReader.mapName;
 		lastTurn = MapReader.nrTurns;
@@ -160,9 +156,9 @@ public class GamePolicy {
 		playerLateTime = Integer.parseInt(parametersNode.getElementsByTagName("playerLateTime").item(0).getTextContent());
 		updateTime = Integer.parseInt(parametersNode.getElementsByTagName("updateTime").item(0).getTextContent());
 		connectWaitTime = Integer.parseInt(parametersNode.getElementsByTagName("connectWaitTime").item(0).getTextContent());
-		lastTurn = Integer.parseInt(parametersNode.getElementsByTagName("nrTurns").item(0).getTextContent());
+		//lastTurn = Integer.parseInt(parametersNode.getElementsByTagName("nrTurns").item(0).getTextContent());
 		nrPlayerUnits = Integer.parseInt(parametersNode.getElementsByTagName("nrPlayerUnits").item(0).getTextContent());
-		mapName = parametersNode.getElementsByTagName("mapName").item(0).getTextContent();
+		//mapName = parametersNode.getElementsByTagName("mapName").item(0).getTextContent();
 	}
 	
 	private static void readScenarioParameters(Element parametersNode) {
@@ -289,10 +285,28 @@ class MapReader {
 	public static String mapName = "map_v1.cqm"; 
 	public static CellState[][] cells;
 	
-	public static void readMap(Document paramDoc) {
-		Element root = (Element)paramDoc.getDocumentElement();
-		Element parametersNode = (Element)root.getElementsByTagName("parameters").item(0);
-		mapName = parametersNode.getElementsByTagName("mapName").item(0).getTextContent();
+	public static void readMap(String mapDatafilename) {
+		//Element root = (Element)paramDoc.getDocumentElement();
+		//Element parametersNode = (Element)root.getElementsByTagName("parameters").item(0);
+		//mapName = parametersNode.getElementsByTagName("mapName").item(0).getTextContent();
+		BufferedReader reader = null;
+		try {
+			reader = new BufferedReader(new FileReader(mapDatafilename));
+			mapName = reader.readLine().trim();
+			System.out.println("Read map name from \"mapdata\" file.");
+			reader.close();
+		} catch(IOException e) {
+			e.printStackTrace();
+		} finally {
+			if (reader != null) {
+				try {
+					reader.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		
 		String mapFile = "maps/" + mapName;
 		
 		try {
