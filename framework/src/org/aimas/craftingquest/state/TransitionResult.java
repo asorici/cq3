@@ -9,7 +9,7 @@ import java.io.Serializable;
 @SuppressWarnings("serial")
 public class TransitionResult implements Serializable {
 
-	public enum TransitionError {
+	public enum TransitionError implements Serializable {
 		NoError, OperandError, MoveError, TerrainError, ObstacleError, NoEnergyError, PickupError, BuildError, CraftingError, ResourceMissingError, NoCreditError, BuyRequestError, SellRequestError, GuardError
 	};
 

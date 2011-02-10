@@ -21,6 +21,7 @@ import org.aimas.craftingquest.state.UnitState;
 import org.aimas.craftingquest.state.CellState.CellType;
 import org.aimas.craftingquest.state.CraftedObject.BasicResourceType;
 import org.aimas.craftingquest.state.Transition.ActionType;
+import org.apache.log4j.Logger;
 
 /**
  * 
@@ -28,6 +29,8 @@ import org.aimas.craftingquest.state.Transition.ActionType;
  */
 public class ActionEngine {
 
+	private static Logger gui_logger = Logger.getLogger("org.aimas.craftingquest.core.guilogger");
+	
 	GameState game;
 
 	public ActionEngine(GameState gameState) {
@@ -878,6 +881,9 @@ public class ActionEngine {
 										opponentState.availableTowers.put(t, false);	// tower is no longer available
 										pTowers.remove(t);			// the weakened tower and remove it
 										foundTower = true;
+										
+										// log tower destruction
+										gui_logger.info(state.round.currentRound + " RemoveTower " + t.getPosition().y + " " + t.getPosition().x);
 										break;
 									}
 								}

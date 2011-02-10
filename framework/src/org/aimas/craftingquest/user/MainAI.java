@@ -4,7 +4,6 @@ import java.security.AccessControlException;
 
 import org.aimas.craftingquest.core.Client0;
 import org.aimas.craftingquest.state.PlayerState;
-import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 

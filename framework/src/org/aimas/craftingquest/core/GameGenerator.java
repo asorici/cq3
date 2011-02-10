@@ -1,7 +1,11 @@
 package org.aimas.craftingquest.core;
 
+import java.io.EOFException;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -14,6 +18,7 @@ import org.aimas.craftingquest.state.MapState;
 import org.aimas.craftingquest.state.Merchant;
 import org.aimas.craftingquest.state.PlayerState;
 import org.aimas.craftingquest.state.Point2i;
+import org.aimas.craftingquest.state.ResourceAttributes;
 import org.aimas.craftingquest.state.StrategicResource;
 import org.aimas.craftingquest.state.UnitState;
 import org.aimas.craftingquest.state.CraftedObject.BasicResourceType;
@@ -28,48 +33,113 @@ public class GameGenerator {
 		/* initialize scenario */
 		GamePolicy.initScenario();
 		
-		/* create initial game state */
-		GameState game = new GameState();
-		game.map = GamePolicy.map;
+		GameState game = checkForSavedGame();
+		//GameState game = null;
 		
-		/* set merchant list */
-		game.merchantList = setupMerchantList(game.map);
-		
-		/* set map resources */
-		HashMap<BasicResourceType, Integer> resourceAmountsByType = ResourceGenerator.placeResources(game.map);
-		game.blueprints = ResourceGenerator.generateBlueprints(resourceAmountsByType);		// generate blueprints
-		game.resourceAmountsByType = resourceAmountsByType;
-		
-		printResourceStatistics(resourceAmountsByType, game.blueprints);
-		
-		/* distribute blueprints to merchants */
-		distributeBlueprints(game);
-		 
-		ScanAttributeGenerator.setupScanAttributes(game.map);		// generate scan attributes for each map cell
-		
-		/* setup initial player states - there should be only 2 players */
-		for (int i = 0; i < GamePolicy.noPlayers; i++) {
-			if (i % 2 == 0) {
-				PlayerState player = setupPlayerState(i + 1, GamePolicy.nrPlayerUnits, new Point2i(5, 5), game.map);
-				player.availableBlueprints = game.blueprints;	// all available blueprints are known at the start
-				//game.playerStates.add(player);
-				game.playerStates.put(player.id, player);
+		/* create initial game state if saved state does not exist */
+		if (game == null) {
+			game = new GameState();
+			game.map = GamePolicy.map;
+			
+			/* set merchant list */
+			game.merchantList = setupMerchantList(game.map);
+			
+			/* set map resources */
+			HashMap<BasicResourceType, Integer> resourceAmountsByType = ResourceGenerator.placeResources(game.map);
+			game.blueprints = ResourceGenerator.generateBlueprints(resourceAmountsByType);		// generate blueprints
+			game.resourceAmountsByType = resourceAmountsByType;
+			
+			/* distribute blueprints to merchants */
+			distributeBlueprints(game);
+			 
+			ScanAttributeGenerator.setupScanAttributes(game.map);		// generate scan attributes for each map cell
+			
+			/* setup initial player states - there should be only 2 players */
+			for (int i = 0; i < GamePolicy.noPlayers; i++) {
+				if (i % 2 == 0) {
+					PlayerState player = setupPlayerState(i + 1, GamePolicy.nrPlayerUnits, new Point2i(5, 5), game.map);
+					player.availableBlueprints = game.blueprints;	// all available blueprints are known at the start
+					//game.playerStates.add(player);
+					game.playerStates.put(player.id, player);
+				}
+				else {
+					PlayerState player = setupPlayerState(i + 1, GamePolicy.nrPlayerUnits, new Point2i(GamePolicy.mapsize.x - 5, GamePolicy.mapsize.y - 5), game.map);
+					player.availableBlueprints = game.blueprints;	// all available blueprints are known at the start
+					//game.playerStates.add(player);
+					game.playerStates.put(player.id, player);
+				}
 			}
-			else {
-				PlayerState player = setupPlayerState(i + 1, GamePolicy.nrPlayerUnits, new Point2i(GamePolicy.mapsize.x - 5, GamePolicy.mapsize.y - 5), game.map);
-				player.availableBlueprints = game.blueprints;	// all available blueprints are known at the start
-				//game.playerStates.add(player);
-				game.playerStates.put(player.id, player);
-			}
+			
+			/* initialize tower list for every player */
+			game.initializeTowerLists();
 		}
 		
-		/* initialize tower list for every player */
-		game.initializeTowerLists();
-		
+		printResourceStatistics(game.resourceAmountsByType, game.blueprints);
 		
 		return game;
 	}
 	
+	private static GameState checkForSavedGame() {
+		String savedResFilename = GamePolicy.mapName + ".cqres";
+		String mapFile = "maps/" + savedResFilename;
+		
+		ObjectInputStream objin = null;
+		GameState game = null;
+		HashMap<Point2i, HashMap<BasicResourceType, Integer>> cellResources = null;
+		HashMap<Point2i, HashMap<BasicResourceType, ResourceAttributes>> cellAttributes = null;
+		
+		try {
+			objin = new ObjectInputStream (new FileInputStream(mapFile));
+			
+			Object obj = objin.readObject();
+			if (obj == null || !(obj instanceof GameState)) {
+				return null;
+			}
+			
+			game = (GameState)obj;
+						
+			cellResources = (HashMap<Point2i, HashMap<BasicResourceType, Integer>>)objin.readObject();
+			if (cellResources == null) {
+				return null;
+			}
+
+			cellAttributes = (HashMap<Point2i, HashMap<BasicResourceType, ResourceAttributes>>)objin.readObject();
+			if (cellAttributes == null) {
+				return null;
+			}
+			
+			for (Point2i p : cellResources.keySet()) {
+				game.map.cells[p.y][p.x].resources = new HashMap<BasicResourceType, Integer>(cellResources.get(p));
+			}
+			
+			for (Point2i p : cellAttributes.keySet()) {
+				game.map.cells[p.y][p.x].scanAttributes = new HashMap<BasicResourceType, ResourceAttributes>(cellAttributes.get(p));
+			}
+		}catch (EOFException ex) { 
+            System.out.println("End of file reached.");
+        } catch (ClassNotFoundException ex) {
+            ex.printStackTrace();
+        }catch(FileNotFoundException e) {
+			System.out.println("No .cqres file found. Will build fresh game state.");
+			return null;
+		} catch (IOException e) {
+			e.printStackTrace();
+			return null;
+		}
+		finally{
+			//Close the ObjectInputStream
+            try {
+                if (objin != null) {
+                    objin.close();
+                }
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+		}
+	
+		return game;
+	}
+
 	private static void distributeBlueprints(GameState game) throws IllegalArgumentException {
 		List<Blueprint> blueprints = game.blueprints;
 		List<Merchant> merchants = game.merchantList;

@@ -7,6 +7,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
+import java.util.HashMap;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -16,7 +18,12 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.SwingUtilities;
 
+import org.aimas.craftingquest.core.ResourceGenerator;
+import org.aimas.craftingquest.state.Blueprint;
+import org.aimas.craftingquest.state.MapState;
+import org.aimas.craftingquest.state.Merchant;
 import org.aimas.craftingquest.state.CellState.CellType;
+import org.aimas.craftingquest.state.CraftedObject.BasicResourceType;
 import org.aimas.craftingquest.state.StrategicResource.StrategicResourceType;
 
 
@@ -24,6 +31,7 @@ import org.aimas.craftingquest.state.StrategicResource.StrategicResourceType;
 public class EditorInterface extends JFrame implements ActionListener {
 
 	private MapCell[][] terrain;
+	
 	private int mapHeight = 60;
 	private int mapWidth = 60;
 	
@@ -119,7 +127,6 @@ public class EditorInterface extends JFrame implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-
 		if (e.getSource().equals(saveMapBtn)) {
 			int returnVal = fileChooser.showSaveDialog(this);
             if (returnVal == JFileChooser.APPROVE_OPTION) {
