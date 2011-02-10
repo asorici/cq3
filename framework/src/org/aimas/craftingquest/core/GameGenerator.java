@@ -73,6 +73,28 @@ public class GameGenerator {
 			/* initialize tower list for every player */
 			game.initializeTowerLists();
 		}
+		else {
+			/* setup initial player states - there should be only 2 players */
+			game.playerStates.clear();
+			
+			for (int i = 0; i < GamePolicy.noPlayers; i++) {
+				if (i % 2 == 0) {
+					PlayerState player = setupPlayerState(i + 1, GamePolicy.nrPlayerUnits, new Point2i(5, 5), game.map);
+					player.availableBlueprints = game.blueprints;	// all available blueprints are known at the start
+					//game.playerStates.add(player);
+					game.playerStates.put(player.id, player);
+				}
+				else {
+					PlayerState player = setupPlayerState(i + 1, GamePolicy.nrPlayerUnits, new Point2i(GamePolicy.mapsize.x - 5, GamePolicy.mapsize.y - 5), game.map);
+					player.availableBlueprints = game.blueprints;	// all available blueprints are known at the start
+					//game.playerStates.add(player);
+					game.playerStates.put(player.id, player);
+				}
+			}
+			
+			/* initialize tower list for every player */
+			game.initializeTowerLists();
+		}
 		
 		printResourceStatistics(game.resourceAmountsByType, game.blueprints);
 		
