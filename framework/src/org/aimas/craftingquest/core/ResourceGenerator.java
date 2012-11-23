@@ -258,7 +258,8 @@ public class ResourceGenerator {
 		
 		for (int i = 0; i < nrIngredients; i++) {
 			int index = randGen.nextInt(auxList.size());
-			objList.add(simpleBlueprints.get(index).getDescribedObject());
+			objList.add(simpleBlueprints.get(auxList.get(index)).getDescribedObject());
+			auxList.remove(index);
 		}
 		
 		return objList;

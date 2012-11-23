@@ -883,7 +883,7 @@ public class ActionEngine {
 										foundTower = true;
 										
 										// log tower destruction
-										gui_logger.info(state.round.currentRound + " RemoveTower " + t.getPosition().y + " " + t.getPosition().x);
+										gui_logger.info(state.round.currentRound + " RemoveTower " + t.getPosition().x + " " + t.getPosition().y);
 										break;
 									}
 								}

@@ -1,0 +1,68 @@
+ 6602 INFO  [RMI TCP Connection(6)-10.6.4.48] core.Client0 - [client][onEvent][NewRound]
+ 6606 INFO  [RMI TCP Connection(6)-10.6.4.48] core.Client0 - [client][onEvent][EndRound]
+ 6609 INFO  [RMI TCP Connection(3)-10.6.4.48] core.Server0 - [srv]Executing action [Move] for client: 0
+ 6671 INFO  [RMI TCP Connection(3)-10.6.4.48] core.Server0 - [srv]Executing action [Move] for client: 0
+ 6704 INFO  [RMI TCP Connection(3)-10.6.4.48] core.Server0 - [srv]Executing action [Move] for client: 0
+ 7702 INFO  [RMI TCP Connection(6)-10.6.4.48] core.Client0 - [client][onEvent][NewRound]
+ 7704 INFO  [RMI TCP Connection(6)-10.6.4.48] core.Client0 - [client][onEvent][EndRound]
+ 7708 INFO  [RMI TCP Connection(3)-10.6.4.48] core.Server0 - [srv]Executing action [Move] for client: 1
+ 7720 INFO  [RMI TCP Connection(3)-10.6.4.48] core.Server0 - [srv]Executing action [Move] for client: 1
+ 7737 INFO  [RMI TCP Connection(3)-10.6.4.48] core.Server0 - [srv]Executing action [Move] for client: 1
+ 8802 INFO  [RMI TCP Connection(6)-10.6.4.48] core.Client0 - [client][onEvent][NewRound]
+ 8803 INFO  [RMI TCP Connection(6)-10.6.4.48] core.Client0 - [client][onEvent][EndRound]
+ 8807 INFO  [RMI TCP Connection(3)-10.6.4.48] core.Server0 - [srv]Executing action [Move] for client: 0
+ 8841 INFO  [RMI TCP Connection(3)-10.6.4.48] core.Server0 - [srv]Executing action [Move] for client: 0
+ 9902 INFO  [RMI TCP Connection(6)-10.6.4.48] core.Client0 - [client][onEvent][NewRound]
+ 9904 INFO  [RMI TCP Connection(6)-10.6.4.48] core.Client0 - [client][onEvent][EndRound]
+ 9907 INFO  [RMI TCP Connection(3)-10.6.4.48] core.Server0 - [srv]Executing action [Move] for client: 1
+ 9916 INFO  [RMI TCP Connection(3)-10.6.4.48] core.Server0 - [srv]Executing action [Move] for client: 1
+ 9925 INFO  [RMI TCP Connection(3)-10.6.4.48] core.Server0 - [srv]Executing action [Move] for client: 1
+11002 INFO  [RMI TCP Connection(6)-10.6.4.48] core.Client0 - [client][onEvent][NewRound]
+11006 INFO  [RMI TCP Connection(6)-10.6.4.48] core.Client0 - [client][onEvent][EndRound]
+11008 INFO  [RMI TCP Connection(3)-10.6.4.48] core.Server0 - [srv]Executing action [Move] for client: 0
+11029 INFO  [RMI TCP Connection(3)-10.6.4.48] core.Server0 - [srv]Executing action [Move] for client: 0
+11047 INFO  [RMI TCP Connection(3)-10.6.4.48] core.Server0 - [srv]Executing action [Move] for client: 0
+12101 INFO  [RMI TCP Connection(6)-10.6.4.48] core.Client0 - [client][onEvent][NewRound]
+12103 INFO  [RMI TCP Connection(6)-10.6.4.48] core.Client0 - [client][onEvent][EndRound]
+12104 INFO  [RMI TCP Connection(3)-10.6.4.48] core.Server0 - [srv]Executing action [Move] for client: 1
+12116 INFO  [RMI TCP Connection(3)-10.6.4.48] core.Server0 - [srv]Executing action [Move] for client: 1
+12128 INFO  [RMI TCP Connection(3)-10.6.4.48] core.Server0 - [srv]Executing action [Move] for client: 1
+13202 INFO  [RMI TCP Connection(6)-10.6.4.48] core.Client0 - [client][onEvent][NewRound]
+13204 INFO  [RMI TCP Connection(6)-10.6.4.48] core.Client0 - [client][onEvent][EndRound]
+13211 INFO  [RMI TCP Connection(3)-10.6.4.48] core.Server0 - [srv]Executing action [Move] for client: 0
+13224 INFO  [RMI TCP Connection(3)-10.6.4.48] core.Server0 - [srv]Executing action [Move] for client: 0
+14302 INFO  [RMI TCP Connection(6)-10.6.4.48] core.Client0 - [client][onEvent][NewRound]
+14303 INFO  [RMI TCP Connection(6)-10.6.4.48] core.Client0 - [client][onEvent][EndRound]
+14304 INFO  [RMI TCP Connection(3)-10.6.4.48] core.Server0 - [srv]Executing action [Move] for client: 1
+14316 INFO  [RMI TCP Connection(3)-10.6.4.48] core.Server0 - [srv]Executing action [Move] for client: 1
+14325 INFO  [RMI TCP Connection(3)-10.6.4.48] core.Server0 - [srv]Executing action [Move] for client: 1
+15402 INFO  [RMI TCP Connection(6)-10.6.4.48] core.Client0 - [client][onEvent][NewRound]
+15404 INFO  [RMI TCP Connection(6)-10.6.4.48] core.Client0 - [client][onEvent][EndRound]
+15410 INFO  [RMI TCP Connection(3)-10.6.4.48] core.Server0 - [srv]Executing action [Move] for client: 0
+15429 INFO  [RMI TCP Connection(3)-10.6.4.48] core.Server0 - [srv]Executing action [Move] for client: 0
+15447 INFO  [RMI TCP Connection(3)-10.6.4.48] core.Server0 - [srv]Executing action [Move] for client: 0
+16502 INFO  [RMI TCP Connection(6)-10.6.4.48] core.Client0 - [client][onEvent][NewRound]
+16503 INFO  [RMI TCP Connection(6)-10.6.4.48] core.Client0 - [client][onEvent][EndRound]
+16509 INFO  [RMI TCP Connection(3)-10.6.4.48] core.Server0 - [srv]Executing action [Move] for client: 1
+16519 INFO  [RMI TCP Connection(3)-10.6.4.48] core.Server0 - [srv]Executing action [Move] for client: 1
+16529 INFO  [RMI TCP Connection(3)-10.6.4.48] core.Server0 - [srv]Executing action [Move] for client: 1
+17602 INFO  [RMI TCP Connection(6)-10.6.4.48] core.Client0 - [client][onEvent][NewRound]
+17603 INFO  [RMI TCP Connection(6)-10.6.4.48] core.Client0 - [client][onEvent][EndRound]
+17612 INFO  [RMI TCP Connection(3)-10.6.4.48] core.Server0 - [srv]Executing action [Move] for client: 0
+17624 INFO  [RMI TCP Connection(3)-10.6.4.48] core.Server0 - [srv]Executing action [Move] for client: 0
+17642 INFO  [RMI TCP Connection(3)-10.6.4.48] core.Server0 - [srv]Executing action [Move] for client: 0
+18702 INFO  [RMI TCP Connection(6)-10.6.4.48] core.Client0 - [client][onEvent][NewRound]
+18703 INFO  [RMI TCP Connection(6)-10.6.4.48] core.Client0 - [client][onEvent][EndRound]
+18704 INFO  [RMI TCP Connection(3)-10.6.4.48] core.Server0 - [srv]Executing action [Move] for client: 1
+18713 INFO  [RMI TCP Connection(3)-10.6.4.48] core.Server0 - [srv]Executing action [Move] for client: 1
+18724 INFO  [RMI TCP Connection(3)-10.6.4.48] core.Server0 - [srv]Executing action [Move] for client: 1
+19802 INFO  [RMI TCP Connection(6)-10.6.4.48] core.Client0 - [client][onEvent][NewRound]
+19803 INFO  [RMI TCP Connection(6)-10.6.4.48] core.Client0 - [client][onEvent][EndRound]
+19806 INFO  [RMI TCP Connection(3)-10.6.4.48] core.Server0 - [srv]Executing action [Move] for client: 0
+19833 INFO  [RMI TCP Connection(3)-10.6.4.48] core.Server0 - [srv]Executing action [Move] for client: 0
+19845 INFO  [RMI TCP Connection(3)-10.6.4.48] core.Server0 - [srv]Executing action [Move] for client: 0
+20902 INFO  [RMI TCP Connection(6)-10.6.4.48] core.Client0 - [client][onEvent][NewRound]
+20903 INFO  [RMI TCP Connection(6)-10.6.4.48] core.Client0 - [client][onEvent][EndRound]
+20905 INFO  [RMI TCP Connection(3)-10.6.4.48] core.Server0 - [srv]Executing action [Move] for client: 1
+20916 INFO  [RMI TCP Connection(3)-10.6.4.48] core.Server0 - [srv]Executing action [Move] for client: 1
+20924 INFO  [RMI TCP Connection(3)-10.6.4.48] core.Server0 - [srv]Executing action [Move] for client: 1

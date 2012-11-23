@@ -32,8 +32,8 @@ public class EditorInterface extends JFrame implements ActionListener {
 
 	private MapCell[][] terrain;
 	
-	private int mapHeight = 60;
-	private int mapWidth = 60;
+	private int mapHeight = 70;
+	private int mapWidth = 70;
 	
 	private EditorCanvas editorCanvas;
 	private MiniEditorCanvas miniEditorCanvas;

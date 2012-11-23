@@ -74,8 +74,27 @@ public class GameGenerator {
 			game.initializeTowerLists();
 		}
 		else {
+			/*reset number of turns according to map size*/
+			if (game.map.mapWidth >= 60 && game.map.mapWidth < 70) {
+				game.round.noRounds = 160;
+			}
+			
+			if (game.map.mapWidth >= 70 && game.map.mapWidth < 80) {
+				game.round.noRounds = 180;
+			}
+			
+			if (MapReader.mapWidth >= 80) {
+				game.round.noRounds = 200;
+			}
+			
 			/* setup initial player states - there should be only 2 players */
 			game.playerStates.clear();
+			
+			for(int y = 0; y < game.map.mapHeight; y++) {
+				for(int x = 0; x < game.map.mapWidth; x++) {
+					game.map.cells[y][x].cellUnits.clear();
+				}
+			}
 			
 			for (int i = 0; i < GamePolicy.noPlayers; i++) {
 				if (i % 2 == 0) {

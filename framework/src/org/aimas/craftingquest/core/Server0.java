@@ -20,6 +20,7 @@ import org.aimas.craftingquest.state.CraftedObject;
 import org.aimas.craftingquest.state.GameState;
 import org.aimas.craftingquest.state.PlayerState;
 import org.aimas.craftingquest.state.Transition;
+import org.aimas.craftingquest.state.TransitionResult;
 import org.aimas.craftingquest.state.UnitState;
 import org.aimas.craftingquest.state.Transition.ActionType;
 import org.apache.log4j.Logger;
@@ -58,6 +59,8 @@ public class Server0 implements IServer {
 		this.portNumber = portNumber;
 		
 		state = GameGenerator.setupGame();
+		
+		System.out.println("Game has " + state.round.noRounds + " rounds.");
 		
 		actionEngine = new ActionEngine(state);
 		timer = new Timer();
@@ -173,11 +176,14 @@ public class Server0 implements IServer {
 		}
 		
 		if (!responsiveClients) {
+			declareWinner();
 			System.exit(10);
 		}
 		
 		// increment turn number
 		state.round.currentRound++;
+		
+		System.out.println("Current round: " + state.round.currentRound);
 		
 		long roundStartTime = GamePolicy.connectWaitTime + state.round.currentRound * GamePolicy.roundTime;
 		state.round.startTime = roundStartTime;
@@ -295,7 +301,7 @@ public class Server0 implements IServer {
 				timer.cancel();
 				endGame();
 			}
-		}, GamePolicy.roundTime * GamePolicy.lastTurn);
+		}, GamePolicy.roundTime * state.round.noRounds);
 
 	}
 
@@ -310,6 +316,10 @@ public class Server0 implements IServer {
 		PlayerState player = state.playerStates.get(playerID);
 		
 		if (action.operator == ActionType.PlayerReady) {
+			TransitionResult res = new TransitionResult(action.id);
+			res.errorType = TransitionResult.TransitionError.NoError;
+			player.response = res;
+			
 			printToGuiLog(player, action);
 			return player;
 		}
@@ -441,6 +451,7 @@ public class Server0 implements IServer {
 			try {
 				BufferedWriter bw = new BufferedWriter(new FileWriter("winner.txt"));
 				bw.write("tied");
+				bw.newLine();
 				bw.write("" + maxCredit);
 				bw.close();
 			} catch (IOException e) {

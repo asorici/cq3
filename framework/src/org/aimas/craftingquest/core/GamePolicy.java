@@ -126,6 +126,16 @@ public class GamePolicy {
 		mapsize = new Point2i(MapReader.mapWidth, MapReader.mapHeight);
 		mapName = MapReader.mapName;
 		lastTurn = MapReader.nrTurns;
+		if (MapReader.mapWidth >= 60 && MapReader.mapWidth < 70) {
+			lastTurn = 160;
+		}
+		if (MapReader.mapWidth >= 70 && MapReader.mapWidth < 80) {
+			lastTurn = 180;
+		}
+		if (MapReader.mapWidth >= 80) {
+			lastTurn = 200;
+		}
+		
 		map = new MapState();
 		map.cells = MapReader.cells;
 		map.mapHeight = MapReader.mapHeight;

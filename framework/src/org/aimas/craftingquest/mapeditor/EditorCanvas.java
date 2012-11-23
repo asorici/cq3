@@ -305,6 +305,7 @@ public class EditorCanvas extends Canvas implements MouseListener, MouseMotionLi
 			for (int yy = cellStartY; yy < cellFinalY; yy++) {
 				for (int xx = cellStartX; xx < cellFinalX; xx++) {
 					terrain[yy][xx].cellType = selectedCellType;
+					terrain[yy][xx].strategicResType = null;
 				}
 			}
 			
@@ -345,6 +346,7 @@ public class EditorCanvas extends Canvas implements MouseListener, MouseMotionLi
 	    	
 	    	if (selectedStrategic == null) {
 		    	terrain[ycoord][xcoord].cellType = selectedCellType;
+		    	terrain[ycoord][xcoord].strategicResType = null;
 	    	}
 	    	else {
 	    		terrain[ycoord][xcoord].strategicResType = selectedStrategic;

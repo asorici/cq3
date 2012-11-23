@@ -1,0 +1,338 @@
+ 3404 INFO  [pool-1-thread-1] user.MainAI - [AI][initPlayer][begin]
+ 3405 INFO  [pool-1-thread-1] user.MainAI - [AI][initPlayer][end]
+ 6602 INFO  [RMI TCP Connection(6)-10.6.4.48] core.Client0 - [client][onEvent][NewRound]
+ 6605 INFO  [Thread-7] user.AIThread - [AI]: beginRound
+ 6606 INFO  [Thread-7] user.AIThread - [AI]: unit state: playerID=1 type=Tazmanian pos=(3, 3) energy=150
+    carried resources: 
+        
+    carried objects: 
+        
+
+ 6606 INFO  [RMI TCP Connection(6)-10.6.4.48] core.Client0 - [client][onEvent][EndRound]
+ 6656 INFO  [Thread-7] user.AIThread - [AI]:  ==== Last transition valid ==== 
+ 6658 INFO  [Thread-7] user.AIThread - [AI]: unit state: playerID=1 type=Fox pos=(4, 3) energy=150
+    carried resources: 
+        
+    carried objects: 
+        
+
+ 6702 INFO  [Thread-7] user.AIThread - [AI]:  ==== Last transition valid ==== 
+ 6702 INFO  [Thread-7] user.AIThread - [AI]: unit state: playerID=1 type=Crocodile pos=(5, 3) energy=150
+    carried resources: 
+        
+    carried objects: 
+        
+
+ 6725 INFO  [Thread-7] user.AIThread - [AI]:  ==== Last transition valid ==== 
+ 7702 INFO  [RMI TCP Connection(6)-10.6.4.48] core.Client0 - [client][onEvent][NewRound]
+ 7703 INFO  [Thread-8] user.AIThread - [AI]: beginRound
+ 7704 INFO  [Thread-8] user.AIThread - [AI]: unit state: playerID=2 type=Tazmanian pos=(57, 57) energy=150
+    carried resources: 
+        
+    carried objects: 
+        
+
+ 7704 INFO  [RMI TCP Connection(6)-10.6.4.48] core.Client0 - [client][onEvent][EndRound]
+ 7718 INFO  [Thread-8] user.AIThread - [AI]:  ==== Last transition valid ==== 
+ 7719 INFO  [Thread-8] user.AIThread - [AI]: unit state: playerID=2 type=Fox pos=(56, 57) energy=150
+    carried resources: 
+        
+    carried objects: 
+        
+
+ 7735 INFO  [Thread-8] user.AIThread - [AI]:  ==== Last transition valid ==== 
+ 7735 INFO  [Thread-8] user.AIThread - [AI]: unit state: playerID=2 type=Crocodile pos=(55, 57) energy=150
+    carried resources: 
+        
+    carried objects: 
+        
+
+ 7749 INFO  [Thread-8] user.AIThread - [AI]:  ==== Last transition valid ==== 
+ 8802 INFO  [RMI TCP Connection(6)-10.6.4.48] core.Client0 - [client][onEvent][NewRound]
+ 8803 INFO  [Thread-7] user.AIThread - [AI]: beginRound
+ 8803 INFO  [Thread-7] user.AIThread - [AI]: unit state: playerID=1 type=Tazmanian pos=(2, 3) energy=130
+    carried resources: 
+        
+    carried objects: 
+        
+
+ 8803 INFO  [RMI TCP Connection(6)-10.6.4.48] core.Client0 - [client][onEvent][EndRound]
+ 8805 INFO  [Thread-7] user.AIThread - [AI]:  ==== Last transition valid ==== 
+ 8806 INFO  [Thread-7] user.AIThread - [AI]: unit state: playerID=1 type=Fox pos=(4, 4) energy=130
+    carried resources: 
+        
+    carried objects: 
+        
+
+ 8838 INFO  [Thread-7] user.AIThread - [AI]:  ==== Last transition valid ==== 
+ 8839 INFO  [Thread-7] user.AIThread - [AI]: unit state: playerID=1 type=Crocodile pos=(5, 2) energy=150
+    carried resources: 
+        
+    carried objects: 
+        
+
+ 8857 INFO  [Thread-7] user.AIThread - [AI]:  ==== Last transition valid ==== 
+ 9902 INFO  [RMI TCP Connection(6)-10.6.4.48] core.Client0 - [client][onEvent][NewRound]
+ 9903 INFO  [Thread-8] user.AIThread - [AI]: beginRound
+ 9904 INFO  [RMI TCP Connection(6)-10.6.4.48] core.Client0 - [client][onEvent][EndRound]
+ 9905 INFO  [Thread-8] user.AIThread - [AI]: unit state: playerID=2 type=Tazmanian pos=(58, 58) energy=130
+    carried resources: 
+        
+    carried objects: 
+        
+
+ 9914 INFO  [Thread-8] user.AIThread - [AI]:  ==== Last transition valid ==== 
+ 9914 INFO  [Thread-8] user.AIThread - [AI]: unit state: playerID=2 type=Fox pos=(55, 58) energy=150
+    carried resources: 
+        
+    carried objects: 
+        
+
+ 9923 INFO  [Thread-8] user.AIThread - [AI]:  ==== Last transition valid ==== 
+ 9924 INFO  [Thread-8] user.AIThread - [AI]: unit state: playerID=2 type=Crocodile pos=(56, 56) energy=150
+    carried resources: 
+        
+    carried objects: 
+        
+
+ 9937 INFO  [Thread-8] user.AIThread - [AI]:  ==== Last transition valid ==== 
+11002 INFO  [RMI TCP Connection(6)-10.6.4.48] core.Client0 - [client][onEvent][NewRound]
+11006 INFO  [RMI TCP Connection(6)-10.6.4.48] core.Client0 - [client][onEvent][EndRound]
+11007 INFO  [Thread-7] user.AIThread - [AI]: beginRound
+11007 INFO  [Thread-7] user.AIThread - [AI]: unit state: playerID=1 type=Tazmanian pos=(2, 3) energy=150
+    carried resources: 
+        
+    carried objects: 
+        
+
+11026 INFO  [Thread-7] user.AIThread - [AI]:  ==== Last transition valid ==== 
+11026 INFO  [Thread-7] user.AIThread - [AI]: unit state: playerID=1 type=Fox pos=(3, 5) energy=150
+    carried resources: 
+        
+    carried objects: 
+        
+
+11043 INFO  [Thread-7] user.AIThread - [AI]:  ==== Last transition valid ==== 
+11043 INFO  [Thread-7] user.AIThread - [AI]: unit state: playerID=1 type=Crocodile pos=(4, 3) energy=150
+    carried resources: 
+        
+    carried objects: 
+        
+
+11066 INFO  [Thread-7] user.AIThread - [AI]:  ==== Last transition valid ==== 
+12101 INFO  [RMI TCP Connection(6)-10.6.4.48] core.Client0 - [client][onEvent][NewRound]
+12102 INFO  [Thread-8] user.AIThread - [AI]: beginRound
+12103 INFO  [Thread-8] user.AIThread - [AI]: unit state: playerID=2 type=Tazmanian pos=(57, 57) energy=130
+    carried resources: 
+        
+    carried objects: 
+        
+
+12103 INFO  [RMI TCP Connection(6)-10.6.4.48] core.Client0 - [client][onEvent][EndRound]
+12114 INFO  [Thread-8] user.AIThread - [AI]:  ==== Last transition valid ==== 
+12115 INFO  [Thread-8] user.AIThread - [AI]: unit state: playerID=2 type=Fox pos=(54, 58) energy=150
+    carried resources: 
+        
+    carried objects: 
+        
+
+12127 INFO  [Thread-8] user.AIThread - [AI]:  ==== Last transition valid ==== 
+12127 INFO  [Thread-8] user.AIThread - [AI]: unit state: playerID=2 type=Crocodile pos=(56, 55) energy=150
+    carried resources: 
+        
+    carried objects: 
+        
+
+12137 INFO  [Thread-8] user.AIThread - [AI]:  ==== Last transition valid ==== 
+13202 INFO  [RMI TCP Connection(6)-10.6.4.48] core.Client0 - [client][onEvent][NewRound]
+13203 INFO  [Thread-7] user.AIThread - [AI]: beginRound
+13203 INFO  [Thread-7] user.AIThread - [AI]: unit state: playerID=1 type=Tazmanian pos=(3, 4) energy=130
+    carried resources: 
+        
+    carried objects: 
+        
+
+13204 INFO  [RMI TCP Connection(6)-10.6.4.48] core.Client0 - [client][onEvent][EndRound]
+13205 INFO  [Thread-7] user.AIThread - [AI]:  ==== Last transition valid ==== 
+13206 INFO  [Thread-7] user.AIThread - [AI]: unit state: playerID=1 type=Fox pos=(3, 6) energy=130
+    carried resources: 
+        
+    carried objects: 
+        
+
+13223 INFO  [Thread-7] user.AIThread - [AI]:  ==== Last transition valid ==== 
+13223 INFO  [Thread-7] user.AIThread - [AI]: unit state: playerID=1 type=Crocodile pos=(4, 4) energy=150
+    carried resources: 
+        
+    carried objects: 
+        
+
+13240 INFO  [Thread-7] user.AIThread - [AI]:  ==== Last transition valid ==== 
+14302 INFO  [RMI TCP Connection(6)-10.6.4.48] core.Client0 - [client][onEvent][NewRound]
+14303 INFO  [Thread-8] user.AIThread - [AI]: beginRound
+14303 INFO  [Thread-8] user.AIThread - [AI]: unit state: playerID=2 type=Tazmanian pos=(58, 57) energy=130
+    carried resources: 
+        
+    carried objects: 
+        
+
+14303 INFO  [RMI TCP Connection(6)-10.6.4.48] core.Client0 - [client][onEvent][EndRound]
+14312 INFO  [Thread-8] user.AIThread - [AI]:  ==== Last transition valid ==== 
+14312 INFO  [Thread-8] user.AIThread - [AI]: unit state: playerID=2 type=Fox pos=(53, 59) energy=150
+    carried resources: 
+        
+    carried objects: 
+        
+
+14323 INFO  [Thread-8] user.AIThread - [AI]:  ==== Last transition valid ==== 
+14323 INFO  [Thread-8] user.AIThread - [AI]: unit state: playerID=2 type=Crocodile pos=(55, 54) energy=150
+    carried resources: 
+        
+    carried objects: 
+        
+
+14333 INFO  [Thread-8] user.AIThread - [AI]:  ==== Last transition valid ==== 
+15402 INFO  [RMI TCP Connection(6)-10.6.4.48] core.Client0 - [client][onEvent][NewRound]
+15404 INFO  [RMI TCP Connection(6)-10.6.4.48] core.Client0 - [client][onEvent][EndRound]
+15407 INFO  [Thread-7] user.AIThread - [AI]: beginRound
+15409 INFO  [Thread-7] user.AIThread - [AI]: unit state: playerID=1 type=Tazmanian pos=(3, 4) energy=150
+    carried resources: 
+        
+    carried objects: 
+        
+
+15427 INFO  [Thread-7] user.AIThread - [AI]:  ==== Last transition valid ==== 
+15427 INFO  [Thread-7] user.AIThread - [AI]: unit state: playerID=1 type=Fox pos=(4, 6) energy=150
+    carried resources: 
+        
+    carried objects: 
+        
+
+15442 INFO  [Thread-7] user.AIThread - [AI]:  ==== Last transition valid ==== 
+15444 INFO  [Thread-7] user.AIThread - [AI]: unit state: playerID=1 type=Crocodile pos=(5, 5) energy=150
+    carried resources: 
+        
+    carried objects: 
+        
+
+15468 INFO  [Thread-7] user.AIThread - [AI]:  ==== Last transition valid ==== 
+16502 INFO  [RMI TCP Connection(6)-10.6.4.48] core.Client0 - [client][onEvent][NewRound]
+16503 INFO  [Thread-8] user.AIThread - [AI]: beginRound
+16503 INFO  [RMI TCP Connection(6)-10.6.4.48] core.Client0 - [client][onEvent][EndRound]
+16505 INFO  [Thread-8] user.AIThread - [AI]: unit state: playerID=2 type=Tazmanian pos=(59, 56) energy=130
+    carried resources: 
+        
+    carried objects: 
+        
+
+16517 INFO  [Thread-8] user.AIThread - [AI]:  ==== Last transition valid ==== 
+16518 INFO  [Thread-8] user.AIThread - [AI]: unit state: playerID=2 type=Fox pos=(54, 58) energy=150
+    carried resources: 
+        
+    carried objects: 
+        
+
+16527 INFO  [Thread-8] user.AIThread - [AI]:  ==== Last transition valid ==== 
+16527 INFO  [Thread-8] user.AIThread - [AI]: unit state: playerID=2 type=Crocodile pos=(55, 55) energy=150
+    carried resources: 
+        
+    carried objects: 
+        
+
+16536 INFO  [Thread-8] user.AIThread - [AI]:  ==== Last transition valid ==== 
+17602 INFO  [RMI TCP Connection(6)-10.6.4.48] core.Client0 - [client][onEvent][NewRound]
+17603 INFO  [Thread-7] user.AIThread - [AI]: beginRound
+17603 INFO  [RMI TCP Connection(6)-10.6.4.48] core.Client0 - [client][onEvent][EndRound]
+17603 INFO  [Thread-7] user.AIThread - [AI]: unit state: playerID=1 type=Tazmanian pos=(2, 5) energy=130
+    carried resources: 
+        
+    carried objects: 
+        
+
+17622 INFO  [Thread-7] user.AIThread - [AI]:  ==== Last transition valid ==== 
+17622 INFO  [Thread-7] user.AIThread - [AI]: unit state: playerID=1 type=Fox pos=(4, 6) energy=150
+    carried resources: 
+        
+    carried objects: 
+        
+
+17639 INFO  [Thread-7] user.AIThread - [AI]:  ==== Last transition valid ==== 
+17640 INFO  [Thread-7] user.AIThread - [AI]: unit state: playerID=1 type=Crocodile pos=(6, 5) energy=150
+    carried resources: 
+        
+    carried objects: 
+        
+
+17654 INFO  [Thread-7] user.AIThread - [AI]:  ==== Last transition valid ==== 
+18702 INFO  [RMI TCP Connection(6)-10.6.4.48] core.Client0 - [client][onEvent][NewRound]
+18703 INFO  [Thread-8] user.AIThread - [AI]: beginRound
+18703 INFO  [RMI TCP Connection(6)-10.6.4.48] core.Client0 - [client][onEvent][EndRound]
+18703 INFO  [Thread-8] user.AIThread - [AI]: unit state: playerID=2 type=Tazmanian pos=(59, 57) energy=130
+    carried resources: 
+        
+    carried objects: 
+        
+
+18711 INFO  [Thread-8] user.AIThread - [AI]:  ==== Last transition valid ==== 
+18712 INFO  [Thread-8] user.AIThread - [AI]: unit state: playerID=2 type=Fox pos=(53, 59) energy=150
+    carried resources: 
+        
+    carried objects: 
+        
+
+18720 INFO  [Thread-8] user.AIThread - [AI]:  ==== Last transition valid ==== 
+18720 INFO  [Thread-8] user.AIThread - [AI]: unit state: playerID=2 type=Crocodile pos=(55, 54) energy=150
+    carried resources: 
+        
+    carried objects: 
+        
+
+18731 INFO  [Thread-8] user.AIThread - [AI]:  ==== Last transition valid ==== 
+19802 INFO  [RMI TCP Connection(6)-10.6.4.48] core.Client0 - [client][onEvent][NewRound]
+19803 INFO  [RMI TCP Connection(6)-10.6.4.48] core.Client0 - [client][onEvent][EndRound]
+19804 INFO  [Thread-7] user.AIThread - [AI]: beginRound
+19805 INFO  [Thread-7] user.AIThread - [AI]: unit state: playerID=1 type=Tazmanian pos=(1, 6) energy=130
+    carried resources: 
+        
+    carried objects: 
+        
+
+19830 INFO  [Thread-7] user.AIThread - [AI]:  ==== Last transition valid ==== 
+19831 INFO  [Thread-7] user.AIThread - [AI]: unit state: playerID=1 type=Fox pos=(4, 6) energy=150
+    carried resources: 
+        
+    carried objects: 
+        
+
+19844 INFO  [Thread-7] user.AIThread - [AI]:  ==== Last transition valid ==== 
+19844 INFO  [Thread-7] user.AIThread - [AI]: unit state: playerID=1 type=Crocodile pos=(6, 4) energy=150
+    carried resources: 
+        
+    carried objects: 
+        
+
+19857 INFO  [Thread-7] user.AIThread - [AI]:  ==== Last transition valid ==== 
+20902 INFO  [RMI TCP Connection(6)-10.6.4.48] core.Client0 - [client][onEvent][NewRound]
+20903 INFO  [Thread-8] user.AIThread - [AI]: beginRound
+20903 INFO  [RMI TCP Connection(6)-10.6.4.48] core.Client0 - [client][onEvent][EndRound]
+20903 INFO  [Thread-8] user.AIThread - [AI]: unit state: playerID=2 type=Tazmanian pos=(59, 57) energy=130
+    carried resources: 
+        
+    carried objects: 
+        
+
+20915 INFO  [Thread-8] user.AIThread - [AI]:  ==== Last transition valid ==== 
+20915 INFO  [Thread-8] user.AIThread - [AI]: unit state: playerID=2 type=Fox pos=(54, 58) energy=150
+    carried resources: 
+        
+    carried objects: 
+        
+
+20923 INFO  [Thread-8] user.AIThread - [AI]:  ==== Last transition valid ==== 
+20923 INFO  [Thread-8] user.AIThread - [AI]: unit state: playerID=2 type=Crocodile pos=(54, 55) energy=150
+    carried resources: 
+        
+    carried objects: 
+        
+
+20931 INFO  [Thread-8] user.AIThread - [AI]:  ==== Last transition valid ==== 
