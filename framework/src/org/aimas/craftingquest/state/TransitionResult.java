@@ -10,15 +10,23 @@ import java.io.Serializable;
 public class TransitionResult implements Serializable {
 
 	public enum TransitionError implements Serializable {
-		NoError, UnknownError, OperandError, MoveError, TerrainError, ObstacleError, NoEnergyError, PickupError, BuildError, CraftingError, ResourceMissingError, NoCreditError, BuyRequestError, SellRequestError, GuardError
+		NoError, UnitIdError, UnknownActionError, UnknownError, OperandError, MoveError, 
+		TerrainError, ObstacleError, NoEnergyError, PickupError, BuildError, CraftingError, 
+		ResourceMissingError, NoCreditError, BuyRequestError, SellRequestError, GuardError
 	};
 
 	public int id; // egal cu cel trimis
-	public TransitionError errorType = TransitionError.UnknownError;
-	public String errorReason = "Unknown";
+	public TransitionError errorType;
+	public String errorReason;
+	
+	public TransitionResult(int id, TransitionError errorType, String errorReason) {
+		this.id = id;
+		this.errorType = errorType;
+		this.errorReason = errorReason;
+	}
 	
 	public TransitionResult(int id) {
-		this.id = id;
+		this(id, TransitionError.UnknownError, "Unknown");
 	}
 	
 	public boolean valid() {
