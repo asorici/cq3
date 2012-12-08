@@ -22,7 +22,7 @@ import org.aimas.craftingquest.state.ResourceAttributes;
 import org.aimas.craftingquest.state.StrategicResource;
 import org.aimas.craftingquest.state.UnitState;
 import org.aimas.craftingquest.state.CraftedObject.BasicResourceType;
-import org.aimas.craftingquest.state.UnitState.UnitType;
+//import org.aimas.craftingquest.state.UnitState.UnitType;
 
 
 public class GameGenerator {
@@ -54,22 +54,10 @@ public class GameGenerator {
 			 
 			ScanAttributeGenerator.setupScanAttributes(game.map);		// generate scan attributes for each map cell
 			
-			/* setup initial player states - there should be a maximum of 4 players */
+			/* setup initial player states - there should be only 2 players */
 			for (int i = 0; i < GamePolicy.noPlayers; i++) {
-				if (i % 4 == 0) {
+				if (i % 2 == 0) {
 					PlayerState player = setupPlayerState(i + 1, GamePolicy.nrPlayerUnits, new Point2i(5, 5), game.map);
-					player.availableBlueprints = game.blueprints;	// all available blueprints are known at the start
-					//game.playerStates.add(player);
-					game.playerStates.put(player.id, player);
-				}
-				else if (i % 4 == 1) {
-					PlayerState player = setupPlayerState(i + 1, GamePolicy.nrPlayerUnits, new Point2i(GamePolicy.mapsize.x - 5, 5), game.map);
-					player.availableBlueprints = game.blueprints;	// all available blueprints are known at the start
-					//game.playerStates.add(player);
-					game.playerStates.put(player.id, player);
-				}
-				else if (i % 4 == 2) {
-					PlayerState player = setupPlayerState(i + 1, GamePolicy.nrPlayerUnits, new Point2i(5, GamePolicy.mapsize.y - 5), game.map);
 					player.availableBlueprints = game.blueprints;	// all available blueprints are known at the start
 					//game.playerStates.add(player);
 					game.playerStates.put(player.id, player);
@@ -99,7 +87,7 @@ public class GameGenerator {
 				game.round.noRounds = 200;
 			}
 			
-			/* setup initial player states - there should be a maximum of 4 players */
+			/* setup initial player states - there should be only 2 players */
 			game.playerStates.clear();
 			
 			for(int y = 0; y < game.map.mapHeight; y++) {
@@ -109,20 +97,8 @@ public class GameGenerator {
 			}
 			
 			for (int i = 0; i < GamePolicy.noPlayers; i++) {
-				if (i % 4 == 0) {
+				if (i % 2 == 0) {
 					PlayerState player = setupPlayerState(i + 1, GamePolicy.nrPlayerUnits, new Point2i(5, 5), game.map);
-					player.availableBlueprints = game.blueprints;	// all available blueprints are known at the start
-					//game.playerStates.add(player);
-					game.playerStates.put(player.id, player);
-				}
-				else if (i % 4 == 1) {
-					PlayerState player = setupPlayerState(i + 1, GamePolicy.nrPlayerUnits, new Point2i(GamePolicy.mapsize.x - 5, 5), game.map);
-					player.availableBlueprints = game.blueprints;	// all available blueprints are known at the start
-					//game.playerStates.add(player);
-					game.playerStates.put(player.id, player);
-				}
-				else if (i % 4 == 2) {
-					PlayerState player = setupPlayerState(i + 1, GamePolicy.nrPlayerUnits, new Point2i(5, GamePolicy.mapsize.y - 5), game.map);
 					player.availableBlueprints = game.blueprints;	// all available blueprints are known at the start
 					//game.playerStates.add(player);
 					game.playerStates.put(player.id, player);
@@ -144,6 +120,7 @@ public class GameGenerator {
 		return game;
 	}
 	
+	@SuppressWarnings("unchecked")
 	private static GameState checkForSavedGame() {
 		String savedResFilename = GamePolicy.mapName + ".cqres";
 		String mapFile = "maps/" + savedResFilename;
@@ -296,7 +273,7 @@ public class GameGenerator {
 		
 		// setup player units
 		for (int i = 0; i < nrUnits; i++) {
-			UnitType utype = UnitType.Tazmanian;
+			/*UnitType utype = UnitType.Tazmanian;
 			switch (i % 3) {
 			case 0:
 				utype = UnitType.Tazmanian;
@@ -307,28 +284,28 @@ public class GameGenerator {
 			case 2:
 				utype = UnitType.Crocodile;
 				break;
-			}
+			}*/
 
 			// search for a position for the unit in the vicinity of the given initial position
 			Point2i unitPos = null;
 			if (initPos.x < GamePolicy.mapsize.x / 2) {
-				unitPos = setUnitInitialPosition1(map, utype, initPos.x - 2, initPos.x + 8, initPos.y - 2, initPos.y + 8);
+				unitPos = setUnitInitialPosition1(map, /*utype,*/ initPos.x - 2, initPos.x + 8, initPos.y - 2, initPos.y + 8);
 				if (unitPos == null) {
-					unitPos = setUnitInitialPosition1(map, utype, initPos.x - 2, GamePolicy.mapsize.x / 2, initPos.y - 2, GamePolicy.mapsize.y / 2);
+					unitPos = setUnitInitialPosition1(map, /*utype,*/ initPos.x - 2, GamePolicy.mapsize.x / 2, initPos.y - 2, GamePolicy.mapsize.y / 2);
 				}
 			} else {
-				unitPos = setUnitInitialPosition2(map, utype, initPos.x - 8, initPos.x + 2, initPos.y - 8, initPos.y + 2);
+				unitPos = setUnitInitialPosition2(map, /*utype,*/ initPos.x - 8, initPos.x + 2, initPos.y - 8, initPos.y + 2);
 				if (unitPos == null) {
-					unitPos = setUnitInitialPosition2(map, utype, GamePolicy.mapsize.x / 2, initPos.x + 2, GamePolicy.mapsize.y / 2, initPos.y + 2);
+					unitPos = setUnitInitialPosition2(map, /*utype,*/ GamePolicy.mapsize.x / 2, initPos.x + 2, GamePolicy.mapsize.y / 2, initPos.y + 2);
 				}
 			}
 
 			if (unitPos == null) { // it should never come to this
-				throw new NullPointerException("Unit initial position error: " + utype.name());
+				throw new NullPointerException("Unit initial position error for player: " + playerID/*utype.name()*/);
 			}
 			
 			int unitID = playerID * nrUnits + i;
-			UnitState unit = new UnitState(unitID, playerID, utype, unitPos, GamePolicy.unitEnergy);
+			UnitState unit = new UnitState(unitID, playerID, /*utype,*/ unitPos, GamePolicy.unitEnergy);
 			
 			// set unit's sight
 			for (int ii = 0, y = unit.pos.y - GamePolicy.sightRadius; y <= unit.pos.y + GamePolicy.sightRadius; y++, ii++) {
@@ -348,11 +325,11 @@ public class GameGenerator {
 		return pState;
 	}
 	
-	private static Point2i setUnitInitialPosition1(MapState map, UnitType utype, int xmin, int xmax, int ymin, int ymax) {
+	private static Point2i setUnitInitialPosition1(MapState map,/* UnitType utype,*/ int xmin, int xmax, int ymin, int ymax) {
 		for(int y = ymin; y < ymax; y++) {
 			for(int x = xmin; x < xmax; x++) {
 				CellState cell = map.cells[y][x];
-				if (cell.cellUnits.isEmpty() && GamePolicy.terrainMovePossibilities.get(cell.type).contains(utype)) {
+				if (cell.cellUnits.isEmpty() /*&& GamePolicy.terrainMovePossibilities.get(cell.type).contains(utype)*/) {
 					return new Point2i(x, y);
 				}
 			}
@@ -361,11 +338,11 @@ public class GameGenerator {
 		return null;
 	}
 	
-	private static Point2i setUnitInitialPosition2(MapState map, UnitType utype, int xmin, int xmax, int ymin, int ymax) {
+	private static Point2i setUnitInitialPosition2(MapState map, /*UnitType utype,*/ int xmin, int xmax, int ymin, int ymax) {
 		for(int y = ymax; y > ymin; y--) {
 			for(int x = xmax; x > xmin; x--) {
 				CellState cell = map.cells[y][x];
-				if (cell.cellUnits.isEmpty() && GamePolicy.terrainMovePossibilities.get(cell.type).contains(utype)) {
+				if (cell.cellUnits.isEmpty() /*&& GamePolicy.terrainMovePossibilities.get(cell.type).contains(utype)*/) {
 					return new Point2i(x, y);
 				}
 			}

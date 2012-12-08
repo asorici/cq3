@@ -8,9 +8,9 @@ import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
-import java.util.ArrayList;
+//import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
+//import java.util.List;
 
 import org.aimas.craftingquest.state.CellState;
 import org.aimas.craftingquest.state.GameState;
@@ -21,7 +21,7 @@ import org.aimas.craftingquest.state.ResourceAttributes;
 import org.aimas.craftingquest.state.CellState.CellType;
 import org.aimas.craftingquest.state.CraftedObject.BasicResourceType;
 import org.aimas.craftingquest.state.CraftedObject.ObjectType;
-import org.aimas.craftingquest.state.UnitState.UnitType;
+//import org.aimas.craftingquest.state.UnitState.UnitType;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -35,7 +35,6 @@ public class GamePolicy {
     public static int initializationWaitTime = 3000;
 	
 	/* number of players */
-    public static int maxPlayers = 4;
 	public static int noPlayers = 2;
 	public static int nrPlayerUnits = 3;
 
@@ -90,7 +89,7 @@ public class GamePolicy {
 	public static int towerEnergy = 250;
 	// drain = towerDrainBase / min(abs(tower.pos.x - player.pos.x), abs(..y))
 	
-	public static HashMap<CellType, List<UnitType>> terrainMovePossibilities = new HashMap<CellType, List<UnitType>>();
+//	public static HashMap<CellType, List<UnitType>> terrainMovePossibilities = new HashMap<CellType, List<UnitType>>();
 	
 	public static int maxResourceSpots = 5;
 	
@@ -117,10 +116,6 @@ public class GamePolicy {
 	}
 	
 	public static void initScenario() {
-		for (CellType ct : CellType.values()) {
-			terrainMovePossibilities.put(ct, new ArrayList<UnitType>());
-			movePenalty.put(ct, 0.0);
-		}
 		
 		Document paramDoc = GameUtils.readXMLDocument("GamePolicy.xml");
 		MapReader.readMap("mapdata");
@@ -162,19 +157,17 @@ public class GamePolicy {
 	}
 	
 	private static void readServerParameters(Element parametersNode) {
-		maxPlayers = Integer.parseInt(parametersNode.getElementsByTagName("maxPlayers").item(0).getTextContent());
+		noPlayers = Integer.parseInt(parametersNode.getElementsByTagName("nrPlayers").item(0).getTextContent());
 		playerActionTime = Integer.parseInt(parametersNode.getElementsByTagName("playerActionTime").item(0).getTextContent());
 		playerLateTime = Integer.parseInt(parametersNode.getElementsByTagName("playerLateTime").item(0).getTextContent());
 		updateTime = Integer.parseInt(parametersNode.getElementsByTagName("updateTime").item(0).getTextContent());
 		connectWaitTime = Integer.parseInt(parametersNode.getElementsByTagName("connectWaitTime").item(0).getTextContent());
 		//lastTurn = Integer.parseInt(parametersNode.getElementsByTagName("nrTurns").item(0).getTextContent());
+		nrPlayerUnits = Integer.parseInt(parametersNode.getElementsByTagName("nrPlayerUnits").item(0).getTextContent());
 		//mapName = parametersNode.getElementsByTagName("mapName").item(0).getTextContent();
 	}
 	
 	private static void readScenarioParameters(Element parametersNode) {
-		noPlayers = Integer.parseInt(parametersNode.getElementsByTagName("nrPlayers").item(0).getTextContent());
-		nrPlayerUnits = Integer.parseInt(parametersNode.getElementsByTagName("nrPlayerUnits").item(0).getTextContent());
-		
 		scanAttributeCount = Integer.parseInt(parametersNode.getElementsByTagName("scanAttributeCount").item(0).getTextContent());
 		unitEnergy = Integer.parseInt(parametersNode.getElementsByTagName("unitEnergy").item(0).getTextContent());
 		baseObjectValue = Integer.parseInt(parametersNode.getElementsByTagName("baseObjectValue").item(0).getTextContent());
@@ -208,45 +201,6 @@ public class GamePolicy {
 			
 			movePenalty.put(CellType.valueOf(terrain), value);
 		}
-		
-		// retrieve character abilities
-		Element abilities = (Element)ruleNode.getElementsByTagName("abilities").item(0);
-		NodeList movementAbilities = abilities.getElementsByTagName("movement");
-		for (int i = 0; i < movementAbilities.getLength(); i++) {
-			Element movement = (Element)movementAbilities.item(i);
-			String terrain = movement.getElementsByTagName("terrain").item(0).getTextContent();
-			String unit = movement.getElementsByTagName("unit").item(0).getTextContent();
-			
-			CellType terrainType = CellType.valueOf(terrain);
-			if (unit.equals("Any")) {
-				List<UnitType> unitAccessList = terrainMovePossibilities.get(terrainType);
-				if (unitAccessList == null) {
-					unitAccessList = new ArrayList<UnitType>();
-					unitAccessList.add(UnitType.Tazmanian);
-					unitAccessList.add(UnitType.Fox);
-					unitAccessList.add(UnitType.Crocodile);
-					terrainMovePossibilities.put(terrainType, unitAccessList);
-				}
-				else {
-					unitAccessList.add(UnitType.Tazmanian);
-					unitAccessList.add(UnitType.Fox);
-					unitAccessList.add(UnitType.Crocodile);
-				}
-			}
-			else {
-				UnitType allowedUnit = UnitType.valueOf(unit);
-				List<UnitType> unitAccessList = terrainMovePossibilities.get(terrainType);
-				if (unitAccessList == null) {
-					unitAccessList = new ArrayList<UnitType>();
-					unitAccessList.add(allowedUnit);
-					terrainMovePossibilities.put(terrainType, unitAccessList);
-				}
-				else {
-					unitAccessList.add(allowedUnit);
-				}
-			}
-		}
-		
 	}
 
 	public static void saveMapResources(GameState state) {

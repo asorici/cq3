@@ -28,16 +28,11 @@ import org.aimas.craftingquest.state.CraftedObject.BasicResourceType;
 @SuppressWarnings("serial")
 public class UnitState implements Serializable {
 
-	public enum UnitType implements Serializable {
-		Crocodile, Tazmanian, Fox
-	}
-
 	/**
 	 * the opponent view for this unit
 	 */
 	private BasicUnit opponentPerspective = null;
 	
-	/* what */
 	/**
 	 * the unit id
 	 */
@@ -47,11 +42,6 @@ public class UnitState implements Serializable {
 	 * the id of the player that owns the unit
 	 */
 	public int playerID;
-	
-	/**
-	 * the unit type
-	 */
-	public UnitType type;
 	
 	/**
 	 * the unit energy points
@@ -98,10 +88,9 @@ public class UnitState implements Serializable {
 		sight = new CellState[sightDim][sightDim];
 	}
 
-	public UnitState(int id, int playerID, UnitType type, Point2i pos, int energy) {
+	public UnitState(int id, int playerID, Point2i pos, int energy) {
 		this.id = id;
 		this.playerID = playerID;
-		this.type = type;
 		this.pos = pos;
 		this.energy = energy;
 
@@ -112,7 +101,7 @@ public class UnitState implements Serializable {
 	@Override
 	public String toString() {
 		String info = "";
-		info += "playerID=" + playerID + " type=" + type + " pos=" + pos + " energy=" + energy + "\n";
+		info += "playerID=" + playerID + " pos=" + pos + " energy=" + energy + "\n";
 		info += "    carried resources: \n";
 		info += "        ";
 		for (BasicResourceType br : carriedResources.keySet()) {
@@ -138,10 +127,10 @@ public class UnitState implements Serializable {
 	public BasicUnit getOpponentPerspective() {
 		if (opponentPerspective == null) {
 			opponentPerspective = new BasicUnit();
-			opponentPerspective.set(type, playerID, energy);
+			opponentPerspective.set(playerID, energy);
 		}
 		else {
-			opponentPerspective.set(type, playerID, energy);
+			opponentPerspective.set(playerID, energy);
 		}
 		
 		return opponentPerspective;
@@ -154,9 +143,6 @@ public class UnitState implements Serializable {
 		}
 		
 		final UnitState other = (UnitState)obj;
-		if (type != other.type) {
-			return false;
-		}
 		
 		if (playerID != other.playerID) {
 			return false;
@@ -167,6 +153,6 @@ public class UnitState implements Serializable {
 	
 	@Override
 	public int hashCode() {
-		return playerID * (UnitType.values().length + 1) + type.ordinal();
+		return (playerID + "_" + id).hashCode();
 	}
 }

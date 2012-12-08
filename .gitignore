@@ -5,3 +5,5 @@ apache-log4j-1.2.16/
 framework/resource-stats.txt
 framework/server_gui_log.log
 framework/someFile.txt
+*.log
+*~

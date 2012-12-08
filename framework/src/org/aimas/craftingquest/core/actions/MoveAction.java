@@ -10,18 +10,19 @@ import org.aimas.craftingquest.state.PlayerState;
 import org.aimas.craftingquest.state.Point2i;
 import org.aimas.craftingquest.state.Transition;
 import org.aimas.craftingquest.state.UnitState;
-import org.aimas.craftingquest.state.CellState.CellType;
+//import org.aimas.craftingquest.state.CellState.CellType;
 import org.aimas.craftingquest.state.Transition.ActionType;
 import org.aimas.craftingquest.state.TransitionResult;
 
 public class MoveAction extends Action {
-	
+
 	public MoveAction(ActionType type) {
 		super(type);
 	}
-	
+
 	@Override
-	protected TransitionResult handle(GameState game, PlayerState player, Transition transition) {
+	protected TransitionResult handle(GameState game, PlayerState player,
+			Transition transition) {
 		// check allowed distance
 		Point2i toPos = (Point2i) transition.operands[1];
 		Point2i fromPos = playerUnit.pos;
@@ -42,16 +43,6 @@ public class MoveAction extends Action {
 			return res;
 		}
 
-		// check allowed terrain type
-		CellType toCellType = game.map.cells[toPos.y][toPos.x].type;
-		if (!GamePolicy.terrainMovePossibilities.get(toCellType).contains(
-				playerUnit.type)) {
-			TransitionResult res = new TransitionResult(transition.id);
-			res.errorType = TransitionResult.TransitionError.TerrainError;
-			res.errorReason = "Move allowed only on appropriate terrain type";
-			return res;
-		}
-
 		// check no object is there
 		if (game.map.cells[toPos.y][toPos.x].strategicResource != null) {
 			TransitionResult res = new TransitionResult(transition.id);
@@ -68,8 +59,7 @@ public class MoveAction extends Action {
 		for (Integer quant : playerUnit.carriedObjects.values()) {
 			carriedResourcesAmount += quant;
 		}
-		int requiredEnergy = (int) (GamePolicy.moveBase
-				* (1.0 + GamePolicy.movePenalty.get(toCellType)) + GamePolicy.resourceMoveCost
+		int requiredEnergy = (int) (GamePolicy.moveBase + GamePolicy.resourceMoveCost
 				* carriedResourcesAmount / 2);
 
 		if (playerUnit.energy < requiredEnergy) {
@@ -86,10 +76,11 @@ public class MoveAction extends Action {
 		updateUnitSight(game, playerUnit, toPos);
 
 		// update cells with new unit position
-		Iterator<BasicUnit> it = game.map.cells[fromPos.y][fromPos.x].cellUnits.iterator();
+		Iterator<BasicUnit> it = game.map.cells[fromPos.y][fromPos.x].cellUnits
+				.iterator();
 		while (it.hasNext()) {
 			BasicUnit u = it.next();
-			if (u.playerID == playerUnit.playerID && u.type == playerUnit.type) {
+			if (u.playerID == playerUnit.playerID) {
 				it.remove();
 				break;
 			}
@@ -106,15 +97,17 @@ public class MoveAction extends Action {
 	protected boolean validOperands(Transition transition) {
 		return true;
 	}
-	
-	private void updateUnitSight(GameState game, UnitState playerUnit, Point2i pos) {
+
+	private void updateUnitSight(GameState game, UnitState playerUnit,
+			Point2i pos) {
 		int sightRadius = GamePolicy.sightRadius;
-		
+
 		CellState[][] unitSight = playerUnit.sight;
 		for (int i = 0, y = pos.y - sightRadius; y <= pos.y + sightRadius; y++, i++) {
 			for (int j = 0, x = pos.x - sightRadius; x <= pos.x + sightRadius; x++, j++) {
 				unitSight[i][j] = null;
-				if (x >= 0 && x < GamePolicy.mapsize.x && y >= 0 && y < GamePolicy.mapsize.y) {
+				if (x >= 0 && x < GamePolicy.mapsize.x && y >= 0
+						&& y < GamePolicy.mapsize.y) {
 					unitSight[i][j] = game.map.cells[y][x];
 				}
 			}
