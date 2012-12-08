@@ -56,8 +56,7 @@ public abstract class Action {
 				return new MoveAction(type);
 			case Dig:
 				return new DigAction(type);
-			case ScanLand:
-				return new ScanLandAction(type);
+			
 			case PickupResources:
 				return new PickupResourcesAction(type);
 			case PickupObjects:
@@ -72,12 +71,8 @@ public abstract class Action {
 				return new CraftObjectAction(type);
 			case Equip:
 				return new EquipAction(type);
-			case SellObject:
-				return new SellObjectAction(type);
 			case PlaceTower:
 				return new PlaceTowerAction(type);
-			case BuyBlueprint:
-				return new BuyBlueprintAction(type);
 			
 			default: return null;
 		}

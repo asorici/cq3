@@ -4,17 +4,16 @@ import gnu.cajo.invoke.Remote;
 
 import java.util.HashMap;
 
-
-import org.aimas.craftingquest.state.Blueprint;
+import org.aimas.craftingquest.state.BasicUnit;
 import org.aimas.craftingquest.state.CraftedObject;
+import org.aimas.craftingquest.state.CraftedObject.BasicResourceType;
 import org.aimas.craftingquest.state.EquippableObject;
 import org.aimas.craftingquest.state.PlayerState;
 import org.aimas.craftingquest.state.Point2i;
 import org.aimas.craftingquest.state.Transition;
+import org.aimas.craftingquest.state.Transition.ActionType;
 import org.aimas.craftingquest.state.TrapObject;
 import org.aimas.craftingquest.state.UnitState;
-import org.aimas.craftingquest.state.CraftedObject.BasicResourceType;
-import org.aimas.craftingquest.state.Transition.ActionType;
 import org.aimas.craftingquest.user.IPlayerActions;
 import org.aimas.craftingquest.user.IPlayerHooks;
 import org.apache.log4j.Logger;
@@ -183,20 +182,6 @@ public final class Client0 implements IClient, IPlayerActions {
 		return doGenericAction(new Transition(ActionType.Dig, new Object[] {unit.id, unit.pos}));
 	}
 	
-	/**
- 	 * Allows the given unit to perform a scan operation which is centered at the current cell.
- 	 * <p> If successful, the {@link UnitState} of the unit performing the action will have
- 	 * its <code>scannedResourceAttributes</code> field updated with the scan attributes of the cells
- 	 * that fall within the scanners radius.</p>
- 	 * <p>In case of an error, the returned player state will not be different from the current one. 
- 	 * It will also contain a <code>TransitionResult</code> which gives the reason for the failure.</p>
- 	 * @param unit   the unit performing the scan
-	 * @return the new player state or null if the player attempts to move outside his turn.
- 	 */
-	@Override
-	public PlayerState scan(UnitState unit) {
-		return doGenericAction(new Transition(ActionType.ScanLand, new Object[] {unit.id}));
-	}
 	
 	/**
  	 * Allows the given unit to pick up the resources contained in the current cell.
@@ -312,23 +297,6 @@ public final class Client0 implements IClient, IPlayerActions {
 	
 	
 	/**
- 	 * Allows the given unit to sell the specified quantity of target artifacts.
- 	 * <p> If successful, the value of the target artifact will be added to the players's score.
- 	 * Also, the unit performing the action will have the specified quantity of target artifacts subtracted 
- 	 * from its <code>carriedObjects</code> field.</p>
- 	 * <p>In case of an error, the returned player state will not be different from the current one. 
- 	 * It will also contain a <code>TransitionResult</code> which gives the reason for the failure.</p>
- 	 * @param unit   the unit performing the selling action
- 	 * @param craftedObject   the target object to be sold
- 	 * @param quantity   the number of target objects to be sold
-	 * @return the new player state or null if the player attempts to move outside his turn.
- 	 */
-	@Override
-	public PlayerState sellObject(UnitState unit, CraftedObject craftedObject, Integer quantity) {
-		return doGenericAction(new Transition(ActionType.SellObject, new Object[] {unit.id, craftedObject, quantity}));
-	}
-	
-	/**
  	 * Allows the given unit to place a tower in its current position.
  	 * <p> If successful, the tower will be placed in the current position of the builder unit. 
  	 * Also, the new tower will be added to the <code>availableTowers</code> field 
@@ -342,19 +310,42 @@ public final class Client0 implements IClient, IPlayerActions {
 	public PlayerState placeTower(UnitState unit) {
 		return doGenericAction(new Transition(ActionType.PlaceTower, new Object[] {unit.id}));
 	}
+    
 	
 	/**
- 	 * Allows the given unit to buy a desired blueprint
- 	 * <p>If successful, the returned player state will have the required blueprint added to its
- 	 * <code>boughtBlueprints</code> field. </p>
- 	 * <p>In case of an error, the returned player state will not be different from the current one. 
- 	 * It will also contain a <code>TransitionResult</code> which gives the reason for the failure.</p>
- 	 * @param unit   the unit buying the blueprint
- 	 * @param blueprint   the desired blueprint
+	 * Allows the given unit to attack an enemy unit if in its vicinity in its current position 
+	 * optionally using an amount of energy points as backup strength for the attack.
+	 * <p> If successful, the unit doing the attack will use its currently equipped weapon to subtract
+	 * a number of energy points from the <code>maxEnergy</code> field of the attacked unit equivalent to the
+	 * <code>damage</code> provoked. </p>
+	 * <p> The attacked unit will retaliate with 50% of the attacker's <code>damage</code> + however much
+	 * backup energy it set for defense</p> 
+	 * <p>In case of an error, the returned player state will not be different from the current one. 
+	 * It will also contain a <code>TransitionResult</code> which gives the reason for the failure.</p>
+	 * @param unit   the unit doing the attack
+	 * @param attackedUnit  the enemy unit being attacked
+	 * @param energyBackup  the amount of energy points used to increase the damage
 	 * @return the new player state or null if the player attempts to move outside his turn.
- 	 */
-	@Override
-	public PlayerState buyBlueprint(UnitState unit, Blueprint blueprint) {
-		return doGenericAction(new Transition(ActionType.BuyBlueprint, new Object[] {unit.id, blueprint}));
-	}
+	 */
+    public PlayerState attack(UnitState unit, BasicUnit attackedUnit, int energyBackup) {
+    	return doGenericAction(new Transition(ActionType.Attack, new Object[] {
+    			unit.id, attackedUnit.playerID, attackedUnit.unitId, energyBackup}));
+    }
+    
+    /**
+	 * Performs an upgrade for the given <code>craftedObject</code> by paying <code>goldAmount</code> 
+	 * gold nuggets.
+	 * <p> If successful, the PlayerState returned will contain an additional blueprint describing the requirements
+	 * for the next level of the crafted object submitted.
+	 * <p>In case of an error, the returned player state will not be different from the current one. 
+	 * It will also contain a <code>TransitionResult</code> which gives the reason for the failure.</p>
+	 * @param unit   the unit performing the upgrade
+	 * @param craftedObject  the type of object for which an upgrade is desired
+	 * @param goldAmount  the amount of gold nuggets required for the upgrade  
+	 * @return the new player state or null if the player attempts to move outside his turn.
+	 */
+    public PlayerState upgrade(UnitState unit, CraftedObject craftedObject, int goldAmount) {
+    	return doGenericAction(new Transition(ActionType.Upgrade, new Object[] {
+    			unit.id, craftedObject, goldAmount }));
+    }
 }

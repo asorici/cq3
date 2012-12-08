@@ -496,7 +496,7 @@ public class Server0 implements IServer {
 				return;
 			}
 			
-			if (action.operator == ActionType.CraftObject || action.operator == ActionType.SellObject) {
+			if (action.operator == ActionType.CraftObject) {
 				CraftedObject target = (CraftedObject)action.operands[1];
 				gui_logger.info(state.round.currentRound + " " + action.operator.name() + " " + player.id + " " 
 						+ playerUnit.pos.x + " " + playerUnit.pos.y + " " + player.credit + " " + playerUnit.energy + " " 

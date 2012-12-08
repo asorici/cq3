@@ -46,8 +46,7 @@ public class Behavior {
 	PlayerState nextAction(PlayerState state) {
 		if (lastRound != state.round.currentRound) {
 			lastRound = state.round.currentRound;
-			//checkForMerchantCamp(state);
-			performScan(state);
+			
 			performDig(state);
 			performPickUp(state);
 			performDrop(state);
@@ -74,77 +73,6 @@ public class Behavior {
 		
 		// should never get here
 		return null;
-	}
-	/*
-
-	private void checkForMerchantCamp(PlayerState state) {
-		// TODO Auto-generated method stub
-		UnitState unit = getBehaviorUnit(state);
-		if (unit == null) return;
-		
-		CellState[][] sight = unit.sight;
-		int mid = sight.length / 2;
-		if (sight[mid][mid] != null) {
-			if (sight[mid][mid].resources == null) {
-				System.out.println("Confirming that cell.resources is NULL");
-			}
-			
-			if (sight[mid][mid].scanAttributes == null) {
-				System.out.println("Confirming that cell.scanAttributes is NULL");
-			}
-			
-			if (sight[mid][mid].visibleResources != null) {
-				System.out.println("Confirming that cell.visibleRes is NOT NULL");
-			}
-		}
-		
-		for (int i = 0; i < sight.length; i++) {
-			for (int j = 0; j < sight[i].length; j++) {
-				if (sight[i][j] != null && Math.abs(sight[i][j].pos.x - unit.pos.x) == 1 && Math.abs(sight[i][j].pos.y - unit.pos.y) == 1) {
-					StrategicObject strRes = sight[i][j].strategicResource;
-					if (strRes != null && strRes.getType() == StrategicResourceType.Merchant) {
-						Merchant m = (Merchant)strRes;
-						for (Blueprint bp : m.getBlueprints()) {
-							if(!state.boughtBlueprints.contains(bp) && state.credit > bp.getValue()) {
-								state = cmd.buyBlueprint(unit, bp);
-								break;
-							}
-						}
-					}
-				}
-			}
-		}
-		
-		System.out.println("Bought blueprints: " + state.boughtBlueprints);
-	}
-	*/
-	
-	private void performScan(PlayerState state) {
-		// TODO Auto-generated method stub
-		UnitState unit = getBehaviorUnit(state);
-		if (unit == null) return;
-		
-		if (unit.energy > 20) {
-			state = cmd.scan(unit);
-			
-			/*
-			System.out.println(" ++++ Scan result ++++ ");
-			List<int[]>[][] scanned = getBehaviorUnit(state).scannedResourceAttributes;
-			
-			for (int i = 0; i < scanned.length; i++) {
-				for (int j = 0; j < scanned[i].length; j++) {
-					if (scanned[i][j] != null) {
-						for (int[] attrs : scanned[i][j]) {
-							for (int k = 0; k < attrs.length; k++) {
-								System.out.print(attrs[k] + "  ");
-							}
-							System.out.println();
-						}
-					}
-				}
-			}
-			*/
-		}
 	}
 	
 	private void performDig(PlayerState state) {
