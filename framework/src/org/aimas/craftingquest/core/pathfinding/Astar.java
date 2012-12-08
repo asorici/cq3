@@ -8,7 +8,7 @@ import org.aimas.craftingquest.state.UnitState;
 public class Astar implements IPathFinder
 {
 	private int maxSearchDistance;
-	private AStarHeuristic heuristic;
+	private IHeuristic heuristic;
 	
 	public Astar()
 	{
@@ -20,6 +20,12 @@ public class Astar implements IPathFinder
 	{
 		maxSearchDistance = maxSearchDist;
 		heuristic = new AStarHeuristic();
+	}
+	
+	public Astar(IHeuristic heur, int maxSearchDist)
+	{
+		maxSearchDistance = maxSearchDist;
+		heuristic = heur;
 	}
 	
 	//public AStarPath findPath(int xstart, int ystart, int xtarget, int ytarget)
@@ -122,7 +128,7 @@ public class Astar implements IPathFinder
 						if (!open.contains(neighbour) && ! closed.contains(neighbour))
 						{
 							neighbour.cost = nextStepCost;
-							neighbour.heuristic = heuristic.getCost(xn, yn, xtarget, ytarget);
+							neighbour.heuristic = heuristic.getCost(new Point2i(xn, yn), new Point2i(xtarget, ytarget));
 							currentDepth = Math.max(currentDepth, neighbour.setParent(current));
 							open.add(neighbour);
 						}

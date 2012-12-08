@@ -40,6 +40,7 @@
 				<include name="org/aimas/craftingquest/state/*.class" />
 				<include name="org/aimas/craftingquest/core/actions/*.class" />
 				<include name="org/aimas/craftingquest/core/energyreplenishmodels/*.class" />
+				<include name="org/aimas/craftingquest/core/pathfinding/*.class" />
 			</fileset>
 		    
 			<manifest>
