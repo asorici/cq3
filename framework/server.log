@@ -1,68 +1,1266 @@
- 6602 INFO  [RMI TCP Connection(6)-10.6.4.48] core.Client0 - [client][onEvent][NewRound]
- 6606 INFO  [RMI TCP Connection(6)-10.6.4.48] core.Client0 - [client][onEvent][EndRound]
- 6609 INFO  [RMI TCP Connection(3)-10.6.4.48] core.Server0 - [srv]Executing action [Move] for client: 0
- 6671 INFO  [RMI TCP Connection(3)-10.6.4.48] core.Server0 - [srv]Executing action [Move] for client: 0
- 6704 INFO  [RMI TCP Connection(3)-10.6.4.48] core.Server0 - [srv]Executing action [Move] for client: 0
- 7702 INFO  [RMI TCP Connection(6)-10.6.4.48] core.Client0 - [client][onEvent][NewRound]
- 7704 INFO  [RMI TCP Connection(6)-10.6.4.48] core.Client0 - [client][onEvent][EndRound]
- 7708 INFO  [RMI TCP Connection(3)-10.6.4.48] core.Server0 - [srv]Executing action [Move] for client: 1
- 7720 INFO  [RMI TCP Connection(3)-10.6.4.48] core.Server0 - [srv]Executing action [Move] for client: 1
- 7737 INFO  [RMI TCP Connection(3)-10.6.4.48] core.Server0 - [srv]Executing action [Move] for client: 1
- 8802 INFO  [RMI TCP Connection(6)-10.6.4.48] core.Client0 - [client][onEvent][NewRound]
- 8803 INFO  [RMI TCP Connection(6)-10.6.4.48] core.Client0 - [client][onEvent][EndRound]
- 8807 INFO  [RMI TCP Connection(3)-10.6.4.48] core.Server0 - [srv]Executing action [Move] for client: 0
- 8841 INFO  [RMI TCP Connection(3)-10.6.4.48] core.Server0 - [srv]Executing action [Move] for client: 0
- 9902 INFO  [RMI TCP Connection(6)-10.6.4.48] core.Client0 - [client][onEvent][NewRound]
- 9904 INFO  [RMI TCP Connection(6)-10.6.4.48] core.Client0 - [client][onEvent][EndRound]
- 9907 INFO  [RMI TCP Connection(3)-10.6.4.48] core.Server0 - [srv]Executing action [Move] for client: 1
- 9916 INFO  [RMI TCP Connection(3)-10.6.4.48] core.Server0 - [srv]Executing action [Move] for client: 1
- 9925 INFO  [RMI TCP Connection(3)-10.6.4.48] core.Server0 - [srv]Executing action [Move] for client: 1
-11002 INFO  [RMI TCP Connection(6)-10.6.4.48] core.Client0 - [client][onEvent][NewRound]
-11006 INFO  [RMI TCP Connection(6)-10.6.4.48] core.Client0 - [client][onEvent][EndRound]
-11008 INFO  [RMI TCP Connection(3)-10.6.4.48] core.Server0 - [srv]Executing action [Move] for client: 0
-11029 INFO  [RMI TCP Connection(3)-10.6.4.48] core.Server0 - [srv]Executing action [Move] for client: 0
-11047 INFO  [RMI TCP Connection(3)-10.6.4.48] core.Server0 - [srv]Executing action [Move] for client: 0
-12101 INFO  [RMI TCP Connection(6)-10.6.4.48] core.Client0 - [client][onEvent][NewRound]
-12103 INFO  [RMI TCP Connection(6)-10.6.4.48] core.Client0 - [client][onEvent][EndRound]
-12104 INFO  [RMI TCP Connection(3)-10.6.4.48] core.Server0 - [srv]Executing action [Move] for client: 1
-12116 INFO  [RMI TCP Connection(3)-10.6.4.48] core.Server0 - [srv]Executing action [Move] for client: 1
-12128 INFO  [RMI TCP Connection(3)-10.6.4.48] core.Server0 - [srv]Executing action [Move] for client: 1
-13202 INFO  [RMI TCP Connection(6)-10.6.4.48] core.Client0 - [client][onEvent][NewRound]
-13204 INFO  [RMI TCP Connection(6)-10.6.4.48] core.Client0 - [client][onEvent][EndRound]
-13211 INFO  [RMI TCP Connection(3)-10.6.4.48] core.Server0 - [srv]Executing action [Move] for client: 0
-13224 INFO  [RMI TCP Connection(3)-10.6.4.48] core.Server0 - [srv]Executing action [Move] for client: 0
-14302 INFO  [RMI TCP Connection(6)-10.6.4.48] core.Client0 - [client][onEvent][NewRound]
-14303 INFO  [RMI TCP Connection(6)-10.6.4.48] core.Client0 - [client][onEvent][EndRound]
-14304 INFO  [RMI TCP Connection(3)-10.6.4.48] core.Server0 - [srv]Executing action [Move] for client: 1
-14316 INFO  [RMI TCP Connection(3)-10.6.4.48] core.Server0 - [srv]Executing action [Move] for client: 1
-14325 INFO  [RMI TCP Connection(3)-10.6.4.48] core.Server0 - [srv]Executing action [Move] for client: 1
-15402 INFO  [RMI TCP Connection(6)-10.6.4.48] core.Client0 - [client][onEvent][NewRound]
-15404 INFO  [RMI TCP Connection(6)-10.6.4.48] core.Client0 - [client][onEvent][EndRound]
-15410 INFO  [RMI TCP Connection(3)-10.6.4.48] core.Server0 - [srv]Executing action [Move] for client: 0
-15429 INFO  [RMI TCP Connection(3)-10.6.4.48] core.Server0 - [srv]Executing action [Move] for client: 0
-15447 INFO  [RMI TCP Connection(3)-10.6.4.48] core.Server0 - [srv]Executing action [Move] for client: 0
-16502 INFO  [RMI TCP Connection(6)-10.6.4.48] core.Client0 - [client][onEvent][NewRound]
-16503 INFO  [RMI TCP Connection(6)-10.6.4.48] core.Client0 - [client][onEvent][EndRound]
-16509 INFO  [RMI TCP Connection(3)-10.6.4.48] core.Server0 - [srv]Executing action [Move] for client: 1
-16519 INFO  [RMI TCP Connection(3)-10.6.4.48] core.Server0 - [srv]Executing action [Move] for client: 1
-16529 INFO  [RMI TCP Connection(3)-10.6.4.48] core.Server0 - [srv]Executing action [Move] for client: 1
-17602 INFO  [RMI TCP Connection(6)-10.6.4.48] core.Client0 - [client][onEvent][NewRound]
-17603 INFO  [RMI TCP Connection(6)-10.6.4.48] core.Client0 - [client][onEvent][EndRound]
-17612 INFO  [RMI TCP Connection(3)-10.6.4.48] core.Server0 - [srv]Executing action [Move] for client: 0
-17624 INFO  [RMI TCP Connection(3)-10.6.4.48] core.Server0 - [srv]Executing action [Move] for client: 0
-17642 INFO  [RMI TCP Connection(3)-10.6.4.48] core.Server0 - [srv]Executing action [Move] for client: 0
-18702 INFO  [RMI TCP Connection(6)-10.6.4.48] core.Client0 - [client][onEvent][NewRound]
-18703 INFO  [RMI TCP Connection(6)-10.6.4.48] core.Client0 - [client][onEvent][EndRound]
-18704 INFO  [RMI TCP Connection(3)-10.6.4.48] core.Server0 - [srv]Executing action [Move] for client: 1
-18713 INFO  [RMI TCP Connection(3)-10.6.4.48] core.Server0 - [srv]Executing action [Move] for client: 1
-18724 INFO  [RMI TCP Connection(3)-10.6.4.48] core.Server0 - [srv]Executing action [Move] for client: 1
-19802 INFO  [RMI TCP Connection(6)-10.6.4.48] core.Client0 - [client][onEvent][NewRound]
-19803 INFO  [RMI TCP Connection(6)-10.6.4.48] core.Client0 - [client][onEvent][EndRound]
-19806 INFO  [RMI TCP Connection(3)-10.6.4.48] core.Server0 - [srv]Executing action [Move] for client: 0
-19833 INFO  [RMI TCP Connection(3)-10.6.4.48] core.Server0 - [srv]Executing action [Move] for client: 0
-19845 INFO  [RMI TCP Connection(3)-10.6.4.48] core.Server0 - [srv]Executing action [Move] for client: 0
-20902 INFO  [RMI TCP Connection(6)-10.6.4.48] core.Client0 - [client][onEvent][NewRound]
-20903 INFO  [RMI TCP Connection(6)-10.6.4.48] core.Client0 - [client][onEvent][EndRound]
-20905 INFO  [RMI TCP Connection(3)-10.6.4.48] core.Server0 - [srv]Executing action [Move] for client: 1
-20916 INFO  [RMI TCP Connection(3)-10.6.4.48] core.Server0 - [srv]Executing action [Move] for client: 1
-20924 INFO  [RMI TCP Connection(3)-10.6.4.48] core.Server0 - [srv]Executing action [Move] for client: 1
+ 6670 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][NewRound]
+ 6673 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+ 6674 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 0
+ 6681 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 0 Move 1 Tazmanian 4 2 300 130
+ 6701 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+ 6702 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 0
+ 6702 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 0 Move 1 Fox 3 2 300 130
+ 6720 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+ 6721 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 0
+ 6721 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 0 Move 1 Crocodile 6 3 300 130
+ 7770 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][NewRound]
+ 7772 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+ 7773 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 1
+ 7773 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 0 Move 2 Tazmanian 56 8 300 130
+ 7801 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+ 7802 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 1
+ 7802 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+ 7803 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 0 Move 2 Fox 57 6 300 130
+ 7831 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 1
+ 7832 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 0 Move 2 Crocodile 54 8 300 130
+ 8870 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][NewRound]
+ 8873 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+ 8874 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 2
+ 8874 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+ 8874 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 0 Move 3 Tazmanian 3 54 300 130
+ 8886 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+ 8886 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 2
+ 8887 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 0 Move 3 Fox 5 54 300 130
+ 8895 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 2
+ 8895 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 0 Move 3 Crocodile 6 53 300 130
+ 9971 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][NewRound]
+ 9972 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+ 9972 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 3
+ 9972 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+ 9972 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 0 Move 4 Tazmanian 58 58 300 130
+ 9973 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+ 9981 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 3
+ 9981 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 0 Move 4 Fox 55 58 300 130
+ 9990 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 3
+ 9991 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 0 Move 4 Crocodile 54 57 300 130
+11070 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][NewRound]
+11071 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+11072 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+11073 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+11075 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 0
+11076 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 1 Move 1 Crocodile 5 3 300 130
+12170 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][NewRound]
+12171 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+12172 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 1
+12172 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 1 Move 2 Tazmanian 57 8 300 130
+12183 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+12184 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 1
+12184 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+12184 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 1 Move 2 Fox 56 6 300 130
+12191 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 1
+12191 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 1 Move 2 Crocodile 53 7 300 130
+13270 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][NewRound]
+13271 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+13272 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 2
+13272 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+13272 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 1 Move 3 Tazmanian 3 55 300 130
+13283 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+13284 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 2
+13285 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 1 Move 3 Fox 5 53 300 130
+13293 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 2
+13293 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 1 Move 3 Crocodile 7 54 300 130
+14370 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][NewRound]
+14370 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+14371 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 3
+14371 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+14371 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 1 Move 4 Tazmanian 59 57 300 130
+14372 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+14378 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 3
+14378 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 1 Move 4 Fox 54 59 300 130
+14383 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 3
+14383 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 1 Move 4 Crocodile 53 58 300 130
+15470 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][NewRound]
+15471 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+15472 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+15473 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+15475 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 0
+15475 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 2 Move 1 Crocodile 4 2 300 130
+16570 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][NewRound]
+16571 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+16572 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 1
+16572 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 2 Move 2 Tazmanian 58 8 300 130
+16577 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+16577 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 1
+16578 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+16578 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 2 Move 2 Fox 55 7 300 130
+16584 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 1
+16585 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 2 Move 2 Crocodile 53 6 300 130
+17670 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][NewRound]
+17671 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+17672 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 2
+17672 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+17672 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 2 Move 3 Tazmanian 3 54 300 130
+17677 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+17678 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 2
+17678 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 2 Move 3 Fox 5 52 300 130
+17684 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 2
+17685 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 2 Move 3 Crocodile 7 55 300 130
+18770 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][NewRound]
+18771 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+18771 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 3
+18771 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+18772 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 2 Move 4 Tazmanian 59 56 300 130
+18772 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+18778 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 3
+18778 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 2 Move 4 Fox 55 59 300 130
+18784 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 3
+18784 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 2 Move 4 Crocodile 53 59 300 130
+19870 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][NewRound]
+19872 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+19873 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+19873 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+19876 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 0
+19876 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 3 Move 1 Crocodile 3 1 300 130
+20969 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][NewRound]
+20977 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+20978 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 1
+20979 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 3 Move 2 Tazmanian 57 8 300 130
+20985 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 1
+20985 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+20985 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 3 Move 2 Fox 54 7 300 130
+20986 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+20989 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 1
+20989 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 3 Move 2 Crocodile 54 5 300 130
+22070 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][NewRound]
+22071 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+22072 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 2
+22072 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 3 Move 3 Tazmanian 4 54 300 130
+22072 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+22077 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+22078 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 2
+22078 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 3 Move 3 Fox 6 52 300 130
+22083 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 2
+22083 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 3 Move 3 Crocodile 8 56 300 130
+23170 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][NewRound]
+23171 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+23171 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 3
+23171 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+23171 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 3 Move 4 Tazmanian 58 55 300 130
+23172 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+23177 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 3
+23177 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 3 Move 4 Fox 55 58 300 130
+23180 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 3
+23181 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 3 Move 4 Crocodile 54 59 300 130
+24270 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][NewRound]
+24271 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+24271 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+24272 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+24275 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 0
+24275 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 4 Move 1 Crocodile 2 2 300 130
+25370 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][NewRound]
+25371 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+25372 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 1
+25372 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 4 Move 2 Tazmanian 58 9 300 130
+25375 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+25376 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 1
+25376 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+25376 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 4 Move 2 Fox 55 8 300 130
+25382 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 1
+25382 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 4 Move 2 Crocodile 55 5 300 130
+26470 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][NewRound]
+26471 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+26472 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 2
+26472 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+26472 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 4 Move 3 Tazmanian 5 54 300 130
+26477 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+26477 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 2
+26477 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 4 Move 3 Fox 5 52 300 130
+26482 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 2
+26483 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 4 Move 3 Crocodile 7 57 300 130
+27570 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][NewRound]
+27571 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+27571 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 3
+27572 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+27572 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 4 Move 4 Tazmanian 59 54 300 130
+27572 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+27578 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 3
+27579 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 4 Move 4 Fox 55 57 300 130
+27584 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 3
+27584 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 4 Move 4 Crocodile 54 58 300 130
+28670 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][NewRound]
+28671 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+28672 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+28672 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+28674 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 0
+28674 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 5 Move 1 Crocodile 2 3 300 130
+29770 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][NewRound]
+29772 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 1
+29772 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 5 Move 2 Tazmanian 57 10 300 130
+29773 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+29777 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+29777 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 1
+29777 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 5 Move 2 Fox 54 8 300 130
+29777 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+29780 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 1
+29780 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 5 Move 2 Crocodile 56 5 300 130
+30869 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][NewRound]
+30870 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+30872 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+30872 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 2
+30872 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 5 Move 3 Tazmanian 6 54 300 130
+30877 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+30878 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 2
+30878 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 5 Move 3 Fox 5 53 300 130
+30882 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 2
+30882 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 5 Move 3 Crocodile 6 57 300 130
+31969 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][NewRound]
+31970 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+31971 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 3
+31971 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+31971 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 5 Move 4 Tazmanian 59 55 300 130
+31972 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+31982 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 3
+31982 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 5 Move 4 Fox 55 56 300 130
+31986 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 3
+31986 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 5 Move 4 Crocodile 53 59 300 130
+33070 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][NewRound]
+33071 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+33071 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+33072 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+33074 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 0
+33074 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 6 Move 1 Crocodile 3 4 300 130
+34170 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][NewRound]
+34171 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+34171 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 1
+34172 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 6 Move 2 Tazmanian 56 10 300 130
+34174 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+34175 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 1
+34175 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+34175 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 6 Move 2 Fox 55 8 300 130
+34179 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 1
+34179 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 6 Move 2 Crocodile 57 6 300 130
+35270 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][NewRound]
+35271 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+35272 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 2
+35272 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+35272 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 6 Move 3 Tazmanian 5 53 300 130
+35277 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+35278 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 2
+35279 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 6 Move 3 Fox 5 54 300 130
+35284 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 2
+35284 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 6 Move 3 Crocodile 5 57 300 130
+36370 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][NewRound]
+36371 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+36371 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 3
+36371 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+36371 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 6 Move 4 Tazmanian 58 55 300 130
+36372 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+36374 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 3
+36375 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 6 Move 4 Fox 54 57 300 130
+36378 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 3
+36379 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 6 Move 4 Crocodile 52 59 300 130
+37470 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][NewRound]
+37471 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+37472 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+37473 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+37474 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 0
+37475 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 7 Move 1 Crocodile 2 3 300 130
+38570 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][NewRound]
+38571 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+38571 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 1
+38571 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 7 Move 2 Tazmanian 55 10 300 130
+38575 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+38576 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 1
+38576 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 7 Move 2 Fox 56 7 300 130
+38576 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+38580 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 1
+38580 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 7 Move 2 Crocodile 58 6 300 130
+39669 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][NewRound]
+39670 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+39671 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 2
+39671 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 7 Move 3 Tazmanian 5 54 300 130
+39671 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+39676 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+39676 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 2
+39677 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 7 Move 3 Fox 5 55 300 130
+39681 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 2
+39681 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 7 Move 3 Crocodile 5 56 300 130
+40770 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][NewRound]
+40771 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+40771 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 3
+40772 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 7 Move 4 Tazmanian 58 56 300 130
+40772 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+40773 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+40776 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 3
+40776 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 7 Move 4 Fox 54 58 300 130
+40781 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 3
+40781 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 7 Move 4 Crocodile 51 58 300 130
+41870 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][NewRound]
+41873 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+41873 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+41874 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+41875 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 0
+41876 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 8 Move 1 Crocodile 1 2 300 130
+42970 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][NewRound]
+42971 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+42972 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 1
+42972 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 8 Move 2 Tazmanian 55 9 300 130
+42976 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+42977 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 1
+42977 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 8 Move 2 Fox 56 6 300 130
+42977 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+42981 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 1
+42982 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 8 Move 2 Crocodile 59 6 300 130
+44070 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][NewRound]
+44071 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+44072 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 2
+44072 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 8 Move 3 Tazmanian 4 54 300 130
+44072 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+44076 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+44076 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 2
+44076 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 8 Move 3 Fox 6 55 300 130
+44081 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 2
+44081 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 8 Move 3 Crocodile 6 55 300 130
+45170 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][NewRound]
+45171 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+45172 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 3
+45172 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+45172 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 8 Move 4 Tazmanian 59 55 300 130
+45172 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+45176 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 3
+45177 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 8 Move 4 Fox 55 57 300 130
+45181 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 3
+45181 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 8 Move 4 Crocodile 50 57 300 130
+46270 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][NewRound]
+46271 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+46272 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+46272 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+46274 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 0
+46274 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 9 Move 1 Crocodile 1 1 300 130
+47370 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][NewRound]
+47371 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+47371 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 1
+47372 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 9 Move 2 Tazmanian 56 10 300 130
+47375 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+47376 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 1
+47376 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+47376 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 9 Move 2 Fox 57 7 300 130
+47379 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 1
+47380 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 9 Move 2 Crocodile 58 7 300 130
+48470 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][NewRound]
+48471 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+48472 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 2
+48472 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+48472 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 9 Move 3 Tazmanian 4 53 300 130
+48476 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+48480 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 2
+48481 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 9 Move 3 Fox 6 54 300 130
+48486 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 2
+48486 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 9 Move 3 Crocodile 7 54 300 130
+49570 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][NewRound]
+49571 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+49571 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 3
+49571 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 9 Move 4 Tazmanian 59 54 300 130
+49571 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+49572 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+49577 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 3
+49577 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 9 Move 4 Fox 54 58 300 130
+49582 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 3
+49582 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 9 Move 4 Crocodile 51 57 300 130
+50670 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][NewRound]
+50670 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+50671 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+50672 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+50673 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 0
+50673 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 10 Move 1 Crocodile 0 0 300 130
+51770 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][NewRound]
+51771 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+51771 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 1
+51772 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 10 Move 2 Tazmanian 57 10 300 130
+51775 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+51775 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 1
+51776 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+51776 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 10 Move 2 Fox 58 6 300 130
+51780 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 1
+51781 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 10 Move 2 Crocodile 57 8 300 130
+52870 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][NewRound]
+52874 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+52875 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+52875 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 2
+52875 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 10 Move 3 Tazmanian 5 52 300 130
+52878 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+52879 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 2
+52879 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 10 Move 3 Fox 7 53 300 130
+52883 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 2
+52883 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 10 Move 3 Crocodile 6 54 300 130
+53970 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][NewRound]
+53971 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+53971 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 3
+53971 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 10 Move 4 Tazmanian 58 53 300 130
+53971 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+53972 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+53975 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 3
+53976 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 10 Move 4 Fox 55 59 300 130
+53979 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 3
+53979 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 10 Move 4 Crocodile 51 56 300 130
+55070 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][NewRound]
+55071 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+55072 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+55073 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+55074 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 0
+55074 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 11 Move 1 Crocodile 0 1 300 130
+56169 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][NewRound]
+56170 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+56171 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 1
+56171 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 11 Move 2 Tazmanian 57 9 300 130
+56178 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+56179 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 1
+56179 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 11 Move 2 Fox 57 7 300 130
+56179 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+56182 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 1
+56182 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 11 Move 2 Crocodile 57 9 300 130
+57270 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][NewRound]
+57271 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+57271 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+57271 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 2
+57272 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 11 Move 3 Tazmanian 6 53 300 130
+57275 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+57276 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 2
+57276 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 11 Move 3 Fox 7 54 300 130
+57280 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 2
+57280 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 11 Move 3 Crocodile 6 55 300 130
+58370 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][NewRound]
+58370 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+58371 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 3
+58371 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+58371 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 11 Move 4 Tazmanian 59 52 300 130
+58371 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+58374 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 3
+58374 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 11 Move 4 Fox 55 58 300 130
+58377 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 3
+58378 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 11 Move 4 Crocodile 52 57 300 130
+59470 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][NewRound]
+59471 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+59471 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+59472 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+60570 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][NewRound]
+60571 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+60572 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 1
+60572 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 12 Move 2 Tazmanian 58 8 300 130
+60576 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+60577 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 1
+60577 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+60577 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 12 Move 2 Fox 57 8 300 130
+60580 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 1
+60580 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 12 Move 2 Crocodile 58 10 300 130
+61670 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][NewRound]
+61671 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+61671 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 2
+61671 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+61672 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 12 Move 3 Tazmanian 5 53 300 130
+61675 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+61675 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 2
+61676 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 12 Move 3 Fox 8 54 300 130
+61679 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 2
+61679 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 12 Move 3 Crocodile 6 54 300 130
+62770 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][NewRound]
+62771 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+62772 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 3
+62772 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 12 Move 4 Tazmanian 59 51 300 130
+62772 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+62772 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+62776 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 3
+62776 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 12 Move 4 Fox 54 59 300 130
+62779 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 3
+62779 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 12 Move 4 Crocodile 51 58 300 130
+63870 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][NewRound]
+63872 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+63873 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+63874 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+63875 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 0
+63875 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 13 Move 1 Crocodile 1 2 300 130
+64970 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][NewRound]
+64971 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+64971 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 1
+64972 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 13 Move 2 Tazmanian 59 7 300 130
+64974 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+64975 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 1
+64975 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+64975 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 13 Move 2 Fox 58 8 300 130
+64978 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 1
+64979 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 13 Move 2 Crocodile 57 10 300 130
+66070 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][NewRound]
+66071 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+66072 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 2
+66072 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 13 Move 3 Tazmanian 4 52 300 130
+66072 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+66075 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+66075 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 2
+66076 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 13 Move 3 Fox 9 54 300 130
+66079 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 2
+66079 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 13 Move 3 Crocodile 6 55 300 130
+67169 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][NewRound]
+67170 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+67171 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 3
+67171 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 13 Move 4 Tazmanian 59 50 300 130
+67171 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+67172 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+67175 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 3
+67175 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 13 Move 4 Fox 54 58 300 130
+67179 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 3
+67179 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 13 Move 4 Crocodile 50 57 300 130
+68270 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][NewRound]
+68271 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+68272 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+68272 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+68274 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 0
+68274 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 14 Move 1 Crocodile 0 3 300 130
+69370 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][NewRound]
+69370 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+69371 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 1
+69371 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 14 Move 2 Tazmanian 59 6 300 130
+69373 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+69373 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 1
+69373 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 14 Move 2 Fox 58 9 300 130
+69373 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+69375 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 1
+69376 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 14 Move 2 Crocodile 57 11 300 130
+70469 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][NewRound]
+70470 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+70471 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 2
+70471 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 14 Move 3 Tazmanian 5 51 300 130
+70471 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+70474 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+70474 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 2
+70475 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 14 Move 3 Fox 10 54 300 130
+70479 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 2
+70479 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 14 Move 3 Crocodile 6 56 300 130
+71569 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][NewRound]
+71570 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+71571 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 3
+71571 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 14 Move 4 Tazmanian 59 51 300 130
+71571 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+71572 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+71575 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 3
+71575 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 14 Move 4 Fox 53 57 300 130
+71578 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 3
+71578 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 14 Move 4 Crocodile 50 58 300 130
+72670 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][NewRound]
+72671 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+72671 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+72672 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+72674 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 0
+72674 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 15 Move 1 Crocodile 0 2 300 130
+73770 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][NewRound]
+73771 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+73771 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 1
+73772 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 15 Move 2 Tazmanian 58 7 300 130
+73775 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+73775 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 1
+73775 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+73775 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 15 Move 2 Fox 58 8 300 130
+73779 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 1
+73779 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 15 Move 2 Crocodile 57 12 300 130
+74869 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][NewRound]
+74871 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+74872 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 2
+74872 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+74872 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 15 Move 3 Tazmanian 4 51 300 130
+74876 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+74876 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 2
+74876 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 15 Move 3 Fox 9 54 300 130
+74880 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 2
+74880 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 15 Move 3 Crocodile 7 56 300 130
+75970 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][NewRound]
+75971 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+75971 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 3
+75972 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+75972 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 15 Move 4 Tazmanian 58 51 300 130
+75972 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+75976 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 3
+75976 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 15 Move 4 Fox 53 58 300 130
+75978 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 3
+75978 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 15 Move 4 Crocodile 51 59 300 130
+77069 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][NewRound]
+77070 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+77070 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+77071 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+77072 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 0
+77072 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 16 Move 1 Crocodile 1 1 300 130
+78170 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][NewRound]
+78171 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+78171 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 1
+78172 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 16 Move 2 Tazmanian 57 6 300 130
+78175 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+78175 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 1
+78175 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+78175 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 16 Move 2 Fox 59 9 300 130
+78179 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 1
+78179 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 16 Move 2 Crocodile 58 13 300 130
+79269 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][NewRound]
+79270 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+79271 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 2
+79271 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 16 Move 3 Tazmanian 5 50 300 130
+79271 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+79274 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+79274 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 2
+79275 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 16 Move 3 Fox 10 55 300 130
+79279 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 2
+79279 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 16 Move 3 Crocodile 8 57 300 130
+80370 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][NewRound]
+80371 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+80371 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+80371 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 3
+80372 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 16 Move 4 Tazmanian 59 50 300 130
+80372 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+80375 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 3
+80375 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 16 Move 4 Fox 54 59 300 130
+80378 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 3
+80378 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 16 Move 4 Crocodile 50 58 300 130
+81470 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][NewRound]
+81471 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+81471 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+81472 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+81473 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 0
+81474 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 17 Move 1 Crocodile 1 0 300 130
+82570 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][NewRound]
+82570 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+82571 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 1
+82571 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 17 Move 2 Tazmanian 56 7 300 130
+82574 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+82574 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 1
+82575 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 17 Move 2 Fox 58 10 300 130
+82575 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+82578 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 1
+82579 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 17 Move 2 Crocodile 58 12 300 130
+83670 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][NewRound]
+83671 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+83671 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 2
+83672 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 17 Move 3 Tazmanian 6 51 300 130
+83672 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+83675 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+83675 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 2
+83676 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 17 Move 3 Fox 9 54 300 130
+83679 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 2
+83679 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 17 Move 3 Crocodile 8 58 300 130
+84770 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][NewRound]
+84771 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+84772 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 3
+84772 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+84772 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 17 Move 4 Tazmanian 58 50 300 130
+84772 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+84775 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 3
+84776 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 17 Move 4 Fox 53 59 300 130
+84779 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 3
+85869 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][NewRound]
+85872 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+85872 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+85873 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+85874 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 0
+85874 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 18 Move 1 Crocodile 0 1 300 130
+86970 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][NewRound]
+86971 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+86971 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 1
+86972 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 18 Move 2 Tazmanian 57 6 300 130
+86974 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+86974 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 1
+86974 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 18 Move 2 Fox 57 9 300 130
+86976 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+86978 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 1
+86979 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 18 Move 2 Crocodile 59 12 300 130
+88070 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][NewRound]
+88071 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 2
+88071 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 18 Move 3 Tazmanian 7 51 300 130
+88070 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+88073 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+88075 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+88075 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 2
+88075 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 18 Move 3 Fox 10 54 300 130
+88077 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 2
+88077 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 18 Move 3 Crocodile 9 59 300 130
+89170 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][NewRound]
+89171 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+89171 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 3
+89171 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 18 Move 4 Tazmanian 59 51 300 130
+89171 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+89172 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+89175 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 3
+89175 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 18 Move 4 Fox 52 58 300 130
+89178 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 3
+89178 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 18 Move 4 Crocodile 49 59 300 130
+90270 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][NewRound]
+90271 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+90271 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+90272 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+90273 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 0
+90273 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 19 Move 1 Crocodile 1 2 300 130
+91369 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][NewRound]
+91370 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+91371 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 1
+91371 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 19 Move 2 Tazmanian 58 5 300 130
+91374 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+91374 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 1
+91374 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+91374 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 19 Move 2 Fox 57 10 300 130
+91377 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 1
+91377 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 19 Move 2 Crocodile 58 11 300 130
+92469 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][NewRound]
+92471 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+92471 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 2
+92471 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 19 Move 3 Tazmanian 6 50 300 130
+92472 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+92478 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+92479 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 2
+92479 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 19 Move 3 Fox 11 55 300 130
+92481 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 2
+92481 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 19 Move 3 Crocodile 10 58 300 130
+93569 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][NewRound]
+93570 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+93571 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 3
+93571 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 19 Move 4 Tazmanian 58 50 300 130
+93571 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+93572 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+93574 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 3
+93575 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 19 Move 4 Fox 53 57 300 130
+93578 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 3
+93578 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 19 Move 4 Crocodile 48 59 300 130
+94670 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][NewRound]
+94671 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+94671 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+94672 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+94673 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 0
+94673 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 20 Move 1 Crocodile 2 2 300 130
+95769 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][NewRound]
+95770 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+95770 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 1
+95771 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 20 Move 2 Tazmanian 58 6 300 130
+95773 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 1
+95773 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+95773 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 20 Move 2 Fox 58 11 300 130
+95774 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+95776 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 1
+95777 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 20 Move 2 Crocodile 58 12 300 130
+96870 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][NewRound]
+96872 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+96873 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 2
+96873 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+96873 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 20 Move 3 Tazmanian 5 49 300 130
+96877 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 2
+96877 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 20 Move 3 Fox 11 54 300 130
+96879 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+96881 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 2
+96881 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 20 Move 3 Crocodile 9 57 300 130
+97970 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][NewRound]
+97971 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+97971 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+97971 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 3
+97972 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 20 Move 4 Tazmanian 59 49 300 130
+97972 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+97975 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 3
+97975 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 20 Move 4 Fox 52 58 300 130
+97978 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 3
+97978 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 20 Move 4 Crocodile 49 59 300 130
+99070 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][NewRound]
+99071 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+99071 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+99072 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+99073 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 0
+99074 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 21 Move 1 Crocodile 3 1 300 130
+100170 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][NewRound]
+100171 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+100171 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 1
+100171 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 21 Move 2 Tazmanian 59 5 300 130
+100174 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+100174 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 1
+100175 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 21 Move 2 Fox 57 12 300 130
+100175 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+100177 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 1
+100178 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 21 Move 2 Crocodile 59 13 300 130
+101270 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][NewRound]
+101271 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+101271 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 2
+101271 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 21 Move 3 Tazmanian 5 50 300 130
+101271 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+101275 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+101275 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 2
+101275 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 21 Move 3 Fox 12 54 300 130
+101279 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 2
+101279 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 21 Move 3 Crocodile 10 58 300 130
+102370 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][NewRound]
+102371 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+102371 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 3
+102371 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+102371 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 21 Move 4 Tazmanian 58 48 300 130
+102372 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+102374 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 3
+102374 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 21 Move 4 Fox 51 59 300 130
+102377 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 3
+102377 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 21 Move 4 Crocodile 50 59 300 130
+103470 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][NewRound]
+103471 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+103472 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+103472 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+103473 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 0
+103474 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 22 Move 1 Crocodile 2 0 300 130
+104570 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][NewRound]
+104570 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+104571 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 1
+104571 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 22 Move 2 Tazmanian 58 4 300 130
+104573 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+104573 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 1
+104574 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 22 Move 2 Fox 56 12 300 130
+104574 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+104577 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 1
+104577 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 22 Move 2 Crocodile 59 14 300 130
+105670 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][NewRound]
+105671 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+105671 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 2
+105671 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 22 Move 3 Tazmanian 4 49 300 130
+105671 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+105674 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+105675 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 2
+105675 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 22 Move 3 Fox 12 53 300 130
+105678 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 2
+105679 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 22 Move 3 Crocodile 11 57 300 130
+106770 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][NewRound]
+106770 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+106771 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 3
+106771 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 22 Move 4 Tazmanian 57 48 300 130
+106771 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+106772 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+106775 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 3
+106775 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 22 Move 4 Fox 51 58 300 130
+106779 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 3
+106779 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 22 Move 4 Crocodile 50 58 300 130
+107870 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][NewRound]
+107872 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+107873 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+107874 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+107874 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 0
+107875 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 23 Move 1 Crocodile 2 1 300 130
+108970 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][NewRound]
+108971 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+108971 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 1
+108971 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 23 Move 2 Tazmanian 59 4 300 130
+108975 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 1
+108975 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+108975 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 23 Move 2 Fox 57 12 300 130
+108976 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+108977 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 1
+108978 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 23 Move 2 Crocodile 58 15 300 130
+110070 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][NewRound]
+110071 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+110071 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+110071 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 2
+110072 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 23 Move 3 Tazmanian 5 48 300 130
+110075 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+110075 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 2
+110075 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 23 Move 3 Fox 11 53 300 130
+110079 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 2
+110079 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 23 Move 3 Crocodile 10 56 300 130
+111170 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][NewRound]
+111171 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+111171 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 3
+111171 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 23 Move 4 Tazmanian 58 47 300 130
+111171 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+111172 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+111175 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 3
+111175 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 23 Move 4 Fox 52 58 300 130
+111178 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 3
+111179 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 23 Move 4 Crocodile 49 59 300 130
+112270 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][NewRound]
+112271 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+112271 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+112272 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+112273 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 0
+112273 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 24 Move 1 Crocodile 3 2 300 130
+113370 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][NewRound]
+113371 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+113371 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 1
+113371 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 24 Move 2 Tazmanian 59 3 300 130
+113374 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+113374 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 1
+113374 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+113374 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 24 Move 2 Fox 58 13 300 130
+113378 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 1
+113378 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 24 Move 2 Crocodile 58 16 300 130
+114470 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][NewRound]
+114471 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+114471 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 2
+114471 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 24 Move 3 Tazmanian 5 49 300 130
+114471 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+114474 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+114474 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 2
+114474 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 24 Move 3 Fox 12 54 300 130
+114477 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 2
+114477 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 24 Move 3 Crocodile 11 55 300 130
+115570 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][NewRound]
+115571 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+115571 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 3
+115571 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 24 Move 4 Tazmanian 59 48 300 130
+115571 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+115572 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+115574 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 3
+115574 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 24 Move 4 Fox 51 58 300 130
+115577 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 3
+115578 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 24 Move 4 Crocodile 50 58 300 130
+116669 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][NewRound]
+116670 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+116671 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+116671 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+116672 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 0
+116672 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 25 Move 1 Crocodile 3 3 300 130
+117769 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][NewRound]
+117770 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+117771 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 1
+117771 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 25 Move 2 Tazmanian 58 2 300 130
+117773 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+117774 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 1
+117774 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 25 Move 2 Fox 59 14 300 130
+117774 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+117777 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 1
+117777 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 25 Move 2 Crocodile 58 15 300 130
+118870 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][NewRound]
+118871 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+118872 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 2
+118872 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+118872 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 25 Move 3 Tazmanian 4 48 300 130
+118875 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+118875 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 2
+118875 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 25 Move 3 Fox 13 54 300 130
+118878 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 2
+118878 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 25 Move 3 Crocodile 10 55 300 130
+119970 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][NewRound]
+119971 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+119971 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+119971 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 3
+119971 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 25 Move 4 Tazmanian 58 49 300 130
+119971 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+119974 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 3
+119974 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 25 Move 4 Fox 52 58 300 130
+119977 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 3
+119977 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 25 Move 4 Crocodile 51 58 300 130
+121069 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][NewRound]
+121070 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+121071 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+121071 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+121072 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 0
+121072 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 26 Move 1 Crocodile 2 2 300 130
+122170 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][NewRound]
+122170 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+122171 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 1
+122171 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 26 Move 2 Tazmanian 59 1 300 130
+122174 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+122174 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 1
+122174 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 26 Move 2 Fox 58 14 300 130
+122175 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+122178 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 1
+122178 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 26 Move 2 Crocodile 58 16 300 130
+123269 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][NewRound]
+123270 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+123271 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 2
+123271 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+123271 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 26 Move 3 Tazmanian 5 47 300 130
+123274 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+123274 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 2
+123274 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 26 Move 3 Fox 12 53 300 130
+123277 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 2
+123277 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 26 Move 3 Crocodile 11 55 300 130
+124370 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][NewRound]
+124370 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+124371 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 3
+124371 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 26 Move 4 Tazmanian 59 48 300 130
+124371 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+124372 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+124374 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 3
+124374 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 26 Move 4 Fox 52 59 300 130
+124377 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 3
+124377 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 26 Move 4 Crocodile 50 59 300 130
+125470 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][NewRound]
+125471 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+125471 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+125472 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+125477 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 0
+125477 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 27 Move 1 Crocodile 3 2 300 130
+126570 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][NewRound]
+126571 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+126571 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 1
+126571 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 27 Move 2 Tazmanian 58 2 300 130
+126574 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+126575 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 1
+126575 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+126575 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 27 Move 2 Fox 59 15 300 130
+126578 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 1
+126578 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 27 Move 2 Crocodile 59 16 300 130
+127670 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][NewRound]
+127671 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+127671 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+127671 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 2
+127671 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 27 Move 3 Tazmanian 5 46 300 130
+127674 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+127674 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 2
+127675 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 27 Move 3 Fox 12 54 300 130
+127678 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 2
+127678 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 27 Move 3 Crocodile 10 54 300 130
+128769 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][NewRound]
+128770 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+128770 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 3
+128770 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+128771 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 27 Move 4 Tazmanian 58 47 300 130
+128771 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+128774 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 3
+128774 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 27 Move 4 Fox 51 59 300 130
+128776 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 3
+128777 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 27 Move 4 Crocodile 51 59 300 130
+129870 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][NewRound]
+129872 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+129873 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+129873 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+129874 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 0
+129875 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 28 Move 1 Crocodile 3 1 300 130
+130970 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][NewRound]
+130970 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+130971 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 1
+130971 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 28 Move 2 Tazmanian 57 3 300 130
+130974 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+130974 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 1
+130975 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+130975 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 28 Move 2 Fox 58 16 300 130
+130978 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 1
+130978 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 28 Move 2 Crocodile 58 17 300 130
+132070 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][NewRound]
+132070 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+132071 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 2
+132071 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+132071 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 28 Move 3 Tazmanian 4 47 300 130
+132074 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+132074 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 2
+132074 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 28 Move 3 Fox 11 53 300 130
+132077 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 2
+132077 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 28 Move 3 Crocodile 9 53 300 130
+133170 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][NewRound]
+133170 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+133171 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 3
+133171 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 28 Move 4 Tazmanian 57 46 300 130
+133171 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+133171 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+133174 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 3
+133174 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 28 Move 4 Fox 50 59 300 130
+133176 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 3
+133177 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 28 Move 4 Crocodile 50 59 300 130
+134270 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][NewRound]
+134271 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+134271 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+134271 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+134273 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 0
+134273 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 29 Move 1 Crocodile 2 0 300 130
+135370 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][NewRound]
+135370 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+135371 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 1
+135371 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 29 Move 2 Tazmanian 58 2 300 130
+135373 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+135373 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 1
+135373 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 29 Move 2 Fox 59 16 300 130
+135373 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+135375 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 1
+135376 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 29 Move 2 Crocodile 58 16 300 130
+136469 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][NewRound]
+136470 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+136470 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 2
+136471 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 29 Move 3 Tazmanian 5 47 300 130
+136471 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+136473 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+136473 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 2
+136474 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 29 Move 3 Fox 12 53 300 130
+136476 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 2
+136476 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 29 Move 3 Crocodile 8 54 300 130
+137570 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][NewRound]
+137571 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+137571 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 3
+137572 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+137572 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 29 Move 4 Tazmanian 56 47 300 130
+137572 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+137575 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 3
+137575 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 29 Move 4 Fox 49 58 300 130
+137577 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 3
+137578 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 29 Move 4 Crocodile 50 58 300 130
+138670 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][NewRound]
+138671 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+138671 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+138671 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+138673 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 0
+138673 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 30 Move 1 Crocodile 3 1 300 130
+139770 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][NewRound]
+139771 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+139771 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 1
+139771 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 30 Move 2 Tazmanian 59 3 300 130
+139773 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+139774 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 1
+139774 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 30 Move 2 Fox 58 17 300 130
+139774 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+139776 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 1
+139776 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 30 Move 2 Crocodile 59 17 300 130
+140870 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][NewRound]
+140871 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+140913 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 2
+140913 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+140913 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 30 Move 3 Tazmanian 6 46 300 130
+140915 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+140916 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 2
+140916 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 30 Move 3 Fox 11 54 300 130
+140918 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 2
+140918 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 30 Move 3 Crocodile 7 55 300 130
+141970 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][NewRound]
+141970 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+141971 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 3
+141971 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+141971 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 30 Move 4 Tazmanian 57 46 300 130
+141971 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+141974 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 3
+141974 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 30 Move 4 Fox 49 59 300 130
+141976 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 3
+141977 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 30 Move 4 Crocodile 51 59 300 130
+143070 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][NewRound]
+143071 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+143071 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+143072 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+143073 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 0
+143073 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 31 Move 1 Crocodile 4 1 300 130
+144170 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][NewRound]
+144171 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+144171 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 1
+144171 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 31 Move 2 Tazmanian 58 4 300 130
+144174 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+144174 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 1
+144174 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 31 Move 2 Fox 57 17 300 130
+144174 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+144176 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 1
+144177 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 31 Move 2 Crocodile 59 16 300 130
+145270 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][NewRound]
+145271 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+145271 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 2
+145271 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 31 Move 3 Tazmanian 5 46 300 130
+145271 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+145275 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+145275 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 2
+145276 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 31 Move 3 Fox 12 55 300 130
+145279 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 2
+145279 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 31 Move 3 Crocodile 6 56 300 130
+146369 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][NewRound]
+146370 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+146370 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 3
+146371 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 31 Move 4 Tazmanian 56 46 300 130
+146371 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+146371 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+146374 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 3
+146374 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 31 Move 4 Fox 50 58 300 130
+146376 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 3
+146376 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 31 Move 4 Crocodile 50 58 300 130
+147470 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][NewRound]
+147470 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+147471 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+147471 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+147472 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 0
+147472 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 32 Move 1 Crocodile 5 2 300 130
+148569 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][NewRound]
+148570 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+148570 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 1
+148571 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 32 Move 2 Tazmanian 57 5 300 130
+148573 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+148573 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 1
+148573 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 32 Move 2 Fox 56 17 300 130
+148573 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+148576 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 1
+148576 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 32 Move 2 Crocodile 58 17 300 130
+149670 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][NewRound]
+149670 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+149671 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 2
+149671 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 32 Move 3 Tazmanian 5 45 300 130
+149671 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+149674 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+149674 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 2
+149674 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 32 Move 3 Fox 13 55 300 130
+149677 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 2
+149677 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 32 Move 3 Crocodile 5 57 300 130
+150770 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][NewRound]
+150770 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+150771 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 3
+150771 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 32 Move 4 Tazmanian 57 46 300 130
+150771 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+150771 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+150774 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 3
+150774 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 32 Move 4 Fox 49 59 300 130
+150776 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 3
+151870 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][NewRound]
+151872 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+151873 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+151873 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+151874 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 0
+151874 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 33 Move 1 Crocodile 5 1 300 130
+152969 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][NewRound]
+152970 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+152970 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 1
+152971 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 33 Move 2 Tazmanian 56 5 300 130
+152973 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+152973 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 1
+152973 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 33 Move 2 Fox 56 18 300 130
+152974 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+152976 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 1
+152976 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 33 Move 2 Crocodile 59 16 300 130
+154070 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][NewRound]
+154070 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+154071 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 2
+154071 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 33 Move 3 Tazmanian 5 46 300 130
+154071 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+154074 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+154074 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 2
+154074 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 33 Move 3 Fox 14 56 300 130
+154077 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 2
+154077 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 33 Move 3 Crocodile 4 56 300 130
+155170 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][NewRound]
+155171 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+155171 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+155171 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 3
+155171 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 33 Move 4 Tazmanian 58 46 300 130
+155171 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+155174 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 3
+155174 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 33 Move 4 Fox 48 58 300 130
+155177 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 3
+155177 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 33 Move 4 Crocodile 51 57 300 130
+156269 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][NewRound]
+156270 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+156270 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+156271 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+156272 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 0
+156272 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 34 Move 1 Crocodile 6 1 300 130
+157370 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][NewRound]
+157371 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+157371 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 1
+157371 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 34 Move 2 Tazmanian 55 6 300 130
+157374 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+157374 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 1
+157374 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 34 Move 2 Fox 56 19 300 130
+157374 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+157377 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 1
+157377 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 34 Move 2 Crocodile 59 15 300 130
+158469 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][NewRound]
+158470 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+158470 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 2
+158470 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 34 Move 3 Tazmanian 5 45 300 130
+158470 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+158473 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+158473 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 2
+158474 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 34 Move 3 Fox 14 55 300 130
+158477 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 2
+158477 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 34 Move 3 Crocodile 4 57 300 130
+159569 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][NewRound]
+159570 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+159570 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 3
+159570 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 34 Move 4 Tazmanian 57 45 300 130
+159571 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+159571 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+159573 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 3
+159574 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 34 Move 4 Fox 47 59 300 130
+159576 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 3
+159576 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 34 Move 4 Crocodile 52 57 300 130
+160670 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][NewRound]
+160670 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+160671 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+160671 INFO  [RMI TCP Connection(10)-127.0.0.1] core.Client0 - [client][onEvent][EndRound]
+160672 INFO  [RMI TCP Connection(8)-127.0.0.1] core.Server0 - [srv]Executing action [Move] for client: 0
+160673 INFO  [RMI TCP Connection(8)-127.0.0.1] core.guilogger - 35 Move 1 Crocodile 6 2 300 130

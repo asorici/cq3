@@ -2,3 +2,6 @@ framework/bin/
 framework/build/
 apache-log4j-1.2.16/
 .metadata/
+framework/resource-stats.txt
+framework/server_gui_log.log
+framework/someFile.txt

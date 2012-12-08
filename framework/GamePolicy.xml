@@ -12,7 +12,7 @@
 		
 		<mapName>map_v1.cqm</mapName>
 		
-		<!-- scenario specific configurations --><nrPlayers>2</nrPlayers>
+		<!-- scenario specific configurations --><nrPlayers>4</nrPlayers>
 		<nrPlayerUnits>3</nrPlayerUnits><initialTeamCredit>300</initialTeamCredit>
 		<scanAttributeCount>5</scanAttributeCount>
 		<unitEnergy>150</unitEnergy>

@@ -105,6 +105,10 @@ public class Server0 implements IServer {
 	public static void main(String[] args) throws Exception {
 		// args are servername, port, secrets file
 		Server0 server = null;
+		
+		// să ruleze cu GUI
+		System.setProperty("gui", "true");
+		
 		if(args == null || args.length != 3) {
 			server = new Server0("CraftingQuest", 1198, "secrets.txt");
 		}
@@ -274,6 +278,7 @@ public class Server0 implements IServer {
 					// send the NEW ROUND event to current client
 					sendEvent(clientID, client, new Event(Event.EventType.NewRound));
 					
+					
 					// send the END ROUND event to all the others
 					for (int cID = 0; cID < clients.length; cID++) {
 						if (cID != clientID) {
@@ -351,7 +356,7 @@ public class Server0 implements IServer {
 	}
 	
 	private boolean allowedPlayer(int clientID) {
-		int factor = clientID % 2;
+		int factor = clientID % 4;
 		long currentTime = System.currentTimeMillis();
 		int currentRound = state.round.currentRound;
 		
