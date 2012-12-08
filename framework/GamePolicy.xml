@@ -18,7 +18,7 @@
 		<unitEnergy>150</unitEnergy>
 		<baseObjectValue>100</baseObjectValue>
 		<valueIncrement>20</valueIncrement>
-		<energyReplenishModel>FullReplenish</energyReplenishModel>
+		<energyReplenishModel>ExponentialReplenish</energyReplenishModel>
 		
 		<moveBaseCost>20</moveBaseCost>
 		<resourceMoveCost>1</resourceMoveCost>

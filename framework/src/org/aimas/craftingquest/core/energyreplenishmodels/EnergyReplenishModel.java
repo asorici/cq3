@@ -20,6 +20,8 @@ public abstract class EnergyReplenishModel {
 		switch (type) {
 			case FullReplenish:
 				return new FullEnergyReplenishModel(type);
+			case ExponentialReplenish:
+				return new ExponentialReplenishModel(type);
 			default: return null;
 		}
 	}

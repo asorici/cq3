@@ -190,6 +190,14 @@ public class GamePolicy {
 		towerCutoffRadius = Integer.parseInt(parametersNode.getElementsByTagName("towerCutoffRadius").item(0).getTextContent());
 		towerDrainBase = Integer.parseInt(parametersNode.getElementsByTagName("towerDrainBase").item(0).getTextContent());
 		towerEnergy = Integer.parseInt(parametersNode.getElementsByTagName("towerEnergy").item(0).getTextContent());
+
+		String replenishType = parametersNode.getElementsByTagName("energyReplenishModel").item(0).getTextContent();
+		if (replenishType.equals("FullReplenish"))
+			energyReplenishModel = ReplenishType.FullReplenish;
+		else if (replenishType.equals("ExponentialReplenish"))
+			energyReplenishModel = ReplenishType.ExponentialReplenish;
+		else
+			energyReplenishModel = null;
 	}
 	
 	private static void readScenarioRules(Element ruleNode) {
