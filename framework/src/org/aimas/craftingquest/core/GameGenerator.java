@@ -52,8 +52,6 @@ public class GameGenerator {
 			/* distribute blueprints to merchants */
 			distributeBlueprints(game);
 			 
-			ScanAttributeGenerator.setupScanAttributes(game.map);		// generate scan attributes for each map cell
-			
 			/* setup initial player states - there should be only 2 players */
 			for (int i = 0; i < GamePolicy.noPlayers; i++) {
 				if (i % 4 == 0) {

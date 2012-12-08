@@ -310,7 +310,6 @@ public class ResourceGenerator {
 		
 		for (int i = 0; i < quant.length; i++) {
 			BasicResourceType resType = GamePolicy.getResTypeByOrdinal(i);
-			//System.out.println(resType.name() + " has ordinal: " + resType.ordinal() + " and associated quantum of: " + quant[i]);
 			
 			for (int k = 0; k < quant[i]; k++) {
 				int resTypeAmount = placeResourceType(resType, map);
@@ -399,7 +398,6 @@ public class ResourceGenerator {
 		int placedResCt = 0;
 		
 		Point2i topPlacementPos = getPlacementPosition(topPlacementRegions);
-		// Point2i bottomPlacementPos = getPlacementPosition(bottomPlacementRegions);
 		
 		int posy = topPlacementPos.y;
 		int posx = topPlacementPos.x;
@@ -447,7 +445,6 @@ public class ResourceGenerator {
 		int placedResCt = 0;
 		
 		Point2i topPlacementPos = getPlacementPosition(topPlacementRegions);
-		// Point2i bottomPlacementPos = getPlacementPosition(bottomPlacementRegions);
 		int option = randGen.nextInt(4);
 		
 		int posy = topPlacementPos.y;
@@ -658,7 +655,6 @@ public class ResourceGenerator {
 			System.out.println("	- construction alternatives: ");
 			
 			List<HashMap<BasicResourceType, Integer>> requiredResources = obj.getRequiredResources();
-			List<HashMap<CraftedObject, Integer>> requiredObjects = obj.getRequiredObjects();
 			
 			if (requiredResources != null) {
 				for (HashMap<BasicResourceType, Integer> alternative : requiredResources) {
@@ -668,20 +664,6 @@ public class ResourceGenerator {
 					while(resIt.hasNext()) {
 						BasicResourceType rt = resIt.next();
 						System.out.println("			- " + rt.name() + ": " + alternative.get(rt));
-					}
-					
-					System.out.println();
-				}
-			}
-			
-			if (requiredObjects != null) {
-				for (HashMap<CraftedObject, Integer> alternative : requiredObjects) {
-					System.out.println("		:: ALTERNATIVE");
-					
-					Iterator<CraftedObject> objIt = alternative.keySet().iterator();
-					while(objIt.hasNext()) {
-						CraftedObject o = objIt.next();
-						System.out.println("			- " + o.getType() + ": " + alternative.get(o));
 					}
 					
 					System.out.println();
