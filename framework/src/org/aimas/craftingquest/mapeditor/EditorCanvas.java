@@ -20,7 +20,6 @@ import javax.swing.JTextArea;
 
 import org.aimas.craftingquest.state.CellState.CellType;
 import org.aimas.craftingquest.state.StrategicResource.StrategicResourceType;
-import org.aimas.craftingquest.state.UnitState.UnitType;
 
 
 @SuppressWarnings("serial")
@@ -45,11 +44,6 @@ public class EditorCanvas extends Canvas implements MouseListener, MouseMotionLi
 	
 	private Image tower;
 	private Image merchant;
-	private Image resource;
-	private Image recipe;
-	private Image crocImage;
-	private Image foxImage;
-	private Image devilImage;	
 	
 	private Graphics bufferGraphics;
 	private Image offscreenImage;
@@ -99,11 +93,6 @@ public class EditorCanvas extends Canvas implements MouseListener, MouseMotionLi
 			
 			tower = ImageIO.read(new File("images/tower.jpg")).getScaledInstance(CELL_DIM, CELL_DIM, Image.SCALE_FAST);
 			merchant = ImageIO.read(new File("images/merchant.jpg")).getScaledInstance(CELL_DIM, CELL_DIM, Image.SCALE_FAST);
-			resource = ImageIO.read(new File("images/resource.gif")).getScaledInstance(CELL_DIM / 2, CELL_DIM / 2, Image.SCALE_FAST);
-			recipe = ImageIO.read(new File("images/recipe.png")).getScaledInstance(CELL_DIM / 2, CELL_DIM / 2, Image.SCALE_FAST);
-			crocImage = ImageIO.read(new File("images/crocodile.png")).getScaledInstance(CELL_DIM, CELL_DIM, Image.SCALE_FAST);
-			devilImage = ImageIO.read(new File("images/devil.png")).getScaledInstance(CELL_DIM, CELL_DIM, Image.SCALE_FAST);
-			foxImage = ImageIO.read(new File("images/fox.png")).getScaledInstance(CELL_DIM, CELL_DIM, Image.SCALE_FAST);
 		
 			entityToImage.put(CellType.Grass.name(), grassTile);
 			entityToImage.put(CellType.Water.name(), waterTile);
@@ -114,9 +103,6 @@ public class EditorCanvas extends Canvas implements MouseListener, MouseMotionLi
 			entityToImage.put(CellType.Dirt.name(), dirtTile);
 			entityToImage.put(CellType.Snow.name(), snowTile);
 			
-			entityToImage.put(UnitType.Crocodile.name(), crocImage);
-			entityToImage.put(UnitType.Tazmanian.name(), devilImage);
-			entityToImage.put(UnitType.Fox.name(), foxImage);
 			entityToImage.put("unknown", unknown);
 			entityToImage.put(StrategicResourceType.Merchant.name(), merchant);
 			entityToImage.put(StrategicResourceType.Tower.name(), tower);

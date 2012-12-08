@@ -27,7 +27,7 @@ import org.aimas.craftingquest.state.StrategicResource;
 import org.aimas.craftingquest.state.CellState.CellType;
 import org.aimas.craftingquest.state.CraftedObject.BasicResourceType;
 import org.aimas.craftingquest.state.StrategicResource.StrategicResourceType;
-import org.aimas.craftingquest.state.UnitState.UnitType;
+//import org.aimas.craftingquest.state.UnitState.UnitType;
 
 
 @SuppressWarnings("serial")
@@ -52,9 +52,7 @@ public class MapCanvas extends Canvas implements MouseListener, MouseMotionListe
 	private Image tower;
 	private Image merchant;
 	private Image resource;
-	private Image crocImage;
-	private Image foxImage;
-	private Image devilImage;	
+	private Image standardUnitImage;	
 	
 	private Graphics bufferGraphics;
 	private Image offscreenImage;
@@ -100,9 +98,7 @@ public class MapCanvas extends Canvas implements MouseListener, MouseMotionListe
 			tower = ImageIO.read(new File("images/tower.jpg")).getScaledInstance(CELL_DIM, CELL_DIM, Image.SCALE_FAST);
 			merchant = ImageIO.read(new File("images/merchant.jpg")).getScaledInstance(CELL_DIM, CELL_DIM, Image.SCALE_FAST);
 			resource = ImageIO.read(new File("images/resource.gif")).getScaledInstance(CELL_DIM / 2, CELL_DIM / 2, Image.SCALE_FAST);
-			crocImage = ImageIO.read(new File("images/crocodile.png")).getScaledInstance(CELL_DIM, CELL_DIM, Image.SCALE_FAST);
-			devilImage = ImageIO.read(new File("images/devil.png")).getScaledInstance(CELL_DIM, CELL_DIM, Image.SCALE_FAST);
-			foxImage = ImageIO.read(new File("images/fox.png")).getScaledInstance(CELL_DIM, CELL_DIM, Image.SCALE_FAST);
+			standardUnitImage = ImageIO.read(new File("images/devil.png")).getScaledInstance(CELL_DIM, CELL_DIM, Image.SCALE_FAST);
 		
 			entityToImage.put(CellType.Grass.name(), grassTile);
 			entityToImage.put(CellType.Water.name(), waterTile);
@@ -113,9 +109,6 @@ public class MapCanvas extends Canvas implements MouseListener, MouseMotionListe
 			entityToImage.put(CellType.Dirt.name(), dirtTile);
 			entityToImage.put(CellType.Snow.name(), snowTile);
 			
-			entityToImage.put(UnitType.Crocodile.name(), crocImage);
-			entityToImage.put(UnitType.Tazmanian.name(), devilImage);
-			entityToImage.put(UnitType.Fox.name(), foxImage);
 			entityToImage.put("unknown", unknown);
 			entityToImage.put(StrategicResourceType.Merchant.name(), merchant);
 			entityToImage.put(StrategicResourceType.Tower.name(), tower);
@@ -155,7 +148,7 @@ public class MapCanvas extends Canvas implements MouseListener, MouseMotionListe
 		
 		info += "Cell units: \n";
 		for (BasicUnit bu : crtCell.cellUnits) {
-    		info += "\t" + bu.type.name() + "(" + bu.playerID +")\n";
+    		info += "\t" + "[" + bu.id + "]" + "(" + bu.playerID +")\n";
 		}
 		
 		StrategicResource res = crtCell.strategicResource;
@@ -234,18 +227,8 @@ public class MapCanvas extends Canvas implements MouseListener, MouseMotionListe
     	  	
     	if (!cell.cellUnits.isEmpty()) {
     		BasicUnit unit = cell.cellUnits.get(0);
-    		switch (unit.type) {
-			case Crocodile:
-				unitImage = crocImage;
-				break;
-			case Tazmanian:
-				unitImage = devilImage;
-				break;
-			case Fox:
-				unitImage = foxImage;
-				break;
-			}
     		
+    		unitImage = standardUnitImage;
     		bufferGraphics.drawImage(unitImage, j * CELL_DIM + offsetX, i * CELL_DIM + offsetY, null);
     		
     		bufferGraphics.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 12));
