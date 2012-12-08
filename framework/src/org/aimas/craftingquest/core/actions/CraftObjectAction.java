@@ -15,17 +15,19 @@ import org.aimas.craftingquest.state.CraftedObject.BasicResourceType;
 import org.aimas.craftingquest.state.Transition.ActionType;
 
 public class CraftObjectAction extends Action {
-	
+
 	public CraftObjectAction(ActionType type) {
 		super(type);
 	}
-	
+
+	@SuppressWarnings("unchecked")
 	@Override
-	protected TransitionResult handle(GameState game, PlayerState player, Transition transition) {
-		CraftedObject target = (CraftedObject)transition.operands[1];
-		HashMap<CraftedObject, Integer> usedObjects = (HashMap<CraftedObject, Integer>)transition.operands[2];
-		HashMap<BasicResourceType, Integer> usedResources = (HashMap<BasicResourceType, Integer>)transition.operands[3];
-		
+	protected TransitionResult handle(GameState game, PlayerState player,
+			Transition transition) {
+		CraftedObject target = (CraftedObject) transition.operands[1];
+		HashMap<CraftedObject, Integer> usedObjects = (HashMap<CraftedObject, Integer>) transition.operands[2];
+		HashMap<BasicResourceType, Integer> usedResources = (HashMap<BasicResourceType, Integer>) transition.operands[3];
+
 		// check for enough energy points
 		if (playerUnit.energy < GamePolicy.buildCost) {
 			TransitionResult res = new TransitionResult(transition.id);
@@ -72,125 +74,119 @@ public class CraftObjectAction extends Action {
 		craftres.errorType = TransitionResult.TransitionError.NoError;
 		return craftres;
 	}
-	
-	
+
+	@SuppressWarnings("unchecked")
 	@Override
 	protected boolean validOperands(Transition transition) {
 		CraftedObject target = null;
 		HashMap<CraftedObject, Integer> usedObjects = null;
 		HashMap<BasicResourceType, Integer> usedResources = null;
-		
+
 		try {
-			target = (CraftedObject)transition.operands[1];
-			usedObjects = (HashMap<CraftedObject, Integer>)transition.operands[2];
-			usedResources = (HashMap<BasicResourceType, Integer>)transition.operands[3];
-			
+			target = (CraftedObject) transition.operands[1];
+			usedObjects = (HashMap<CraftedObject, Integer>) transition.operands[2];
+			usedResources = (HashMap<BasicResourceType, Integer>) transition.operands[3];
+
 			// target may not be null
-			// usedObjects and usedResources may not be both null at the same time
-			if (target == null || (usedObjects == null && usedResources == null)) {
+			// usedObjects and usedResources may not be both null at the same
+			// time
+			if (target == null
+					|| (usedObjects == null && usedResources == null)) {
 				return false;
 			}
-		}
-		catch(ClassCastException ex) {
+		} catch (ClassCastException ex) {
 			return false;
 		}
-				
-		
+
 		return true;
 	}
-	
-	
-	private boolean checkCraftingRequirements(UnitState playerUnit, CraftedObject target, 
-			HashMap<CraftedObject, Integer> usedObjects, HashMap<BasicResourceType, Integer> usedResources) {
-		
-		HashMap<CraftedObject, Integer> carriedObjects = playerUnit.carriedObjects;
+
+	private boolean checkCraftingRequirements(UnitState playerUnit,
+			CraftedObject target, HashMap<CraftedObject, Integer> usedObjects,
+			HashMap<BasicResourceType, Integer> usedResources) {
+
+		// HashMap<CraftedObject, Integer> carriedObjects =
+		// playerUnit.carriedObjects;
 		HashMap<BasicResourceType, Integer> carriedResources = playerUnit.carriedResources;
-		
-		if (target.getRequiredObjects() != null) {		// it is an object made out of sub-objects
-			if (usedObjects == null) {
-				return false;
-			}
-			
-			boolean requirementsMet = false;
-			
-			for (HashMap<CraftedObject, Integer> craftingOption : target.getRequiredObjects()) {
-				boolean alternativeOk = true;
-				
-				Iterator<CraftedObject> objIt = craftingOption.keySet().iterator();
-				while(objIt.hasNext()) {
-					CraftedObject obj = objIt.next();
-					Integer required = craftingOption.get(obj);
-					Integer available = usedObjects.get(obj);
-					Integer carried = carriedObjects.get(obj);
-					
-					if(available == null || carried == null || required > available || required > carried || available > carried) {
-						alternativeOk = false;
-						break;
-					}
-				}
-				
-				if(alternativeOk) {
-					requirementsMet = true;
+
+		/*
+		 * if (target.getRequiredObjects() != null) { // it is an object made
+		 * out of sub-objects if (usedObjects == null) { return false; }
+		 * 
+		 * boolean requirementsMet = false;
+		 * 
+		 * for (HashMap<CraftedObject, Integer> craftingOption :
+		 * target.getRequiredObjects()) { boolean alternativeOk = true;
+		 * 
+		 * Iterator<CraftedObject> objIt = craftingOption.keySet().iterator();
+		 * while(objIt.hasNext()) { CraftedObject obj = objIt.next(); Integer
+		 * required = craftingOption.get(obj); Integer available =
+		 * usedObjects.get(obj); Integer carried = carriedObjects.get(obj);
+		 * 
+		 * if(available == null || carried == null || required > available ||
+		 * required > carried || available > carried) { alternativeOk = false;
+		 * break; } }
+		 * 
+		 * if(alternativeOk) { requirementsMet = true; break; } }
+		 * 
+		 * if (requirementsMet) { // if requirements met update carriedObjects
+		 * with the quantity that remains Iterator<CraftedObject> it =
+		 * usedObjects.keySet().iterator(); while (it.hasNext()) { CraftedObject
+		 * obj = it.next(); Integer used = usedObjects.get(obj); Integer
+		 * existing = carriedObjects.get(obj);
+		 * 
+		 * carriedObjects.put(obj, existing - used); }
+		 * 
+		 * return true; } }
+		 */
+		// else { // it is an object made only out of basic resources
+		if (usedResources == null) {
+			return false;
+		}
+
+		boolean requirementsMet = false;
+
+		for (HashMap<BasicResourceType, Integer> resourceOption : target
+				.getRequiredResources()) {
+			boolean alternativeOk = true;
+
+			Iterator<BasicResourceType> resIt = resourceOption.keySet()
+					.iterator();
+			while (resIt.hasNext()) {
+				BasicResourceType res = resIt.next();
+				Integer required = resourceOption.get(res);
+				Integer available = usedResources.get(res);
+				Integer carried = carriedResources.get(res);
+
+				if (available == null || carried == null
+						|| required > available || required > carried
+						|| available > carried) {
+					alternativeOk = false;
 					break;
 				}
 			}
-			
-			if (requirementsMet) {		// if requirements met update carriedObjects with the quantity that remains 
-				Iterator<CraftedObject> it = usedObjects.keySet().iterator();	
-				while (it.hasNext()) { 
-					CraftedObject obj = it.next();
-					Integer used = usedObjects.get(obj);
-					Integer existing = carriedObjects.get(obj);
-					
-					carriedObjects.put(obj, existing - used);
-				}
-				
-				return true;
+
+			if (alternativeOk) {
+				requirementsMet = true;
+				break;
 			}
 		}
-		else {												// it is an object made only out of basic resources
-			if (usedResources == null) {
-				return false;
+
+		if (requirementsMet) { // if requirements met update carriedResources
+								// with the quantity that remains
+			Iterator<BasicResourceType> it = usedResources.keySet().iterator();
+			while (it.hasNext()) {
+				BasicResourceType res = it.next();
+				Integer used = usedResources.get(res);
+				Integer existing = carriedResources.get(res);
+
+				carriedResources.put(res, existing - used);
 			}
-			
-			boolean requirementsMet = false;
-			
-			for (HashMap<BasicResourceType, Integer> resourceOption : target.getRequiredResources()) {
-				boolean alternativeOk = true;
-				
-				Iterator<BasicResourceType> resIt = resourceOption.keySet().iterator();
-				while(resIt.hasNext()) {
-					BasicResourceType res = resIt.next();
-					Integer required = resourceOption.get(res);
-					Integer available = usedResources.get(res);
-					Integer carried = carriedResources.get(res);
-					
-					if(available == null || carried == null || required > available || required > carried || available > carried) {
-						alternativeOk = false;
-						break;
-					}
-				}
-				
-				if(alternativeOk) {
-					requirementsMet = true;
-					break;
-				}
-			}
-			
-			if (requirementsMet) {		// if requirements met update carriedResources with the quantity that remains
-				Iterator<BasicResourceType> it = usedResources.keySet().iterator();
-				while (it.hasNext()) { 
-					BasicResourceType res = it.next();
-					Integer used = usedResources.get(res);
-					Integer existing = carriedResources.get(res);
-					
-					carriedResources.put(res, existing - used);
-				}
-				
-				return true;
-			}
+
+			return true;
 		}
-		
+		// }
+
 		return false;
 	}
 }
