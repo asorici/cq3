@@ -145,10 +145,10 @@ public class UnitState implements Serializable {
 	public BasicUnit getOpponentPerspective() {
 		if (opponentPerspective == null) {
 			opponentPerspective = new BasicUnit();
-			opponentPerspective.set(playerID, energy, maxEnergy);
+			opponentPerspective.set(id, playerID, energy, maxEnergy);
 		}
 		else {
-			opponentPerspective.set(playerID, energy, maxEnergy);
+			opponentPerspective.set(id, playerID, energy, maxEnergy);
 		}
 		
 		return opponentPerspective;
@@ -163,6 +163,10 @@ public class UnitState implements Serializable {
 		final UnitState other = (UnitState)obj;
 		
 		if (playerID != other.playerID) {
+			return false;
+		}
+		
+		if (id != other.id) {
 			return false;
 		}
 		

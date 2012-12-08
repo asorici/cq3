@@ -148,7 +148,7 @@ public class MapCanvas extends Canvas implements MouseListener, MouseMotionListe
 		
 		info += "Cell units: \n";
 		for (BasicUnit bu : crtCell.cellUnits) {
-    		info += "\t" + "[" + bu.id + "]" + "(" + bu.playerID +")\n";
+    		info += "\t" + "[" + bu.unitId + "]" + "(" + bu.playerID +")\n";
 		}
 		
 		StrategicResource res = crtCell.strategicResource;

@@ -8,7 +8,7 @@ import java.io.Serializable;
  */
 @SuppressWarnings("serial")
 public class BasicUnit implements Serializable {
-	public int id;
+	public int unitId;
 	
 	/**
 	 * the units energy reserves
@@ -28,7 +28,8 @@ public class BasicUnit implements Serializable {
 	public BasicUnit (){
 	}
 	
-	public void set( int playerID, int energy, int life) {
+	public void set(int unitId, int playerID, int energy, int life) {
+		this.unitId = unitId;
 		this.playerID = playerID;
 		this.energy = energy;
 		this.life = life;
