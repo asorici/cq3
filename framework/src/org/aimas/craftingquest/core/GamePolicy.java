@@ -178,7 +178,6 @@ public class GamePolicy {
 		
 		scanAttributeCount = Integer.parseInt(parametersNode.getElementsByTagName("scanAttributeCount").item(0).getTextContent());
 		unitEnergy = Integer.parseInt(parametersNode.getElementsByTagName("unitEnergy").item(0).getTextContent());
-		//TODO: public static ReplenishType energyReplenishModel = ReplenishType.FullReplenish;
 		baseObjectValue = Integer.parseInt(parametersNode.getElementsByTagName("baseObjectValue").item(0).getTextContent());
 		valueIncrement = Integer.parseInt(parametersNode.getElementsByTagName("valueIncrement").item(0).getTextContent());
 		initialTeamCredit = Integer.parseInt(parametersNode.getElementsByTagName("initialTeamCredit").item(0).getTextContent());
@@ -197,6 +196,13 @@ public class GamePolicy {
 		towerCutoffRadius = Integer.parseInt(parametersNode.getElementsByTagName("towerCutoffRadius").item(0).getTextContent());
 		towerDrainBase = Integer.parseInt(parametersNode.getElementsByTagName("towerDrainBase").item(0).getTextContent());
 		towerEnergy = Integer.parseInt(parametersNode.getElementsByTagName("towerEnergy").item(0).getTextContent());
+
+		//TODO: public static ReplenishType energyReplenishModel = ReplenishType.FullReplenish;
+		String energyRMStr = parametersNode.getElementsByTagName("energyReplenishModel").item(0).getTextContent();
+		if (energyRMStr.equals("FullReplenish"))
+			energyReplenishModel = ReplenishType.FullReplenish;
+		else
+			energyReplenishModel = null;
 	}
 
 	private static void readScenarioRules(Element ruleNode) {
