@@ -4,16 +4,15 @@ import gnu.cajo.invoke.Remote;
 
 import java.util.HashMap;
 
-import org.aimas.craftingquest.state.BasicUnit;
-import org.aimas.craftingquest.state.CraftedObject;
-import org.aimas.craftingquest.state.CraftedObject.BasicResourceType;
-import org.aimas.craftingquest.state.EquippableObject;
+import org.aimas.craftingquest.state.Blueprint;
+import org.aimas.craftingquest.state.ICarriable;
 import org.aimas.craftingquest.state.PlayerState;
 import org.aimas.craftingquest.state.Point2i;
 import org.aimas.craftingquest.state.Transition;
 import org.aimas.craftingquest.state.Transition.ActionType;
-import org.aimas.craftingquest.state.TrapObject;
 import org.aimas.craftingquest.state.UnitState;
+import org.aimas.craftingquest.state.objects.IEquippable;
+import org.aimas.craftingquest.state.resources.ResourceType;
 import org.aimas.craftingquest.user.IPlayerActions;
 import org.aimas.craftingquest.user.IPlayerHooks;
 import org.apache.log4j.Logger;
@@ -194,7 +193,7 @@ public final class Client0 implements IClient, IPlayerActions {
 	 * @return the new player state or null if the player attempts to move outside his turn.
  	 */
 	@Override
-	public PlayerState pickupResources(UnitState unit, HashMap<BasicResourceType, Integer> desiredResources) {
+	public PlayerState pickupResources(UnitState unit, HashMap<ResourceType, Integer> desiredResources){
 		return doGenericAction(new Transition(ActionType.PickupResources, new Object[] {unit.id, desiredResources}));
 	}
 	
@@ -210,7 +209,7 @@ public final class Client0 implements IClient, IPlayerActions {
 	 * @return the new player state or null if the player attempts to move outside his turn.
 	 */
 	@Override
-	public PlayerState pickupObjects(UnitState unit, HashMap<CraftedObject, Integer> desiredObjects) {
+	public PlayerState pickupObjects(UnitState unit, HashMap<ICarriable, Integer> desiredObjects) {
 		return doGenericAction(new Transition(ActionType.PickupObjects, new Object[] {unit.id, desiredObjects}));
 	}
 	
@@ -226,7 +225,7 @@ public final class Client0 implements IClient, IPlayerActions {
 	 * @return the new player state or null if the player attempts to move outside his turn.
  	 */
 	@Override
-	public PlayerState dropResources(UnitState unit, HashMap<BasicResourceType, Integer> unwantedResources) {
+	public PlayerState dropResources(UnitState unit, HashMap<ResourceType, Integer> unwantedResources) {
 		return doGenericAction(new Transition(ActionType.DropResources, new Object[] {unit.id, unwantedResources}));
 	}
 	
@@ -242,7 +241,7 @@ public final class Client0 implements IClient, IPlayerActions {
 	 * @return the new player state or null if the player attempts to move outside his turn.
  	 */
 	@Override
-	public PlayerState dropObjects(UnitState unit, HashMap<CraftedObject, Integer> unwantedObjects) {
+	public PlayerState dropObjects(UnitState unit, HashMap<ICarriable, Integer> unwantedObjects) {
 		return doGenericAction(new Transition(ActionType.DropObjects, new Object[] {unit.id, unwantedObjects}));
 	}
 	
@@ -258,8 +257,8 @@ public final class Client0 implements IClient, IPlayerActions {
 	 * @return the new player state or null if the player attempts to move outside his turn.
  	 */
 	@Override
-	public PlayerState placeTrap(UnitState unit, TrapObject trapObject) {
-		return doGenericAction(new Transition(ActionType.PlaceTrap, new Object[] {unit.id, trapObject}));
+	public PlayerState placeTrap(UnitState unit, Blueprint blueprint) {
+		return doGenericAction(new Transition(ActionType.PlaceTrap, new Object[] {unit.id, blueprint}));
 	}
 	
 	/**
@@ -276,9 +275,8 @@ public final class Client0 implements IClient, IPlayerActions {
 	 * @return the new player state or null if the player attempts to move outside his turn.
  	 */
 	@Override
-	public PlayerState craftObject(UnitState unit, CraftedObject target, 
-			HashMap<CraftedObject, Integer> usedObjects, HashMap<BasicResourceType, Integer> usedResources) {
-		return doGenericAction(new Transition(ActionType.CraftObject, new Object[] {unit.id, target, usedObjects, usedResources}));
+	public PlayerState craftObject(UnitState unit, Blueprint blueprint) {
+		return doGenericAction(new Transition(ActionType.CraftObject, new Object[] {unit.id, blueprint}));
 	}
 
 	/**
@@ -291,7 +289,7 @@ public final class Client0 implements IClient, IPlayerActions {
 	 * @return the new player state or null if the player attempts to equip an invalid object.
  	 */
 	@Override
-	public PlayerState equip(UnitState unit, EquippableObject target) {
+	public PlayerState equip(UnitState unit, IEquippable target) {
 		return doGenericAction(new Transition(ActionType.Equip, new Object[] {unit.id, target}));
 	}	
 	

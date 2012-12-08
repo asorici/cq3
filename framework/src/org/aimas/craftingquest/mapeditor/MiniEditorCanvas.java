@@ -10,7 +10,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
-import org.aimas.craftingquest.state.StrategicResource.StrategicResourceType;
+import org.aimas.craftingquest.state.objects.CraftedObjectType;
 
 @SuppressWarnings("serial")
 public class MiniEditorCanvas extends Canvas implements MouseListener, MouseMotionListener {
@@ -99,13 +99,10 @@ public class MiniEditorCanvas extends Canvas implements MouseListener, MouseMoti
     	
     	g.setFont(font);
     	g.setColor(Color.RED);
-    	StrategicResourceType strRes = cell.strategicResType;
+    	CraftedObjectType strRes = cell.strategicResType;
     	if (strRes != null) {
-    		if (strRes == StrategicResourceType.Tower) {
+    		if (strRes == CraftedObjectType.TOWER) {
     			g.drawString("T", j * CELL_DIM, i * CELL_DIM); // T = observation Tower
-    		}
-    		else {
-    			g.drawString("M", j * CELL_DIM, i * CELL_DIM); // P = trading Post
     		}
     	}
     }

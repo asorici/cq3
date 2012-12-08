@@ -19,7 +19,7 @@ import javax.imageio.ImageIO;
 import javax.swing.JTextArea;
 
 import org.aimas.craftingquest.state.CellState.CellType;
-import org.aimas.craftingquest.state.StrategicResource.StrategicResourceType;
+import org.aimas.craftingquest.state.objects.CraftedObjectType;
 
 
 @SuppressWarnings("serial")
@@ -30,7 +30,6 @@ public class EditorCanvas extends Canvas implements MouseListener, MouseMotionLi
 	private int mapHeight;
 	
 	private CellType selectedCellType = CellType.Grass;
-	private StrategicResourceType selectedStrategic = StrategicResourceType.Merchant;
 	
 	private Image rockTile;
 	private Image grassTile;
@@ -104,8 +103,7 @@ public class EditorCanvas extends Canvas implements MouseListener, MouseMotionLi
 			entityToImage.put(CellType.Snow.name(), snowTile);
 			
 			entityToImage.put("unknown", unknown);
-			entityToImage.put(StrategicResourceType.Merchant.name(), merchant);
-			entityToImage.put(StrategicResourceType.Tower.name(), tower);
+			entityToImage.put(CraftedObjectType.TOWER.toString(), tower);
 		}
 		catch (IOException e) {
 			e.printStackTrace();
@@ -133,9 +131,9 @@ public class EditorCanvas extends Canvas implements MouseListener, MouseMotionLi
 		MapCell crtCell = terrain[crtCellY][crtCellX];
 		info += "Terrain type = " + crtCell.cellType + " [" + crtCellX + "," + crtCellY + "]\n";
 		
-		StrategicResourceType res = crtCell.strategicResType;
+		CraftedObjectType res = crtCell.strategicResType;
 		if (res != null) {
-			info += "Strategic resource = " + res.name() + "\n";
+			info += "Strategic resource = " + res + "\n";
 		}
 		
 		return info;
@@ -179,12 +177,10 @@ public class EditorCanvas extends Canvas implements MouseListener, MouseMotionLi
     	MapCell cell = terrain[i][j];
     	Image tile = grassTile;
     	
-		StrategicResourceType strRes = cell.strategicResType;
+		CraftedObjectType strRes = cell.strategicResType;
 		if (strRes != null) {
-			if (strRes == StrategicResourceType.Tower) {
+			if (strRes == CraftedObjectType.TOWER) {
 				bufferGraphics.drawImage(tower, j * CELL_DIM + offsetX, i * CELL_DIM + offsetY, null);
-			} else {
-				bufferGraphics.drawImage(merchant, j * CELL_DIM + offsetX, i * CELL_DIM + offsetY, null);
 			}
 			return;
 		}
@@ -233,7 +229,7 @@ public class EditorCanvas extends Canvas implements MouseListener, MouseMotionLi
 	    	return;
 	    }
 	    else {
-	    	if (e.getButton() == MouseEvent.BUTTON3 && selectedStrategic == null) {
+	    	if (e.getButton() == MouseEvent.BUTTON3) {
 	    		mouseButton2Pressed = true;
 	    		cellStartX = (x - offsetX) / CELL_DIM;
 	    		cellStartY = (y - offsetY) / CELL_DIM;
@@ -330,14 +326,8 @@ public class EditorCanvas extends Canvas implements MouseListener, MouseMotionLi
 		    int xcoord = (x - offsetX) / CELL_DIM;
 	    	int ycoord = (y - offsetY) / CELL_DIM;
 	    	
-	    	if (selectedStrategic == null) {
-		    	terrain[ycoord][xcoord].cellType = selectedCellType;
-		    	terrain[ycoord][xcoord].strategicResType = null;
-	    	}
-	    	else {
-	    		terrain[ycoord][xcoord].strategicResType = selectedStrategic;
-	    		terrain[ycoord][xcoord].cellType = CellType.Grass;
-	    	}
+	    	terrain[ycoord][xcoord].cellType = CellType.Grass;
+	    	
 	    	repaint();
 	    	miniMap.repaint();
 	    }
@@ -361,14 +351,6 @@ public class EditorCanvas extends Canvas implements MouseListener, MouseMotionLi
 
 	public void setSelectedCellType(CellType selectedCellType) {
 		this.selectedCellType = selectedCellType;
-	}
-
-	public StrategicResourceType getSelectedStrategic() {
-		return selectedStrategic;
-	}
-
-	public void setSelectedStrategic(StrategicResourceType selectedStrategic) {
-		this.selectedStrategic = selectedStrategic;
 	}
 
 }

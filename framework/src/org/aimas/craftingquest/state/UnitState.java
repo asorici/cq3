@@ -5,7 +5,10 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.aimas.craftingquest.core.GamePolicy;
-import org.aimas.craftingquest.state.CraftedObject.BasicResourceType;
+import org.aimas.craftingquest.state.objects.ArmourObject;
+import org.aimas.craftingquest.state.objects.ICrafted;
+import org.aimas.craftingquest.state.objects.SwordObject;
+import org.aimas.craftingquest.state.resources.*;
 
 /**
  * Describes the state of a unit at any moment in the game. The class defines:
@@ -74,18 +77,18 @@ public class UnitState implements Serializable {
 	/**
 	 * the last dug up soil resources. the field will be reset to null before each action attempt
 	 */
-	public HashMap<BasicResourceType, Integer> currentCellResources = new HashMap<BasicResourceType, Integer>();
+	public HashMap<ResourceType, Integer> currentCellResources = new HashMap<ResourceType, Integer>();
 
 	// pertain from round to round
 	/**
 	 * the list of carried basic resources and their associated quantities
 	 */
-	public HashMap<BasicResourceType, Integer> carriedResources = new HashMap<BasicResourceType, Integer>();
+	public HashMap<ResourceType, Integer> carriedResources = new HashMap<ResourceType, Integer>();
 	
 	/**
 	 * the list of carried objects and their associated quantities
 	 */
-	public HashMap<CraftedObject, Integer> carriedObjects = new HashMap<CraftedObject, Integer>();
+	public HashMap<ICrafted, Integer> carriedObjects = new HashMap<ICrafted, Integer>();
 
 	/* where */
 	/**
@@ -122,15 +125,16 @@ public class UnitState implements Serializable {
 		info += "playerID=" + playerID + " pos=" + pos + " energy=" + energy + " life=" + maxEnergy + "\n";
 		info += "    carried resources: \n";
 		info += "        ";
-		for (BasicResourceType br : carriedResources.keySet()) {
+		for (ResourceType br : carriedResources.keySet()) {
 			info += br.name() + ":" + carriedResources.get(br) + " ";
 		}
 		info += "\n";
 		
 		info += "    carried objects: \n";
 		info += "        ";
-		for (CraftedObject o : carriedObjects.keySet()) {
-			info += o.getType().name() + ":" + carriedObjects.get(o) + " ";
+		// This needs some explaining
+		for (ICrafted o : carriedObjects.keySet()) {
+			info += o.getType().toString() + ":" + carriedObjects.get(o) + " ";
 		}
 		info += "\n";
 		

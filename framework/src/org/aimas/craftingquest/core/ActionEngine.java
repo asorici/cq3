@@ -6,11 +6,11 @@ import org.aimas.craftingquest.core.actions.Action;
 import org.aimas.craftingquest.core.energyreplenishmodels.EnergyReplenishModel;
 import org.aimas.craftingquest.state.GameState;
 import org.aimas.craftingquest.state.PlayerState;
-import org.aimas.craftingquest.state.Tower;
 import org.aimas.craftingquest.state.Transition;
 import org.aimas.craftingquest.state.Transition.ActionType;
 import org.aimas.craftingquest.state.TransitionResult;
 import org.aimas.craftingquest.state.TransitionResult.TransitionError;
+import org.aimas.craftingquest.state.objects.Tower;
 import org.aimas.craftingquest.state.UnitState;
 import org.apache.log4j.Logger;
 

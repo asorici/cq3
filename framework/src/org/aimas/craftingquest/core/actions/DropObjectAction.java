@@ -4,12 +4,12 @@ import java.util.HashMap;
 import java.util.Iterator;
 
 import org.aimas.craftingquest.core.GamePolicy;
-import org.aimas.craftingquest.state.CraftedObject;
 import org.aimas.craftingquest.state.GameState;
 import org.aimas.craftingquest.state.PlayerState;
 import org.aimas.craftingquest.state.Transition;
 import org.aimas.craftingquest.state.TransitionResult;
 import org.aimas.craftingquest.state.Transition.ActionType;
+import org.aimas.craftingquest.state.objects.CraftedObject;
 
 public class DropObjectAction extends Action {
 	

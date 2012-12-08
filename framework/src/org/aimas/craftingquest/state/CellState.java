@@ -5,7 +5,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import org.aimas.craftingquest.state.CraftedObject.BasicResourceType;
+import org.aimas.craftingquest.state.objects.ICrafted;
+import org.aimas.craftingquest.state.objects.IStrategic;
+import org.aimas.craftingquest.state.resources.ResourceType;
 
 /**
  * Maintains the state of a map cell. It keeps data about the cell's type, position, <br/>
@@ -33,12 +35,12 @@ public class CellState implements Serializable {
 	/**
 	 * quantities of each visible resource
 	 */
-	public HashMap<BasicResourceType, Integer> visibleResources = new HashMap<BasicResourceType, Integer>();
+	public HashMap<ResourceType, Integer> visibleResources = new HashMap<ResourceType, Integer>();
 	
 	/**
 	 * quantities of each crafted object (must have been previously dropped by an other unit)
 	 */
-	public HashMap<CraftedObject, Integer> craftedObjects = new HashMap<CraftedObject, Integer>();
+	public HashMap<ICrafted, Integer> craftedObjects = new HashMap<ICrafted, Integer>();
 	
 	/**
 	 * the list of units present in the cell - as seen by an opponent's view
@@ -48,19 +50,13 @@ public class CellState implements Serializable {
 	/**
 	 * the strategic resource (may be null) contained in this cell.
 	 */
-	public StrategicObject strategicObject;
+	public IStrategic strategicObject;
 	
 	/**
 	 * the quantities of buried cell resources - these will not be available to the client side as they are 
 	 * declared <code>transient</code> and thus will not be serialized.
 	 */
-	public transient HashMap<BasicResourceType, Integer> resources = new HashMap<BasicResourceType, Integer>();
-	
-	/**
-	 * the scan attributes for each type of resource - like in the case of buried resources, these will not be 
-	 * available on the client side
-	 */
-	public transient HashMap<BasicResourceType, ResourceAttributes> scanAttributes = new HashMap<BasicResourceType, ResourceAttributes>();
+	public transient HashMap<ResourceType, Integer> resources = new HashMap<ResourceType, Integer>();
 	
 	public CellState() {
 	}

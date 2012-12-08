@@ -4,18 +4,18 @@ import java.util.HashMap;
 import java.util.Iterator;
 
 import org.aimas.craftingquest.core.GamePolicy;
-import org.aimas.craftingquest.state.ArmourObject;
 import org.aimas.craftingquest.state.Blueprint;
-import org.aimas.craftingquest.state.CraftedObject;
-import org.aimas.craftingquest.state.EquippableObject;
 import org.aimas.craftingquest.state.GameState;
 import org.aimas.craftingquest.state.PlayerState;
-import org.aimas.craftingquest.state.SwordObject;
 import org.aimas.craftingquest.state.Transition;
 import org.aimas.craftingquest.state.TransitionResult;
 import org.aimas.craftingquest.state.UnitState;
-import org.aimas.craftingquest.state.CraftedObject.BasicResourceType;
 import org.aimas.craftingquest.state.Transition.ActionType;
+import org.aimas.craftingquest.state.objects.ArmourObject;
+import org.aimas.craftingquest.state.objects.CraftedObject;
+import org.aimas.craftingquest.state.objects.EquippableObject;
+import org.aimas.craftingquest.state.objects.SwordObject;
+import org.aimas.craftingquest.state.objects.CraftedObject.BasicResourceType;
 
 public class EquipAction extends Action {
 	

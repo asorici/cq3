@@ -6,12 +6,12 @@ import java.util.List;
 
 import org.aimas.craftingquest.core.GamePolicy;
 import org.aimas.craftingquest.state.CellState;
-import org.aimas.craftingquest.state.CraftedObject;
 import org.aimas.craftingquest.state.GameState;
 import org.aimas.craftingquest.state.PlayerState;
-import org.aimas.craftingquest.state.Tower;
 import org.aimas.craftingquest.state.Transition;
 import org.aimas.craftingquest.state.Transition.ActionType;
+import org.aimas.craftingquest.state.objects.CraftedObject;
+import org.aimas.craftingquest.state.objects.Tower;
 import org.aimas.craftingquest.state.TransitionResult;
 
 public class PickupObjectsAction extends Action {

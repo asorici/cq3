@@ -12,11 +12,9 @@ import java.awt.event.MouseMotionListener;
 
 import org.aimas.craftingquest.state.CellState;
 import org.aimas.craftingquest.state.GameState;
-import org.aimas.craftingquest.state.StrategicObject;
-import org.aimas.craftingquest.state.StrategicResource;
-import org.aimas.craftingquest.state.Tower;
-import org.aimas.craftingquest.state.CraftedObject.BasicResourceType;
-import org.aimas.craftingquest.state.StrategicResource.StrategicResourceType;
+import org.aimas.craftingquest.state.objects.IStrategic;
+import org.aimas.craftingquest.state.objects.Tower;
+import org.aimas.craftingquest.state.resources.ResourceType;
 
 @SuppressWarnings("serial")
 public class MiniMapCanvas extends Canvas implements MouseListener, MouseMotionListener {
@@ -115,7 +113,7 @@ public class MiniMapCanvas extends Canvas implements MouseListener, MouseMotionL
     	
     	g.setFont(font);
     	g.setColor(Color.RED);
-    	StrategicObject strRes = cell.strategicObject;
+    	IStrategic strRes = cell.strategicObject;
     	if (strRes != null) {
     		if (strRes instanceof Tower) {
     			g.drawString("T", j * CELL_DIM, i * CELL_DIM); // T = observation Tower
@@ -141,7 +139,7 @@ public class MiniMapCanvas extends Canvas implements MouseListener, MouseMotionL
     			g.drawString("R", j * CELL_DIM, i * CELL_DIM);
     		}
     		else {
-    			BasicResourceType selectedType = BasicResourceType.valueOf(map.getSelectedResource());
+    			ResourceType selectedType = ResourceType.valueOf(ResourceType.class, map.getSelectedResource());
     			if (cell.resources.containsKey(selectedType)) {
     				g.drawString("R", j * CELL_DIM, i * CELL_DIM);
     			}

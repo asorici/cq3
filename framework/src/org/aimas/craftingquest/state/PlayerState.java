@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import org.aimas.craftingquest.state.objects.Tower;
+
 /**
  * The central client state class. It contains information about the player's progress in the game.
  */

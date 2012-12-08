@@ -2,17 +2,14 @@ package org.aimas.craftingquest.core;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
 import org.aimas.craftingquest.state.Blueprint;
-import org.aimas.craftingquest.state.CraftedObject;
+import org.aimas.craftingquest.state.CellState.CellType;
 import org.aimas.craftingquest.state.MapState;
 import org.aimas.craftingquest.state.Point2i;
-import org.aimas.craftingquest.state.CellState.CellType;
-import org.aimas.craftingquest.state.CraftedObject.BasicResourceType;
-import org.aimas.craftingquest.state.CraftedObject.ObjectType;
+import org.aimas.craftingquest.state.resources.ResourceType;
 
 public class ResourceGenerator {
 	private static Random randGen = new Random();
@@ -22,9 +19,9 @@ public class ResourceGenerator {
 	private static List<PlacementRegion> topPlacementRegions = new ArrayList<PlacementRegion>();
 	private static List<PlacementRegion> bottomPlacementRegions = new ArrayList<PlacementRegion>();
 	
-	public static List<Blueprint> generateBlueprints(HashMap<BasicResourceType, Integer> resourceAmountsByType) {
+	public static List<Blueprint> generateBlueprints(HashMap<ResourceType, Integer> resourceAmountsByType) {
 		List<Blueprint> blueprints = new ArrayList<Blueprint>();
-		int nrObjectTypes = ObjectType.values().length;
+		/*int nrObjectTypes = ObjectType.values().length;
 		int complexObjectCount = nrObjectTypes / 4;						// 1/4 of objects will be built from other objects
 		
 		List<ObjectType> complexObjects = new ArrayList<ObjectType>();
@@ -48,27 +45,27 @@ public class ResourceGenerator {
 		List<Blueprint> complexBlueprints = generateComplexObjectBlueprints(complexObjects, simpleBlueprints);
 		
 		blueprints.addAll(simpleBlueprints);
-		blueprints.addAll(complexBlueprints);
+		blueprints.addAll(complexBlueprints);*/
 		
 		return blueprints;
 	}
 	
 	
-	private static List<Blueprint> generateSimpleObjectBlueprints(List<ObjectType> simpleObjects, HashMap<BasicResourceType, Integer> resourceAmountsByType) {
+	/*private static List<Blueprint> generateSimpleObjectBlueprints(List<ObjectType> simpleObjects, HashMap<ResourceType, Integer> resourceAmountsByType) {
 		ArrayList<Blueprint> simpleBlueprints = new ArrayList<Blueprint>();
 		
 		for (int i = 0; i < simpleObjects.size(); i++) {
 			ObjectType objType = simpleObjects.get(i);
 			int nrIngredients = randGen.nextInt(3) + 2;
-			ArrayList<BasicResourceType> alternative1 = getRandomIngredients(nrIngredients);
+			ArrayList<ResourceType> alternative1 = getRandomIngredients(nrIngredients);
 			
 			nrIngredients = randGen.nextInt(3) + 2;
-			ArrayList<BasicResourceType> alternative2 = getRandomIngredients(nrIngredients);
+			ArrayList<ResourceType> alternative2 = getRandomIngredients(nrIngredients);
 			
 			// create alternatives  
-			HashMap<BasicResourceType, Integer> recipe1 = buildRecipe(alternative1, resourceAmountsByType);
-			HashMap<BasicResourceType, Integer> recipe2 = buildRecipe(alternative2, resourceAmountsByType);
-			List<HashMap<BasicResourceType, Integer>> recipeAlternatives = new ArrayList<HashMap<BasicResourceType,Integer>>();
+			HashMap<ResourceType, Integer> recipe1 = buildRecipe(alternative1, resourceAmountsByType);
+			HashMap<ResourceType, Integer> recipe2 = buildRecipe(alternative2, resourceAmountsByType);
+			List<HashMap<ResourceType, Integer>> recipeAlternatives = new ArrayList<HashMap<ResourceType,Integer>>();
 			recipeAlternatives.add(recipe1);
 			recipeAlternatives.add(recipe2);
 			
@@ -83,13 +80,13 @@ public class ResourceGenerator {
 	}
 	
 
-	private static int computeSimpleValue(ArrayList<BasicResourceType> alternative1, 
-			ArrayList<BasicResourceType> alternative2,
-			HashMap<BasicResourceType, Integer> resourceAmountsByType) {
+	private static int computeSimpleValue(ArrayList<ResourceType> alternative1, 
+			ArrayList<ResourceType> alternative2,
+			HashMap<ResourceType, Integer> resourceAmountsByType) {
 		
 		int maxAmount = 0;
-		for (int i = 0; i < BasicResourceType.values().length; i++) {
-			BasicResourceType rt = BasicResourceType.values()[i];
+		for (int i = 0; i < ResourceType.values().length; i++) {
+			ResourceType rt = ResourceType.values()[i];
 			int amount = resourceAmountsByType.get(rt);
 			if (amount > maxAmount) {
 				maxAmount = amount;
@@ -99,7 +96,7 @@ public class ResourceGenerator {
 		double valueAlternative1 = GamePolicy.baseObjectValue, valueAlternative2 = GamePolicy.baseObjectValue;
 		double weight1 = 0, weight2 = 0;
 		
-		for (BasicResourceType rt : alternative1) {
+		for (ResourceType rt : alternative1) {
 			int amount = resourceAmountsByType.get(rt);
 			double w = (double)maxAmount / (double)amount; 
 			double valInc = w * (double)GamePolicy.valueIncrement;
@@ -108,7 +105,7 @@ public class ResourceGenerator {
 			valueAlternative1 += valInc;
 		}
 		
-		for (BasicResourceType rt : alternative2) {
+		for (ResourceType rt : alternative2) {
 			int amount = resourceAmountsByType.get(rt);
 			double w = (double)maxAmount / (double)amount; 
 			double valInc = w * (double)GamePolicy.valueIncrement;
@@ -121,16 +118,16 @@ public class ResourceGenerator {
 	}
 
 
-	private static HashMap<BasicResourceType, Integer> buildRecipe(ArrayList<BasicResourceType> alternative, HashMap<BasicResourceType, Integer> resourceAmountsByType) {
-		HashMap<BasicResourceType, Integer> recipe = new HashMap<BasicResourceType, Integer>();
+	private static HashMap<ResourceType, Integer> buildRecipe(ArrayList<ResourceType> alternative, HashMap<ResourceType, Integer> resourceAmountsByType) {
+		HashMap<ResourceType, Integer> recipe = new HashMap<ResourceType, Integer>();
 		
 		int totalAmount = 0;
-		for (BasicResourceType rt : alternative) {
+		for (ResourceType rt : alternative) {
 			totalAmount += resourceAmountsByType.get(rt);
 		}
 		
 		for (int i = 0; i < alternative.size(); i++) {
-			BasicResourceType rt = alternative.get(i);
+			ResourceType rt = alternative.get(i);
 			int rtAmount = maxRequiredResPerObject * resourceAmountsByType.get(rt) / totalAmount;
 			if (rtAmount == 0) {
 				rtAmount = 2;
@@ -143,16 +140,16 @@ public class ResourceGenerator {
 	}
 	
 	
-	private static ArrayList<BasicResourceType> getRandomIngredients(int nrIngredients) {
+	private static ArrayList<ResourceType> getRandomIngredients(int nrIngredients) {
 		ArrayList<Integer> auxList = new ArrayList<Integer>();
-		ArrayList<BasicResourceType> resList = new ArrayList<BasicResourceType>();
-		for (int i = 0; i < BasicResourceType.values().length; i++) {
+		ArrayList<ResourceType> resList = new ArrayList<ResourceType>();
+		for (int i = 0; i < ResourceType.values().length; i++) {
 			auxList.add(i);
 		}
 		
 		for (int i = 0; i < nrIngredients; i++) {
 			int index = randGen.nextInt(auxList.size());
-			resList.add(BasicResourceType.values()[auxList.remove(index)]);
+			resList.add(ResourceType.values()[auxList.remove(index)]);
 		}
 		
 		return resList;
@@ -301,15 +298,15 @@ public class ResourceGenerator {
 				}
 			}
 		}
-	}
+	}*/
 	
-	public static HashMap<BasicResourceType, Integer> placeResources(MapState map) {
-		int[] quant = generateRandomResourceQuantityDistribution(GamePolicy.maxResourceSpots);
+	public static HashMap<ResourceType, Integer> placeResources(MapState map) {
+		/*int[] quant = generateRandomResourceQuantityDistribution(GamePolicy.maxResourceSpots);
 		computePlacementRegions();
-		HashMap<BasicResourceType, Integer> resourceAmountsByType = new HashMap<BasicResourceType, Integer>();
+		*/HashMap<ResourceType, Integer> resourceAmountsByType = new HashMap<ResourceType, Integer>();
 		
-		for (int i = 0; i < quant.length; i++) {
-			BasicResourceType resType = GamePolicy.getResTypeByOrdinal(i);
+		/*for (int i = 0; i < quant.length; i++) {
+			ResourceType resType = GamePolicy.getResTypeByOrdinal(i);
 			
 			for (int k = 0; k < quant[i]; k++) {
 				int resTypeAmount = placeResourceType(resType, map);
@@ -321,13 +318,13 @@ public class ResourceGenerator {
 					resourceAmountsByType.put(resType, resTypeAmount + existing);
 				}
 			}
-		}
+		}*/
 		
 		return resourceAmountsByType;
 	}
 	
 	
-	private static int placeResourceType(BasicResourceType resType, MapState map) {
+	private static int placeResourceType(ResourceType resType, MapState map) {
 		int placedResCount = 0;
 		int radius = 1;
 		
@@ -394,7 +391,7 @@ public class ResourceGenerator {
 	}
 	
 	
-	private static int discResourcePlacement(BasicResourceType resType, MapState map, int radius, DiscDistribution dd) {
+	private static int discResourcePlacement(ResourceType resType, MapState map, int radius, DiscDistribution dd) {
 		int placedResCt = 0;
 		
 		Point2i topPlacementPos = getPlacementPosition(topPlacementRegions);
@@ -426,7 +423,7 @@ public class ResourceGenerator {
 		return placedResCt;
 	}
 	
-	private static int placeDiscRes(int posx, int posy, BasicResourceType resType, MapState map, DiscDistribution dd) {
+	private static int placeDiscRes(int posx, int posy, ResourceType resType, MapState map, DiscDistribution dd) {
 		int placedResCt = 0;
 		int[][] ddist = dd.getDisc();
 		int radius = dd.radius;
@@ -441,7 +438,7 @@ public class ResourceGenerator {
 		return placedResCt;
 	}
 	
-	private static int veinResourcePlacement(BasicResourceType resType, MapState map, int radius, VeinDistribution vd) {
+	private static int veinResourcePlacement(ResourceType resType, MapState map, int radius, VeinDistribution vd) {
 		int placedResCt = 0;
 		
 		Point2i topPlacementPos = getPlacementPosition(topPlacementRegions);
@@ -474,7 +471,7 @@ public class ResourceGenerator {
 		return placedResCt;
 	}
 	
-	private static int placeVeinRes(int posx, int posy, BasicResourceType resType, MapState map, VeinDistribution vd, int option) {
+	private static int placeVeinRes(int posx, int posy, ResourceType resType, MapState map, VeinDistribution vd, int option) {
 		int placedResCt = 0;
 		int[][] vdist = vd.getVein();
 		int lengthRadius = vd.lengthRadius;
@@ -538,7 +535,7 @@ public class ResourceGenerator {
 		return placedResCt;
 	}
 	
-	private static int placeResourceInCell(BasicResourceType resType, MapState map, int x, int y, int amount) {
+	private static int placeResourceInCell(ResourceType resType, MapState map, int x, int y, int amount) {
 		int placedAmount = 0;
 		
 		if (x >= 0 && x < GamePolicy.mapsize.x && y >= 0 && y < GamePolicy.mapsize.y ) {
@@ -562,9 +559,9 @@ public class ResourceGenerator {
 		return placedAmount;
 	}
 	
-	@SuppressWarnings("unused")
+	/*@SuppressWarnings("unused")
 	private static int[] generateUniformResourceQuantityDistribution(int maxSpots) {
-		int nrTypes = BasicResourceType.values().length;
+		int nrTypes = ResourceType.values().length;
 		int[] quant = new int[nrTypes];
 		
 		for (int i = 0; i < nrTypes; i++) {
@@ -572,10 +569,10 @@ public class ResourceGenerator {
 		}
 		
 		return quant;
-	}
+	}*/
 	
-	private static int[] generateRandomResourceQuantityDistribution(int maxSpots) {
-		int nrTypes = BasicResourceType.values().length;
+	/*private static int[] generateRandomResourceQuantityDistribution(int maxSpots) {
+		int nrTypes = ResourceType.values().length;
 		int[] quant = new int[nrTypes];
 		
 		Random rand = new Random();
@@ -597,7 +594,7 @@ public class ResourceGenerator {
 		}
 		
 		return quant;
-	}
+	}*/
 	
 	public static void main(String[] args) {
 		VeinDistribution vd = new VeinDistribution(8, 4, 10);
@@ -629,46 +626,43 @@ public class ResourceGenerator {
 		TerrainGenerator terrainGen = new TerrainGenerator();
 		MapState map = terrainGen.hardcoded1();
 		
-		HashMap<BasicResourceType, Integer> amountsPerType = placeResources(map);
+		HashMap<ResourceType, Integer> amountsPerType = placeResources(map);
 		List<Blueprint> blueprints = generateBlueprints(amountsPerType);
 		
 		System.out.println();
 		System.out.println();
 		
-		System.out.println("Resource quantities on the map");
-		for (int i = 0; i < BasicResourceType.values().length; i++) {
-			BasicResourceType resType = GamePolicy.getResTypeByOrdinal(i);
+		/*System.out.println("ResourceType quantities on the map");
+		for (int i = 0; i < ResourceType.values().length; i++) {
+			ResourceType resType = GamePolicy.getResTypeByOrdinal(i);
 			System.out.println(resType.name() + ": " + amountsPerType.get(resType));
-		}
+		}*/
 		
 		System.out.println();
 		System.out.println();
 		
 		for (int i = 0; i < blueprints.size(); i++) {
 			Blueprint bp = blueprints.get(i);
-			CraftedObject obj = bp.getDescribedObject();
-			int bpvalue = bp.getValue();
 			
-			System.out.println("==== Blueprint for object of type: " + obj.getType().name() + "====");
-			System.out.println("	- blueprint value: " + bpvalue);
-			System.out.println("	- object value: " + obj.getValue());
+			System.out.println("==== Blueprint for object of type: " + bp.getType() + "====");
+			System.out.println("	- blueprint value: " + bp.getLevel());
 			System.out.println("	- construction alternatives: ");
 			
-			List<HashMap<BasicResourceType, Integer>> requiredResources = obj.getRequiredResources();
+			/*List<HashMap<ResourceType, Integer>> requiredResources = obj.getRequiredResources();
 			
 			if (requiredResources != null) {
-				for (HashMap<BasicResourceType, Integer> alternative : requiredResources) {
+				for (HashMap<ResourceType, Integer> alternative : requiredResources) {
 					System.out.println("		:: ALTERNATIVE");
 					
-					Iterator<BasicResourceType> resIt = alternative.keySet().iterator();
+					Iterator<ResourceType> resIt = alternative.keySet().iterator();
 					while(resIt.hasNext()) {
-						BasicResourceType rt = resIt.next();
+						ResourceType rt = resIt.next();
 						System.out.println("			- " + rt.name() + ": " + alternative.get(rt));
 					}
 					
 					System.out.println();
 				}
-			}
+			}*/
 			
 			System.out.println();
 		}

@@ -7,8 +7,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
-import java.util.HashMap;
-import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -18,13 +16,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.SwingUtilities;
 
-import org.aimas.craftingquest.core.ResourceGenerator;
-import org.aimas.craftingquest.state.Blueprint;
-import org.aimas.craftingquest.state.MapState;
-import org.aimas.craftingquest.state.Merchant;
 import org.aimas.craftingquest.state.CellState.CellType;
-import org.aimas.craftingquest.state.CraftedObject.BasicResourceType;
-import org.aimas.craftingquest.state.StrategicResource.StrategicResourceType;
 
 
 @SuppressWarnings("serial")
@@ -88,14 +80,12 @@ public class EditorInterface extends JFrame implements ActionListener {
 		
 		terrainSelector = new JComboBox(CellType.values());
 		terrainSelector.addActionListener(this);
-		strategicSelector = new JComboBox(new StrategicResourceType[] {StrategicResourceType.Merchant});
 		
 		strategicInfoBtn = new JButton("Select strategic");
 		strategicInfoBtn.addActionListener(this);
 		cellTypeInfoBtn = new JButton("Select cell type");
 		cellTypeInfoBtn.addActionListener(this);
 		
-		selectorPanel.add(strategicSelector);
 		selectorPanel.add(strategicInfoBtn);
 		selectorPanel.add(terrainSelector);
 		selectorPanel.add(cellTypeInfoBtn);
@@ -162,15 +152,11 @@ public class EditorInterface extends JFrame implements ActionListener {
 		
 		if (e.getSource().equals(cellTypeInfoBtn)) {
 			editorCanvas.setSelectedCellType((CellType)terrainSelector.getSelectedItem());
-			editorCanvas.setSelectedStrategic(null);
 		}
 				
-		if (e.getSource().equals(strategicInfoBtn)) {
-			editorCanvas.setSelectedStrategic((StrategicResourceType)strategicSelector.getSelectedItem());
-		}
+		
 		
 		if (e.getSource().equals(terrainSelector)) {
-			editorCanvas.setSelectedStrategic(null);
 			editorCanvas.setSelectedCellType((CellType)terrainSelector.getSelectedItem());
 		}
 		

@@ -4,14 +4,12 @@ import java.util.HashMap;
 
 import org.aimas.craftingquest.state.BasicUnit;
 import org.aimas.craftingquest.state.Blueprint;
-import org.aimas.craftingquest.state.CraftedObject;
-import org.aimas.craftingquest.state.EquippableObject;
+import org.aimas.craftingquest.state.ICarriable;
 import org.aimas.craftingquest.state.PlayerState;
 import org.aimas.craftingquest.state.Point2i;
 import org.aimas.craftingquest.state.UnitState;
-import org.aimas.craftingquest.state.CraftedObject.BasicResourceType;
-import org.aimas.craftingquest.state.TrapObject;
-
+import org.aimas.craftingquest.state.objects.IEquippable;
+import org.aimas.craftingquest.state.resources.ResourceType;
 
 
 public interface IPlayerActions {
@@ -69,7 +67,7 @@ public interface IPlayerActions {
 	 * @param desiredResources   the desired resources and their quantity
 	 * @return the new player state or null if the player attempts to move outside his turn.
 	 */
-    public PlayerState pickupResources(UnitState unit, HashMap<BasicResourceType, Integer> desiredResources);
+    public PlayerState pickupResources(UnitState unit, HashMap<ResourceType, Integer> desiredResources);
     
     /**
 	 * Allows the given unit to drop the specified quantities of basic resources.
@@ -82,7 +80,7 @@ public interface IPlayerActions {
 	 * @param unwantedResources   the unwanted resources and their quantities
 	 * @return the new player state or null if the player attempts to move outside his turn.
 	 */
-    public PlayerState pickupObjects(UnitState unit, HashMap<CraftedObject, Integer> desiredObjects);
+    public PlayerState pickupObjects(UnitState unit, HashMap<ICarriable, Integer> desiredObjects);
     
     /**
 	 * Allows the given unit to drop the specified quantities of crafted objects.
@@ -95,7 +93,7 @@ public interface IPlayerActions {
 	 * @param unwantedResources   the unwanted objects and their quantities
 	 * @return the new player state or null if the player attempts to move outside his turn.
 	 */
-    public PlayerState dropResources(UnitState unit, HashMap<BasicResourceType, Integer> unwantedResources);
+    public PlayerState dropResources(UnitState unit, HashMap<ResourceType, Integer> unwantedResources);
     
     /**
 	 * Allows the given unit to drop the specified quantities of crafted objects.
@@ -108,7 +106,7 @@ public interface IPlayerActions {
 	 * @param unwantedResources   the unwanted objects and their quantities
 	 * @return the new player state or null if the player attempts to move outside his turn.
 	 */
-    public PlayerState dropObjects(UnitState unit, HashMap<CraftedObject, Integer> unwantedObjects);
+    public PlayerState dropObjects(UnitState unit, HashMap<ICarriable, Integer> unwantedObjects);
     
     /**
 	 * Allows the given unit to craft the target object using the specified ingredients. 
@@ -118,13 +116,10 @@ public interface IPlayerActions {
 	 * <p>In case of an error, the returned player state will not be different from the current one. 
 	 * It will also contain a <code>TransitionResult</code> which gives the reason for the failure.</p>
 	 * @param unit   the unit performing the crafting action
-	 * @param target   the artifact that is supposed to be built
-	 * @param usedObjects   the list of object ingredients, if any. The value of this parameter may be null if the target object is of a simple type 
-	 * @param usedResources   the list of basic resource ingredients, if any. The value of this parameter may be null if the target object is of a complex type
-	 * @return the new player state or null if the player attempts to move outside his turn.
+	 * @param blueprint  the blueprint used to craft something
+	 * @return the new player state or null if the player attempts to craft something wrong.
 	 */
-    public PlayerState craftObject(UnitState unit, CraftedObject target, 
-			HashMap<CraftedObject, Integer> usedObjects, HashMap<BasicResourceType, Integer> usedResources);
+    public PlayerState craftObject(UnitState unit, Blueprint blueprint);
     
     /**
  	 * Allows the given unit to equip the target equippable object. 
@@ -135,7 +130,7 @@ public interface IPlayerActions {
  	 * @param target   the armour / sword that is supposed to be equiped
 	 * @return the new player state or null if the player attempts to equip an invalid object.
  	 */
-	public PlayerState equip(UnitState unit, EquippableObject target);
+	public PlayerState equip(UnitState unit, IEquippable target);
 	
 	/**
  	 * Allows the given unit to place a trap in the current cell. 
@@ -146,8 +141,8 @@ public interface IPlayerActions {
  	 * @param target   the trap that is supposed to be placed in the current cell
 	 * @return the new player state or null if the trap placement fails.
  	 */
-	public PlayerState placeTrap(UnitState unit, TrapObject target);
-    
+	public PlayerState placeTrap(UnitState unit, Blueprint blueprint);
+
     
     /**
 	 * Allows the given unit to place a tower in its current position.
@@ -159,8 +154,7 @@ public interface IPlayerActions {
 	 * @param unit   the unit building the tower
 	 * @return the new player state or null if the player attempts to move outside his turn.
 	 */
-    public PlayerState placeTower(UnitState unit);
-    
+    public PlayerState placeTower(UnitState unit, Blueprint blueprint);
     
     /**
 	 * Allows the given unit to attack an enemy unit if in its vicinity in its current position 

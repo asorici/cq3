@@ -56,7 +56,6 @@ public abstract class Action {
 				return new MoveAction(type);
 			case Dig:
 				return new DigAction(type);
-			
 			case PickupResources:
 				return new PickupResourcesAction(type);
 			case PickupObjects:

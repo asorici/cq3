@@ -6,7 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.aimas.craftingquest.core.GamePolicy;
-import org.aimas.craftingquest.state.CraftedObject.BasicResourceType;
+import org.aimas.craftingquest.state.objects.Tower;
+import org.aimas.craftingquest.state.resources.ResourceType;
 
 /**
  * 
@@ -22,15 +23,13 @@ public class GameState implements Serializable {
 	//public List<PlayerState> playerStates;
 	public HashMap<Integer, PlayerState> playerStates;
 	public HashMap<Integer, List<Tower>> playerTowers;
-	public List<Merchant> merchantList;
 	public List<Blueprint> blueprints;
-	public HashMap<BasicResourceType, Integer> resourceAmountsByType;
+	public HashMap<ResourceType, Integer> resourceAmountsByType;
 	
 	public GameState() {
 		//playerStates = new ArrayList<PlayerState>();
 		playerStates = new HashMap<Integer, PlayerState>();
 		playerTowers = new HashMap<Integer, List<Tower>>();
-		merchantList = new ArrayList<Merchant>();
 		blueprints = new ArrayList<Blueprint>();
 		
 		round = new RoundState();

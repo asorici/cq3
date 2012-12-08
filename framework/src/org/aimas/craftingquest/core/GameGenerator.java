@@ -6,7 +6,6 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectInputStream;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
@@ -15,14 +14,10 @@ import org.aimas.craftingquest.state.Blueprint;
 import org.aimas.craftingquest.state.CellState;
 import org.aimas.craftingquest.state.GameState;
 import org.aimas.craftingquest.state.MapState;
-import org.aimas.craftingquest.state.Merchant;
 import org.aimas.craftingquest.state.PlayerState;
 import org.aimas.craftingquest.state.Point2i;
-import org.aimas.craftingquest.state.ResourceAttributes;
-import org.aimas.craftingquest.state.StrategicResource;
 import org.aimas.craftingquest.state.UnitState;
-import org.aimas.craftingquest.state.CraftedObject.BasicResourceType;
-//import org.aimas.craftingquest.state.UnitState.UnitType;
+import org.aimas.craftingquest.state.resources.ResourceType;
 
 
 public class GameGenerator {
@@ -45,13 +40,10 @@ public class GameGenerator {
 			/* game.merchantList = setupMerchantList(game.map); */
 			
 			/* set map resources */
-			HashMap<BasicResourceType, Integer> resourceAmountsByType = ResourceGenerator.placeResources(game.map);
+			HashMap<ResourceType, Integer> resourceAmountsByType = ResourceGenerator.placeResources(game.map);
 			game.blueprints = ResourceGenerator.generateBlueprints(resourceAmountsByType);		// generate blueprints
 			game.resourceAmountsByType = resourceAmountsByType;
 			
-			/* distribute blueprints to merchants */
-			distributeBlueprints(game);
-			 
 			/* setup initial player states - there should be only 2 players */
 			for (int i = 0; i < GamePolicy.noPlayers; i++) {
 				if (i % 4 == 0) {
@@ -148,8 +140,7 @@ public class GameGenerator {
 		
 		ObjectInputStream objin = null;
 		GameState game = null;
-		HashMap<Point2i, HashMap<BasicResourceType, Integer>> cellResources = null;
-		HashMap<Point2i, HashMap<BasicResourceType, ResourceAttributes>> cellAttributes = null;
+		HashMap<Point2i, HashMap<ResourceType, Integer>> cellResources = null;
 		
 		try {
 			objin = new ObjectInputStream (new FileInputStream(mapFile));
@@ -161,23 +152,15 @@ public class GameGenerator {
 			
 			game = (GameState)obj;
 						
-			cellResources = (HashMap<Point2i, HashMap<BasicResourceType, Integer>>)objin.readObject();
+			cellResources = (HashMap<Point2i, HashMap<ResourceType, Integer>>)objin.readObject();
 			if (cellResources == null) {
 				return null;
 			}
 
-			cellAttributes = (HashMap<Point2i, HashMap<BasicResourceType, ResourceAttributes>>)objin.readObject();
-			if (cellAttributes == null) {
-				return null;
-			}
-			
 			for (Point2i p : cellResources.keySet()) {
-				game.map.cells[p.y][p.x].resources = new HashMap<BasicResourceType, Integer>(cellResources.get(p));
+				game.map.cells[p.y][p.x].resources = new HashMap<ResourceType, Integer>(cellResources.get(p));
 			}
 			
-			for (Point2i p : cellAttributes.keySet()) {
-				game.map.cells[p.y][p.x].scanAttributes = new HashMap<BasicResourceType, ResourceAttributes>(cellAttributes.get(p));
-			}
 		}catch (EOFException ex) { 
             System.out.println("End of file reached.");
         } catch (ClassNotFoundException ex) {
@@ -202,86 +185,7 @@ public class GameGenerator {
 	
 		return game;
 	}
-
-	private static void distributeBlueprints(GameState game) throws IllegalArgumentException {
-		List<Blueprint> blueprints = game.blueprints;
-		List<Merchant> merchants = game.merchantList;
-		
-		// we rely on the premise that merchant camps are symmetrically distributed across the map
-		List<Merchant> topSideMerchants = new ArrayList<Merchant>();		// these two lists
-		List<Merchant> bottomSideMerchants = new ArrayList<Merchant>();		// must have the same size
-		
-		
-		for (Merchant m : merchants) {
-			Point2i pos = m.getPosition();
-			if (pos.x + pos.y < game.map.mapWidth) {
-				topSideMerchants.add(m);
-			}
-			else {
-				bottomSideMerchants.add(m);
-			}
-		}
-		
-		if (topSideMerchants.size() != bottomSideMerchants.size()) {
-			System.out.println(topSideMerchants.size() - bottomSideMerchants.size());
-			throw new IllegalArgumentException("The merchant camps are not evenly distributed");
-		}
-		
-		// step 1 - ensure that each blueprint is present in at least half the merchant camps
-		for (Blueprint bp : blueprints) {
-			int count = topSideMerchants.size() / 2;
-			ArrayList<Merchant> auxListTop = new ArrayList<Merchant>(topSideMerchants);
-			ArrayList<Merchant> auxListBottom = new ArrayList<Merchant>(bottomSideMerchants);
-			
-			for (int i = 0; i < count; i++) {
-				int index = randGen.nextInt(auxListTop.size());
-				Merchant mTop = auxListTop.remove(index);
-				Merchant mBottom = auxListBottom.remove(index);
-				
-				mTop.getBlueprints().add(bp);
-				mBottom.getBlueprints().add(bp);
-			}
-		}
-		
-		// step 2 - ensure that every merchant has at least 1/4 blueprints
-		int count = blueprints.size() / 4;
-		for (int k = 0; k < topSideMerchants.size(); k++) {
-			Merchant mTop = topSideMerchants.get(k);
-			Merchant mBottom = bottomSideMerchants.get(k);
-			
-			ArrayList<Blueprint> auxList = new ArrayList<Blueprint>(blueprints);
-			for (int i = 0; i < count; i++) {
-				int index = randGen.nextInt(auxList.size());
-				Blueprint bp = auxList.remove(index);
-				
-				if (!mTop.getBlueprints().contains(bp)) {
-					mTop.getBlueprints().add(bp);
-				}
-				
-				if (!mBottom.getBlueprints().contains(bp)) {
-					mBottom.getBlueprints().add(bp);
-				}
-			}
-		}
-	}
-
-	/*
-	private static List<Merchant> setupMerchantList(MapState map) {
-		List<Merchant> merchantList = new ArrayList<Merchant>();
-		
-		for (int i = 0; i < map.mapHeight; i++) {
-			for (int j = 0; j < map.mapWidth; j++) {
-				StrategicResource strRes = map.cells[i][j].strategicResource;
-				if (strRes != null && strRes instanceof Merchant) {
-					merchantList.add((Merchant)strRes);
-				}
-			}
-		}
-		
-		return merchantList;
-	}
-	*/
-
+	
 	private static PlayerState setupPlayerState(int playerID, int nrUnits, Point2i initPos, MapState map) {
 		PlayerState pState = new PlayerState();
 		pState.id = playerID;
@@ -374,13 +278,13 @@ public class GameGenerator {
 		return null;
 	}
 	
-	private static void printResourceStatistics(HashMap<BasicResourceType, Integer> resourceAmountsByType,
+	private static void printResourceStatistics(HashMap<ResourceType, Integer> resourceAmountsByType,
 			List<Blueprint> blueprints) {
 		try {
 			FileWriter fw = new FileWriter("resource-stats.txt");
 			fw.write("======== Resources -- Quantity ========");
 			fw.write("\n");
-			for (BasicResourceType br : resourceAmountsByType.keySet()) {
+			for (ResourceType br : resourceAmountsByType.keySet()) {
 				fw.write(br.name() + ": " + resourceAmountsByType.get(br) + "\n");
 			}
 			
@@ -388,7 +292,7 @@ public class GameGenerator {
 			fw.write("======== Objects -- Values ========");
 			fw.write("\n");
 			for (Blueprint bp : blueprints) {
-				fw.write(bp.getDescribedObject().getType().name() + ":" + bp.getDescribedObject().getValue() + "\n");
+				fw.write(bp.getType() + ":" + bp.getLevel() + "\n");
 			}
 			
 			fw.close();

@@ -2,15 +2,11 @@ package org.aimas.craftingquest.user;
 import java.util.HashMap;
 import java.util.Random;
 
-import org.aimas.craftingquest.state.Blueprint;
 import org.aimas.craftingquest.state.CellState;
-import org.aimas.craftingquest.state.Merchant;
 import org.aimas.craftingquest.state.PlayerState;
 import org.aimas.craftingquest.state.Point2i;
-import org.aimas.craftingquest.state.StrategicResource;
 import org.aimas.craftingquest.state.UnitState;
-import org.aimas.craftingquest.state.CraftedObject.BasicResourceType;
-import org.aimas.craftingquest.state.StrategicResource.StrategicResourceType;
+import org.aimas.craftingquest.state.resources.ResourceType;
 
 public class Behavior {
 	IPlayerActions cmd;
@@ -19,7 +15,7 @@ public class Behavior {
 	Random rnd = new Random();
 	int lastRound = -1;
 	
-	HashMap<BasicResourceType, Integer> dugUpResources;
+	HashMap<ResourceType, Integer> dugUpResources;
 	
 	
 	public Behavior (int unitId, IPlayerActions cmd) {
@@ -109,10 +105,10 @@ public class Behavior {
 		UnitState unit = getBehaviorUnit(state);
 		if (unit == null) return;
 		
-		HashMap<BasicResourceType, Integer> aux = new HashMap<BasicResourceType, Integer>();
+		HashMap<ResourceType, Integer> aux = new HashMap<ResourceType, Integer>();
 		
 		if (!unit.carriedResources.isEmpty()) {
-			for (BasicResourceType br : unit.carriedResources.keySet()) {
+			for (ResourceType br : unit.carriedResources.keySet()) {
 				int quantity = unit.carriedResources.get(br) / 2;
 				if (quantity > 0) {
 					aux.put(br, quantity);
@@ -138,6 +134,7 @@ public class Behavior {
 	}
 	
 	private void performBuildTower(PlayerState state) {
+		/*
 		UnitState unit = getBehaviorUnit(state);
 		if (unit == null) return;
 		
@@ -152,7 +149,9 @@ public class Behavior {
 			}
 			System.out.println("Available towers: " + state.availableTowers);
 		}
-	}	
+		*/
+	}
+		
 
 	private void performSellObject(PlayerState state) {
 		// TODO Auto-generated method stub

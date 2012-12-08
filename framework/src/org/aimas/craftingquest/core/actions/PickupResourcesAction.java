@@ -6,12 +6,12 @@ import java.util.List;
 
 import org.aimas.craftingquest.core.GamePolicy;
 import org.aimas.craftingquest.state.CellState;
-import org.aimas.craftingquest.state.CraftedObject.BasicResourceType;
 import org.aimas.craftingquest.state.GameState;
 import org.aimas.craftingquest.state.PlayerState;
-import org.aimas.craftingquest.state.Tower;
 import org.aimas.craftingquest.state.Transition;
 import org.aimas.craftingquest.state.Transition.ActionType;
+import org.aimas.craftingquest.state.objects.Tower;
+import org.aimas.craftingquest.state.objects.CraftedObject.BasicResourceType;
 import org.aimas.craftingquest.state.TransitionResult;
 
 public class PickupResourcesAction extends Action {
@@ -23,8 +23,8 @@ public class PickupResourcesAction extends Action {
 	@Override
 	protected TransitionResult handle(GameState game, PlayerState player, Transition transition) {
 		// get resources
-		HashMap<BasicResourceType, Integer> requiredResources = 
-				(HashMap<BasicResourceType, Integer>)transition.operands[1];
+		HashMap<Resource, Integer> requiredResources = 
+				(HashMap<Resource, Integer>)transition.operands[1];
 		
 		// check that enough energy points are available for this operation
 		if (playerUnit.energy < GamePolicy.pickupCost) {
@@ -65,13 +65,13 @@ public class PickupResourcesAction extends Action {
 		// and do the pickup where conditions are met
 		CellState miningCell = game.map.cells[playerUnit.pos.y][playerUnit.pos.x];
 
-		HashMap<BasicResourceType, Integer> cellResources = miningCell.resources;
-		HashMap<BasicResourceType, Integer> visibleCellResources = miningCell.visibleResources;
-		HashMap<BasicResourceType, Integer> carriedResources = playerUnit.carriedResources;
+		HashMap<Resource, Integer> cellResources = miningCell.resources;
+		HashMap<Resource, Integer> visibleCellResources = miningCell.visibleResources;
+		HashMap<Resource, Integer> carriedResources = playerUnit.carriedResources;
 
-		Iterator<BasicResourceType> it = requiredResources.keySet().iterator();
+		Iterator<Resource> it = requiredResources.keySet().iterator();
 		while (it.hasNext()) {
-			BasicResourceType res = it.next();
+			Resource res = it.next();
 			Integer required = requiredResources.get(res);
 			Integer available = cellResources.get(res);
 			Integer availableVisible = visibleCellResources.get(res);
@@ -118,10 +118,10 @@ public class PickupResourcesAction extends Action {
 	@SuppressWarnings("unchecked")
 	@Override
 	protected boolean validOperands(Transition transition) {
-		HashMap<BasicResourceType, Integer> requiredResources = null;
+		HashMap<Resource, Integer> requiredResources = null;
 		
 		try{
-			requiredResources = (HashMap<BasicResourceType, Integer>)transition.operands[1];
+			requiredResources = (HashMap<Resource, Integer>)transition.operands[1];
 			
 			// check for valid operand
 			if (requiredResources == null) {

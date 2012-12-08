@@ -16,13 +16,14 @@ import java.util.TimerTask;
 import javax.swing.SwingUtilities;
 
 import org.aimas.craftingquest.gui.GraphicInterface;
-import org.aimas.craftingquest.state.CraftedObject;
+import org.aimas.craftingquest.state.Blueprint;
 import org.aimas.craftingquest.state.GameState;
 import org.aimas.craftingquest.state.PlayerState;
 import org.aimas.craftingquest.state.Transition;
+import org.aimas.craftingquest.state.Transition.ActionType;
+import org.aimas.craftingquest.state.objects.ICrafted;
 import org.aimas.craftingquest.state.TransitionResult;
 import org.aimas.craftingquest.state.UnitState;
-import org.aimas.craftingquest.state.Transition.ActionType;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
@@ -497,10 +498,11 @@ public class Server0 implements IServer {
 			}
 			
 			if (action.operator == ActionType.CraftObject) {
-				CraftedObject target = (CraftedObject)action.operands[1];
+				Blueprint target = (Blueprint)action.operands[1];
+
 				gui_logger.info(state.round.currentRound + " " + action.operator.name() + " " + player.id + " " 
 						+ playerUnit.pos.x + " " + playerUnit.pos.y + " " + player.credit + " " + playerUnit.energy + " " 
-						+ target.getType().name() + " " + target.getValue());
+						+ target.getType() + " " + target.getLevel());
 			}
 			else {
 				gui_logger.info(state.round.currentRound + " " + action.operator.name() + " " + player.id + " " 

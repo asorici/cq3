@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.EnumSet;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -14,10 +15,9 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
-import org.aimas.craftingquest.core.GamePolicy;
 import org.aimas.craftingquest.state.GameState;
 import org.aimas.craftingquest.state.PlayerState;
-import org.aimas.craftingquest.state.CraftedObject.BasicResourceType;
+import org.aimas.craftingquest.state.resources.ResourceType;
 
 
 @SuppressWarnings("serial")
@@ -70,11 +70,13 @@ public class GraphicInterface extends JFrame implements ActionListener {
 		JPanel selectorPanel = new JPanel();
 		Integer[] playerIDs = game.getPlayerIds().toArray(new Integer[0]);
 		
-		String[] resourceNames = new String[BasicResourceType.values().length + 2];
+		String[] resourceNames = new String[ResourceType.size + 2];
 		resourceNames[0] = "ALL";
 		resourceNames[1] = "NONE";
-		for (int i = 0; i < resourceNames.length - 2; i++) {
-			resourceNames[i + 2] = GamePolicy.getResTypeByOrdinal(i).name();
+		int i = 2;
+		for (final ResourceType rt : EnumSet.allOf(ResourceType.class))
+		{
+			resourceNames[i++] =  rt.toString();
 		}
 		resourceSelector = new JComboBox(resourceNames);
 		
@@ -228,12 +230,13 @@ public class GraphicInterface extends JFrame implements ActionListener {
 			String info = "Selected resource: " + selectedRes + "\n";
 			if (!selectedRes.equals("NONE")) {
 				if (!selectedRes.equals("ALL")){
-					info += "Total quantity: " + game.resourceAmountsByType.get(BasicResourceType.valueOf(selectedRes));
+					info += "Total quantity: " + game.resourceAmountsByType.get(selectedRes);
 				}
 				else {
 					int amount = 0;
-					for (BasicResourceType br : BasicResourceType.values()) {
-						amount += game.resourceAmountsByType.get(br);
+					for (final ResourceType rt : EnumSet.allOf(ResourceType.class))
+					{
+						amount += game.resourceAmountsByType.get(rt);						
 					}
 					info += "Total quantity: " + amount;
 				}

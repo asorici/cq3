@@ -8,24 +8,20 @@ import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
-//import java.util.ArrayList;
 import java.util.HashMap;
-//import java.util.List;
 
 import org.aimas.craftingquest.core.energyreplenishmodels.ReplenishType;
 import org.aimas.craftingquest.state.CellState;
+import org.aimas.craftingquest.state.CellState.CellType;
 import org.aimas.craftingquest.state.GameState;
 import org.aimas.craftingquest.state.MapState;
-import org.aimas.craftingquest.state.Merchant;
 import org.aimas.craftingquest.state.Point2i;
-import org.aimas.craftingquest.state.ResourceAttributes;
-import org.aimas.craftingquest.state.CellState.CellType;
-import org.aimas.craftingquest.state.CraftedObject.BasicResourceType;
-import org.aimas.craftingquest.state.CraftedObject.ObjectType;
-//import org.aimas.craftingquest.state.UnitState.UnitType;
+import org.aimas.craftingquest.state.resources.ResourceType;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
+//import java.util.ArrayList;
+//import java.util.List;
+//import org.aimas.craftingquest.state.UnitState.UnitType;
 
 public class GamePolicy {
 
@@ -96,28 +92,21 @@ public class GamePolicy {
 //	public static HashMap<CellType, List<UnitType>> terrainMovePossibilities = new HashMap<CellType, List<UnitType>>();
 	
 	public static int maxResourceSpots = 5;
+	public static int goldWeight = 4;
+	public static int leatherWeight = 1;
+	public static int stoneWeight = 2;
+	public static int woodWeight = 1;
+	public static int bronzeWeight = 3;
+	public static int titaniumWeight = 9;
+	public static int ironWeight = 5;
 	
-	public static BasicResourceType getResTypeByOrdinal(int ord) {
-		BasicResourceType[] vals = BasicResourceType.values();
-		for (int i = 0; i < vals.length; i++) {
-			if (vals[i].ordinal() == ord) {
-				return vals[i];
-			}
-		}
-		
-		return null;		// will never actually get here
-	}
+	public static int towerBaseEnergy = 100;
 	
-	public static ObjectType getObjectTypeByOrdinal(int ord) {
-		ObjectType[] vals = ObjectType.values();
-		for (int i = 0; i < vals.length; i++) {
-			if (vals[i].ordinal() == ord) {
-				return vals[i];
-			}
-		}
-		
-		return null;		// will never actually get here
-	}
+	public static int attackBaseValue = 40;
+	public static int defenseBaseValue = 20;
+	
+	public static int[] levelIncrease = {10, 45, 70};
+	
 	
 	public static void initScenario() {
 		
@@ -152,12 +141,12 @@ public class GamePolicy {
 	public static void readParametersFrom(Document doc) {
 		Element root = (Element)doc.getDocumentElement();
 		Element parametersNode = (Element)root.getElementsByTagName("parameters").item(0);
-		Element ruleNode = (Element)root.getElementsByTagName("rules").item(0);
+		//Element ruleNode = (Element)root.getElementsByTagName("rules").item(0);
 		
 		readServerParameters(parametersNode);
 		readScenarioParameters(parametersNode);
 		
-		readScenarioRules(ruleNode);
+		//readScenarioRules(ruleNode);
 	}
 	
 	private static void readServerParameters(Element parametersNode) {
@@ -202,18 +191,16 @@ public class GamePolicy {
 		placeTrapCost = Integer.parseInt(parametersNode.getElementsByTagName("placeTrapCost").item(0).getTextContent());
 	}
 	
-	private static void readScenarioRules(Element ruleNode) {
+	/*private static void readScenarioRules(Element ruleNode) {
 		// retrieve movePenalties
-		Element movePenalties = (Element)ruleNode.getElementsByTagName("movePenalties").item(0);
+		//Element movePenalties = (Element)ruleNode.getElementsByTagName("movePenalties").item(0);
 		NodeList penaltyList = movePenalties.getElementsByTagName("penalty");
 		for (int i = 0; i < penaltyList.getLength(); i++) {
 			Element penalty = (Element)penaltyList.item(i);
 			String terrain = penalty.getElementsByTagName("terrain").item(0).getTextContent();
 			double value = Double.parseDouble(penalty.getElementsByTagName("value").item(0).getTextContent());
-			
-			movePenalty.put(CellType.valueOf(terrain), value);
 		}
-	}
+	}*/
 
 	public static void saveMapResources(GameState state) {
 		MapResourceWriter.saveMapResources(mapName, state); 
@@ -229,13 +216,11 @@ class MapResourceWriter {
 			FileOutputStream fout = new FileOutputStream(mapFile);
 			ObjectOutputStream objout = new ObjectOutputStream (fout);
 			
-			HashMap<Point2i, HashMap<BasicResourceType, Integer>> cellResources = new HashMap<Point2i, HashMap<BasicResourceType,Integer>>();
-			HashMap<Point2i, HashMap<BasicResourceType, ResourceAttributes>> cellAttributes = new HashMap<Point2i, HashMap<BasicResourceType,ResourceAttributes>>();
+			HashMap<Point2i, HashMap<ResourceType, Integer>> cellResources = new HashMap<Point2i, HashMap<ResourceType,Integer>>();
 			
 			for (int i = 0; i < game.map.mapHeight; i++) {
 				for (int j = 0; j < game.map.mapWidth; j++) {
-					cellResources.put(game.map.cells[i][j].pos, new HashMap<BasicResourceType, Integer>(game.map.cells[i][j].resources));
-					cellAttributes.put(game.map.cells[i][j].pos, new HashMap<BasicResourceType, ResourceAttributes>(game.map.cells[i][j].scanAttributes));
+					cellResources.put(game.map.cells[i][j].pos, new HashMap<ResourceType, Integer>(game.map.cells[i][j].resources));
 				}
 			}
 			
@@ -244,7 +229,6 @@ class MapResourceWriter {
 			
 			// write resource and scan data
 			objout.writeObject(cellResources);
-			objout.writeObject(cellAttributes);
 			
 			objout.flush();
 			objout.close();

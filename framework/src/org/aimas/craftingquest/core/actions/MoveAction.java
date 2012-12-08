@@ -8,11 +8,11 @@ import org.aimas.craftingquest.state.CellState;
 import org.aimas.craftingquest.state.GameState;
 import org.aimas.craftingquest.state.PlayerState;
 import org.aimas.craftingquest.state.Point2i;
-import org.aimas.craftingquest.state.Tower;
 import org.aimas.craftingquest.state.Transition;
 import org.aimas.craftingquest.state.UnitState;
 //import org.aimas.craftingquest.state.CellState.CellType;
 import org.aimas.craftingquest.state.Transition.ActionType;
+import org.aimas.craftingquest.state.objects.Tower;
 import org.aimas.craftingquest.state.TransitionResult;
 
 public class MoveAction extends Action {

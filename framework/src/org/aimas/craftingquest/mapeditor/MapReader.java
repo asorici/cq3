@@ -8,7 +8,6 @@ import java.io.IOException;
 
 import org.aimas.craftingquest.state.CellState;
 import org.aimas.craftingquest.state.CellState.CellType;
-import org.aimas.craftingquest.state.StrategicResource.StrategicResourceType;
 
 public class MapReader {
 	public static int mapWidth;
@@ -34,15 +33,6 @@ public class MapReader {
 					CellType ct = CellState.getCellTypeByOrdinal(cellTypeOrdinal);
 					cells[i][j] = new MapCell(ct, null);
 				}
-			}
-			
-			// read merchant positions
-			int ct = dis.readByte();	// merchant count
-			for (int i = 0; i < ct; i++) {
-				int x = dis.readByte();
-				int y = dis.readByte();
-				
-				cells[y][x].strategicResType = StrategicResourceType.Merchant;
 			}
 			
 			dis.close();

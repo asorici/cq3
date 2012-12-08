@@ -4,15 +4,15 @@ import java.util.HashMap;
 
 import org.aimas.craftingquest.core.GamePolicy;
 import org.aimas.craftingquest.state.CellState;
-import org.aimas.craftingquest.state.CraftedObject;
-import org.aimas.craftingquest.state.EquippableObject;
 import org.aimas.craftingquest.state.GameState;
 import org.aimas.craftingquest.state.PlayerState;
-import org.aimas.craftingquest.state.StrategicObject;
 import org.aimas.craftingquest.state.Transition;
 import org.aimas.craftingquest.state.TransitionResult;
-import org.aimas.craftingquest.state.TrapObject;
 import org.aimas.craftingquest.state.Transition.ActionType;
+import org.aimas.craftingquest.state.objects.CraftedObject;
+import org.aimas.craftingquest.state.objects.EquippableObject;
+import org.aimas.craftingquest.state.objects.StrategicObject;
+import org.aimas.craftingquest.state.objects.TrapObject;
 
 public class PlaceTrapAction extends Action {
 	

@@ -21,15 +21,14 @@ import javax.imageio.ImageIO;
 import javax.swing.JTextArea;
 
 import org.aimas.craftingquest.state.BasicUnit;
-import org.aimas.craftingquest.state.Tower;
 import org.aimas.craftingquest.state.CellState;
-import org.aimas.craftingquest.state.GameState;
-import org.aimas.craftingquest.state.StrategicObject;
-import org.aimas.craftingquest.state.StrategicResource;
 import org.aimas.craftingquest.state.CellState.CellType;
-import org.aimas.craftingquest.state.CraftedObject.BasicResourceType;
-import org.aimas.craftingquest.state.StrategicResource.StrategicResourceType;
+import org.aimas.craftingquest.state.GameState;
+import org.aimas.craftingquest.state.objects.Tower;
+import org.aimas.craftingquest.state.resources.ResourceType;
+import org.aimas.craftingquest.state.objects.*;
 //import org.aimas.craftingquest.state.UnitState.UnitType;
+
 
 
 @SuppressWarnings("serial")
@@ -112,8 +111,7 @@ public class MapCanvas extends Canvas implements MouseListener, MouseMotionListe
 			entityToImage.put(CellType.Snow.name(), snowTile);
 			
 			entityToImage.put("unknown", unknown);
-			entityToImage.put(StrategicResourceType.Merchant.name(), merchant);
-			entityToImage.put(StrategicResourceType.Tower.name(), tower);
+			entityToImage.put(CraftedObjectType.TOWER.toString(), tower);
 		}
 		catch (IOException e) {
 			e.printStackTrace();
@@ -153,24 +151,24 @@ public class MapCanvas extends Canvas implements MouseListener, MouseMotionListe
     		info += "\t" + "[" + bu.unitId + "]" + "(" + bu.playerID +")\n";
 		}
 		
-		StrategicObject res = crtCell.strategicObject;
+		IStrategic res = crtCell.strategicObject;
 		if (res != null) {
 			info += "Strategic resource = " + res + "\n";
 		}
 		
 		if (!crtCell.resources.isEmpty()) {
 			info += "Resources: \n";
-			Iterator<BasicResourceType> resIt = crtCell.resources.keySet().iterator();
+			Iterator<ResourceType> resIt = crtCell.resources.keySet().iterator();
 			while(resIt.hasNext()) {
-				BasicResourceType resType = resIt.next();
-				info += "\t" + resType.name() + ": " + crtCell.resources.get(resType) + "\n";
+				ResourceType resType = resIt.next();
+				info += "\t" + resType.toString() + ": " + crtCell.resources.get(resType) + "\n";
 			}
 		}
 		
 		if (!crtCell.visibleResources.isEmpty()) {
 			info += "Visible resources: \n";
-			for(BasicResourceType resType : crtCell.visibleResources.keySet()) {
-				info += "\t" + resType.name() + ": " + crtCell.visibleResources.get(resType) + "\n";
+			for(ResourceType resType : crtCell.visibleResources.keySet()) {
+				info += "\t" + resType.toString() + ": " + crtCell.visibleResources.get(resType) + "\n";
 			}
 		}
 		
@@ -211,7 +209,7 @@ public class MapCanvas extends Canvas implements MouseListener, MouseMotionListe
     	Image unitImage = null;
     	
     	if (cell.cellUnits.isEmpty()) {
-	    	StrategicObject strRes = cell.strategicObject;
+	    	IStrategic strRes = cell.strategicObject;
 	    	if (strRes != null) {
 	    		if (strRes instanceof Tower) {
 	    			bufferGraphics.drawImage(tower, j * CELL_DIM + offsetX, i * CELL_DIM + offsetY, null);
@@ -254,7 +252,7 @@ public class MapCanvas extends Canvas implements MouseListener, MouseMotionListe
     			bufferGraphics.drawImage(resource, j * CELL_DIM + offsetX, i * CELL_DIM + offsetY, null);
         	}
     		else {
-    			BasicResourceType selectedType = BasicResourceType.valueOf(selectedResource);
+    			ResourceType selectedType = ResourceType.valueOf(ResourceType.class, selectedResource);
         		if (cell.resources.containsKey(selectedType)) {
         			bufferGraphics.drawImage(resource, j * CELL_DIM + offsetX, i * CELL_DIM + offsetY, null);
         		}

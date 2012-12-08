@@ -8,8 +8,8 @@ import org.aimas.craftingquest.state.GameState;
 import org.aimas.craftingquest.state.PlayerState;
 import org.aimas.craftingquest.state.Transition;
 import org.aimas.craftingquest.state.TransitionResult;
-import org.aimas.craftingquest.state.CraftedObject.BasicResourceType;
 import org.aimas.craftingquest.state.Transition.ActionType;
+import org.aimas.craftingquest.state.objects.CraftedObject.BasicResourceType;
 
 public class DropResourcesAction extends Action {
 	
@@ -19,8 +19,8 @@ public class DropResourcesAction extends Action {
 	
 	@Override
 	protected TransitionResult handle(GameState game, PlayerState player, Transition transition) {
-		HashMap<BasicResourceType, Integer> unwantedResources = 
-				(HashMap<BasicResourceType, Integer>)transition.operands[1];
+		HashMap<Resource, Integer> unwantedResources = 
+				(HashMap<Resource, Integer>)transition.operands[1];
 		
 		// check for enough energy points
 		if (playerUnit.energy < GamePolicy.dropCost) {
@@ -30,12 +30,12 @@ public class DropResourcesAction extends Action {
 			return res;
 		}
 
-		HashMap<BasicResourceType, Integer> visibleCellResources = game.map.cells[playerUnit.pos.y][playerUnit.pos.x].visibleResources;
-		HashMap<BasicResourceType, Integer> carriedResources = playerUnit.carriedResources;
+		HashMap<Resource, Integer> visibleCellResources = game.map.cells[playerUnit.pos.y][playerUnit.pos.x].visibleResources;
+		HashMap<Resource, Integer> carriedResources = playerUnit.carriedResources;
 
-		Iterator<BasicResourceType> it = unwantedResources.keySet().iterator();
+		Iterator<Resource> it = unwantedResources.keySet().iterator();
 		while (it.hasNext()) {
-			BasicResourceType res = it.next();
+			Resource res = it.next();
 			Integer dropped = unwantedResources.get(res);
 			Integer existing = visibleCellResources.get(res);
 			Integer carried = carriedResources.get(res);
@@ -60,10 +60,10 @@ public class DropResourcesAction extends Action {
 	
 	@Override
 	protected boolean validOperands(Transition transition) {
-		HashMap<BasicResourceType, Integer> unwantedResources = null;
+		HashMap<Resource, Integer> unwantedResources = null;
 		
 		try{
-			unwantedResources = (HashMap<BasicResourceType, Integer>)transition.operands[1];
+			unwantedResources = (HashMap<Resource, Integer>)transition.operands[1];
 			if (unwantedResources == null) {
 				return false;
 			}
