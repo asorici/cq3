@@ -105,6 +105,10 @@ public class Server0 implements IServer {
 	public static void main(String[] args) throws Exception {
 		// args are servername, port, secrets file
 		Server0 server = null;
+		
+		// set gui on
+		System.setProperty("gui", "true");
+		
 		if(args == null || args.length != 3) {
 			server = new Server0("CraftingQuest", 1198, "secrets.txt");
 		}
