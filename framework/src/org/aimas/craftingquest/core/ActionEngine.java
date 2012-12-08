@@ -3,6 +3,7 @@ package org.aimas.craftingquest.core;
 import java.util.List;
 
 import org.aimas.craftingquest.core.actions.Action;
+import org.aimas.craftingquest.core.energyreplenishmodels.EnergyReplenishModel;
 import org.aimas.craftingquest.state.GameState;
 import org.aimas.craftingquest.state.PlayerState;
 import org.aimas.craftingquest.state.Tower;
@@ -123,7 +124,9 @@ public class ActionEngine {
 	protected void replenishEnergy() {
 		for (PlayerState pState : game.playerStates.values()) {
 			for (UnitState unit : pState.units) {
-				unit.energy = GamePolicy.unitEnergy;
+				unit.energy = EnergyReplenishModel
+					.getInstance(GamePolicy.energyReplenishModel)
+					.replenishEnergy(unit.energy, GamePolicy.unitEnergy);
 			}
 		}
 	}
