@@ -14,6 +14,11 @@ public class BasicUnit implements Serializable {
 	 * the units energy reserves
 	 */
 	public int energy;
+
+	/**
+	 * the unit's life (maximum energy).
+	 */
+	public int life;
 	
 	/**
 	 * the player that it belongs to
@@ -23,8 +28,9 @@ public class BasicUnit implements Serializable {
 	public BasicUnit (){
 	}
 	
-	public void set( int playerID, int energy) {
+	public void set( int playerID, int energy, int life) {
 		this.playerID = playerID;
 		this.energy = energy;
+		this.life = life;
 	}
 }
