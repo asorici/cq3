@@ -197,7 +197,6 @@ public class GamePolicy {
 		towerDrainBase = Integer.parseInt(parametersNode.getElementsByTagName("towerDrainBase").item(0).getTextContent());
 		towerEnergy = Integer.parseInt(parametersNode.getElementsByTagName("towerEnergy").item(0).getTextContent());
 
-		//TODO: public static ReplenishType energyReplenishModel = ReplenishType.FullReplenish;
 		String energyRMStr = parametersNode.getElementsByTagName("energyReplenishModel").item(0).getTextContent();
 		if (energyRMStr.equals("FullReplenish"))
 			energyReplenishModel = ReplenishType.FullReplenish;
