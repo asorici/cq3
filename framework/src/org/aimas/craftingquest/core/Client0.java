@@ -277,6 +277,21 @@ public final class Client0 implements IClient, IPlayerActions {
 			HashMap<CraftedObject, Integer> usedObjects, HashMap<BasicResourceType, Integer> usedResources) {
 		return doGenericAction(new Transition(ActionType.CraftObject, new Object[] {unit.id, target, usedObjects, usedResources}));
 	}
+
+	/**
+ 	 * Allows the given unit to equip the target crafted object. 
+ 	 * <p> If successful, the target object, a sword or an armour, will be equiped.
+ 	 * <p>In case of an error, the returned player state will not be different from the current one. 
+ 	 * It will also contain a <code>TransitionResult</code> which gives the reason for the failure.</p>
+ 	 * @param unit   the unit performing the crafting action
+ 	 * @param target   the armour / sword that is supposed to be equiped
+	 * @return the new player state or null if the player attempts to equip an invalid object.
+ 	 */
+	@Override
+	public PlayerState equip(UnitState unit, CraftedObject target) {
+		return doGenericAction(new Transition(ActionType.Equip, new Object[] {unit.id, target}));
+	}	
+	
 	
 	/**
  	 * Allows the given unit to sell the specified quantity of target artifacts.
