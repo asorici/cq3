@@ -56,8 +56,19 @@ public class GameGenerator {
 			
 			/* setup initial player states - there should be only 2 players */
 			for (int i = 0; i < GamePolicy.noPlayers; i++) {
-				if (i % 2 == 0) {
+				if (i % 4 == 0) {
 					PlayerState player = setupPlayerState(i + 1, GamePolicy.nrPlayerUnits, new Point2i(5, 5), game.map);
+					player.availableBlueprints = game.blueprints;	// all available blueprints are known at the start
+					//game.playerStates.add(player);
+					game.playerStates.put(player.id, player);
+				}
+				else if (i % 4 == 1) {
+					PlayerState player = setupPlayerState(i + 1, GamePolicy.nrPlayerUnits, new Point2i(GamePolicy.mapsize.x - 5, 5), game.map);
+					player.availableBlueprints = game.blueprints;	// all available blueprints are known at the start
+					//game.playerStates.add(player);
+					game.playerStates.put(player.id, player);
+				} else if (i % 4 == 2) {
+					PlayerState player = setupPlayerState(i + 1, GamePolicy.nrPlayerUnits, new Point2i(5, GamePolicy.mapsize.y - 5), game.map);
 					player.availableBlueprints = game.blueprints;	// all available blueprints are known at the start
 					//game.playerStates.add(player);
 					game.playerStates.put(player.id, player);
@@ -99,6 +110,18 @@ public class GameGenerator {
 			for (int i = 0; i < GamePolicy.noPlayers; i++) {
 				if (i % 2 == 0) {
 					PlayerState player = setupPlayerState(i + 1, GamePolicy.nrPlayerUnits, new Point2i(5, 5), game.map);
+					player.availableBlueprints = game.blueprints;	// all available blueprints are known at the start
+					//game.playerStates.add(player);
+					game.playerStates.put(player.id, player);
+				}
+				else if (i % 2 == 1) {
+					PlayerState player = setupPlayerState(i + 1, GamePolicy.nrPlayerUnits, new Point2i(5, GamePolicy.mapsize.y - 5), game.map);
+					player.availableBlueprints = game.blueprints;	// all available blueprints are known at the start
+					//game.playerStates.add(player);
+					game.playerStates.put(player.id, player);
+				}
+				else if (i % 2 == 2) {
+					PlayerState player = setupPlayerState(i + 1, GamePolicy.nrPlayerUnits, new Point2i(GamePolicy.mapsize.x - 5, 5), game.map);
 					player.availableBlueprints = game.blueprints;	// all available blueprints are known at the start
 					//game.playerStates.add(player);
 					game.playerStates.put(player.id, player);

@@ -475,7 +475,7 @@ public class Server0 implements IServer {
 			
 			if (action.operator == ActionType.PlayerReady) {
 				for (UnitState u : player.units) {
-					gui_logger.info(state.round.currentRound + " " + action.operator.name() + " " + player.id + " " + u.type.name() + " " 
+					gui_logger.info(state.round.currentRound + " " + action.operator.name() + " " + player.id + " " 
 							+ u.pos.x + " " + u.pos.y + " " + player.credit + " " + u.energy);
 				}
 				
@@ -498,12 +498,12 @@ public class Server0 implements IServer {
 			
 			if (action.operator == ActionType.CraftObject || action.operator == ActionType.SellObject) {
 				CraftedObject target = (CraftedObject)action.operands[1];
-				gui_logger.info(state.round.currentRound + " " + action.operator.name() + " " + player.id + " " + playerUnit.type.name() + " " 
+				gui_logger.info(state.round.currentRound + " " + action.operator.name() + " " + player.id + " " 
 						+ playerUnit.pos.x + " " + playerUnit.pos.y + " " + player.credit + " " + playerUnit.energy + " " 
 						+ target.getType().name() + " " + target.getValue());
 			}
 			else {
-				gui_logger.info(state.round.currentRound + " " + action.operator.name() + " " + player.id + " " + playerUnit.type.name() + " " 
+				gui_logger.info(state.round.currentRound + " " + action.operator.name() + " " + player.id + " " 
 						+ playerUnit.pos.x + " " + playerUnit.pos.y + " " + player.credit + " " + playerUnit.energy);
 			}
 		}

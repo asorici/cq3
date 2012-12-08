@@ -12,6 +12,7 @@ import java.io.ObjectOutputStream;
 import java.util.HashMap;
 //import java.util.List;
 
+import org.aimas.craftingquest.core.energyreplenishmodels.ReplenishType;
 import org.aimas.craftingquest.state.CellState;
 import org.aimas.craftingquest.state.GameState;
 import org.aimas.craftingquest.state.MapState;
@@ -66,6 +67,7 @@ public class GamePolicy {
 	public static int resourceMoveCost = 1;
 	public static int initialTeamCredit = 300;
 	public static int unitEnergy = 150;
+	public static ReplenishType energyReplenishModel = ReplenishType.FullReplenish;
 	public static int baseObjectValue = 100;
 	public static int valueIncrement = 20;
 
