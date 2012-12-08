@@ -4,10 +4,12 @@ import java.util.HashMap;
 
 import org.aimas.craftingquest.state.Blueprint;
 import org.aimas.craftingquest.state.CraftedObject;
+import org.aimas.craftingquest.state.EquippableObject;
 import org.aimas.craftingquest.state.PlayerState;
 import org.aimas.craftingquest.state.Point2i;
 import org.aimas.craftingquest.state.UnitState;
 import org.aimas.craftingquest.state.CraftedObject.BasicResourceType;
+import org.aimas.craftingquest.state.TrapObject;
 
 
 public interface IPlayerActions {
@@ -134,7 +136,7 @@ public interface IPlayerActions {
 			HashMap<CraftedObject, Integer> usedObjects, HashMap<BasicResourceType, Integer> usedResources);
     
     /**
- 	 * Allows the given unit to equip the target crafted object. 
+ 	 * Allows the given unit to equip the target equippable object. 
  	 * <p> If successful, the target object, a sword or an armour, will be equiped.
  	 * <p>In case of an error, the returned player state will not be different from the current one. 
  	 * It will also contain a <code>TransitionResult</code> which gives the reason for the failure.</p>
@@ -142,7 +144,18 @@ public interface IPlayerActions {
  	 * @param target   the armour / sword that is supposed to be equiped
 	 * @return the new player state or null if the player attempts to equip an invalid object.
  	 */
-	public PlayerState equip(UnitState unit, CraftedObject target);
+	public PlayerState equip(UnitState unit, EquippableObject target);
+	
+	/**
+ 	 * Allows the given unit to place a trap in the current cell. 
+ 	 * <p> If successful, the target trap will be placed in the current cell.
+ 	 * <p>In case of an error, the returned player state will not be different from the current one. 
+ 	 * It will also contain a <code>TransitionResult</code> which gives the reason for the failure.</p>
+ 	 * @param unit   the unit performing the crafting action
+ 	 * @param target   the trap that is supposed to be placed in the current cell
+	 * @return the new player state or null if the trap placement fails.
+ 	 */
+	public PlayerState placeTrap(UnitState unit, TrapObject target);
     
     /**
 	 * Allows the given unit to sell the specified quantity of target artifacts.

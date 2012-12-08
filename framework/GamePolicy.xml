@@ -33,7 +33,8 @@
 		<towerCutoffRadius>4</towerCutoffRadius>
 		<towerDrainBase>60</towerDrainBase>
 		<towerEnergy>250</towerEnergy>
-		
+		<placeTrapCost>40</placeTrapCost>
+
 	</parameters>
 	
 	<rules>

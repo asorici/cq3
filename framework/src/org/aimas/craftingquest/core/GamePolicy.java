@@ -91,6 +91,8 @@ public class GamePolicy {
 	public static int towerEnergy = 250;
 	// drain = towerDrainBase / min(abs(tower.pos.x - player.pos.x), abs(..y))
 	
+	public static int placeTrapCost = 40;
+	
 //	public static HashMap<CellType, List<UnitType>> terrainMovePossibilities = new HashMap<CellType, List<UnitType>>();
 	
 	public static int maxResourceSpots = 5;
@@ -190,7 +192,6 @@ public class GamePolicy {
 		towerCutoffRadius = Integer.parseInt(parametersNode.getElementsByTagName("towerCutoffRadius").item(0).getTextContent());
 		towerDrainBase = Integer.parseInt(parametersNode.getElementsByTagName("towerDrainBase").item(0).getTextContent());
 		towerEnergy = Integer.parseInt(parametersNode.getElementsByTagName("towerEnergy").item(0).getTextContent());
-
 		String replenishType = parametersNode.getElementsByTagName("energyReplenishModel").item(0).getTextContent();
 		if (replenishType.equals("FullReplenish"))
 			energyReplenishModel = ReplenishType.FullReplenish;
@@ -198,6 +199,7 @@ public class GamePolicy {
 			energyReplenishModel = ReplenishType.ExponentialReplenish;
 		else
 			energyReplenishModel = null;
+		placeTrapCost = Integer.parseInt(parametersNode.getElementsByTagName("placeTrapCost").item(0).getTextContent());
 	}
 	
 	private static void readScenarioRules(Element ruleNode) {

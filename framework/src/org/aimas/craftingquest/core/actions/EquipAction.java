@@ -45,11 +45,10 @@ public class EquipAction extends Action {
 			playerUnit.equipedArmour = (ArmourObject) target;
 		} else {
 			TransitionResult res = new TransitionResult(transition.id);
-			res.errorType = TransitionResult.TransitionError.EquipmentMissingError;
-			res.errorReason = "Player does not hold that equipment.";
+			res.errorType = TransitionResult.TransitionError.OperandError;
+			res.errorReason = "Player tried to equip something that is not a sword nor a armour.";
 			return res;
 		}
-		//playerUnit.energy -= GamePolicy.buildCost; // update energy levels
 
 		TransitionResult craftres = new TransitionResult(transition.id);
 		craftres.errorType = TransitionResult.TransitionError.NoError;
@@ -58,10 +57,8 @@ public class EquipAction extends Action {
 
 	@Override
 	protected boolean validOperands(Transition transition) {
-		CraftedObject target = null;
-		HashMap<CraftedObject, Integer> usedObjects = null;
-		HashMap<BasicResourceType, Integer> usedResources = null;
-		
+		EquippableObject target = null;
+
 		try {
 			target = (EquippableObject)transition.operands[1];
 			

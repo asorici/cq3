@@ -7,9 +7,11 @@ import java.util.HashMap;
 
 import org.aimas.craftingquest.state.Blueprint;
 import org.aimas.craftingquest.state.CraftedObject;
+import org.aimas.craftingquest.state.EquippableObject;
 import org.aimas.craftingquest.state.PlayerState;
 import org.aimas.craftingquest.state.Point2i;
 import org.aimas.craftingquest.state.Transition;
+import org.aimas.craftingquest.state.TrapObject;
 import org.aimas.craftingquest.state.UnitState;
 import org.aimas.craftingquest.state.CraftedObject.BasicResourceType;
 import org.aimas.craftingquest.state.Transition.ActionType;
@@ -260,6 +262,22 @@ public final class Client0 implements IClient, IPlayerActions {
 	}
 	
 	/**
+ 	 * Allows the given unit to drop the specified quantities of crafted objects.
+ 	 * <p> If successful, the {@link UnitState} of the unit performing the action will have
+ 	 * the specified object quantities subtracted from its <code>carriedObjects</code> field.</p>
+ 	 * <p> The dropped artifacts will now become visible to other units that pass near the current cell</p>
+ 	 * <p>In case of an error, the returned player state will not be different from the current one. 
+ 	 * It will also contain a <code>TransitionResult</code> which gives the reason for the failure.</p>
+ 	 * @param unit   the unit executing the drop action
+ 	 * @param unwantedResources   the unwanted objects and their quantities
+	 * @return the new player state or null if the player attempts to move outside his turn.
+ 	 */
+	@Override
+	public PlayerState placeTrap(UnitState unit, TrapObject trapObject) {
+		return doGenericAction(new Transition(ActionType.PlaceTrap, new Object[] {unit.id, trapObject}));
+	}
+	
+	/**
  	 * Allows the given unit to craft the target object using the specified ingredients. 
  	 * <p> If successful, the target object will be added to the unit's <code>carriedObjects</code> field.
  	 * Also, the unit performing the action will have the ingredient quantities 
@@ -288,7 +306,7 @@ public final class Client0 implements IClient, IPlayerActions {
 	 * @return the new player state or null if the player attempts to equip an invalid object.
  	 */
 	@Override
-	public PlayerState equip(UnitState unit, CraftedObject target) {
+	public PlayerState equip(UnitState unit, EquippableObject target) {
 		return doGenericAction(new Transition(ActionType.Equip, new Object[] {unit.id, target}));
 	}	
 	
