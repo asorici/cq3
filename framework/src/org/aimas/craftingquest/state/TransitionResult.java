@@ -12,7 +12,8 @@ public class TransitionResult implements Serializable {
 	public enum TransitionError implements Serializable {
 		NoError, UnitIdError, UnknownActionError, UnknownError, OperandError, MoveError, 
 		TerrainError, ObstacleError, NoEnergyError, PickupError, BuildError, CraftingError, 
-		ResourceMissingError, NoCreditError, BuyRequestError, SellRequestError, GuardError
+		ResourceMissingError, NoCreditError, BuyRequestError, SellRequestError, GuardError,
+		EquipmentMissingError
 	};
 
 	public int id; // egal cu cel trimis

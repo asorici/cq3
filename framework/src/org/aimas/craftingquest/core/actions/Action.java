@@ -68,6 +68,8 @@ public abstract class Action {
 				return new DropObjectAction(type);
 			case CraftObject:
 				return new CraftObjectAction(type);
+			case Equip:
+				return new EquipAction(type);
 			case SellObject:
 				return new SellObjectAction(type);
 			case PlaceTower:
