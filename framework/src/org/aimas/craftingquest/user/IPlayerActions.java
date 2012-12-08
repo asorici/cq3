@@ -8,6 +8,7 @@ import org.aimas.craftingquest.state.ICarriable;
 import org.aimas.craftingquest.state.PlayerState;
 import org.aimas.craftingquest.state.Point2i;
 import org.aimas.craftingquest.state.UnitState;
+import org.aimas.craftingquest.state.objects.ICrafted;
 import org.aimas.craftingquest.state.objects.IEquippable;
 import org.aimas.craftingquest.state.resources.ResourceType;
 
@@ -181,10 +182,10 @@ public interface IPlayerActions {
 	 * <p>In case of an error, the returned player state will not be different from the current one. 
 	 * It will also contain a <code>TransitionResult</code> which gives the reason for the failure.</p>
 	 * @param unit   the unit performing the upgrade
-	 * @param craftedObject  the type of object for which an upgrade is desired
+	 * @param blueprint  the blueprint that is upgraded
 	 * @param goldAmount  the amount of gold nuggets required for the upgrade  
 	 * @return the new player state or null if the player attempts to move outside his turn.
 	 */
-    public PlayerState upgrade(UnitState unit, CraftedObject craftedObject, int goldAmount);
+    public PlayerState upgrade(UnitState unit, Blueprint blueprint, int goldAmount);
     
 }

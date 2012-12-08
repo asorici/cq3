@@ -4,6 +4,7 @@ import gnu.cajo.invoke.Remote;
 
 import java.util.HashMap;
 
+import org.aimas.craftingquest.state.BasicUnit;
 import org.aimas.craftingquest.state.Blueprint;
 import org.aimas.craftingquest.state.ICarriable;
 import org.aimas.craftingquest.state.PlayerState;
@@ -305,8 +306,8 @@ public final class Client0 implements IClient, IPlayerActions {
 	 * @return the new player state or null if the player attempts to move outside his turn.
  	 */
 	@Override
-	public PlayerState placeTower(UnitState unit) {
-		return doGenericAction(new Transition(ActionType.PlaceTower, new Object[] {unit.id}));
+	public PlayerState placeTower(UnitState unit, Blueprint blueprint) {
+		return doGenericAction(new Transition(ActionType.PlaceTower, new Object[] {unit.id, blueprint}));
 	}
     
 	
@@ -342,8 +343,8 @@ public final class Client0 implements IClient, IPlayerActions {
 	 * @param goldAmount  the amount of gold nuggets required for the upgrade  
 	 * @return the new player state or null if the player attempts to move outside his turn.
 	 */
-    public PlayerState upgrade(UnitState unit, CraftedObject craftedObject, int goldAmount) {
+    public PlayerState upgrade(UnitState unit, Blueprint blueprint, int goldAmount) {
     	return doGenericAction(new Transition(ActionType.Upgrade, new Object[] {
-    			unit.id, craftedObject, goldAmount }));
+    			unit.id, blueprint, goldAmount }));
     }
 }
