@@ -36,6 +36,11 @@ public class CraftedObject implements Serializable {
 	private int value;
 	
 	/**
+	 * the object weight
+	 */
+	private int weight;
+	
+	/**
 	 * If not null, this field gives a list of alternative ways of constructing a complex object.<br/>
 	 * Each alternative is a mapping between <code>CraftedObject</code>s and their required quantities. 
 	 */
@@ -85,6 +90,10 @@ public class CraftedObject implements Serializable {
 
 	public int getValue() {
 		return value;
+	}
+	
+	public int getWeight() {
+		return weight;
 	}
 	
 	@Override
