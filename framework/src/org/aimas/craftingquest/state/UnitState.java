@@ -17,6 +17,7 @@ import org.aimas.craftingquest.state.CraftedObject.BasicResourceType;
  * <li>the unit's sight from its current position</li>
  * <li>the unit's energy levels</li>
  * <li>the opponent view for this unit</li>
+ * <li>the equiped sword and armour</li>
  * <li>the list of carried basic resources and their quantities</li>
  * <li>the list of carried artifacts and their quantities</li>
  * </ul>
@@ -47,6 +48,16 @@ public class UnitState implements Serializable {
 	 * the unit energy points
 	 */
 	public int energy;
+	
+	/**
+	 * 
+	 */
+	public SwordObject equipedSword;
+	
+	/**
+	 * 
+	 */
+	public ArmourObject equipedArmour;
 
 	/**
 	 * The unit's maximum energy points.
