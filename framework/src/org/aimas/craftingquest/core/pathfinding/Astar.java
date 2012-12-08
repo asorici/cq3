@@ -30,7 +30,7 @@ public class Astar implements IPathFinder
 		int xtarget = to.x;
 		int ytarget = to.y;
 		
-		if (map.getCellCost(new Point2i(xtarget, ytarget), u) > 90000)
+		if (map.getCellCost(new Point2i(xtarget, ytarget), u) > (IPathMap.INF-1.0f))
 		{
 			return null;
 		}
@@ -155,7 +155,7 @@ public class Astar implements IPathFinder
 		
 		if ((!invalid) && ((sx != x) || (sy != y)))
 		{
-			invalid = (map.getCellCost(mmc, u) > 90000);
+			invalid = (map.getCellCost(mmc, u) > (IPathMap.INF-1.0f));
 		}
 		
 		return !invalid;
