@@ -8,6 +8,7 @@ import org.aimas.craftingquest.state.CellState;
 import org.aimas.craftingquest.state.GameState;
 import org.aimas.craftingquest.state.PlayerState;
 import org.aimas.craftingquest.state.Point2i;
+import org.aimas.craftingquest.state.Tower;
 import org.aimas.craftingquest.state.Transition;
 import org.aimas.craftingquest.state.UnitState;
 //import org.aimas.craftingquest.state.CellState.CellType;
@@ -44,7 +45,9 @@ public class MoveAction extends Action {
 		}
 
 		// check no object is there
-		if (game.map.cells[toPos.y][toPos.x].strategicResource != null) {
+		if (game.map.cells[toPos.y][toPos.x].strategicObject != null
+				&& game.map.cells[toPos.y][toPos.x].strategicObject instanceof Tower
+				) {
 			TransitionResult res = new TransitionResult(transition.id);
 			res.errorType = TransitionResult.TransitionError.ObstacleError;
 			res.errorReason = "Move not allowed to cells containing strategic structures.";

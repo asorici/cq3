@@ -544,7 +544,7 @@ public class ResourceGenerator {
 		if (x >= 0 && x < GamePolicy.mapsize.x && y >= 0 && y < GamePolicy.mapsize.y ) {
 			// place resources in upper left quadrant
 			int xx = x, yy = y;
-			if (map.cells[yy][xx] != null && map.cells[yy][xx].type != CellType.Rock && map.cells[yy][xx].strategicResource == null) {
+			if (map.cells[yy][xx] != null && map.cells[yy][xx].type != CellType.Rock && map.cells[yy][xx].strategicObject == null) {
 				// if nothing occupies this cell then put resources in it
 				Integer contents = map.cells[yy][xx].resources.get(resType);
 				if (contents == null) {

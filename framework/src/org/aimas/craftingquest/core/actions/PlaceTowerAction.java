@@ -38,9 +38,9 @@ public class PlaceTowerAction extends Action {
 			return res;
 		}
 
-		// check to see if any towers are already in the cell
+		// check to see if any towers or traps are already in the cell
 		CellState unitCell = game.map.cells[playerUnit.pos.y][playerUnit.pos.x];
-		if (unitCell.strategicResource != null) {
+		if (unitCell.strategicObject != null) {
 			TransitionResult res = new TransitionResult(transition.id);
 			res.errorType = TransitionResult.TransitionError.BuildError;
 			res.errorReason = "Cannot build a tower in a cell that already contains a strategic resource";
@@ -83,7 +83,7 @@ public class PlaceTowerAction extends Action {
 
 		// all is ok - build tower and update energy and credit levels
 		Tower tower = new Tower(player.id, playerUnit.pos);
-		unitCell.strategicResource = tower; // place tower in cell
+		unitCell.strategicObject = tower; // place tower in cell
 
 		List<Tower> playerTowers = game.playerTowers.get(player.id); // add in global list of towers
 		if (playerTowers == null) {

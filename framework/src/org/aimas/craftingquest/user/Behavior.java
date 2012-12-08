@@ -46,7 +46,7 @@ public class Behavior {
 	PlayerState nextAction(PlayerState state) {
 		if (lastRound != state.round.currentRound) {
 			lastRound = state.round.currentRound;
-			checkForMerchantCamp(state);
+			//checkForMerchantCamp(state);
 			performScan(state);
 			performDig(state);
 			performPickUp(state);
@@ -75,6 +75,7 @@ public class Behavior {
 		// should never get here
 		return null;
 	}
+	/*
 
 	private void checkForMerchantCamp(PlayerState state) {
 		// TODO Auto-generated method stub
@@ -100,7 +101,7 @@ public class Behavior {
 		for (int i = 0; i < sight.length; i++) {
 			for (int j = 0; j < sight[i].length; j++) {
 				if (sight[i][j] != null && Math.abs(sight[i][j].pos.x - unit.pos.x) == 1 && Math.abs(sight[i][j].pos.y - unit.pos.y) == 1) {
-					StrategicResource strRes = sight[i][j].strategicResource;
+					StrategicObject strRes = sight[i][j].strategicResource;
 					if (strRes != null && strRes.getType() == StrategicResourceType.Merchant) {
 						Merchant m = (Merchant)strRes;
 						for (Blueprint bp : m.getBlueprints()) {
@@ -116,6 +117,7 @@ public class Behavior {
 		
 		System.out.println("Bought blueprints: " + state.boughtBlueprints);
 	}
+	*/
 	
 	private void performScan(PlayerState state) {
 		// TODO Auto-generated method stub

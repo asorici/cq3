@@ -48,7 +48,7 @@ public class CellState implements Serializable {
 	/**
 	 * the strategic resource (may be null) contained in this cell.
 	 */
-	public StrategicResource strategicResource;
+	public StrategicObject strategicObject;
 	
 	/**
 	 * the quantities of buried cell resources - these will not be available to the client side as they are 

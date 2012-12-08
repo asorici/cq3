@@ -3,10 +3,12 @@ package org.aimas.craftingquest.core.actions;
 import java.util.HashMap;
 
 import org.aimas.craftingquest.core.GamePolicy;
+import org.aimas.craftingquest.state.CellState;
 import org.aimas.craftingquest.state.CraftedObject;
 import org.aimas.craftingquest.state.EquippableObject;
 import org.aimas.craftingquest.state.GameState;
 import org.aimas.craftingquest.state.PlayerState;
+import org.aimas.craftingquest.state.StrategicObject;
 import org.aimas.craftingquest.state.Transition;
 import org.aimas.craftingquest.state.TransitionResult;
 import org.aimas.craftingquest.state.TrapObject;
@@ -31,20 +33,26 @@ public class PlaceTrapAction extends Action {
 			return res;
 		}
 		
-		HashMap<CraftedObject, Integer> cellObjects = game.map.cells[playerUnit.pos.y][playerUnit.pos.x].craftedObjects;
-		HashMap<CraftedObject, Integer> carriedObjects = playerUnit.carriedObjects;
+		// check to see if any towers or traps are already in the cell
+		CellState unitCell = game.map.cells[playerUnit.pos.y][playerUnit.pos.x];
+		if (unitCell.strategicObject != null) {
+			TransitionResult res = new TransitionResult(transition.id);
+			res.errorType = TransitionResult.TransitionError.BuildError;
+			res.errorReason = "Cannot place a trap in a cell that already contains a strategic resource";
+			return res;
+		}
 		
-		Integer existing = cellObjects.get(trapObject);
+		HashMap<CraftedObject, Integer> carriedObjects = playerUnit.carriedObjects;
 		Integer carried = carriedObjects.get(trapObject);
 
 		if (carried != null && 1 <= carried) {
-			if (existing == null) {
-				cellObjects.put(trapObject, 1);
+			unitCell.strategicObject = (StrategicObject) trapObject;
+			if (carried > 1) {
+				carriedObjects.put(trapObject, carried - 1);
 			} else {
-				cellObjects.put(trapObject, existing + 1);
+				carriedObjects.remove(trapObject);
 			}
 
-			carriedObjects.put(trapObject, carried - 1);
 		} else {
 			TransitionResult res = new TransitionResult(transition.id);
 			res.errorType = TransitionResult.TransitionError.TrapMisssingError;
@@ -53,7 +61,6 @@ public class PlaceTrapAction extends Action {
 		}
 		
 		playerUnit.energy -= GamePolicy.placeTrapCost; // update energy levels
-		
 		return null;
 	}
 

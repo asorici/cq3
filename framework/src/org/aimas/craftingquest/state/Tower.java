@@ -6,11 +6,8 @@ package org.aimas.craftingquest.state;
  * Defense towers will protect cells falling within their radius from being exploited by the adversary.
  */
 @SuppressWarnings("serial")
-public class Tower extends StrategicResource {
-	/**
-	 * the id of the player that this tower belongs to
-	 */
-	private int playerID;
+public class Tower extends StrategicObject {
+	
 	
 	/**
 	 * the remaining strength (expressed in energy points) of this tower
@@ -18,15 +15,11 @@ public class Tower extends StrategicResource {
 	private int remainingStrength;
 	
 	public Tower(int playerID, Point2i pos) {
-		super(StrategicResourceType.Tower, pos);
-		this.playerID = playerID;
+		super(playerID,pos);
 		this.remainingStrength = 300;
 	}
 
-	public int getPlayerID() {
-		return playerID;
-	}
-	
+
 	public int getRemainingStrength() {
 		return remainingStrength;
 	}
@@ -42,5 +35,24 @@ public class Tower extends StrategicResource {
 		info += "Tower of player(" + playerID + ") - strength:" + remainingStrength + "\n";
 		
 		return info;
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (!(obj instanceof Tower)) {
+			return false;
+		}
+		
+		final Tower other = (Tower)obj;
+		
+		if (playerID != other.playerID) {
+			return false;
+		}
+	
+		if (position.x != other.position.x || position.y != other.position.y) {
+			return false;
+		}
+		
+		return true;
 	}
 }

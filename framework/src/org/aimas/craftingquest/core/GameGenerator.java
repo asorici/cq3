@@ -42,7 +42,7 @@ public class GameGenerator {
 			game.map = GamePolicy.map;
 			
 			/* set merchant list */
-			game.merchantList = setupMerchantList(game.map);
+			/* game.merchantList = setupMerchantList(game.map); */
 			
 			/* set map resources */
 			HashMap<BasicResourceType, Integer> resourceAmountsByType = ResourceGenerator.placeResources(game.map);
@@ -265,6 +265,7 @@ public class GameGenerator {
 		}
 	}
 
+	/*
 	private static List<Merchant> setupMerchantList(MapState map) {
 		List<Merchant> merchantList = new ArrayList<Merchant>();
 		
@@ -279,6 +280,7 @@ public class GameGenerator {
 		
 		return merchantList;
 	}
+	*/
 
 	private static PlayerState setupPlayerState(int playerID, int nrUnits, Point2i initPos, MapState map) {
 		PlayerState pState = new PlayerState();

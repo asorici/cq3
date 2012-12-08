@@ -21,8 +21,10 @@ import javax.imageio.ImageIO;
 import javax.swing.JTextArea;
 
 import org.aimas.craftingquest.state.BasicUnit;
+import org.aimas.craftingquest.state.Tower;
 import org.aimas.craftingquest.state.CellState;
 import org.aimas.craftingquest.state.GameState;
+import org.aimas.craftingquest.state.StrategicObject;
 import org.aimas.craftingquest.state.StrategicResource;
 import org.aimas.craftingquest.state.CellState.CellType;
 import org.aimas.craftingquest.state.CraftedObject.BasicResourceType;
@@ -151,7 +153,7 @@ public class MapCanvas extends Canvas implements MouseListener, MouseMotionListe
     		info += "\t" + "[" + bu.unitId + "]" + "(" + bu.playerID +")\n";
 		}
 		
-		StrategicResource res = crtCell.strategicResource;
+		StrategicObject res = crtCell.strategicObject;
 		if (res != null) {
 			info += "Strategic resource = " + res + "\n";
 		}
@@ -209,9 +211,9 @@ public class MapCanvas extends Canvas implements MouseListener, MouseMotionListe
     	Image unitImage = null;
     	
     	if (cell.cellUnits.isEmpty()) {
-	    	StrategicResource strRes = cell.strategicResource;
+	    	StrategicObject strRes = cell.strategicObject;
 	    	if (strRes != null) {
-	    		if (strRes.getType() == StrategicResourceType.Tower) {
+	    		if (strRes instanceof Tower) {
 	    			bufferGraphics.drawImage(tower, j * CELL_DIM + offsetX, i * CELL_DIM + offsetY, null);
 	    		}
 	    		else {

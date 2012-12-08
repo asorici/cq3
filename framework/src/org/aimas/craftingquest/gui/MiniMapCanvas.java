@@ -12,7 +12,9 @@ import java.awt.event.MouseMotionListener;
 
 import org.aimas.craftingquest.state.CellState;
 import org.aimas.craftingquest.state.GameState;
+import org.aimas.craftingquest.state.StrategicObject;
 import org.aimas.craftingquest.state.StrategicResource;
+import org.aimas.craftingquest.state.Tower;
 import org.aimas.craftingquest.state.CraftedObject.BasicResourceType;
 import org.aimas.craftingquest.state.StrategicResource.StrategicResourceType;
 
@@ -113,9 +115,9 @@ public class MiniMapCanvas extends Canvas implements MouseListener, MouseMotionL
     	
     	g.setFont(font);
     	g.setColor(Color.RED);
-    	StrategicResource strRes = cell.strategicResource;
+    	StrategicObject strRes = cell.strategicObject;
     	if (strRes != null) {
-    		if (strRes.getType() == StrategicResourceType.Tower) {
+    		if (strRes instanceof Tower) {
     			g.drawString("T", j * CELL_DIM, i * CELL_DIM); // T = observation Tower
     		}
     		else {

@@ -308,6 +308,7 @@ class MapReader {
 			}
 			
 			// read merchant positions
+			/*
 			int ct = dis.readByte();	// merchant count
 			for (int i = 0; i < ct; i++) {
 				int x = dis.readByte();
@@ -315,6 +316,7 @@ class MapReader {
 				
 				cells[y][x].strategicResource = new Merchant(new Point2i(x, y));
 			}
+			*/
 			
 			dis.close();
 			fis.close();
