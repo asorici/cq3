@@ -35,6 +35,7 @@ public class GamePolicy {
     public static int initializationWaitTime = 3000;
 	
 	/* number of players */
+    public static int maxPlayers = 4;
 	public static int noPlayers = 2;
 	public static int nrPlayerUnits = 3;
 
@@ -161,17 +162,19 @@ public class GamePolicy {
 	}
 	
 	private static void readServerParameters(Element parametersNode) {
-		noPlayers = Integer.parseInt(parametersNode.getElementsByTagName("nrPlayers").item(0).getTextContent());
+		maxPlayers = Integer.parseInt(parametersNode.getElementsByTagName("maxPlayers").item(0).getTextContent());
 		playerActionTime = Integer.parseInt(parametersNode.getElementsByTagName("playerActionTime").item(0).getTextContent());
 		playerLateTime = Integer.parseInt(parametersNode.getElementsByTagName("playerLateTime").item(0).getTextContent());
 		updateTime = Integer.parseInt(parametersNode.getElementsByTagName("updateTime").item(0).getTextContent());
 		connectWaitTime = Integer.parseInt(parametersNode.getElementsByTagName("connectWaitTime").item(0).getTextContent());
 		//lastTurn = Integer.parseInt(parametersNode.getElementsByTagName("nrTurns").item(0).getTextContent());
-		nrPlayerUnits = Integer.parseInt(parametersNode.getElementsByTagName("nrPlayerUnits").item(0).getTextContent());
 		//mapName = parametersNode.getElementsByTagName("mapName").item(0).getTextContent();
 	}
 	
 	private static void readScenarioParameters(Element parametersNode) {
+		noPlayers = Integer.parseInt(parametersNode.getElementsByTagName("nrPlayers").item(0).getTextContent());
+		nrPlayerUnits = Integer.parseInt(parametersNode.getElementsByTagName("nrPlayerUnits").item(0).getTextContent());
+		
 		scanAttributeCount = Integer.parseInt(parametersNode.getElementsByTagName("scanAttributeCount").item(0).getTextContent());
 		unitEnergy = Integer.parseInt(parametersNode.getElementsByTagName("unitEnergy").item(0).getTextContent());
 		baseObjectValue = Integer.parseInt(parametersNode.getElementsByTagName("baseObjectValue").item(0).getTextContent());
