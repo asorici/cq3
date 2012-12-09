@@ -1,18 +1,20 @@
 package org.aimas.craftingquest.core.actions;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.aimas.craftingquest.core.GamePolicy;
+import org.aimas.craftingquest.state.Blueprint;
 import org.aimas.craftingquest.state.CellState;
 import org.aimas.craftingquest.state.GameState;
 import org.aimas.craftingquest.state.PlayerState;
 import org.aimas.craftingquest.state.Transition;
-import org.aimas.craftingquest.state.TransitionResult;
 import org.aimas.craftingquest.state.Transition.ActionType;
-import org.aimas.craftingquest.state.objects.CraftedObject;
+import org.aimas.craftingquest.state.TransitionResult;
+import org.aimas.craftingquest.state.objects.ICrafted;
 import org.aimas.craftingquest.state.objects.Tower;
-import org.aimas.craftingquest.state.objects.CraftedObject.BasicResourceType;
+import org.aimas.craftingquest.state.resources.ResourceType;
 
 public class PlaceTowerAction extends Action {
 	
@@ -43,13 +45,13 @@ public class PlaceTowerAction extends Action {
 		if (unitCell.strategicObject != null) {
 			TransitionResult res = new TransitionResult(transition.id);
 			res.errorType = TransitionResult.TransitionError.BuildError;
-			res.errorReason = "Cannot build a tower in a cell that already contains a strategic resource";
+			res.errorReason = "Cannot build a tower in a cell that already contains a strategic object";
 			return res;
 		}
 
 		// check to see if any resources are left in the cell
 		boolean emptyCell = true;
-		for (Resource restype : unitCell.resources.keySet()) { // first soil resources
+		for (ResourceType restype : unitCell.resources.keySet()) { // first soil resources
 			if (unitCell.resources.get(restype) > 0) {
 				emptyCell = false;
 				break;
@@ -57,7 +59,7 @@ public class PlaceTowerAction extends Action {
 		}
 
 		if (emptyCell) { 	// if still empty then check for visible resources
-			for (Resource restype : unitCell.visibleResources.keySet()) {
+			for (ResourceType restype : unitCell.visibleResources.keySet()) {
 				if (unitCell.visibleResources.get(restype) > 0) {
 					emptyCell = false;
 					break;
@@ -66,7 +68,7 @@ public class PlaceTowerAction extends Action {
 		}
 
 		if (emptyCell) { 	// if still empty then check for crafted objects
-			for (CraftedObject obj : unitCell.craftedObjects.keySet()) {
+			for (ICrafted obj : unitCell.craftedObjects.keySet()) {
 				if (unitCell.craftedObjects.get(obj) > 0) {
 					emptyCell = false;
 					break;
@@ -77,12 +79,39 @@ public class PlaceTowerAction extends Action {
 		if (!emptyCell) {
 			TransitionResult res = new TransitionResult(transition.id);
 			res.errorType = TransitionResult.TransitionError.BuildError;
-			res.errorReason = "Cannot build a tower in a cell that still contains unmined resources";
+			res.errorReason = "Cannot build a tower in a cell that still contains unmined resources or dropped objects";
 			return res;
 		}
-
-		// all is ok - build tower and update energy and credit levels
-		Tower tower = new Tower(player.id, playerUnit.pos);
+		
+		// Map cell is clear ...
+		
+		Blueprint blueprint = (Blueprint) transition.operands[1];
+		
+		//Check if resources are available
+		Iterator<ResourceType> resIt = blueprint.getResourcesNeeded().keySet().iterator();
+		while (resIt.hasNext()) {
+			ResourceType rt = resIt.next(); 
+			Integer required = blueprint.getResourcesNeeded().get(rt);
+			Integer available = playerUnit.carriedResources.get(rt);
+			if (available == null || available < required) {
+				TransitionResult res = new TransitionResult(transition.id);
+				res.errorType = TransitionResult.TransitionError.BuildError;
+				res.errorReason = "Not enough resources to build the tower.";
+				return res;
+			}
+		}
+		
+		// Everythin ok, Consume resources
+		resIt = blueprint.getResourcesNeeded().keySet().iterator();
+		while (resIt.hasNext()) {
+			ResourceType rt = resIt.next(); 
+			Integer required = blueprint.getResourcesNeeded().get(rt);
+			Integer available = playerUnit.carriedResources.get(rt);
+			playerUnit.carriedResources.put(rt, available-required);
+		}
+		
+		Tower tower = (Tower) blueprint.craft(playerUnit.playerID, playerUnit.pos);
+		
 		unitCell.strategicObject = tower; // place tower in cell
 
 		List<Tower> playerTowers = game.playerTowers.get(player.id); // add in global list of towers
@@ -91,12 +120,12 @@ public class PlaceTowerAction extends Action {
 			playerTowers.add(tower);
 			game.playerTowers.put(player.id, playerTowers);
 			player.availableTowers.put(tower, true); // this tower is newly
-														// available
 		} else {
 			playerTowers.add(tower);
 		}
 
-		player.credit -= GamePolicy.towerBuildCost; // subtract cost from player credit
+		// consume energy to build the tower
+		playerUnit.energy -= GamePolicy.towerBuildCost; 
 
 		TransitionResult towerres = new TransitionResult(transition.id);
 		towerres.errorType = TransitionResult.TransitionError.NoError;

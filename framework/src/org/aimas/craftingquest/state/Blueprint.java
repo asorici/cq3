@@ -18,10 +18,21 @@ import org.aimas.craftingquest.state.resources.ResourceType;
  */
 @SuppressWarnings("serial")
 public class Blueprint implements Serializable {
-	
+	/**
+	 * (Tech) level of the object described by the blue print
+	 */
 	int level;
+	/**
+	 * the weight of the object (just for swords and armours)
+	 */
 	int weight;
+	/**
+	 * the type of object described by the blueprint
+	 */
 	private CraftedObjectType type;
+	/**
+	 * the resources needed to craft the object
+	 */
 	private HashMap<ResourceType, Integer> requiredResources;
 	
 	public Blueprint(CraftedObjectType type, int level, int weight, HashMap<ResourceType, Integer> requiredResources) {
@@ -35,6 +46,8 @@ public class Blueprint implements Serializable {
 	{
 		return this.requiredResources;
 	}
+	
+	// getters	
 	
 	public int getLevel() {
 		return level;
@@ -61,7 +74,10 @@ public class Blueprint implements Serializable {
 			return 0;
 		return GamePolicy.defenseBaseValue * (100 + GamePolicy.levelIncrease[level]) / 100;
 	}
-	
+
+	public CraftedObjectType getType() {
+		return type;
+	}	
 
 	@Override
 	public boolean equals(Object obj) {
@@ -87,10 +103,12 @@ public class Blueprint implements Serializable {
 		return "Blueprint for " + type + "[level=" + level + ", weight=" + weight +"]";
 	}
 
-	public CraftedObjectType getType() {
-		return type;
-	}
-	
+	/**
+	 * Creates an instance of the object described by the blueprint.
+	 * @param playerID
+	 * @param position
+	 * @return
+	 */
 	public ICrafted craft(int playerID, Point2i position) {
 		switch (type) {
 		case ARMOUR: return new ArmourObject(this);
