@@ -1,5 +1,8 @@
 package org.aimas.craftingquest.core.actions;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.aimas.craftingquest.core.GamePolicy;
 import org.aimas.craftingquest.state.Blueprint;
 import org.aimas.craftingquest.state.CellState;
@@ -9,6 +12,7 @@ import org.aimas.craftingquest.state.Transition;
 import org.aimas.craftingquest.state.Transition.ActionType;
 import org.aimas.craftingquest.state.TransitionResult;
 import org.aimas.craftingquest.state.objects.CraftedObjectType;
+import org.aimas.craftingquest.state.objects.Tower;
 import org.aimas.craftingquest.state.objects.TrapObject;
 
 public class PlaceTrapAction extends Action {
@@ -125,6 +129,9 @@ public class PlaceTrapAction extends Action {
 		// consume energy to build the tower
 		playerUnit.energy -= GamePolicy.placeTrapCost; 
 
+		List<TrapObject> playerTraps = game.playerStates.get(player.id).availableTraps; // add in global list of towers
+		playerTraps.add(trap);
+		
 		TransitionResult trapres = new TransitionResult(transition.id);
 		trapres.errorType = TransitionResult.TransitionError.NoError;
 		return trapres;

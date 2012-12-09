@@ -1,6 +1,7 @@
 package org.aimas.craftingquest.core.actions;
 
 import java.util.Iterator;
+import java.util.List;
 
 import org.aimas.craftingquest.core.GamePolicy;
 import org.aimas.craftingquest.state.BasicUnit;
@@ -110,7 +111,15 @@ public class MoveAction extends Action {
 				) {
 			TrapObject trap = (TrapObject) game.map.cells[toPos.y][toPos.x].strategicObject;
 			playerUnit.energy = 0;
-			playerUnit.freeze(trap.getLevel());
+			playerUnit.freeze(trap.getLevel()+1);
+			
+			
+
+			List<Tower> pTraps = game.playerTowers.get(trap.getPlayerID());
+			PlayerState opponentState = game.playerStates.get(trap.getPlayerID());
+			opponentState.availableTraps.add(trap);	// trap is no longer available
+			pTraps.remove(trap);			// the weakened tower and remove it
+			//game.gui_logger.info(state.round.currentRound + " RemoveTrap " + trap.getPosition().x + " " + trap.getPosition().y);
 		}
 		
 		TransitionResult moveres = new TransitionResult(transition.id);

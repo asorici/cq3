@@ -3,10 +3,12 @@ package org.aimas.craftingquest.state;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 
 import org.aimas.craftingquest.core.GamePolicy;
 import org.aimas.craftingquest.state.objects.Tower;
+import org.aimas.craftingquest.state.objects.TrapObject;
 import org.aimas.craftingquest.state.resources.ResourceType;
 
 /**
@@ -21,6 +23,8 @@ public class GameState implements Serializable {
 	public RoundState round;
 	
 	public HashMap<Integer, PlayerState> playerStates;
+	public HashMap<Integer, List<Tower>> playerTowers;
+	public HashMap<Integer, List<TrapObject>> playerTraps;
 	public List<Blueprint> blueprints;
 	public HashMap<ResourceType, Integer> resourceAmountsByType;
 	
@@ -57,6 +61,13 @@ public class GameState implements Serializable {
 		round.currentRound = turn;
 	}
 	
+	public void initializeTowerTrapLists(){
+		List<Integer> playerIds = getPlayerIds();
+		for (Integer pId : playerIds) {
+			playerTowers.put(pId, new ArrayList<Tower>());
+			playerTraps.put(pId, new ArrayList<TrapObject>());
+		}
+	}
 	
 	public List<Integer> getPlayerIds() {
 		List<Integer> playerIds = new ArrayList<Integer>();
@@ -79,5 +90,16 @@ public class GameState implements Serializable {
 		}
 		
 		return opponentTowers;
+	}
+	
+	public Blueprint getNextLevel(Blueprint bp) {
+		Iterator<Blueprint> bpit = blueprints.iterator();
+		while(bpit.hasNext()) {
+			Blueprint nextbp = bpit.next();
+			if (nextbp.getType() == bp.getType() && nextbp.getLevel() == bp.getLevel()+1) {
+				return bp;
+			}
+		}
+		return null;
 	}
 }

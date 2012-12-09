@@ -72,7 +72,7 @@ public class GameGenerator {
 			}
 			
 			/* initialize tower list for every player */
-//			game.initializeTowerLists();
+			game.initializeTowerTrapLists();
 		}
 		else {
 			/*reset number of turns according to map size*/
@@ -125,7 +125,7 @@ public class GameGenerator {
 			}
 			
 			/* initialize tower list for every player */
-//			game.initializeTowerLists();
+			game.initializeTowerTrapLists();
 		}
 		
 		printResourceStatistics(game.resourceAmountsByType, game.blueprints);

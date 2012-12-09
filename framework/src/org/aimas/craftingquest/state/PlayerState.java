@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.aimas.craftingquest.state.objects.Tower;
+import org.aimas.craftingquest.state.objects.TrapObject;
 
 /**
  * The central client state class. It contains information about the player's progress in the game.
@@ -40,7 +41,9 @@ public class PlayerState implements Serializable {
 	/**
 	 * the list of active player towers
 	 */
+
 	public List<Tower> availableTowers; // stores the state of all the towers built by the player
+	public List<TrapObject> availableTraps; // stores the state of all the towers built by the player
 	public int gold;
 	
 	/* map dimensions */
@@ -94,11 +97,11 @@ public class PlayerState implements Serializable {
 		return info;
 	}
 
-	public int getCredit() {
+	public int getGold() {
 		return gold;
 	}
 
-	public void setCredit(int credit) {
+	public void setGold(int credit) {
 		this.gold = credit;
 	}
 

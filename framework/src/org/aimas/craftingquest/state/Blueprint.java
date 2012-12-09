@@ -33,13 +33,21 @@ public class Blueprint implements Serializable {
 	/**
 	 * the resources needed to craft the object
 	 */
+	
 	private HashMap<ResourceType, Integer> requiredResources;
 	
-	public Blueprint(CraftedObjectType type, int level, int weight, HashMap<ResourceType, Integer> requiredResources) {
+	/**
+	 * the cost to upgrade to next level
+	 */
+	int upgradeCost;
+	
+	public Blueprint(CraftedObjectType type, int level, int weight, HashMap<ResourceType, 
+			Integer> requiredResources, int upgradeCost) {
 		this.level = level;
 		this.weight = weight;
 		this.type = type;
 		this.requiredResources = requiredResources;
+		this.upgradeCost = upgradeCost;
 	}
 
 	public HashMap<ResourceType, Integer> getResourcesNeeded()
@@ -51,6 +59,10 @@ public class Blueprint implements Serializable {
 	
 	public int getLevel() {
 		return level;
+	}
+	
+	public int getUpgradeCost() {
+		return upgradeCost;
 	}
 
 	public int getInitialStrength() {

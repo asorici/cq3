@@ -1,11 +1,14 @@
 package org.aimas.craftingquest.core.actions;
 
+import java.util.Iterator;
+
 import org.aimas.craftingquest.state.Blueprint;
 import org.aimas.craftingquest.state.GameState;
 import org.aimas.craftingquest.state.PlayerState;
 import org.aimas.craftingquest.state.Transition;
 import org.aimas.craftingquest.state.Transition.ActionType;
 import org.aimas.craftingquest.state.objects.CraftedObjectType;
+import org.aimas.craftingquest.state.resources.ResourceType;
 import org.aimas.craftingquest.state.TransitionResult;
 
 public class UpgradeAction extends Action {
@@ -36,14 +39,26 @@ public class UpgradeAction extends Action {
 			return res;
 		}
 		
+		Blueprint upbp = game.getNextLevel(blueprint);
+		
 		//check if he has goldeanu
 		
+		Integer required = blueprint.getUpgradeCost();
+		Integer available = player.getGold();
+		if (available < required) {
+			TransitionResult res = new TransitionResult(transition.id);
+			res.errorType = TransitionResult.TransitionError.NoCreditError;
+			res.errorReason = "Player attempted to use a blueprint with no money in his pockets.";
+			return res;			
+		}
 		
-		//TODO
+		player.setGold(available-required);
 		
-		TransitionResult towerres = new TransitionResult(transition.id);
-		towerres.errorType = TransitionResult.TransitionError.NoError;
-		return towerres;
+		player.availableBlueprints.add(upbp);
+		
+		TransitionResult upgraderes = new TransitionResult(transition.id);
+		upgraderes.errorType = TransitionResult.TransitionError.NoError;
+		return upgraderes;
 	}
 
 	@Override
