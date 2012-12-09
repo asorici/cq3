@@ -1,6 +1,7 @@
 package org.aimas.craftingquest.state;
 
 import java.io.Serializable;
+import java.util.HashMap;
 
 import org.aimas.craftingquest.core.GamePolicy;
 import org.aimas.craftingquest.state.objects.ArmourObject;
@@ -9,6 +10,7 @@ import org.aimas.craftingquest.state.objects.ICrafted;
 import org.aimas.craftingquest.state.objects.SwordObject;
 import org.aimas.craftingquest.state.objects.Tower;
 import org.aimas.craftingquest.state.objects.TrapObject;
+import org.aimas.craftingquest.state.resources.ResourceType;
 
 /**
  * Shows how to construct an artifact.
@@ -20,13 +22,20 @@ public class Blueprint implements Serializable {
 	int level;
 	int weight;
 	private CraftedObjectType type;
+	private HashMap<ResourceType, Integer> requiredResources;
 	
-	public Blueprint(CraftedObjectType type, int level, int weight) {
+	public Blueprint(CraftedObjectType type, int level, int weight, HashMap<ResourceType, Integer> requiredResources) {
 		this.level = level;
 		this.weight = weight;
 		this.type = type;
+		this.requiredResources = requiredResources;
 	}
 
+	public HashMap<ResourceType, Integer> getResourcesNeeded()
+	{
+		return this.requiredResources;
+	}
+	
 	public int getLevel() {
 		return level;
 	}

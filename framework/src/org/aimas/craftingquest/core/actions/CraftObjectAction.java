@@ -1,6 +1,5 @@
 package org.aimas.craftingquest.core.actions;
 
-import java.util.HashMap;
 import java.util.Iterator;
 
 import org.aimas.craftingquest.core.GamePolicy;
@@ -8,12 +7,11 @@ import org.aimas.craftingquest.state.Blueprint;
 import org.aimas.craftingquest.state.GameState;
 import org.aimas.craftingquest.state.PlayerState;
 import org.aimas.craftingquest.state.Transition;
+import org.aimas.craftingquest.state.Transition.ActionType;
 import org.aimas.craftingquest.state.TransitionResult;
 import org.aimas.craftingquest.state.UnitState;
-import org.aimas.craftingquest.state.Transition.ActionType;
-import org.aimas.craftingquest.state.objects.CraftedObject;
-import org.aimas.craftingquest.state.objects.CraftedObject.BasicResourceType;
 import org.aimas.craftingquest.state.objects.ICrafted;
+import org.aimas.craftingquest.state.resources.ResourceType;
 
 public class CraftObjectAction extends Action {
 
@@ -21,10 +19,8 @@ public class CraftObjectAction extends Action {
 		super(type);
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
-	protected TransitionResult handle(GameState game, PlayerState player,
-			Transition transition) {
+	protected TransitionResult handle(GameState game, PlayerState player, Transition transition) {
 		Blueprint blueprint = (Blueprint) transition.operands[1];
 		
 		// check for enough energy points
@@ -75,14 +71,11 @@ public class CraftObjectAction extends Action {
 		return craftres;
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	protected boolean validOperands(Transition transition) {
 		Blueprint bp = null;
-
 		try {
 			bp = (Blueprint) transition.operands[1];
-			// target may not be null
 			if (bp == null) {
 				return false;
 			}
@@ -96,47 +89,30 @@ public class CraftObjectAction extends Action {
 	private boolean checkCraftingRequirements(UnitState playerUnit,
 			Blueprint blueprint) {
 
-		// HashMap<CraftedObject, Integer> carriedObjects =
-		// playerUnit.carriedObjects;
-		HashMap<Resource, Integer> carriedResources = playerUnit.carriedResources;
-
-		/*
-		 * if (target.getRequiredObjects() != null) { // it is an object made
-		 * out of sub-objects if (usedObjects == null) { return false; }
-		 * 
-		 * boolean requirementsMet = false;
-		 * 
-		 * for (HashMap<CraftedObject, Integer> craftingOption :
-		 * target.getRequiredObjects()) { boolean alternativeOk = true;
-		 * 
-		 * Iterator<CraftedObject> objIt = craftingOption.keySet().iterator();
-		 * while(objIt.hasNext()) { CraftedObject obj = objIt.next(); Integer
-		 * required = craftingOption.get(obj); Integer available =
-		 * usedObjects.get(obj); Integer carried = carriedObjects.get(obj);
-		 * 
-		 * if(available == null || carried == null || required > available ||
-		 * required > carried || available > carried) { alternativeOk = false;
-		 * break; } }
-		 * 
-		 * if(alternativeOk) { requirementsMet = true; break; } }
-		 * 
-		 * if (requirementsMet) { // if requirements met update carriedObjects
-		 * with the quantity that remains Iterator<CraftedObject> it =
-		 * usedObjects.keySet().iterator(); while (it.hasNext()) { CraftedObject
-		 * obj = it.next(); Integer used = usedObjects.get(obj); Integer
-		 * existing = carriedObjects.get(obj);
-		 * 
-		 * carriedObjects.put(obj, existing - used); }
-		 * 
-		 * return true; } }
+		/**
+		 *  Check if resources are available
 		 */
-		// else { // it is an object made only out of basic resources
-		if (usedResources == null) {
-			return false;
+		Iterator<ResourceType> resIt = blueprint.getResourcesNeeded().keySet().iterator();
+		while (resIt.hasNext()) {
+			ResourceType rt = resIt.next(); 
+			Integer required = blueprint.getResourcesNeeded().get(rt);
+			Integer available = playerUnit.carriedResources.get(rt);
+			if (available == null || available < required) return false;
 		}
-
-		boolean requirementsMet = false;
-
+		/**
+		 *  Everythin ok, Consume resources
+		 */
+		resIt = blueprint.getResourcesNeeded().keySet().iterator();
+		while (resIt.hasNext()) {
+			ResourceType rt = resIt.next(); 
+			Integer required = blueprint.getResourcesNeeded().get(rt);
+			Integer available = playerUnit.carriedResources.get(rt);
+			playerUnit.carriedResources.put(rt, available-required);
+		}
+		
+		return true;
+		
+		/*
 		for (HashMap<Resource, Integer> resourceOption : target
 				.getRequiredResources()) {
 			boolean alternativeOk = true;
@@ -162,7 +138,7 @@ public class CraftObjectAction extends Action {
 				break;
 			}
 		}
-
+		
 		if (requirementsMet) { // if requirements met update carriedResources
 								// with the quantity that remains
 			Iterator<Resource> it = usedResources.keySet().iterator();
@@ -179,5 +155,6 @@ public class CraftObjectAction extends Action {
 		// }
 
 		return false;
+		*/
 	}
 }
