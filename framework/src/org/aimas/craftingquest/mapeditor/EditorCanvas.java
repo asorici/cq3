@@ -42,7 +42,7 @@ public class EditorCanvas extends Canvas implements MouseListener, MouseMotionLi
 	private Image unknown;
 	
 	private Image tower;
-	private Image merchant;
+//	private Image merchant;
 	
 	private Graphics bufferGraphics;
 	private Image offscreenImage;
@@ -91,7 +91,7 @@ public class EditorCanvas extends Canvas implements MouseListener, MouseMotionLi
 			dirtTile = ImageIO.read(new File("images/dirt.jpg")).getScaledInstance(CELL_DIM, CELL_DIM, Image.SCALE_FAST);
 			
 			tower = ImageIO.read(new File("images/tower.jpg")).getScaledInstance(CELL_DIM, CELL_DIM, Image.SCALE_FAST);
-			merchant = ImageIO.read(new File("images/merchant.jpg")).getScaledInstance(CELL_DIM, CELL_DIM, Image.SCALE_FAST);
+//			merchant = ImageIO.read(new File("images/merchant.jpg")).getScaledInstance(CELL_DIM, CELL_DIM, Image.SCALE_FAST);
 		
 			entityToImage.put(CellType.Grass.name(), grassTile);
 			entityToImage.put(CellType.Water.name(), waterTile);

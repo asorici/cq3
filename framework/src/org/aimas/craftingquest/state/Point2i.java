@@ -7,7 +7,8 @@ import java.io.Serializable;
  */
 @SuppressWarnings("serial")
 public class Point2i implements Serializable {
-
+	public static final int SAFETY_MAX = 512;
+	
 	public int x;
 	public int y;
 
@@ -50,7 +51,7 @@ public class Point2i implements Serializable {
 	
 	@Override
 	public int hashCode() {
-		return y * 512 + x;
+		return y * SAFETY_MAX + x;
 	}
 	
 	@Override

@@ -7,19 +7,24 @@ import org.aimas.craftingquest.state.UnitState;
 
 public class Astar implements IPathFinder
 {
+	private static final int MAX_SEARCH_DISTANCE = 500;
+	
 	private int maxSearchDistance;
 	private IHeuristic heuristic;
 	
 	public Astar()
 	{
-		maxSearchDistance = 500;
-		heuristic = new AStarHeuristic();
+		this(new AStarHeuristic(), MAX_SEARCH_DISTANCE);
 	}
 	
 	public Astar(int maxSearchDist)
 	{
-		maxSearchDistance = maxSearchDist;
-		heuristic = new AStarHeuristic();
+		this(new AStarHeuristic(), maxSearchDist);
+	}
+	
+	public Astar(IHeuristic heur) 
+	{
+		this(heur, MAX_SEARCH_DISTANCE);
 	}
 	
 	public Astar(IHeuristic heur, int maxSearchDist)

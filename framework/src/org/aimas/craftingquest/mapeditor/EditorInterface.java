@@ -33,7 +33,7 @@ public class EditorInterface extends JFrame implements ActionListener {
 	private JButton mirrorBtn, openMapBtn, saveMapBtn, strategicInfoBtn, cellTypeInfoBtn;
 	private JTextArea infoArea;
 	private JComboBox terrainSelector;
-	private JComboBox strategicSelector;
+	
 	private JFileChooser fileChooser = new JFileChooser("maps");
 	
 	private static final int WIDTH = 1200;
@@ -153,8 +153,6 @@ public class EditorInterface extends JFrame implements ActionListener {
 		if (e.getSource().equals(cellTypeInfoBtn)) {
 			editorCanvas.setSelectedCellType((CellType)terrainSelector.getSelectedItem());
 		}
-				
-		
 		
 		if (e.getSource().equals(terrainSelector)) {
 			editorCanvas.setSelectedCellType((CellType)terrainSelector.getSelectedItem());

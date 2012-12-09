@@ -112,7 +112,8 @@ public class AStarPath implements IPath
 		
 		public int hashCode()
 		{
-			return x*y;
+			//return x*y;
+			return y * Point2i.SAFETY_MAX + x;
 		}
 
 		public boolean equals(Object other)
