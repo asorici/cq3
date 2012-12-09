@@ -125,7 +125,9 @@ public class PlaceTowerAction extends Action {
 
 		// consume energy to build the tower
 		playerUnit.energy -= GamePolicy.placeTowerCost; 
-
+		
+		game.playerStates.get(player.id).placeTower();
+		
 		TransitionResult towerres = new TransitionResult(transition.id);
 		towerres.errorType = TransitionResult.TransitionError.NoError;
 		return towerres;

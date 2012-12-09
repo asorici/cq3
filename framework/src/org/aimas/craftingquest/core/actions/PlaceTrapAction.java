@@ -124,6 +124,8 @@ public class PlaceTrapAction extends Action {
 		List<TrapObject> playerTraps = game.playerStates.get(player.id).availableTraps; // add in global list of towers
 		playerTraps.add(trap);
 		
+		game.playerStates.get(player.id).placeTrap();
+		
 		TransitionResult trapres = new TransitionResult(transition.id);
 		trapres.errorType = TransitionResult.TransitionError.NoError;
 		return trapres;

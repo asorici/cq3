@@ -68,6 +68,12 @@ public class PlayerState implements Serializable {
 	 * Statistics
 	 ***************************/
 	private int kills;
+	private int successfulTraps;
+	private int placedTraps;
+	private int deadUnits;
+	private int placedTowers;
+	private int retaliationKills;
+
 	
 	/* game mechanics time */
 	/**
@@ -91,6 +97,11 @@ public class PlayerState implements Serializable {
 
 		/* initial statistics */
 		kills = 0;
+		successfulTraps = 0;
+		placedTraps = 0;
+		deadUnits = 0;
+		placedTowers = 0;
+		retaliationKills = 0;
 	}
 
 	@Override
@@ -112,16 +123,58 @@ public class PlayerState implements Serializable {
 
 		/* statistics */
 		info += "    Kills: " + kills + "\n";
-		
+		info += "    Retaliation Kills: " + retaliationKills + "\n";
+		info += "    Dead units: " + deadUnits + "\n"; 
+		info += "    Placed towers: " + placedTowers + "\n";
+		info += "    Traps: " + successfulTraps + "/" + placedTraps + "\n";
 		return info;
 	}
 
+	public void die() {
+		deadUnits++;
+	}
+	
+	public int getDeadUnits() {
+		return deadUnits;
+	}
+	
 	public int getKills() {
 		return kills;
 	}
+	
+	public int getRetaliationKills() {
+		return retaliationKills;
+	}
 
-	public void killOne() {
+	public void killOne(boolean retaliation) {
 		kills++;
+		if (retaliation) {
+			retaliationKills++;
+		}
+	}
+	
+	public void placeTrap() {
+		placedTraps++;
+	}
+	
+	public int getPlacedTraps() {
+		return placedTraps;
+	}
+	
+	public void placeTower() {
+		placedTowers++;
+	}
+	
+	public int getPlacedTowers() {
+		return placedTowers;
+	}
+	
+	public void triggerTrap() {
+		successfulTraps++;
+	}
+	
+	public int getSuccessfulTraps() {
+		return successfulTraps;
 	}
 
 	public int getGold() {

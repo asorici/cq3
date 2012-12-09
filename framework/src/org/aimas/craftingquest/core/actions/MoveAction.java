@@ -109,14 +109,13 @@ public class MoveAction extends Action {
 			TrapObject trap = (TrapObject) game.map.cells[toPos.y][toPos.x].strategicObject;
 			playerUnit.energy = 0;
 			player.freeze(playerUnit, trap.getLevel()+1);
-			
-			
 
 			List<Tower> pTraps = game.playerTowers.get(trap.getPlayerID());
 			PlayerState opponentState = game.playerStates.get(trap.getPlayerID());
 			opponentState.availableTraps.add(trap);	// trap is no longer available
 			pTraps.remove(trap);			// the weakened tower and remove it
 			//game.gui_logger.info(state.round.currentRound + " RemoveTrap " + trap.getPosition().x + " " + trap.getPosition().y);
+			game.playerStates.get(trap.getPlayerID()).triggerTrap();
 		}
 		
 		TransitionResult moveres = new TransitionResult(transition.id);

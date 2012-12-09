@@ -427,21 +427,7 @@ public class Server0 implements IServer {
 		int maxCredit = state.playerStates.get(playerIDs.get(winnerClient)).gold;
 		boolean tied = true;
 		
-		for (int clientID = 1; clientID < clients.length; clientID++) {
-			Integer pId = playerIDs.get(clientID);
-			int pCredit = state.playerStates.get(pId).gold;
-			
-			if (pCredit > maxCredit) {
-				maxCredit = pCredit;
-				winnerClient = clientID;
-				tied = false;
-			}
-			else {
-				if (pCredit < maxCredit) {
-					tied = false;
-				}
-			}
-		}
+		//TODO
 		
 		if (!tied) { 
 			logger.info("Winner is: " + winnerClient);

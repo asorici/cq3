@@ -78,10 +78,12 @@ public class AttackAction extends Action {
 
 		// check for dead units and update scores
 		if (attackedUnit.life < 0)
-			player.killOne();
+			player.killOne(false);
 
-		if (playerUnit.life < 0)
-			attackedPlayer.killOne();
+		if (playerUnit.life < 0) {
+			attackedPlayer.killOne(true);
+			player.die();
+		}
 
 		TransitionResult res = new TransitionResult(transition.id);
 		res.errorType = TransitionResult.TransitionError.NoError;
