@@ -1,7 +1,5 @@
 package org.aimas.craftingquest.core.actions;
 
-import java.util.Iterator;
-
 import org.aimas.craftingquest.core.GamePolicy;
 import org.aimas.craftingquest.state.Blueprint;
 import org.aimas.craftingquest.state.GameState;
@@ -9,9 +7,8 @@ import org.aimas.craftingquest.state.PlayerState;
 import org.aimas.craftingquest.state.Transition;
 import org.aimas.craftingquest.state.Transition.ActionType;
 import org.aimas.craftingquest.state.TransitionResult;
-import org.aimas.craftingquest.state.UnitState;
+import org.aimas.craftingquest.state.objects.CraftedObjectType;
 import org.aimas.craftingquest.state.objects.ICrafted;
-import org.aimas.craftingquest.state.resources.ResourceType;
 
 public class CraftObjectAction extends Action {
 
@@ -21,8 +18,6 @@ public class CraftObjectAction extends Action {
 
 	@Override
 	protected TransitionResult handle(GameState game, PlayerState player, Transition transition) {
-		Blueprint blueprint = (Blueprint) transition.operands[1];
-		
 		// check for enough energy points
 		if (playerUnit.energy < GamePolicy.buildCost) {
 			TransitionResult res = new TransitionResult(transition.id);
@@ -31,24 +26,36 @@ public class CraftObjectAction extends Action {
 			return res;
 		}
 
-		// check that player holds corresponding blueprint
-		boolean foundBlueprint = false;
-		for (Blueprint bp : player.availableBlueprints) {
-			if (bp.equals(blueprint)) {
-				foundBlueprint = true;
-			}
-		}
-
-		if (!foundBlueprint) {
+		Blueprint playerBlueprint = (Blueprint) transition.operands[1];
+		Blueprint blueprint; // the real one
+		if (game.blueprints.contains(playerBlueprint)) {
+			blueprint = game.blueprints.get(game.blueprints.indexOf(playerBlueprint));
+		} else {
 			TransitionResult res = new TransitionResult(transition.id);
-			res.errorType = TransitionResult.TransitionError.CraftingError;
-			res.errorReason = "Object crafting requirements are not met. Missing required blueprint.";
+			res.errorType = TransitionResult.TransitionError.BlueprintError;
+			res.errorReason = "Wrong blueprint for trap.";
+			return res;
+		}
+		
+		if (!player.availableBlueprints.contains(blueprint)) {
+			TransitionResult res = new TransitionResult(transition.id);
+			res.errorType = TransitionResult.TransitionError.MissingBlueprintError;
+			res.errorReason = "Player attempted to use a blueprint he does not have.";
+			return res;
+		}
+		
+		// Check if blueprint is for a sword or an armour
+		if (blueprint.getType() != CraftedObjectType.ARMOUR &&
+				blueprint.getType() != CraftedObjectType.SWORD) {
+			TransitionResult res = new TransitionResult(transition.id);
+			res.errorType = TransitionResult.TransitionError.BlueprintError;
+			res.errorReason = "Wrong blueprint for Equipment.";
 			return res;
 		}
 
 		// check that the unit has the required resources/objects required for
 		// making the object
-		if (!checkCraftingRequirements(playerUnit, blueprint)) {
+		if (!ActionUtils.checkCraftingRequirements(playerUnit, blueprint)) {
 			TransitionResult res = new TransitionResult(transition.id);
 			res.errorType = TransitionResult.TransitionError.CraftingError;
 			res.errorReason = "Object crafting requirements are not met.";
@@ -84,77 +91,5 @@ public class CraftObjectAction extends Action {
 		}
 
 		return true;
-	}
-
-	private boolean checkCraftingRequirements(UnitState playerUnit,
-			Blueprint blueprint) {
-
-		/**
-		 *  Check if resources are available
-		 */
-		Iterator<ResourceType> resIt = blueprint.getResourcesNeeded().keySet().iterator();
-		while (resIt.hasNext()) {
-			ResourceType rt = resIt.next(); 
-			Integer required = blueprint.getResourcesNeeded().get(rt);
-			Integer available = playerUnit.carriedResources.get(rt);
-			if (available == null || available < required) return false;
-		}
-		/**
-		 *  Everythin ok, Consume resources
-		 */
-		resIt = blueprint.getResourcesNeeded().keySet().iterator();
-		while (resIt.hasNext()) {
-			ResourceType rt = resIt.next(); 
-			Integer required = blueprint.getResourcesNeeded().get(rt);
-			Integer available = playerUnit.carriedResources.get(rt);
-			playerUnit.carriedResources.put(rt, available-required);
-		}
-		
-		return true;
-		
-		/*
-		for (HashMap<Resource, Integer> resourceOption : target
-				.getRequiredResources()) {
-			boolean alternativeOk = true;
-
-			Iterator<Resource> resIt = resourceOption.keySet()
-					.iterator();
-			while (resIt.hasNext()) {
-				Resource res = resIt.next();
-				Integer required = resourceOption.get(res);
-				Integer available = usedResources.get(res);
-				Integer carried = carriedResources.get(res);
-
-				if (available == null || carried == null
-						|| required > available || required > carried
-						|| available > carried) {
-					alternativeOk = false;
-					break;
-				}
-			}
-
-			if (alternativeOk) {
-				requirementsMet = true;
-				break;
-			}
-		}
-		
-		if (requirementsMet) { // if requirements met update carriedResources
-								// with the quantity that remains
-			Iterator<Resource> it = usedResources.keySet().iterator();
-			while (it.hasNext()) {
-				Resource res = it.next();
-				Integer used = usedResources.get(res);
-				Integer existing = carriedResources.get(res);
-
-				carriedResources.put(res, existing - used);
-			}
-
-			return true;
-		}
-		// }
-
-		return false;
-		*/
 	}
 }

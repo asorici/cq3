@@ -81,7 +81,7 @@ public class GamePolicy {
 	public static int scanRadius = 7;
 	public static int sightRadius = 5;
 
-	public static int towerBuildCost = 75;
+	public static int placeTowerCost = 75;
 	public static int towerCutoffRadius = 4;
 	public static int towerDrainBase = 100;
 	public static int towerEnergy = 250;
@@ -175,7 +175,7 @@ public class GamePolicy {
 		digCost = Integer.parseInt(parametersNode.getElementsByTagName("digCost").item(0).getTextContent());
 		buildCost = Integer.parseInt(parametersNode.getElementsByTagName("buildCost").item(0).getTextContent());
 		
-		towerBuildCost = Integer.parseInt(parametersNode.getElementsByTagName("towerBuildCost").item(0).getTextContent());
+		placeTowerCost = Integer.parseInt(parametersNode.getElementsByTagName("placeTowerCost").item(0).getTextContent());
 		scanRadius = Integer.parseInt(parametersNode.getElementsByTagName("scanRadius").item(0).getTextContent());
 		sightRadius = Integer.parseInt(parametersNode.getElementsByTagName("sightRadius").item(0).getTextContent());
 		towerCutoffRadius = Integer.parseInt(parametersNode.getElementsByTagName("towerCutoffRadius").item(0).getTextContent());

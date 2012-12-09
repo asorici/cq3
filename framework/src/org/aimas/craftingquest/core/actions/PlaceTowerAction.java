@@ -1,7 +1,6 @@
 package org.aimas.craftingquest.core.actions;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import org.aimas.craftingquest.core.GamePolicy;
@@ -12,6 +11,7 @@ import org.aimas.craftingquest.state.PlayerState;
 import org.aimas.craftingquest.state.Transition;
 import org.aimas.craftingquest.state.Transition.ActionType;
 import org.aimas.craftingquest.state.TransitionResult;
+import org.aimas.craftingquest.state.objects.CraftedObjectType;
 import org.aimas.craftingquest.state.objects.ICrafted;
 import org.aimas.craftingquest.state.objects.Tower;
 import org.aimas.craftingquest.state.resources.ResourceType;
@@ -25,18 +25,10 @@ public class PlaceTowerAction extends Action {
 	@Override
 	protected TransitionResult handle(GameState game, PlayerState player, Transition transition) {
 		// check for enough energy points
-		if (playerUnit.energy < GamePolicy.buildCost) {
+		if (playerUnit.energy < GamePolicy.placeTowerCost) {
 			TransitionResult res = new TransitionResult(transition.id);
 			res.errorType = TransitionResult.TransitionError.NoEnergyError;
-			res.errorReason = "Not enough energy points left for constructing a tower";
-			return res;
-		}
-
-		// check for enough credit
-		if (player.credit < GamePolicy.towerBuildCost) {
-			TransitionResult res = new TransitionResult(transition.id);
-			res.errorType = TransitionResult.TransitionError.NoCreditError;
-			res.errorReason = "Not enough credit left for constructing a tower";
+			res.errorReason = "Not enough energy points left to build tower";
 			return res;
 		}
 
@@ -85,29 +77,38 @@ public class PlaceTowerAction extends Action {
 		
 		// Map cell is clear ...
 		
-		Blueprint blueprint = (Blueprint) transition.operands[1];
-		
-		//Check if resources are available
-		Iterator<ResourceType> resIt = blueprint.getResourcesNeeded().keySet().iterator();
-		while (resIt.hasNext()) {
-			ResourceType rt = resIt.next(); 
-			Integer required = blueprint.getResourcesNeeded().get(rt);
-			Integer available = playerUnit.carriedResources.get(rt);
-			if (available == null || available < required) {
-				TransitionResult res = new TransitionResult(transition.id);
-				res.errorType = TransitionResult.TransitionError.BuildError;
-				res.errorReason = "Not enough resources to build the tower.";
-				return res;
-			}
+		Blueprint playerBlueprint = (Blueprint) transition.operands[1];
+		Blueprint blueprint; // the real one
+		if (game.blueprints.contains(playerBlueprint)) {
+			blueprint = game.blueprints.get(game.blueprints.indexOf(playerBlueprint));
+		} else {
+			TransitionResult res = new TransitionResult(transition.id);
+			res.errorType = TransitionResult.TransitionError.BlueprintError;
+			res.errorReason = "Wrong blueprint for trap.";
+			return res;
 		}
 		
-		// Everythin ok, Consume resources
-		resIt = blueprint.getResourcesNeeded().keySet().iterator();
-		while (resIt.hasNext()) {
-			ResourceType rt = resIt.next(); 
-			Integer required = blueprint.getResourcesNeeded().get(rt);
-			Integer available = playerUnit.carriedResources.get(rt);
-			playerUnit.carriedResources.put(rt, available-required);
+		if (!player.availableBlueprints.contains(blueprint)) {
+			TransitionResult res = new TransitionResult(transition.id);
+			res.errorType = TransitionResult.TransitionError.MissingBlueprintError;
+			res.errorReason = "Player attempted to use a blueprint he does not have.";
+			return res;
+		}
+		
+		// Check if blueprint is ok
+		if (blueprint.getType() != CraftedObjectType.TOWER) {
+			TransitionResult res = new TransitionResult(transition.id);
+			res.errorType = TransitionResult.TransitionError.BlueprintError;
+			res.errorReason = "Wrong blueprint for tower.";
+			return res;
+		}
+		
+		//Check if resources are available
+		if (!ActionUtils.checkCraftingRequirements(playerUnit, blueprint)) {
+			TransitionResult res = new TransitionResult(transition.id);
+			res.errorType = TransitionResult.TransitionError.CraftingError;
+			res.errorReason = "Object crafting requirements are not met.";
+			return res;
 		}
 		
 		Tower tower = (Tower) blueprint.craft(playerUnit.playerID, playerUnit.pos);
@@ -125,7 +126,7 @@ public class PlaceTowerAction extends Action {
 		}
 
 		// consume energy to build the tower
-		playerUnit.energy -= GamePolicy.towerBuildCost; 
+		playerUnit.energy -= GamePolicy.placeTowerCost; 
 
 		TransitionResult towerres = new TransitionResult(transition.id);
 		towerres.errorType = TransitionResult.TransitionError.NoError;
@@ -134,6 +135,16 @@ public class PlaceTowerAction extends Action {
 
 	@Override
 	protected boolean validOperands(Transition transition) {
+		Blueprint bp = null;
+		try {
+			bp = (Blueprint) transition.operands[1];
+			if (bp == null) {
+				return false;
+			}
+		} catch (ClassCastException ex) {
+			return false;
+		}
+
 		return true;
 	}
 
