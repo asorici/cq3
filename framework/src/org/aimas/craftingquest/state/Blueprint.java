@@ -66,13 +66,13 @@ public class Blueprint implements Serializable {
 	public int getAttack() {
 		if (type != CraftedObjectType.SWORD)
 			return 0;
-		return GamePolicy.attackBaseValue * (100 + GamePolicy.levelIncrease[level]) / 100;
+		return GamePolicy.levelIncrease[level];
 	}
 
 	public int getDefence() {
 		if (type != CraftedObjectType.ARMOUR)
 			return 0;
-		return GamePolicy.defenseBaseValue * (100 + GamePolicy.levelIncrease[level]) / 100;
+		return GamePolicy.levelIncrease[level];
 	}
 
 	public CraftedObjectType getType() {
