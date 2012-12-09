@@ -73,9 +73,7 @@ public class ActionEngine {
 	
 	protected void unfreeze(GameState state, Integer playerID) {
 		PlayerState playerState = state.playerStates.get(playerID);
-		for (UnitState unit : playerState.units) {
-			unit.unfreeze();
-		}
+		playerState.unfreeze();
 	}
 	
 	protected void doTowerDrain(GameState state, Integer playerID) {
@@ -160,9 +158,12 @@ public class ActionEngine {
 	protected void replenishEnergy() {
 		for (PlayerState pState : game.playerStates.values()) {
 			for (UnitState unit : pState.units) {
-				unit.energy = EnergyReplenishModel
-					.getInstance(GamePolicy.energyReplenishModel)
-					.replenishEnergy(unit.energy, unit.life);
+				if (pState.isFrozen(unit))
+					unit.energy = 0;
+				else
+					unit.energy = EnergyReplenishModel
+						.getInstance(GamePolicy.energyReplenishModel)
+						.replenishEnergy(unit.energy, unit.life);
 			}
 		}
 	}

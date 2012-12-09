@@ -3,6 +3,8 @@ package org.aimas.craftingquest.state;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.HashMap;
 
 import org.aimas.craftingquest.state.objects.Tower;
 import org.aimas.craftingquest.state.objects.TrapObject;
@@ -23,6 +25,11 @@ public class PlayerState implements Serializable {
 	 * the list of <code>UnitStates</code> - the player's units
 	 */
 	public List<UnitState> units;
+
+	/**
+	 * the frozen units. Value is time until they are unfrozen.
+	 */
+	private Map<UnitState, Integer> frozenUnits;
 	
 	/**
 	 * the list of game wide available blueprints. 
@@ -74,6 +81,7 @@ public class PlayerState implements Serializable {
 
 	public PlayerState() {
 		units = new ArrayList<UnitState>();
+		frozenUnits = new HashMap<UnitState, Integer>();
 		//responces = new ArrayList<TransitionResult>();
 		boughtBlueprints = new ArrayList<Blueprint>();
 		availableBlueprints = new ArrayList<Blueprint>();
@@ -161,5 +169,23 @@ public class PlayerState implements Serializable {
 		
 		return "";
 	}
-	
+
+	public void unfreeze() {
+		List<UnitState> toRemove = new ArrayList<UnitState>();
+
+		for (UnitState u : frozenUnits.keySet()) {
+			int val = frozenUnits.get(u) - 1;
+			if (val == 0) {
+				toRemove.add(u);
+			} else
+				frozenUnits.put(u, val);
+		}
+
+		for (UnitState u : toRemove)
+			frozenUnits.remove(u);
+	}
+
+	public boolean isFrozen(UnitState unit) {
+		return frozenUnits.containsKey(unit);
+	}
 }
