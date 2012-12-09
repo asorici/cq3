@@ -7,14 +7,17 @@ import org.aimas.craftingquest.core.GamePolicy;
 import org.aimas.craftingquest.state.BasicUnit;
 import org.aimas.craftingquest.state.CellState;
 import org.aimas.craftingquest.state.GameState;
+import org.aimas.craftingquest.state.ICarriable;
 import org.aimas.craftingquest.state.PlayerState;
 import org.aimas.craftingquest.state.Point2i;
 import org.aimas.craftingquest.state.Transition;
 import org.aimas.craftingquest.state.UnitState;
 //import org.aimas.craftingquest.state.CellState.CellType;
 import org.aimas.craftingquest.state.Transition.ActionType;
+import org.aimas.craftingquest.state.objects.ICrafted;
 import org.aimas.craftingquest.state.objects.Tower;
 import org.aimas.craftingquest.state.objects.TrapObject;
+import org.aimas.craftingquest.state.resources.ResourceType;
 import org.aimas.craftingquest.state.TransitionResult;
 
 public class MoveAction extends Action {
@@ -58,15 +61,19 @@ public class MoveAction extends Action {
 		
 		
 		// check enough energy for action
-		int carriedResourcesAmount = 0;
-		for (Integer quant : playerUnit.carriedResources.values()) {
-			carriedResourcesAmount += quant;
+		int carriedResourcesWeight = 0;
+		Iterator<ICrafted> coit = (Iterator<ICrafted>) playerUnit.carriedObjects.keySet().iterator();
+		while (coit.hasNext()) {
+			ICarriable co = (ICarriable) coit.next();
+			carriedResourcesWeight += co.getWeight() * playerUnit.carriedObjects.get(co);
 		}
-		for (Integer quant : playerUnit.carriedObjects.values()) {
-			carriedResourcesAmount += quant;
+		Iterator<ResourceType> crit = (Iterator<ResourceType>) playerUnit.carriedResources.keySet().iterator();
+		while(crit.hasNext()) {
+			ResourceType rt = crit.next();
+			carriedResourcesWeight += rt.getWeight() * playerUnit.carriedResources.get(rt);
 		}
-		int requiredEnergy = (int) (GamePolicy.moveBase + GamePolicy.resourceMoveCost
-				* carriedResourcesAmount / 2);
+		
+		int requiredEnergy = (int) (GamePolicy.moveBase * (1 + GamePolicy.movePenaltyWeight/100));
 
 		if (playerUnit.energy < requiredEnergy) {
 			TransitionResult res = new TransitionResult(transition.id);
