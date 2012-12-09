@@ -63,6 +63,8 @@ public class GameState implements Serializable {
 	
 	public void initializeTowerTrapLists(){
 		List<Integer> playerIds = getPlayerIds();
+		playerTowers = new HashMap<Integer, List<Tower>>();
+		playerTraps = new HashMap<Integer, List<TrapObject>>();
 		for (Integer pId : playerIds) {
 			playerTowers.put(pId, new ArrayList<Tower>());
 			playerTraps.put(pId, new ArrayList<TrapObject>());
