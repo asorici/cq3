@@ -309,29 +309,59 @@ public final class Client0 implements IClient, IPlayerActions {
 	public PlayerState placeTower(UnitState unit, Blueprint blueprint) {
 		return doGenericAction(new Transition(ActionType.PlaceTower, new Object[] {unit.id, blueprint}));
 	}
-    
-	
+
 	/**
-	 * Allows the given unit to attack an enemy unit if in its vicinity in its current position 
-	 * optionally using an amount of energy points as backup strength for the attack.
-	 * <p> If successful, the unit doing the attack will use its currently equipped weapon to subtract
-	 * a number of energy points from the <code>maxEnergy</code> field of the attacked unit equivalent to the
-	 * <code>damage</code> provoked. </p>
-	 * <p> The attacked unit will retaliate with 50% of the attacker's <code>damage</code> + however much
-	 * backup energy it set for defense</p> 
-	 * <p>In case of an error, the returned player state will not be different from the current one. 
-	 * It will also contain a <code>TransitionResult</code> which gives the reason for the failure.</p>
+	 * Allows the given unit to attack an enemy unit if it is in its
+	 * vicinity.
+	 * <p>The attack is done by investing as much energy as desired.  Damage
+	 * is done by multiplying this energy with the equipped sword's modifier
+	 * and enemy's shield modifier: <code>damage = energy * (1 + swordMod) *
+	 * (1 - shieldMod)</code>.</p>
+	 * <p>If there's no sword then <code>swordMod = 0</code>. Same for
+	 * missing armour.</p>
+	 * <p>The resulting damage decreases the unit's <code>maxEnergy</code>
+	 * value, equivalent to unit's life.</p>
+	 * <p>The attacked unit had the possibility of preparing for
+	 * retaliation. In this case and if the unit survives the attack and it
+	 * has enough energy then a retaliation is done, using the same formula
+	 * as above</p>.
+	 * <p>In case of an error, the returned player state will not be
+	 * different from the current one.  It will also contain a
+	 * <code>TransitionResult</code> which gives the reason for the
+	 * failure. Otherwise, the returned state will be updated to reflect
+	 * attack and retaliation.</p>
 	 * @param unit   the unit doing the attack
 	 * @param attackedUnit  the enemy unit being attacked
-	 * @param energyBackup  the amount of energy points used to increase the damage
+	 * @param energy  the amount of energy points used for damage
 	 * @return the new player state or null if the player attempts to move outside his turn.
 	 */
-    public PlayerState attack(UnitState unit, BasicUnit attackedUnit, int energyBackup) {
-    	return doGenericAction(new Transition(ActionType.Attack, new Object[] {
-    			unit.id, attackedUnit.playerID, attackedUnit.unitId, energyBackup}));
-    }
-    
-    /**
+	public PlayerState attack(UnitState unit, BasicUnit attackedUnit, int energy) {
+		return doGenericAction(new Transition(ActionType.Attack, new Object[] {
+			unit.id, attackedUnit.playerID, attackedUnit.unitId, energy}));
+	}
+
+	/**
+	 * Allows the given unit to prepare for retaliation in the next round
+	 * should it be placed under attack.
+	 * <p>For a description of attack and retaliation @see attack
+	 * description.</p>
+	 * <p>If a unit is attacked multiple times during a round then after
+	 * each attack there's a possibility for retaliation, as long as there
+	 * is enough energy. Since each retaliation decreases unit energy, it is
+	 * desirable to select a minimum energy level after which to stop
+	 * retaliating.</p>
+	 * <p>This action doesn't fail, it just sets up some variables.</p>
+	 * @param unit the unit which prepares for retaliation
+	 * @param energy the amount of energy invested in one retaliation
+	 * @param threshold the amount of energy at which the retaliation should
+	 * stop.
+	 */
+	public PlayerState prepare(UnitState unit, int energy, int threshold) {
+		return doGenericAction(new Transition(ActionType.Prepare,
+					new Object[] { unit.id, energy, threshold }));
+	}
+
+	/**
 	 * Performs an upgrade for the given <code>craftedObject</code> by paying <code>goldAmount</code> 
 	 * gold nuggets.
 	 * <p> If successful, the PlayerState returned will contain an additional blueprint describing the requirements
@@ -343,8 +373,8 @@ public final class Client0 implements IClient, IPlayerActions {
 	 * @param goldAmount  the amount of gold nuggets required for the upgrade  
 	 * @return the new player state or null if the player attempts to move outside his turn.
 	 */
-    public PlayerState upgrade(UnitState unit, Blueprint blueprint, int goldAmount) {
-    	return doGenericAction(new Transition(ActionType.Upgrade, new Object[] {
-    			unit.id, blueprint, goldAmount }));
-    }
+	public PlayerState upgrade(UnitState unit, Blueprint blueprint, int goldAmount) {
+		return doGenericAction(new Transition(ActionType.Upgrade, new Object[] {
+			unit.id, blueprint, goldAmount }));
+	}
 }

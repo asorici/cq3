@@ -63,6 +63,16 @@ public class UnitState implements Serializable {
 	public ArmourObject equipedArmour;
 
 	/**
+	 * Energy used for retaliation.
+	 */
+	public int retaliateEnergy;
+
+	/**
+	 * Minimum energy at which retaliation is possible.
+	 */
+	public int retaliateThreshold;
+
+	/**
 	 * The unit's maximum energy points.
 	 * Also, unit's life.
 	 */

@@ -72,7 +72,10 @@ public abstract class Action {
 				return new EquipAction(type);
 			case PlaceTower:
 				return new PlaceTowerAction(type);
-			
+			case Prepare:
+				return new PrepareAction(type);
+			case Attack:
+				return new AttackAction(type);
 			default: return null;
 		}
 	}
