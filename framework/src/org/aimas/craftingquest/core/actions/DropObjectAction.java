@@ -7,9 +7,9 @@ import org.aimas.craftingquest.core.GamePolicy;
 import org.aimas.craftingquest.state.GameState;
 import org.aimas.craftingquest.state.PlayerState;
 import org.aimas.craftingquest.state.Transition;
-import org.aimas.craftingquest.state.TransitionResult;
 import org.aimas.craftingquest.state.Transition.ActionType;
-import org.aimas.craftingquest.state.objects.CraftedObject;
+import org.aimas.craftingquest.state.TransitionResult;
+import org.aimas.craftingquest.state.objects.ICrafted;
 
 public class DropObjectAction extends Action {
 	
@@ -18,9 +18,10 @@ public class DropObjectAction extends Action {
 	}
 	
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	protected TransitionResult handle(GameState game, PlayerState player, Transition transition) {
-		HashMap<CraftedObject, Integer> unwantedObjects = (HashMap<CraftedObject, Integer>)transition.operands[1];
+		HashMap<ICrafted, Integer> unwantedObjects = (HashMap<ICrafted, Integer>)transition.operands[1];
 		
 		// check for enough energy points
 		if (playerUnit.energy < GamePolicy.dropCost) {
@@ -30,24 +31,34 @@ public class DropObjectAction extends Action {
 			return res;
 		}
 
-		HashMap<CraftedObject, Integer> cellObjects = game.map.cells[playerUnit.pos.y][playerUnit.pos.x].craftedObjects;
-		HashMap<CraftedObject, Integer> carriedObjects = playerUnit.carriedObjects;
+		HashMap<ICrafted, Integer> cellObjects = game.map.cells[playerUnit.pos.y][playerUnit.pos.x].craftedObjects;
+		HashMap<ICrafted, Integer> carriedObjects = playerUnit.carriedObjects;
 
-		Iterator<CraftedObject> it = unwantedObjects.keySet().iterator();
+		Iterator<ICrafted> it = unwantedObjects.keySet().iterator();
 		while (it.hasNext()) {
-			CraftedObject res = it.next();
+			ICrafted res = it.next();
 			Integer dropped = unwantedObjects.get(res);
 			Integer existing = cellObjects.get(res);
 			Integer carried = carriedObjects.get(res);
 
-			if (carried != null && dropped <= carried) {
-				if (existing == null) {
-					cellObjects.put(res, dropped);
+			if (carried != null) {
+				if(dropped < carried) {
+					// if the unit drops some, but not all objects
+					if (existing == null) {
+						cellObjects.put(res, dropped);
+					} else {
+						cellObjects.put(res, existing + dropped);
+					}
+					carriedObjects.put(res, carried - dropped);
 				} else {
-					cellObjects.put(res, existing + dropped);
+					// the unit drops all such objects
+					if (existing == null) {
+						cellObjects.put(res, carried);
+					} else {
+						cellObjects.put(res, existing + carried);
+					}
+					carriedObjects.remove(res);
 				}
-
-				carriedObjects.put(res, carried - dropped);
 			}
 		}
 
@@ -58,20 +69,19 @@ public class DropObjectAction extends Action {
 	}
 	
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	protected boolean validOperands(Transition transition) {
-		HashMap<CraftedObject, Integer> unwantedObjects = null; 
-		
+		HashMap<ICrafted, Integer> unwantedObjects = null; 
 		try {
-			unwantedObjects = (HashMap<CraftedObject, Integer>)transition.operands[1];
+			unwantedObjects = (HashMap<ICrafted, Integer>)transition.operands[1];
 			if (unwantedObjects == null) {
 				return false;
 			}
 		}
 		catch (ClassCastException ex) {
 			return false;
-		}
-		
+		}		
 		return true;
 	}
 
