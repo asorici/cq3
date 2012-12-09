@@ -13,7 +13,7 @@ public enum ResourceType implements Serializable, ICarriable {
 	BRONZE (GamePolicy.bronzeWeight), 
 	IRON (GamePolicy.ironWeight), 
 	TITANIUM (GamePolicy.titaniumWeight), 
-	GOLD (GamePolicy.GOLD_WEIGHT);
+	GOLD (0);
 	
 	private int weight;
 	public final static int size = 7;
