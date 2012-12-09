@@ -7,9 +7,9 @@ import org.aimas.craftingquest.state.CellState;
 import org.aimas.craftingquest.state.GameState;
 import org.aimas.craftingquest.state.PlayerState;
 import org.aimas.craftingquest.state.Transition;
-import org.aimas.craftingquest.state.TransitionResult;
 import org.aimas.craftingquest.state.Transition.ActionType;
-import org.aimas.craftingquest.state.objects.CraftedObject.BasicResourceType;
+import org.aimas.craftingquest.state.TransitionResult;
+import org.aimas.craftingquest.state.resources.ResourceType;
 
 public class DigAction extends Action {
 	public DigAction(ActionType type) {
@@ -30,13 +30,12 @@ public class DigAction extends Action {
 		// subtract energy points
 		playerUnit.currentCellResources.clear();
 		CellState currentCell = game.map.cells[playerUnit.pos.y][playerUnit.pos.x];
-		Iterator<Resource> resIterator = currentCell.resources.keySet().iterator();
+		Iterator<ResourceType> resIterator = currentCell.resources.keySet().iterator();
 		
 		while (resIterator.hasNext()) {
-			Resource res = resIterator.next();
+			ResourceType res = resIterator.next();
 			if (currentCell.resources.get(res) > 0) {
-				playerUnit.currentCellResources.put(res,
-						currentCell.resources.get(res));
+				playerUnit.currentCellResources.put(res, currentCell.resources.get(res));
 			}
 		}
 		playerUnit.energy -= GamePolicy.digCost;

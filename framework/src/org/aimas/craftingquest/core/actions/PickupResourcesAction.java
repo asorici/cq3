@@ -2,7 +2,6 @@ package org.aimas.craftingquest.core.actions;
 
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
 
 import org.aimas.craftingquest.core.GamePolicy;
 import org.aimas.craftingquest.state.CellState;
@@ -10,9 +9,8 @@ import org.aimas.craftingquest.state.GameState;
 import org.aimas.craftingquest.state.PlayerState;
 import org.aimas.craftingquest.state.Transition;
 import org.aimas.craftingquest.state.Transition.ActionType;
-import org.aimas.craftingquest.state.objects.Tower;
-import org.aimas.craftingquest.state.objects.CraftedObject.BasicResourceType;
 import org.aimas.craftingquest.state.TransitionResult;
+import org.aimas.craftingquest.state.resources.ResourceType;
 
 public class PickupResourcesAction extends Action {
 	public PickupResourcesAction(ActionType type) {
@@ -23,8 +21,8 @@ public class PickupResourcesAction extends Action {
 	@Override
 	protected TransitionResult handle(GameState game, PlayerState player, Transition transition) {
 		// get resources
-		HashMap<Resource, Integer> requiredResources = 
-				(HashMap<Resource, Integer>)transition.operands[1];
+		HashMap<ResourceType, Integer> requiredResources = 
+				(HashMap<ResourceType, Integer>)transition.operands[1];
 		
 		// check that enough energy points are available for this operation
 		if (playerUnit.energy < GamePolicy.pickupCost) {
@@ -33,6 +31,8 @@ public class PickupResourcesAction extends Action {
 			res.errorReason = "Not enough energy points left for picking up resources";
 			return res;
 		}
+		/**
+		 * Am renuntat la asta
 
 		// check that no opponent tower is guarding the resources
 		boolean resourcesGuarded = false;
@@ -59,19 +59,19 @@ public class PickupResourcesAction extends Action {
 			res.errorReason = "Cannot pickup resources from guarded area.";
 			return res;
 		}
-
+		 */
 		// check that the desired (res, quantity) pairs can be satisfied by the
 		// current cell
 		// and do the pickup where conditions are met
 		CellState miningCell = game.map.cells[playerUnit.pos.y][playerUnit.pos.x];
 
-		HashMap<Resource, Integer> cellResources = miningCell.resources;
-		HashMap<Resource, Integer> visibleCellResources = miningCell.visibleResources;
-		HashMap<Resource, Integer> carriedResources = playerUnit.carriedResources;
+		HashMap<ResourceType, Integer> cellResources = miningCell.resources;
+		HashMap<ResourceType, Integer> visibleCellResources = miningCell.visibleResources;
+		HashMap<ResourceType, Integer> carriedResources = playerUnit.carriedResources;
 
-		Iterator<Resource> it = requiredResources.keySet().iterator();
+		Iterator<ResourceType> it = requiredResources.keySet().iterator();
 		while (it.hasNext()) {
-			Resource res = it.next();
+			ResourceType res = it.next();
 			Integer required = requiredResources.get(res);
 			Integer available = cellResources.get(res);
 			Integer availableVisible = visibleCellResources.get(res);
@@ -118,11 +118,9 @@ public class PickupResourcesAction extends Action {
 	@SuppressWarnings("unchecked")
 	@Override
 	protected boolean validOperands(Transition transition) {
-		HashMap<Resource, Integer> requiredResources = null;
-		
+		HashMap<ResourceType, Integer> requiredResources = null;
 		try{
-			requiredResources = (HashMap<Resource, Integer>)transition.operands[1];
-			
+			requiredResources = (HashMap<ResourceType, Integer>)transition.operands[1];
 			// check for valid operand
 			if (requiredResources == null) {
 				return false;
@@ -131,7 +129,6 @@ public class PickupResourcesAction extends Action {
 		catch(ClassCastException ex) {
 			return false;
 		}
-		
 		return true;
 	}
 
