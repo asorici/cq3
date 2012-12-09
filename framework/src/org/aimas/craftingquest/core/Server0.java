@@ -276,6 +276,9 @@ public class Server0 implements IServer {
 					// then subtract specific energy amount if the player is near some towers
 					actionEngine.doTowerDrain(state, state.getPlayerIds().get(clientID));
 					
+					// update the view of the player's own towers before the start of the new round
+					actionEngine.updateTowerSight(state, state.getPlayerIds().get(clientID));
+					
 					// decrease frozen rounds left for frozen units :)
 					actionEngine.unfreeze(state, state.getPlayerIds().get(clientID));
 					
@@ -413,12 +416,12 @@ public class Server0 implements IServer {
 	private void declareWinner() {
 		List<Integer> playerIDs = state.getPlayerIds();
 		int winnerClient = 0;
-		int maxCredit = state.playerStates.get(playerIDs.get(winnerClient)).credit;
+		int maxCredit = state.playerStates.get(playerIDs.get(winnerClient)).gold;
 		boolean tied = true;
 		
 		for (int clientID = 1; clientID < clients.length; clientID++) {
 			Integer pId = playerIDs.get(clientID);
-			int pCredit = state.playerStates.get(pId).credit;
+			int pCredit = state.playerStates.get(pId).gold;
 			
 			if (pCredit > maxCredit) {
 				maxCredit = pCredit;
@@ -445,7 +448,7 @@ public class Server0 implements IServer {
 				for (int clientID = 0; clientID < clients.length; clientID++) {
 					if (clientID != winnerClient) {
 						Integer pId = playerIDs.get(clientID);
-						bw.write("" + clientID + " " + secrets[clientID] + " " + state.playerStates.get(pId).credit);
+						bw.write("" + clientID + " " + secrets[clientID] + " " + state.playerStates.get(pId).gold);
 						bw.newLine();
 					}
 				}
@@ -480,7 +483,7 @@ public class Server0 implements IServer {
 			if (action.operator == ActionType.PlayerReady) {
 				for (UnitState u : player.units) {
 					gui_logger.info(state.round.currentRound + " " + action.operator.name() + " " + player.id + " " 
-							+ u.pos.x + " " + u.pos.y + " " + player.credit + " " + u.energy);
+							+ u.pos.x + " " + u.pos.y + " " + player.gold + " " + u.energy);
 				}
 				
 				return;
@@ -504,12 +507,12 @@ public class Server0 implements IServer {
 				Blueprint target = (Blueprint)action.operands[1];
 
 				gui_logger.info(state.round.currentRound + " " + action.operator.name() + " " + player.id + " " 
-						+ playerUnit.pos.x + " " + playerUnit.pos.y + " " + player.credit + " " + playerUnit.energy + " " 
+						+ playerUnit.pos.x + " " + playerUnit.pos.y + " " + player.gold + " " + playerUnit.energy + " " 
 						+ target.getType() + " " + target.getLevel());
 			}
 			else {
 				gui_logger.info(state.round.currentRound + " " + action.operator.name() + " " + player.id + " " 
-						+ playerUnit.pos.x + " " + playerUnit.pos.y + " " + player.credit + " " + playerUnit.energy);
+						+ playerUnit.pos.x + " " + playerUnit.pos.y + " " + player.gold + " " + playerUnit.energy);
 			}
 		}
 	}

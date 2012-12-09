@@ -1,8 +1,5 @@
 package org.aimas.craftingquest.core.actions;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.aimas.craftingquest.core.GamePolicy;
 import org.aimas.craftingquest.state.Blueprint;
 import org.aimas.craftingquest.state.CellState;
@@ -122,16 +119,17 @@ public class PlaceTowerAction extends Action {
 		Tower tower = (Tower) blueprint.craft(playerUnit.playerID, playerUnit.pos);
 		
 		unitCell.strategicObject = tower; // place tower in cell
-
-		List<Tower> playerTowers = game.playerTowers.get(player.id); // add in global list of towers
-		if (playerTowers == null) {
-			playerTowers = new ArrayList<Tower>();
-			playerTowers.add(tower);
-			game.playerTowers.put(player.id, playerTowers);
-			player.availableTowers.put(tower, true); // this tower is newly
-		} else {
-			playerTowers.add(tower);
-		}
+		
+		player.availableTowers.add(tower);
+//		List<Tower> playerTowers = game.playerTowers.get(player.id); // add in global list of towers
+//		if (playerTowers == null) {
+//			playerTowers = new ArrayList<Tower>();
+//			playerTowers.add(tower);
+//			game.playerTowers.put(player.id, playerTowers);
+//			player.availableTowers.put(tower, true); // this tower is newly
+//		} else {
+//			playerTowers.add(tower);
+//		}
 
 		// consume energy to build the tower
 		playerUnit.energy -= GamePolicy.placeTowerCost; 

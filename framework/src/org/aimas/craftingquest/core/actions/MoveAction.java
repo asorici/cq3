@@ -123,16 +123,14 @@ public class MoveAction extends Action {
 		return true;
 	}
 
-	private void updateUnitSight(GameState game, UnitState playerUnit,
-			Point2i pos) {
+	private void updateUnitSight(GameState game, UnitState playerUnit, Point2i pos) {
 		int sightRadius = GamePolicy.sightRadius;
 
 		CellState[][] unitSight = playerUnit.sight;
 		for (int i = 0, y = pos.y - sightRadius; y <= pos.y + sightRadius; y++, i++) {
 			for (int j = 0, x = pos.x - sightRadius; x <= pos.x + sightRadius; x++, j++) {
 				unitSight[i][j] = null;
-				if (x >= 0 && x < GamePolicy.mapsize.x && y >= 0
-						&& y < GamePolicy.mapsize.y) {
+				if (x >= 0 && x < GamePolicy.mapsize.x && y >= 0 && y < GamePolicy.mapsize.y) {
 					unitSight[i][j] = game.map.cells[y][x];
 				}
 			}

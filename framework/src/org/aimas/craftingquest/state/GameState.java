@@ -20,16 +20,13 @@ public class GameState implements Serializable {
 	public MapState map;
 	public RoundState round;
 	
-	//public List<PlayerState> playerStates;
 	public HashMap<Integer, PlayerState> playerStates;
-	public HashMap<Integer, List<Tower>> playerTowers;
 	public List<Blueprint> blueprints;
 	public HashMap<ResourceType, Integer> resourceAmountsByType;
 	
 	public GameState() {
 		//playerStates = new ArrayList<PlayerState>();
 		playerStates = new HashMap<Integer, PlayerState>();
-		playerTowers = new HashMap<Integer, List<Tower>>();
 		blueprints = new ArrayList<Blueprint>();
 		
 		round = new RoundState();
@@ -60,12 +57,6 @@ public class GameState implements Serializable {
 		round.currentRound = turn;
 	}
 	
-	public void initializeTowerLists(){
-		List<Integer> playerIds = getPlayerIds();
-		for (Integer pId : playerIds) {
-			playerTowers.put(pId, new ArrayList<Tower>());
-		}
-	}
 	
 	public List<Integer> getPlayerIds() {
 		List<Integer> playerIds = new ArrayList<Integer>();
@@ -82,7 +73,7 @@ public class GameState implements Serializable {
 		
 		for (Integer pId : playerIds) {
 			if (pId != playerID) {
-				List<Tower> pTowers = playerTowers.get(pId);
+				List<Tower> pTowers = playerStates.get(pId).availableTowers;
 				opponentTowers.addAll(pTowers);
 			}
 		}

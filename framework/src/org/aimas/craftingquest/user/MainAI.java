@@ -80,7 +80,7 @@ public class MainAI implements IPlayerHooks {
 	public void finishGame() {
 		PlayerState pState = cmd.getPlayerState();
 		if (pState != null) {
-			logger.info("[AI][finishGame] score: " + pState.credit);
+			logger.info("[AI][finishGame] score: " + pState.gold);
 		} else {
 			logger.info("[AI][finishGame]");
 		}

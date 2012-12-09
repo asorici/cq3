@@ -8,7 +8,6 @@ import org.aimas.craftingquest.state.ICarriable;
 import org.aimas.craftingquest.state.PlayerState;
 import org.aimas.craftingquest.state.Point2i;
 import org.aimas.craftingquest.state.UnitState;
-import org.aimas.craftingquest.state.objects.ICrafted;
 import org.aimas.craftingquest.state.objects.IEquippable;
 import org.aimas.craftingquest.state.resources.ResourceType;
 

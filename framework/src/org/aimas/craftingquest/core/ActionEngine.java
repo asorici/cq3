@@ -4,14 +4,16 @@ import java.util.List;
 
 import org.aimas.craftingquest.core.actions.Action;
 import org.aimas.craftingquest.core.energyreplenishmodels.EnergyReplenishModel;
+import org.aimas.craftingquest.state.CellState;
 import org.aimas.craftingquest.state.GameState;
 import org.aimas.craftingquest.state.PlayerState;
+import org.aimas.craftingquest.state.Point2i;
 import org.aimas.craftingquest.state.Transition;
 import org.aimas.craftingquest.state.Transition.ActionType;
 import org.aimas.craftingquest.state.TransitionResult;
 import org.aimas.craftingquest.state.TransitionResult.TransitionError;
-import org.aimas.craftingquest.state.objects.Tower;
 import org.aimas.craftingquest.state.UnitState;
+import org.aimas.craftingquest.state.objects.Tower;
 import org.apache.log4j.Logger;
 
 /**
@@ -98,13 +100,16 @@ public class ActionEngine {
 							boolean foundTower = false;
 							
 							if (pId != playerID) {
-								List<Tower> pTowers = state.playerTowers.get(pId);	// get opponent tower list
+								//List<Tower> pTowers = state.playerTowers.get(pId);	// get opponent tower list
+								List<Tower> pTowers = state.playerStates.get(pId).availableTowers;	// get opponent tower list
 								
 								for (Tower t : pTowers) {			// see if it contains 
 									if (t.getPosition().isEqual(oppTower.getPosition())) {
 										PlayerState opponentState = state.playerStates.get(pId);
-										opponentState.availableTowers.put(t, false);	// tower is no longer available
-										pTowers.remove(t);			// the weakened tower and remove it
+										opponentState.availableTowers.remove(t); // tower is no longer available
+										
+//										opponentState.availableTowers.put(t, false);	
+//										pTowers.remove(t);			// the weakened tower and remove it
 										foundTower = true;
 										
 										// log tower destruction
@@ -125,6 +130,29 @@ public class ActionEngine {
 				
 		}
 	}
+	
+	public void updateTowerSight(GameState state, Integer playerID) {
+		PlayerState playerState = state.playerStates.get(playerID);
+		
+		for (Tower tower : playerState.availableTowers) {
+			int towerLevel = tower.getLevel();
+			int sightRadius = (int) (GamePolicy.towerCutoffRadius * 
+					(1 + GamePolicy.levelIncrease[towerLevel - 1] / 100.0));
+			
+			CellState[][] towerSight = tower.sight;
+			Point2i towerPos = tower.getPosition();
+			
+			for (int i = 0, y = towerPos.y - sightRadius; y <= towerPos.y + sightRadius; y++, i++) {
+				for (int j = 0, x = towerPos.x - sightRadius; x <= towerPos.x + sightRadius; x++, j++) {
+					towerSight[i][j] = null;
+					if (x >= 0 && x < GamePolicy.mapsize.x && y >= 0 && y < GamePolicy.mapsize.y) {
+						towerSight[i][j] = game.map.cells[y][x];
+					}
+				}
+			}
+		}
+	}
+	
 	
 	protected void replenishEnergy() {
 		for (PlayerState pState : game.playerStates.values()) {

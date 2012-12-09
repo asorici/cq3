@@ -72,7 +72,7 @@ public class GamePolicy {
 	public static HashMap<CellType, Double> movePenalty = new HashMap<CellType, Double>();
 	// conventie: orice parametru cu valoare negativa nu se aplica
 	// moveCost = moveBase * (1 + movePenalty) + nrRes * resourceMoveCost;
-
+	
 	public static int pickupCost = 5;
 	public static int dropCost = 0;
 	public static int scanCost = 10;

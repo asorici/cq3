@@ -2,7 +2,6 @@ package org.aimas.craftingquest.state;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import org.aimas.craftingquest.state.objects.Tower;
@@ -39,10 +38,10 @@ public class PlayerState implements Serializable {
 	public List<Blueprint> boughtBlueprints;		// blueprints that have been bought by the player
 	
 	/**
-	 * A HashMap that contains the status for each tower constructed by the player
+	 * the list of active player towers
 	 */
-	public HashMap<Tower, Boolean> availableTowers; // stores the state of all the towers built by the player
-	public int credit;
+	public List<Tower> availableTowers; // stores the state of all the towers built by the player
+	public int gold;
 	
 	/* map dimensions */
 	public int mapWidth;
@@ -54,13 +53,13 @@ public class PlayerState implements Serializable {
 	 * the TransitionResult response for the last transition. It will be null if no transition was made.
 	 */
 	public TransitionResult response;				// last transition response
-
+	
 	/* game mechanics time */
 	/**
 	 * the round information
 	 */
 	public RoundState round;
-
+	
 	public long currentTime() {
 		return System.currentTimeMillis();
 	}
@@ -70,7 +69,7 @@ public class PlayerState implements Serializable {
 		//responces = new ArrayList<TransitionResult>();
 		boughtBlueprints = new ArrayList<Blueprint>();
 		availableBlueprints = new ArrayList<Blueprint>();
-		availableTowers = new HashMap<Tower, Boolean>();
+		availableTowers = new ArrayList<Tower>();
 		
 		round = new RoundState();
 	}
@@ -80,7 +79,7 @@ public class PlayerState implements Serializable {
 		String info = "";
 		info += "PlayerState: \n";
 		info += "    id:" + id + "\n";
-		info += "    credit:" + credit + "\n";
+		info += "    credit:" + gold + "\n";
 		info += "    round:" + round.currentRound + " of " + round.noRounds + "\n";
 		info += "    Blueprints: \n";
 		for (Blueprint bp: boughtBlueprints) {
@@ -96,11 +95,11 @@ public class PlayerState implements Serializable {
 	}
 
 	public int getCredit() {
-		return credit;
+		return gold;
 	}
 
 	public void setCredit(int credit) {
-		this.credit = credit;
+		this.gold = credit;
 	}
 
 	public int getCurentTurn() {

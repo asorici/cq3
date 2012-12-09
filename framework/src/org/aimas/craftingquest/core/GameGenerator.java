@@ -70,9 +70,6 @@ public class GameGenerator {
 					game.playerStates.put(player.id, player);
 				}
 			}
-			
-			/* initialize tower list for every player */
-			game.initializeTowerLists();
 		}
 		else {
 			/*reset number of turns according to map size*/
@@ -123,9 +120,6 @@ public class GameGenerator {
 					game.playerStates.put(player.id, player);
 				}
 			}
-			
-			/* initialize tower list for every player */
-			game.initializeTowerLists();
 		}
 		
 		printResourceStatistics(game.resourceAmountsByType, game.blueprints);
@@ -189,7 +183,7 @@ public class GameGenerator {
 	private static PlayerState setupPlayerState(int playerID, int nrUnits, Point2i initPos, MapState map) {
 		PlayerState pState = new PlayerState();
 		pState.id = playerID;
-		pState.credit = GamePolicy.initialTeamCredit;
+		pState.gold = GamePolicy.initialTeamCredit;
 		
 		pState.round.currentRound = 0;
 		pState.round.noRounds = GamePolicy.lastTurn;
