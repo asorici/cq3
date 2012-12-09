@@ -66,7 +66,12 @@ public class ActionEngine {
 		}
 	}
 	
-	
+	protected void unfreeze(GameState state, Integer playerID) {
+		PlayerState playerState = state.playerStates.get(playerID);
+		for (UnitState unit : playerState.units) {
+			unit.unfreeze();
+		}
+	}
 	
 	protected void doTowerDrain(GameState state, Integer playerID) {
 		PlayerState playerState = state.playerStates.get(playerID);

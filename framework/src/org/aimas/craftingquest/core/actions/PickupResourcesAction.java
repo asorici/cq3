@@ -20,6 +20,14 @@ public class PickupResourcesAction extends Action {
 	@SuppressWarnings("unchecked")
 	@Override
 	protected TransitionResult handle(GameState game, PlayerState player, Transition transition) {
+		// check if frozen
+		if (playerUnit.isFrozen()) {
+			TransitionResult res = new TransitionResult(transition.id);
+			res.errorType = TransitionResult.TransitionError.Frozen;
+			res.errorReason = "Unit is frozen";
+			return res;
+		}
+		
 		// get resources
 		HashMap<ResourceType, Integer> requiredResources = 
 				(HashMap<ResourceType, Integer>)transition.operands[1];

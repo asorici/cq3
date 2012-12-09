@@ -22,6 +22,13 @@ public class DropResourcesAction extends Action {
 		@SuppressWarnings("unchecked")
 		HashMap<ResourceType, Integer> unwantedResources = 
 				(HashMap<ResourceType, Integer>)transition.operands[1];
+		// check if frozen
+		if (playerUnit.isFrozen()) {
+			TransitionResult res = new TransitionResult(transition.id);
+			res.errorType = TransitionResult.TransitionError.Frozen;
+			res.errorReason = "Unit is frozen";
+			return res;
+		}
 		
 		// check for enough energy points
 		if (playerUnit.energy < GamePolicy.dropCost) {

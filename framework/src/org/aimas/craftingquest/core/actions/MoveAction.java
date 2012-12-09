@@ -13,6 +13,7 @@ import org.aimas.craftingquest.state.UnitState;
 //import org.aimas.craftingquest.state.CellState.CellType;
 import org.aimas.craftingquest.state.Transition.ActionType;
 import org.aimas.craftingquest.state.objects.Tower;
+import org.aimas.craftingquest.state.objects.TrapObject;
 import org.aimas.craftingquest.state.TransitionResult;
 
 public class MoveAction extends Action {
@@ -24,6 +25,16 @@ public class MoveAction extends Action {
 	@Override
 	protected TransitionResult handle(GameState game, PlayerState player,
 			Transition transition) {
+		
+		// check if frozen
+		if (playerUnit.isFrozen()) {
+			TransitionResult res = new TransitionResult(transition.id);
+			res.errorType = TransitionResult.TransitionError.Frozen;
+			res.errorReason = "Unit is frozen";
+			return res;
+		}
+		
+		
 		// check allowed distance
 		Point2i toPos = (Point2i) transition.operands[1];
 		Point2i fromPos = playerUnit.pos;
@@ -53,7 +64,8 @@ public class MoveAction extends Action {
 			res.errorReason = "Move not allowed to cells containing strategic structures.";
 			return res;
 		}
-
+		
+		
 		// check enough energy for action
 		int carriedResourcesAmount = 0;
 		for (Integer quant : playerUnit.carriedResources.values()) {
@@ -90,7 +102,17 @@ public class MoveAction extends Action {
 		}
 		game.map.cells[toPos.y][toPos.x].cellUnits.add(playerUnit
 				.getOpponentPerspective());
-
+		
+		
+		// check no object is there
+		if (game.map.cells[toPos.y][toPos.x].strategicObject != null
+				&& game.map.cells[toPos.y][toPos.x].strategicObject instanceof TrapObject
+				) {
+			TrapObject trap = (TrapObject) game.map.cells[toPos.y][toPos.x].strategicObject;
+			playerUnit.energy = 0;
+			playerUnit.freeze(trap.getLevel());
+		}
+		
 		TransitionResult moveres = new TransitionResult(transition.id);
 		moveres.errorType = TransitionResult.TransitionError.NoError;
 		return moveres;

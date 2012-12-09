@@ -276,6 +276,9 @@ public class Server0 implements IServer {
 					// then subtract specific energy amount if the player is near some towers
 					actionEngine.doTowerDrain(state, state.getPlayerIds().get(clientID));
 					
+					// decrease frozen rounds left for frozen units :)
+					actionEngine.unfreeze(state, state.getPlayerIds().get(clientID));
+					
 					// send the NEW ROUND event to current client
 					sendEvent(clientID, client, new Event(Event.EventType.NewRound));
 					

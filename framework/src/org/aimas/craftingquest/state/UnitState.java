@@ -102,6 +102,16 @@ public class UnitState implements Serializable {
 	 * <p>If the unit is near the margins of the map, cells falling outside the boundaries will be null.</p>  
 	 */
 	public CellState[][] sight;
+	
+	/*
+	 * number of turns frozen
+	 */
+	
+	int frozen;
+	
+	public void freeze (int trapLevel) {
+		frozen = trapLevel;
+	}
 
 	public UnitState() {
 		int sightDim = 2 * GamePolicy.sightRadius + 1;
@@ -114,6 +124,7 @@ public class UnitState implements Serializable {
 		this.pos = pos;
 		this.energy = energy;
 		this.maxEnergy = energy;
+		this.frozen = 0;
 
 		int sightDim = 2 * GamePolicy.sightRadius + 1;
 		sight = new CellState[sightDim][sightDim];
@@ -180,5 +191,14 @@ public class UnitState implements Serializable {
 	@Override
 	public int hashCode() {
 		return (playerID + "_" + id).hashCode();
+	}
+
+	public void unfreeze() {
+		if (frozen > 0) frozen--;
+		
+	}
+
+	public boolean isFrozen() {
+		return (frozen>0);
 	}
 }
