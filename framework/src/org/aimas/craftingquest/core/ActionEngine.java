@@ -1,7 +1,6 @@
 package org.aimas.craftingquest.core;
 
 import java.util.List;
-import java.util.ArrayList;
 
 import org.aimas.craftingquest.core.actions.Action;
 import org.aimas.craftingquest.core.energyreplenishmodels.EnergyReplenishModel;
@@ -63,13 +62,6 @@ public class ActionEngine {
 	// removes dead units
 	private void refresh(PlayerState player) {
 		player.response = null;							// reset player transition response
-		
-		List<UnitState> unitsToRemove = new ArrayList<UnitState>();
-		for (UnitState unit : player.units) {
-			if (unit.life <= 0)
-				unitsToRemove.add(unit);
-		}
-		player.units.removeAll(unitsToRemove);
 
 		for (UnitState unit : player.units) {			// reset each unit's dig and scan results
 			unit.currentCellResources.clear();

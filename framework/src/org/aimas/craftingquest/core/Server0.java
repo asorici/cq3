@@ -10,6 +10,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
+import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -263,29 +264,28 @@ public class Server0 implements IServer {
 				public void run() {
 					// replenish player's units with their energy supplies
 					actionEngine.replenishEnergy();
-					
+
 					// set round status: currentRound and roundStartTime
 					Integer playerID = state.getPlayerIds().get(clientID);
 					PlayerState player = state.playerStates.get(playerID);
 					int currentRound = state.round.currentRound;
-					
+
 					player.round.currentRound = currentRound;
 					player.round.startTime = GamePolicy.connectWaitTime + 
 						currentRound * GamePolicy.roundTime + clientID * GamePolicy.playerActionTime;
-					
+
 					// then subtract specific energy amount if the player is near some towers
 					actionEngine.doTowerDrain(state, state.getPlayerIds().get(clientID));
-					
+
 					// update the view of the player's own towers before the start of the new round
 					actionEngine.updateTowerSight(state, state.getPlayerIds().get(clientID));
-					
+
 					// decrease frozen rounds left for frozen units :)
 					actionEngine.unfreeze(state, state.getPlayerIds().get(clientID));
-					
+
 					// send the NEW ROUND event to current client
 					sendEvent(clientID, client, new Event(Event.EventType.NewRound));
-					
-					
+
 					// send the END ROUND event to all the others
 					for (int cID = 0; cID < clients.length; cID++) {
 						if (cID != clientID) {
@@ -349,6 +349,14 @@ public class Server0 implements IServer {
 		}
 		
 		player.response = actionEngine.process(player, action);
+
+		List<UnitState> unitsToRemove = new ArrayList<UnitState>();
+		for (UnitState unit : player.units) {
+			if (unit.life <= 0)
+				unitsToRemove.add(unit);
+		}
+		player.units.removeAll(unitsToRemove);
+
 		printToGuiLog(player, action);
 		
 		return player;
