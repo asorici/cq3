@@ -47,14 +47,14 @@
         <!-- generating blueprints for each object type -->
         <!-- Resources stone, wood, bronze, iron, titanium, leather, gold -->
         <blueprints>
-          <blueprint type="sword" level="1">
+          <blueprint type="sword" level="1" upgradeCost="5">
             <resource type="iron" quantity="10">
             <resource type="stone" quantity="2">
             <resource type="wood" quantity="2">
             <weight>5</weight>
           </blueprint>
           
-          <blueprint type="sword" level="2">
+          <blueprint type="sword" level="2" upgradeCost="5">
             <resource type="iron" quantity="20">
             <resource type="stone" quantity="5">
             <resource type="wood" quantity="5">
@@ -69,14 +69,14 @@
             <weight>10</weight>
           </blueprint>
           
-          <blueprint type="armour" level="1">
+          <blueprint type="armour" level="1" upgradeCost="5">
             <resource type="leather" quantity="20">
             <resource type="stone" quantity="2">
             <resource type="wood" quantity="2">
             <weight>10</weight>
           </blueprint>
           
-          <blueprint type="armour" level="2">
+          <blueprint type="armour" level="2" upgradeCost="5">
             <resource type="bronze" quantity="20">
             <resource type="stone" quantity="5">
             <resource type="wood" quantity="5">
@@ -91,44 +91,42 @@
             <weight>20</weight>
           </blueprint>
 
-          
-          <blueprint type="tower" level="1">
+          <blueprint type="tower" level="1" upgradeCost="5">
             <resource type="iron" quantity="30">
             <resource type="stone" quantity="50">
             <resource type="wood" quantity="20">
           </blueprint>
-          
-          <blueprint type="tower" level="2">
+
+          <blueprint type="tower" level="2" upgradeCost="5">
             <resource type="iron" quantity="40">
             <resource type="stone" quantity="60">
             <resource type="wood" quantity="30">
           </blueprint>
-          
+
           <blueprint type="tower" level="3">
             <resource type="iron" quantity="50">
             <resource type="stone" quantity="80">
             <resource type="wood" quantity="30">
           </blueprint>
-          
-          
-          <blueprint type="trap" level="1">
+
+          <blueprint type="trap" level="1" upgradeCost="5">
             <resource type="bronze" quantity="10">
             <resource type="leather" quantity="10">
             <resource type="wood" quantity="10">
           </blueprint>
-          
-          <blueprint type="trap" level="2">
+
+          <blueprint type="trap" level="2" upgradeCost="5">
             <resource type="iron" quantity="10">
             <resource type="leather" quantity="20">
             <resource type="wood" quantity="20">
           </blueprint>
-          
-          <blueprint type="trap" level="3">
+
+          <blueprint type="trap" level="3" upgradeCost="5">
             <resource type="iron" quantity="20">
             <resource type="stone" quantity="30">
             <resource type="wood" quantity="20">
           </blueprint>
-          
+
         </blueprints>
         <!--
 	<rules>
