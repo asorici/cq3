@@ -25,13 +25,10 @@ public class GameState implements Serializable {
 	public HashMap<Integer, PlayerState> playerStates;
 	public HashMap<Integer, List<Tower>> playerTowers;
 	public HashMap<Integer, List<TrapObject>> playerTraps;
-	public List<Blueprint> blueprints;
 	public HashMap<ResourceType, Integer> resourceAmountsByType;
 	
 	public GameState() {
-		//playerStates = new ArrayList<PlayerState>();
 		playerStates = new HashMap<Integer, PlayerState>();
-		blueprints = new ArrayList<Blueprint>();
 		
 		round = new RoundState();
 		round.currentRound = 0;
@@ -95,7 +92,7 @@ public class GameState implements Serializable {
 	}
 	
 	public Blueprint getNextLevel(Blueprint bp) {
-		Iterator<Blueprint> bpit = blueprints.iterator();
+		Iterator<Blueprint> bpit = GamePolicy.blueprints.iterator();
 		while(bpit.hasNext()) {
 			Blueprint nextbp = bpit.next();
 			if (nextbp.getType() == bp.getType() && nextbp.getLevel() == bp.getLevel()+1) {

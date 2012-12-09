@@ -76,8 +76,8 @@ public class PlaceTowerAction extends Action {
 		
 		Blueprint playerBlueprint = (Blueprint) transition.operands[1];
 		Blueprint blueprint; // the real one
-		if (game.blueprints.contains(playerBlueprint)) {
-			blueprint = game.blueprints.get(game.blueprints.indexOf(playerBlueprint));
+		if (GamePolicy.blueprints.contains(playerBlueprint)) {
+			blueprint = GamePolicy.blueprints.get(GamePolicy.blueprints.indexOf(playerBlueprint));
 		} else {
 			TransitionResult res = new TransitionResult(transition.id);
 			res.errorType = TransitionResult.TransitionError.BlueprintError;

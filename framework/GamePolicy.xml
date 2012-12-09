@@ -9,7 +9,7 @@
 		<playerLateTime>100</playerLateTime>
 		<updateTime>0</updateTime>
 		<connectWaitTime>5000</connectWaitTime>
-		<nrTurns>160</nrTurns>		
+		<nrTurns>180</nrTurns>		
 		<mapName>map_v1.cqm</mapName>
 
 
@@ -53,48 +53,42 @@
         <!-- Resources stone, wood, bronze, iron, titanium, leather, gold -->
 
         <blueprints>
-          <blueprint type="sword" level="1" upgradeCost="5">
+          <blueprint type="sword" level="1" upgradeCost="5" weight="5">
             <resource type="iron" quantity="10"/>
             <resource type="stone" quantity="2"/>
             <resource type="wood" quantity="2"/>
-            <weight>5</weight>
           </blueprint>
           
-          <blueprint type="sword" level="2" upgradeCost="5">
+          <blueprint type="sword" level="2" upgradeCost="5" weight="7">
             <resource type="iron" quantity="20"/>
             <resource type="stone" quantity="5"/>
             <resource type="wood" quantity="5"/>
-            <weight>7</weight>
           </blueprint>
           
-          <blueprint type="sword" level="3">
+          <blueprint type="sword" level="3" weight="10">
             <resource type="titanium" quantity="20"/>
             <resource type="stone" quantity="10"/>
             <resource type="wood" quantity="10"/>
             <resource type="gold" quantity="10"/>
-            <weight>10</weight>
           </blueprint>
           
-          <blueprint type="armour" level="1" upgradeCost="5">
+          <blueprint type="armour" level="1" upgradeCost="5" weight="10">
             <resource type="leather" quantity="20"/>
             <resource type="stone" quantity="2"/>
             <resource type="wood" quantity="2"/>
-            <weight>10</weight>
           </blueprint>
           
-          <blueprint type="armour" level="2" upgradeCost="5">
+          <blueprint type="armour" level="2" upgradeCost="5" weight="15">
             <resource type="bronze" quantity="20"/>
             <resource type="stone" quantity="5"/>
             <resource type="wood" quantity="5"/>
-            <weight>15</weight>
           </blueprint>
           
-          <blueprint type="armour" level="3">
+          <blueprint type="armour" level="3" weight="20">
             <resource type="iron" quantity="20"/>
             <resource type="stone" quantity="10"/>
             <resource type="wood" quantity="10"/>
             <resource type="gold" quantity="10"/>
-            <weight>20</weight>
           </blueprint>
 		
           <blueprint type="tower" level="1" upgradeCost="5">

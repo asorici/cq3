@@ -1,14 +1,11 @@
 package org.aimas.craftingquest.core.actions;
 
-import java.util.Iterator;
-
+import org.aimas.craftingquest.core.GamePolicy;
 import org.aimas.craftingquest.state.Blueprint;
 import org.aimas.craftingquest.state.GameState;
 import org.aimas.craftingquest.state.PlayerState;
 import org.aimas.craftingquest.state.Transition;
 import org.aimas.craftingquest.state.Transition.ActionType;
-import org.aimas.craftingquest.state.objects.CraftedObjectType;
-import org.aimas.craftingquest.state.resources.ResourceType;
 import org.aimas.craftingquest.state.TransitionResult;
 
 public class UpgradeAction extends Action {
@@ -22,8 +19,8 @@ public class UpgradeAction extends Action {
 			Transition transition) {
 		Blueprint playerBlueprint = (Blueprint) transition.operands[1];
 		Blueprint blueprint; // the real one
-		if (game.blueprints.contains(playerBlueprint)) {
-			blueprint = game.blueprints.get(game.blueprints.indexOf(playerBlueprint));
+		if (GamePolicy.blueprints.contains(playerBlueprint)) {
+			blueprint = GamePolicy.blueprints.get(GamePolicy.blueprints.indexOf(playerBlueprint));
 		} else {
 			TransitionResult res = new TransitionResult(transition.id);
 			res.errorType = TransitionResult.TransitionError.BlueprintError;

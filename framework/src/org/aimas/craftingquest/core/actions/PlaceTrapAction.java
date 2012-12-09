@@ -1,8 +1,6 @@
 package org.aimas.craftingquest.core.actions;
 
-import java.util.ArrayList;
 import java.util.List;
-
 import org.aimas.craftingquest.core.GamePolicy;
 import org.aimas.craftingquest.state.Blueprint;
 import org.aimas.craftingquest.state.CellState;
@@ -12,7 +10,6 @@ import org.aimas.craftingquest.state.Transition;
 import org.aimas.craftingquest.state.Transition.ActionType;
 import org.aimas.craftingquest.state.TransitionResult;
 import org.aimas.craftingquest.state.objects.CraftedObjectType;
-import org.aimas.craftingquest.state.objects.Tower;
 import org.aimas.craftingquest.state.objects.TrapObject;
 
 public class PlaceTrapAction extends Action {
@@ -82,8 +79,8 @@ public class PlaceTrapAction extends Action {
 		
 		Blueprint playerBlueprint = (Blueprint) transition.operands[1];
 		Blueprint blueprint; // the real one
-		if (game.blueprints.contains(playerBlueprint)) {
-			blueprint = game.blueprints.get(game.blueprints.indexOf(playerBlueprint));
+		if (GamePolicy.blueprints.contains(playerBlueprint)) {
+			blueprint = GamePolicy.blueprints.get(GamePolicy.blueprints.indexOf(playerBlueprint));
 		} else {
 			TransitionResult res = new TransitionResult(transition.id);
 			res.errorType = TransitionResult.TransitionError.BlueprintError;

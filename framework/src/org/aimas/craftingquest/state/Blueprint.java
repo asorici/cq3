@@ -111,8 +111,11 @@ public class Blueprint implements Serializable {
 	}
 
 	@Override
-	public String toString() {		
-		return "Blueprint for " + type + "[level=" + level + ", weight=" + weight +"]";
+	public String toString() {
+		if(type == CraftedObjectType.ARMOUR || type == CraftedObjectType.SWORD)
+			return "Blueprint for " + type + ":[level=" + level + ", weight=" + weight +"]" + "[required-resources:" + requiredResources.toString() + "]";
+		else
+			return "Blueprint for " + type + ":[level=" + level +"]" + "[required-resources:" + requiredResources.toString() + "]";
 	}
 
 	/**
