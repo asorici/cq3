@@ -94,7 +94,9 @@ public class ActionEngine {
 					
 					unit.energy -= drainAmount;						// drain unit energy
 					oppTower.weakenTower(drainAmount);				// and also weaken tower with the same amount
-					
+					state.playerStates.get(oppTower.getPlayerID()).availableTowers.remove(oppTower);
+					gui_logger.info(state.round.currentRound + " RemoveTower " + oppTower.getPosition().x + " " + oppTower.getPosition().y);
+					/*
 					if (oppTower.getRemainingStrength() <= 0) {		// if the tower has been weakened enough => destroy it
 						List<Integer> playerIds = state.getPlayerIds();
 						for (Integer pId : playerIds) {
@@ -125,7 +127,7 @@ public class ActionEngine {
 							}
 						}
 					}
-					
+					*/
 				}
 			}
 				
