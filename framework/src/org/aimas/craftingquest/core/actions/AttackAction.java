@@ -75,16 +75,12 @@ public class AttackAction extends Action {
 			attackedUnit.energy -= attackedUnit.retaliateEnergy;
 		}
 
-		// check for dead units
-		if (attackedUnit.life < 0) {
-			// TODO: remove from list
-			// TODO: increase scores
-		}
+		// check for dead units and update scores
+		if (attackedUnit.life < 0)
+			player.killOne();
 
-		if (playerUnit.life < 0) {
-			// TODO: remove from list
-			// TODO: increase scores
-		}
+		if (playerUnit.life < 0)
+			attackedPlayer.killOne();
 
 		TransitionResult res = new TransitionResult(transition.id);
 		res.errorType = TransitionResult.TransitionError.NoError;

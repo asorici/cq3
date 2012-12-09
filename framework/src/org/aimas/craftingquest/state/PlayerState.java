@@ -56,6 +56,11 @@ public class PlayerState implements Serializable {
 	 * the TransitionResult response for the last transition. It will be null if no transition was made.
 	 */
 	public TransitionResult response;				// last transition response
+
+	/***************************
+	 * Statistics
+	 ***************************/
+	private int kills;
 	
 	/* game mechanics time */
 	/**
@@ -75,6 +80,9 @@ public class PlayerState implements Serializable {
 		availableTowers = new ArrayList<Tower>();
 		
 		round = new RoundState();
+
+		/* initial statistics */
+		kills = 0;
 	}
 
 	@Override
@@ -93,8 +101,19 @@ public class PlayerState implements Serializable {
 		for (UnitState unit : units) {
 			info += "        " + unit + "\n";
 		}
+
+		/* statistics */
+		info += "    Kills: " + kills + "\n";
 		
 		return info;
+	}
+
+	public int getKills() {
+		return kills;
+	}
+
+	public void killOne() {
+		kills++;
 	}
 
 	public int getGold() {
