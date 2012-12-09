@@ -20,16 +20,6 @@ public class PickupObjectsAction extends Action {
 	@SuppressWarnings("unchecked")
 	@Override
 	protected TransitionResult handle(GameState game, PlayerState player, Transition transition) {
-		
-		// check if frozen
-		if (playerUnit.isFrozen()) {
-			TransitionResult res = new TransitionResult(transition.id);
-			res.errorType = TransitionResult.TransitionError.Frozen;
-			res.errorReason = "Unit is frozen";
-			return res;
-		}
-		
-		
 		// get objects
 		HashMap<ICrafted, Integer> requiredObjects = 
 				(HashMap<ICrafted, Integer>)transition.operands[1];

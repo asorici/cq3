@@ -19,15 +19,6 @@ public class EquipAction extends Action {
 	@Override
 	protected TransitionResult handle(GameState game, PlayerState player,
 			Transition transition) {
-		// check if frozen
-		if (playerUnit.isFrozen()) {
-			TransitionResult res = new TransitionResult(transition.id);
-			res.errorType = TransitionResult.TransitionError.Frozen;
-			res.errorReason = "Unit is frozen";
-			return res;
-		}
-		
-		
 		ICrafted target = (ICrafted)transition.operands[1];
 		
 		// check that the unit has the required resources/objects required for

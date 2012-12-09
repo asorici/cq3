@@ -20,7 +20,6 @@ public class UpgradeAction extends Action {
 	@Override
 	protected TransitionResult handle(GameState game, PlayerState player,
 			Transition transition) {
-		
 		Blueprint playerBlueprint = (Blueprint) transition.operands[1];
 		Blueprint blueprint; // the real one
 		if (game.blueprints.contains(playerBlueprint)) {

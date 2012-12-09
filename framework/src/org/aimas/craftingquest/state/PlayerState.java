@@ -185,6 +185,10 @@ public class PlayerState implements Serializable {
 			frozenUnits.remove(u);
 	}
 
+	public void freeze(UnitState unit, int level) {
+		frozenUnits.put(unit, level);
+	}
+
 	public boolean isFrozen(UnitState unit) {
 		return frozenUnits.containsKey(unit);
 	}

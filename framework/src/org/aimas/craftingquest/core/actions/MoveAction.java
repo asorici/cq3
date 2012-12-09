@@ -26,16 +26,6 @@ public class MoveAction extends Action {
 	@Override
 	protected TransitionResult handle(GameState game, PlayerState player,
 			Transition transition) {
-		
-		// check if frozen
-		if (playerUnit.isFrozen()) {
-			TransitionResult res = new TransitionResult(transition.id);
-			res.errorType = TransitionResult.TransitionError.Frozen;
-			res.errorReason = "Unit is frozen";
-			return res;
-		}
-		
-		
 		// check allowed distance
 		Point2i toPos = (Point2i) transition.operands[1];
 		Point2i fromPos = playerUnit.pos;
@@ -111,7 +101,7 @@ public class MoveAction extends Action {
 				) {
 			TrapObject trap = (TrapObject) game.map.cells[toPos.y][toPos.x].strategicObject;
 			playerUnit.energy = 0;
-			playerUnit.freeze(trap.getLevel()+1);
+			player.freeze(playerUnit, trap.getLevel()+1);
 			
 			
 
