@@ -60,13 +60,19 @@ public class AttackAction extends Action {
 			return res;
 		}
 
-		// compute attack power
-		int attackValue = computeAttackPower(energy, playerUnit, attackedUnit);
-
 		// do attack
+		int attackValue = computeAttackPower(energy, playerUnit, attackedUnit);
 		attackedUnit.life -= attackValue;
-		if (attackedUnit.life > 0) {
-			// TODO: do retaliate
+		playerUnit.energy -= energy;
+
+		// do retaliate
+		if (attackedUnit.life > 0 && attackedUnit.retaliateEnergy > 0 &&
+				attackedUnit.retaliateEnergy > attackedUnit.retaliateThreshold) {
+			int retaliateValue = computeAttackPower(
+					attackedUnit.retaliateEnergy,
+					attackedUnit, playerUnit);
+			playerUnit.life -= retaliateValue;
+			attackedUnit.energy -= attackedUnit.retaliateEnergy;
 		}
 
 		// check for dead units

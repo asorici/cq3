@@ -65,6 +65,8 @@ public class ActionEngine {
 		for (UnitState unit : player.units) {			// reset each unit's dig and scan results
 			unit.currentCellResources.clear();
 			unit.scannedResourceAttributes = null;
+			unit.retaliateEnergy = 0;
+			unit.retaliateThreshold = 0;
 		}
 	}
 	

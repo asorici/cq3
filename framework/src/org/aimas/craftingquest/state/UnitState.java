@@ -126,6 +126,8 @@ public class UnitState implements Serializable {
 	public UnitState() {
 		int sightDim = 2 * GamePolicy.sightRadius + 1;
 		sight = new CellState[sightDim][sightDim];
+		retaliateEnergy = 0;
+		retaliateThreshold = 0;
 	}
 
 	public UnitState(int id, int playerID, Point2i pos, int energy) {
@@ -138,6 +140,8 @@ public class UnitState implements Serializable {
 
 		int sightDim = 2 * GamePolicy.sightRadius + 1;
 		sight = new CellState[sightDim][sightDim];
+		retaliateEnergy = 0;
+		retaliateThreshold = 0;
 	}
 
 	@Override
