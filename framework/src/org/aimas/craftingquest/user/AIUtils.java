@@ -116,18 +116,18 @@ public class AIUtils {
 	 * @return  the list of traps that have been destroyed (they no longer appear in the server's view of the
 	 * <code><b>availableTowers</b></code> field from the player state) 
 	 */
-//	public static List<TrapObject> getDestroyedTraps(PlayerState clientPlayerState, PlayerState serverPlayerState) {
-//		List<TrapObject> clientPlayerTraps = clientPlayerState.availableTraps;
-//		List<TrapObject> serverPlayerTraps = serverPlayerState.availableTraps;
-//		
-//		List<TrapObject> diffList = new ArrayList<TrapObject>();
-//		
-//		for (TrapObject t: clientPlayerTraps) {
-//			if (!serverPlayerTraps.contains(t)) {
-//				diffList.add(t);
-//			}
-//		}
-//		
-//		return diffList;
-//	}
+	public static List<TrapObject> getDestroyedTraps(PlayerState clientPlayerState, PlayerState serverPlayerState) {
+		List<TrapObject> clientPlayerTraps = clientPlayerState.availableTraps;
+		List<TrapObject> serverPlayerTraps = serverPlayerState.availableTraps;
+		
+		List<TrapObject> diffList = new ArrayList<TrapObject>();
+		
+		for (TrapObject t: clientPlayerTraps) {
+			if (!serverPlayerTraps.contains(t)) {
+				diffList.add(t);
+			}
+		}
+		
+		return diffList;
+	}
 }
