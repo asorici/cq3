@@ -152,16 +152,14 @@ public class GamePolicy {
 		resourceMoveCost = Integer.parseInt(parametersNode.getElementsByTagName("resourceMoveCost").item(0).getTextContent());
 		pickupCost = Integer.parseInt(parametersNode.getElementsByTagName("pickupCost").item(0).getTextContent());
 		dropCost = Integer.parseInt(parametersNode.getElementsByTagName("dropCost").item(0).getTextContent());
-		scanCost = Integer.parseInt(parametersNode.getElementsByTagName("scanCost").item(0).getTextContent());
 		digCost = Integer.parseInt(parametersNode.getElementsByTagName("digCost").item(0).getTextContent());
 		buildCost = Integer.parseInt(parametersNode.getElementsByTagName("buildCost").item(0).getTextContent());
 		
 		placeTowerCost = Integer.parseInt(parametersNode.getElementsByTagName("placeTowerCost").item(0).getTextContent());
-		scanRadius = Integer.parseInt(parametersNode.getElementsByTagName("scanRadius").item(0).getTextContent());
 		sightRadius = Integer.parseInt(parametersNode.getElementsByTagName("sightRadius").item(0).getTextContent());
-		towerBaseRadius = Integer.parseInt(parametersNode.getElementsByTagName("towerCutoffRadius").item(0).getTextContent());
-		towerBaseDrain = Integer.parseInt(parametersNode.getElementsByTagName("towerDrainBase").item(0).getTextContent());
-		towerBaseEnergy = Integer.parseInt(parametersNode.getElementsByTagName("towerEnergy").item(0).getTextContent());
+		towerBaseRadius = Integer.parseInt(parametersNode.getElementsByTagName("towerBaseRadius").item(0).getTextContent());
+		towerBaseDrain = Integer.parseInt(parametersNode.getElementsByTagName("towerBaseDrain").item(0).getTextContent());
+		towerBaseEnergy = Integer.parseInt(parametersNode.getElementsByTagName("towerBaseEnergy").item(0).getTextContent());
 		String replenishType = parametersNode.getElementsByTagName("energyReplenishModel").item(0).getTextContent();
 		if (replenishType.equals("FullReplenish"))
 			energyReplenishModel = ReplenishType.FullReplenish;
