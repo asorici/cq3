@@ -82,14 +82,14 @@ public class ActionEngine {
 			List<Tower> opponentTowers = state.getOpponentTowers(playerID);
 			
 			for (Tower oppTower : opponentTowers) {
-				if (Math.abs(oppTower.getPosition().x - unit.pos.x) <= GamePolicy.towerCutoffRadius && 
-					Math.abs(oppTower.getPosition().y - unit.pos.y) <= GamePolicy.towerCutoffRadius) {
+				if (Math.abs(oppTower.getPosition().x - unit.pos.x) <= GamePolicy.towerBaseRadius && 
+					Math.abs(oppTower.getPosition().y - unit.pos.y) <= GamePolicy.towerBaseRadius) {
 					
 					int distance = Math.min( Math.abs(oppTower.getPosition().x - unit.pos.x), Math.abs(oppTower.getPosition().y - unit.pos.y) );
 					if (distance == 0) {	// can happen if a player constructs a tower in a cell
 						distance = 1;		// that contains an opponents unit
 					}
-					int drainAmount = GamePolicy.towerDrainBase / distance;
+					int drainAmount = GamePolicy.towerBaseDrain / distance;
 					
 					unit.energy -= drainAmount;						// drain unit energy
 					oppTower.weakenTower(drainAmount);				// and also weaken tower with the same amount
@@ -136,7 +136,7 @@ public class ActionEngine {
 		
 		for (Tower tower : playerState.availableTowers) {
 			int towerLevel = tower.getLevel();
-			int sightRadius = (int) (GamePolicy.towerCutoffRadius * 
+			int sightRadius = (int) (GamePolicy.towerBaseRadius * 
 					(1 + GamePolicy.levelIncrease[towerLevel - 1] / 100.0));
 			
 			CellState[][] towerSight = tower.sight;
@@ -159,7 +159,7 @@ public class ActionEngine {
 			for (UnitState unit : pState.units) {
 				unit.energy = EnergyReplenishModel
 					.getInstance(GamePolicy.energyReplenishModel)
-					.replenishEnergy(unit.energy, GamePolicy.unitEnergy);
+					.replenishEnergy(unit.energy, unit.life);
 			}
 		}
 	}

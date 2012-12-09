@@ -13,8 +13,8 @@ import org.aimas.craftingquest.state.resources.ResourceType;
 
 public class ResourceGenerator {
 	private static Random randGen = new Random();
-	private static int maxRequiredResPerObject = GamePolicy.unitEnergy / 5;
-	private static int maxRequiredCraftedObjects = GamePolicy.unitEnergy / 12;
+	private static int maxRequiredResPerObject = GamePolicy.initialUnitMaxLife / 5;
+	private static int maxRequiredCraftedObjects = GamePolicy.initialUnitMaxLife / 12;
 	
 	private static List<PlacementRegion> topPlacementRegions = new ArrayList<PlacementRegion>();
 	private static List<PlacementRegion> bottomPlacementRegions = new ArrayList<PlacementRegion>();

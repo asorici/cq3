@@ -57,22 +57,14 @@ public class GamePolicy {
 	public static MapState map;
 	
 	/* general */
-	public static int scanAttributeCount = 5;
 	public static Point2i mapsize = new Point2i(80, 80);
 	public static int moveBase = 20;
 	public static int resourceMoveCost = 1;
-	public static int initialTeamCredit = 300;
-	public static int unitEnergy = 150;
+	public static int initialTeamGold = 300;
+	public static int initialUnitMaxLife = 150;
 	public static ReplenishType energyReplenishModel = ReplenishType.FullReplenish;
-	public static int baseObjectValue = 100;
-	public static int valueIncrement = 20;
-
-	// Grass, Dirt, Sand, Snow, Rock, Swamp, Lake, DeepSea
-	// public static double[] movePenalty = {0, 0.2, 0.1, 0.25, -1, 0.25, 0, 0};
-	public static HashMap<CellType, Double> movePenalty = new HashMap<CellType, Double>();
-	// conventie: orice parametru cu valoare negativa nu se aplica
-	// moveCost = moveBase * (1 + movePenalty) + nrRes * resourceMoveCost;
 	
+	// Action costs
 	public static int pickupCost = 5;
 	public static int dropCost = 0;
 	public static int scanCost = 10;
@@ -80,19 +72,15 @@ public class GamePolicy {
 	public static int buildCost = 0;
 	public static int scanRadius = 7;
 	public static int sightRadius = 5;
-
 	public static int placeTowerCost = 75;
-	public static int towerCutoffRadius = 4;
-	public static int towerDrainBase = 100;
-	public static int towerEnergy = 250;
-	// drain = towerDrainBase / min(abs(tower.pos.x - player.pos.x), abs(..y))
-	
 	public static int placeTrapCost = 40;
-	
-//	public static HashMap<CellType, List<UnitType>> terrainMovePossibilities = new HashMap<CellType, List<UnitType>>();
+
+	// Tower related
+	public static int towerBaseRadius = 4;
+	public static int towerBaseDrain = 100;
+	public static int towerBaseEnergy = 100;
 	
 	public static int maxResourceSpots = 5;
-	public static int goldWeight = 4;
 	public static int leatherWeight = 1;
 	public static int stoneWeight = 2;
 	public static int woodWeight = 1;
@@ -100,12 +88,8 @@ public class GamePolicy {
 	public static int titaniumWeight = 9;
 	public static int ironWeight = 5;
 	
-	public static int towerBaseEnergy = 100;
-	
-	public static int attackBaseValue = 40;
-	public static int defenseBaseValue = 20;
-	
-	public static int[] levelIncrease = {10, 45, 70};
+	public static int maxLevels = 3;
+	public static int[] levelIncrease;
 	
 	
 	public static void initScenario() {
@@ -155,17 +139,14 @@ public class GamePolicy {
 		playerLateTime = Integer.parseInt(parametersNode.getElementsByTagName("playerLateTime").item(0).getTextContent());
 		updateTime = Integer.parseInt(parametersNode.getElementsByTagName("updateTime").item(0).getTextContent());
 		connectWaitTime = Integer.parseInt(parametersNode.getElementsByTagName("connectWaitTime").item(0).getTextContent());
-		//lastTurn = Integer.parseInt(parametersNode.getElementsByTagName("nrTurns").item(0).getTextContent());
+		lastTurn = Integer.parseInt(parametersNode.getElementsByTagName("nrTurns").item(0).getTextContent());
 		nrPlayerUnits = Integer.parseInt(parametersNode.getElementsByTagName("nrPlayerUnits").item(0).getTextContent());
-		//mapName = parametersNode.getElementsByTagName("mapName").item(0).getTextContent();
+		mapName = parametersNode.getElementsByTagName("mapName").item(0).getTextContent();
 	}
 	
 	private static void readScenarioParameters(Element parametersNode) {
-		scanAttributeCount = Integer.parseInt(parametersNode.getElementsByTagName("scanAttributeCount").item(0).getTextContent());
-		unitEnergy = Integer.parseInt(parametersNode.getElementsByTagName("unitEnergy").item(0).getTextContent());
-		baseObjectValue = Integer.parseInt(parametersNode.getElementsByTagName("baseObjectValue").item(0).getTextContent());
-		valueIncrement = Integer.parseInt(parametersNode.getElementsByTagName("valueIncrement").item(0).getTextContent());
-		initialTeamCredit = Integer.parseInt(parametersNode.getElementsByTagName("initialTeamCredit").item(0).getTextContent());
+		initialUnitMaxLife = Integer.parseInt(parametersNode.getElementsByTagName("unitEnergy").item(0).getTextContent());
+		initialTeamGold = Integer.parseInt(parametersNode.getElementsByTagName("initialTeamGold").item(0).getTextContent());
 		
 		moveBase = Integer.parseInt(parametersNode.getElementsByTagName("moveBaseCost").item(0).getTextContent());
 		resourceMoveCost = Integer.parseInt(parametersNode.getElementsByTagName("resourceMoveCost").item(0).getTextContent());
@@ -178,9 +159,9 @@ public class GamePolicy {
 		placeTowerCost = Integer.parseInt(parametersNode.getElementsByTagName("placeTowerCost").item(0).getTextContent());
 		scanRadius = Integer.parseInt(parametersNode.getElementsByTagName("scanRadius").item(0).getTextContent());
 		sightRadius = Integer.parseInt(parametersNode.getElementsByTagName("sightRadius").item(0).getTextContent());
-		towerCutoffRadius = Integer.parseInt(parametersNode.getElementsByTagName("towerCutoffRadius").item(0).getTextContent());
-		towerDrainBase = Integer.parseInt(parametersNode.getElementsByTagName("towerDrainBase").item(0).getTextContent());
-		towerEnergy = Integer.parseInt(parametersNode.getElementsByTagName("towerEnergy").item(0).getTextContent());
+		towerBaseRadius = Integer.parseInt(parametersNode.getElementsByTagName("towerCutoffRadius").item(0).getTextContent());
+		towerBaseDrain = Integer.parseInt(parametersNode.getElementsByTagName("towerDrainBase").item(0).getTextContent());
+		towerBaseEnergy = Integer.parseInt(parametersNode.getElementsByTagName("towerEnergy").item(0).getTextContent());
 		String replenishType = parametersNode.getElementsByTagName("energyReplenishModel").item(0).getTextContent();
 		if (replenishType.equals("FullReplenish"))
 			energyReplenishModel = ReplenishType.FullReplenish;
@@ -191,17 +172,6 @@ public class GamePolicy {
 		placeTrapCost = Integer.parseInt(parametersNode.getElementsByTagName("placeTrapCost").item(0).getTextContent());
 	}
 	
-	/*private static void readScenarioRules(Element ruleNode) {
-		// retrieve movePenalties
-		//Element movePenalties = (Element)ruleNode.getElementsByTagName("movePenalties").item(0);
-		NodeList penaltyList = movePenalties.getElementsByTagName("penalty");
-		for (int i = 0; i < penaltyList.getLength(); i++) {
-			Element penalty = (Element)penaltyList.item(i);
-			String terrain = penalty.getElementsByTagName("terrain").item(0).getTextContent();
-			double value = Double.parseDouble(penalty.getElementsByTagName("value").item(0).getTextContent());
-		}
-	}*/
-
 	public static void saveMapResources(GameState state) {
 		MapResourceWriter.saveMapResources(mapName, state); 
 	}
@@ -290,17 +260,6 @@ class MapReader {
 					cells[i][j] = new CellState(ct, new Point2i(j, i));
 				}
 			}
-			
-			// read merchant positions
-			/*
-			int ct = dis.readByte();	// merchant count
-			for (int i = 0; i < ct; i++) {
-				int x = dis.readByte();
-				int y = dis.readByte();
-				
-				cells[y][x].strategicResource = new Merchant(new Point2i(x, y));
-			}
-			*/
 			
 			dis.close();
 			fis.close();

@@ -66,7 +66,7 @@ public class UnitState implements Serializable {
 	 * The unit's maximum energy points.
 	 * Also, unit's life.
 	 */
-	public int maxEnergy;
+	public int life;
 
 	// must be cleared before each transition
 	/**
@@ -123,7 +123,7 @@ public class UnitState implements Serializable {
 		this.playerID = playerID;
 		this.pos = pos;
 		this.energy = energy;
-		this.maxEnergy = energy;
+		this.life = energy;
 		this.frozen = 0;
 
 		int sightDim = 2 * GamePolicy.sightRadius + 1;
@@ -133,7 +133,7 @@ public class UnitState implements Serializable {
 	@Override
 	public String toString() {
 		String info = "";
-		info += "playerID=" + playerID + " pos=" + pos + " energy=" + energy + " life=" + maxEnergy + "\n";
+		info += "playerID=" + playerID + " pos=" + pos + " energy=" + energy + " life=" + life + "\n";
 		info += "    carried resources: \n";
 		info += "        ";
 		for (ResourceType br : carriedResources.keySet()) {
@@ -160,10 +160,10 @@ public class UnitState implements Serializable {
 	public BasicUnit getOpponentPerspective() {
 		if (opponentPerspective == null) {
 			opponentPerspective = new BasicUnit();
-			opponentPerspective.set(id, playerID, energy, maxEnergy);
+			opponentPerspective.set(id, playerID, energy, life);
 		}
 		else {
-			opponentPerspective.set(id, playerID, energy, maxEnergy);
+			opponentPerspective.set(id, playerID, energy, life);
 		}
 		
 		return opponentPerspective;

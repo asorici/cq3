@@ -70,6 +70,9 @@ public class GameGenerator {
 					game.playerStates.put(player.id, player);
 				}
 			}
+			
+			/* initialize tower list for every player */
+//			game.initializeTowerLists();
 		}
 		else {
 			/*reset number of turns according to map size*/
@@ -120,6 +123,9 @@ public class GameGenerator {
 					game.playerStates.put(player.id, player);
 				}
 			}
+			
+			/* initialize tower list for every player */
+//			game.initializeTowerLists();
 		}
 		
 		printResourceStatistics(game.resourceAmountsByType, game.blueprints);
@@ -183,7 +189,7 @@ public class GameGenerator {
 	private static PlayerState setupPlayerState(int playerID, int nrUnits, Point2i initPos, MapState map) {
 		PlayerState pState = new PlayerState();
 		pState.id = playerID;
-		pState.gold = GamePolicy.initialTeamCredit;
+		pState.gold = GamePolicy.initialTeamGold;
 		
 		pState.round.currentRound = 0;
 		pState.round.noRounds = GamePolicy.lastTurn;
@@ -226,7 +232,7 @@ public class GameGenerator {
 			}
 			
 			int unitID = playerID * nrUnits + i;
-			UnitState unit = new UnitState(unitID, playerID, /*utype,*/ unitPos, GamePolicy.unitEnergy);
+			UnitState unit = new UnitState(unitID, playerID, /*utype,*/ unitPos, GamePolicy.initialUnitMaxLife);
 			
 			// set unit's sight
 			for (int ii = 0, y = unit.pos.y - GamePolicy.sightRadius; y <= unit.pos.y + GamePolicy.sightRadius; y++, ii++) {
