@@ -2,7 +2,6 @@ package org.aimas.craftingquest.core.actions;
 
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
 
 import org.aimas.craftingquest.core.GamePolicy;
 import org.aimas.craftingquest.state.CellState;
@@ -10,9 +9,8 @@ import org.aimas.craftingquest.state.GameState;
 import org.aimas.craftingquest.state.PlayerState;
 import org.aimas.craftingquest.state.Transition;
 import org.aimas.craftingquest.state.Transition.ActionType;
-import org.aimas.craftingquest.state.objects.CraftedObject;
-import org.aimas.craftingquest.state.objects.Tower;
 import org.aimas.craftingquest.state.TransitionResult;
+import org.aimas.craftingquest.state.objects.ICrafted;
 
 public class PickupObjectsAction extends Action {
 	public PickupObjectsAction(ActionType type) {
@@ -23,8 +21,8 @@ public class PickupObjectsAction extends Action {
 	@Override
 	protected TransitionResult handle(GameState game, PlayerState player, Transition transition) {
 		// get objects
-		HashMap<CraftedObject, Integer> requiredObjects = 
-				(HashMap<CraftedObject, Integer>)transition.operands[1];
+		HashMap<ICrafted, Integer> requiredObjects = 
+				(HashMap<ICrafted, Integer>)transition.operands[1];
 		
 		// check that enough energy points are available for this operation
 		if (playerUnit.energy < GamePolicy.pickupCost) {
@@ -35,6 +33,9 @@ public class PickupObjectsAction extends Action {
 		}
 
 		// check that no opponent tower is guarding the resources
+		/**
+		 * parca am hotarat ca nu ii lasam sa ia resurse, cu pretul damage-ului provocat de turn
+		 *
 		boolean objectsGuarded = false;
 		for (Integer pId : game.getPlayerIds()) {
 			if (pId != player.id) {
@@ -59,29 +60,38 @@ public class PickupObjectsAction extends Action {
 			res.errorReason = "Cannot pickup objects from guarded area.";
 			return res;
 		}
+		*/
 
 		// check that the desired (res, quantity) pairs can be satisfied by the
 		// current cell
 		// and do the pickup where conditions are met
 		CellState miningCell = game.map.cells[playerUnit.pos.y][playerUnit.pos.x];
-		HashMap<CraftedObject, Integer> cellObjects = miningCell.craftedObjects;
-		HashMap<CraftedObject, Integer> carriedObjects = playerUnit.carriedObjects;
+		HashMap<ICrafted, Integer> cellObjects = miningCell.craftedObjects;
+		HashMap<ICrafted, Integer> carriedObjects = playerUnit.carriedObjects;
 
-		Iterator<CraftedObject> it = requiredObjects.keySet().iterator();
+		Iterator<ICrafted> it = requiredObjects.keySet().iterator();
 		while (it.hasNext()) {
-			CraftedObject res = it.next();
+			ICrafted res = it.next();
 			Integer required = requiredObjects.get(res);
 			Integer available = cellObjects.get(res);
 
-			if (available != null && required <= available) {
+			if (available != null) {
 				Integer carried = carriedObjects.get(res);
-				if (carried == null) {
-					carriedObjects.put(res, required);
+				if (required < available) {
+					if (carried == null) {
+						carriedObjects.put(res, required);
+					} else {
+						carriedObjects.put(res, carried + required);
+					}
+					cellObjects.put(res, available - required);
 				} else {
-					carriedObjects.put(res, carried + required);
+					if (carried == null) {
+						carriedObjects.put(res, available);
+					} else {
+						carriedObjects.put(res, carried + available);
+					}
+					cellObjects.remove(res);
 				}
-
-				carriedObjects.put(res, available - required);
 			}
 		}
 
@@ -94,11 +104,9 @@ public class PickupObjectsAction extends Action {
 	@SuppressWarnings("unchecked")
 	@Override
 	protected boolean validOperands(Transition transition) {
-		HashMap<CraftedObject, Integer> requiredObjects = null;
-		
+		HashMap<ICrafted, Integer> requiredObjects = null;
 		try{
-			requiredObjects = (HashMap<CraftedObject, Integer>)transition.operands[1];
-			
+			requiredObjects = (HashMap<ICrafted, Integer>)transition.operands[1];
 			// check for valid operand
 			if (requiredObjects == null) {
 				return false;
@@ -107,7 +115,6 @@ public class PickupObjectsAction extends Action {
 		catch(ClassCastException ex) {
 			return false;
 		}
-		
 		return true;
 	}
 
