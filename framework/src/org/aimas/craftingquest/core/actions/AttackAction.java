@@ -66,8 +66,9 @@ public class AttackAction extends Action {
 		playerUnit.energy -= energy;
 
 		// do retaliate
-		if (attackedUnit.life > 0 && attackedUnit.retaliateEnergy > 0 &&
-				attackedUnit.retaliateEnergy > attackedUnit.retaliateThreshold) {
+		if (attackedUnit.life > 0 && attackedUnit.retaliateEnergy >= 0 &&
+				attackedUnit.retaliateEnergy >= attackedUnit.retaliateThreshold &&
+				attackedUnit.retaliateEnergy <= attackedUnit.energy) {
 			int retaliateValue = computeAttackPower(
 					attackedUnit.retaliateEnergy,
 					attackedUnit, playerUnit);
