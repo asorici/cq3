@@ -66,8 +66,9 @@ public class GamePolicy {
 	public static int initialTeamGold = 300;
 	public static int initialUnitMaxLife = 150;
 	public static ReplenishType energyReplenishModel = ReplenishType.FullReplenish;
+	public static int movePenaltyWeight = 50;
 	
-	// Action costs
+	/* action costs */
 	public static int pickupCost = 5;
 	public static int dropCost = 0;
 	public static int scanCost = 10;
@@ -78,7 +79,7 @@ public class GamePolicy {
 	public static int placeTowerCost = 75;
 	public static int placeTrapCost = 40;
 
-	// Tower related
+	/* tower related */
 	public static int towerBaseRadius = 4;
 	public static int towerBaseDrain = 100;
 	public static int towerBaseEnergy = 100;
@@ -91,9 +92,11 @@ public class GamePolicy {
 	public static int titaniumWeight = 9;
 	public static int ironWeight = 5;
 	
+	/* leveling */
 	public static int maxLevels = 3;
 	public static int[] levelIncrease;
 	
+	/* blueprints */
 	public static List<Blueprint> blueprints;
 	
 	public static void initScenario() {
@@ -147,6 +150,7 @@ public class GamePolicy {
 		connectWaitTime = Integer.parseInt(parametersNode.getElementsByTagName("connectWaitTime").item(0).getTextContent());
 		lastTurn = Integer.parseInt(parametersNode.getElementsByTagName("nrTurns").item(0).getTextContent());
 		nrPlayerUnits = Integer.parseInt(parametersNode.getElementsByTagName("nrPlayerUnits").item(0).getTextContent());
+		movePenaltyWeight = Integer.parseInt(parametersNode.getElementsByTagName("movePenaltyWeight").item(0).getTextContent());
 		mapName = parametersNode.getElementsByTagName("mapName").item(0).getTextContent();
 	}
 	

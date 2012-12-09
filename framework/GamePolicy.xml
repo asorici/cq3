@@ -3,7 +3,7 @@
 	<parameters>
 
 		<!-- general server configurations -->		
-
+	
 		<maxPlayers>4</maxPlayers>
 		<playerActionTime>1000</playerActionTime>
 		<playerLateTime>100</playerLateTime>
@@ -11,33 +11,34 @@
 		<connectWaitTime>5000</connectWaitTime>
 		<nrTurns>180</nrTurns>		
 		<mapName>map_v1.cqm</mapName>
-
-
-
-        <!-- scenario specific configurations -->
-
-        <nrPlayers>4</nrPlayers>
-        <nrPlayerUnits>10</nrPlayerUnits>
-        <initialTeamGold>100</initialTeamGold>
-        <unitEnergy>150</unitEnergy>
+	
+	
+	
+	    <!-- scenario specific configurations -->
+	
+	    <nrPlayers>4</nrPlayers>
+	    <nrPlayerUnits>10</nrPlayerUnits>
+	    <initialTeamGold>100</initialTeamGold>
+	    <unitEnergy>150</unitEnergy>
 		<sightRadius>5</sightRadius>
 		<energyReplenishModel>ExponentialReplenish</energyReplenishModel>
-
-        <attackBaseValue>30</attackBaseValue>
-        <defenseBaseValue>10</defenseBaseValue>
-
+	
+	    <attackBaseValue>30</attackBaseValue>
+	    <defenseBaseValue>10</defenseBaseValue>
+	
 		<towerBaseRadius>4</towerBaseRadius>
 		<towerBaseDrain>60</towerBaseDrain>
 		<towerBaseEnergy>250</towerBaseEnergy>
-
-        <levels>
-          <maxLevels>3</maxLevels>
-          <level value="1" percentage="10" />
-          <level value="2" percentage="30" />
-          <level value="3" percentage="50" />
-        </levels>
-
+		
+	    <levels>
+	      <maxLevels>3</maxLevels>
+	      <level value="1" percentage="10" />
+	      <level value="2" percentage="30" />
+	      <level value="3" percentage="50" />
+	    </levels>
+		
 		<moveBaseCost>20</moveBaseCost>
+		<movePenaltyWeight>50</movePenaltyWeight>
 		<resourceMoveCost>1</resourceMoveCost>
 		<pickupCost>5</pickupCost>
 		<dropCost>0</dropCost>
@@ -45,7 +46,7 @@
 		<buildCost>0</buildCost>
 		<placeTowerCost>75</placeTowerCost>
 		<placeTrapCost>40</placeTrapCost>
-        </parameters>
+	</parameters>
 
 
         
