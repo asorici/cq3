@@ -27,8 +27,15 @@ public class GameState implements Serializable {
 	public HashMap<Integer, List<TrapObject>> playerTraps;
 	public HashMap<ResourceType, Integer> resourceAmountsByType;
 	
+	public int lastKiller;
+	public int consecutiveKills;
+	public boolean somebodyDied;
+	
 	public GameState() {
 		playerStates = new HashMap<Integer, PlayerState>();
+		
+		lastKiller = -1;
+		somebodyDied = false;
 		
 		round = new RoundState();
 		round.currentRound = 0;
@@ -100,5 +107,22 @@ public class GameState implements Serializable {
 			}
 		}
 		return null;
+	}
+	
+	public void killOne(int playerID) {
+		if (somebodyDied == false) {
+			somebodyDied = true;
+			playerStates.get(playerID).setFirstBlood(1);
+		}
+		if (playerID == lastKiller) {
+			consecutiveKills++;
+			if (consecutiveKills == GamePolicy.killingSpreeThreshold) {
+				playerStates.get(playerID).addKillingSpree();
+				consecutiveKills = 0;
+			}
+		} else {
+			lastKiller = playerID;
+			consecutiveKills = 0;
+		}
 	}
 }

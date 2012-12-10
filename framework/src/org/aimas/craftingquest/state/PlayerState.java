@@ -80,6 +80,10 @@ public class PlayerState implements Serializable {
 	 * the round information
 	 */
 	public RoundState round;
+
+	private int killingSprees;
+
+	private int firstBlood;
 	
 	public long currentTime() {
 		return System.currentTimeMillis();
@@ -102,6 +106,8 @@ public class PlayerState implements Serializable {
 		deadUnits = 0;
 		placedTowers = 0;
 		retaliationKills = 0;
+		killingSprees = 0;
+		firstBlood = 0;
 	}
 
 	@Override
@@ -244,5 +250,23 @@ public class PlayerState implements Serializable {
 
 	public boolean isFrozen(UnitState unit) {
 		return frozenUnits.containsKey(unit);
+	}
+
+	public int getKillingSprees() {
+		return killingSprees;
+	}
+
+	public int getFirstBlood() {
+		return firstBlood;
+	}
+
+	public void addKillingSpree() {
+		killingSprees++;
+		
+	}
+
+	public void setFirstBlood(int firstBlood) {
+		this.firstBlood = firstBlood;
+		
 	}
 }
