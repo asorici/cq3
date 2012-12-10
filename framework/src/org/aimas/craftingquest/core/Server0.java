@@ -11,6 +11,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ArrayList;
@@ -23,9 +24,11 @@ import org.aimas.craftingquest.gui.GraphicInterface;
 import org.aimas.craftingquest.state.Blueprint;
 import org.aimas.craftingquest.state.GameState;
 import org.aimas.craftingquest.state.PlayerState;
+import org.aimas.craftingquest.state.Point2i;
 import org.aimas.craftingquest.state.Transition;
 import org.aimas.craftingquest.state.Transition.ActionType;
 import org.aimas.craftingquest.state.objects.ICrafted;
+import org.aimas.craftingquest.state.resources.ResourceType;
 import org.aimas.craftingquest.state.TransitionResult;
 import org.aimas.craftingquest.state.UnitState;
 import org.apache.log4j.Logger;
@@ -86,7 +89,7 @@ public class Server0 implements IServer {
 		}
 		
 		if (System.getProperty("savemap") != null) {
-			boolean savemap = Boolean.parseBoolean(System.getProperty("savemap"));
+			/*boolean savemap =*/ Boolean.parseBoolean(System.getProperty("savemap"));
 			GamePolicy.saveMapResources(state);
 		}
 		
@@ -359,7 +362,50 @@ public class Server0 implements IServer {
 				unitsToRemove.add(unit);
 		}
 		player.units.removeAll(unitsToRemove);
-
+		
+		// clean & respawn units
+		for (UnitState removedUnit : unitsToRemove) {
+			HashMap<ResourceType, Integer> visibleCellResources = state.map.cells[removedUnit.pos.y][removedUnit.pos.x].visibleResources;
+			HashMap<ResourceType, Integer> carriedResources = removedUnit.carriedResources;
+			
+			// drop all resources
+			Iterator<ResourceType> rit = carriedResources.keySet().iterator();
+			while(rit.hasNext()) {
+				ResourceType res = rit.next();
+				Integer existing = visibleCellResources.get(res);
+				Integer carried = carriedResources.get(res);
+				if (existing == null) {
+					visibleCellResources.put(res, carried);
+				} else {
+					visibleCellResources.put(res, existing + carried);
+				}
+				carriedResources.remove(res);
+			}
+			
+			// drop all objects
+			HashMap<ICrafted, Integer> cellObjects = state.map.cells[removedUnit.pos.y][removedUnit.pos.x].craftedObjects;
+			HashMap<ICrafted, Integer> carriedObjects = removedUnit.carriedObjects;
+		
+			Iterator<ICrafted> oit = carriedObjects.keySet().iterator();
+			while(oit.hasNext()) {
+				ICrafted obj = oit.next();
+				Integer existing = cellObjects.get(obj);
+				Integer carried = carriedObjects.get(obj);
+				if (existing == null) {
+					cellObjects.put(obj, carried);
+				} else {
+					cellObjects.put(obj, existing + carried);
+				}
+				carriedObjects.remove(obj);
+			}
+			
+			int respawn_x = 0;
+			int respawn_y = 0;
+			removedUnit.pos = new Point2i(respawn_x, respawn_y);
+			player.units.add(removedUnit);
+		}
+		
+		
 		printToGuiLog(player, action);
 		
 		return player;
