@@ -67,7 +67,7 @@ public class PickupResourcesAction extends Action {
 		CellState miningCell = game.map.cells[playerUnit.pos.y][playerUnit.pos.x];
 
 		HashMap<ResourceType, Integer> cellResources = miningCell.resources;
-		TreeSet<ResourceType> cellResourceTypess = miningCell.resourceTypes;
+		TreeSet<ResourceType> cellResourceTypes = miningCell.resourceTypes;
 		HashMap<ResourceType, Integer> visibleCellResources = miningCell.visibleResources;
 		HashMap<ResourceType, Integer> carriedResources = playerUnit.carriedResources;
 
@@ -111,7 +111,7 @@ public class PickupResourcesAction extends Action {
 			}
 			if (available != null && available ==0) {
 				cellResources.remove(res);
-				cellResourceTypess.remove(res);
+				cellResourceTypes.remove(res);
 			}
 		}
 

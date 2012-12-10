@@ -36,9 +36,7 @@ public class MapReader {
 			
 			for (Point2i p : cellResourceMap.keySet()) {
 				int x = p.x;
-				int y = p.y;
-				
-				System.out.println("pos: " + p + " -- " + cellResourceMap.get(p));
+				int y = p.y;				
 				
 				cells[y][x].cellResources = cellResourceMap.get(p);
 			}

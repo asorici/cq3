@@ -1,7 +1,6 @@
 package org.aimas.craftingquest.core;
 
 import java.io.BufferedReader;
-import java.io.DataInputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -14,13 +13,9 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.aimas.craftingquest.core.energyreplenishmodels.ReplenishType;
-
 import org.aimas.craftingquest.mapeditor.MapCell;
-
 import org.aimas.craftingquest.state.Blueprint;
-
 import org.aimas.craftingquest.state.CellState;
-import org.aimas.craftingquest.state.CellState.CellType;
 import org.aimas.craftingquest.state.GameState;
 import org.aimas.craftingquest.state.MapState;
 import org.aimas.craftingquest.state.Point2i;
@@ -61,7 +56,7 @@ public class GamePolicy {
 	public static int lastTurn = 160;
 	
 	/* game map */
-	public static String mapName = "map_v1.cqm";
+	public static String mapName = "map_cq3_v1.cqm";
 	public static MapState map;
 	
 	/* general */

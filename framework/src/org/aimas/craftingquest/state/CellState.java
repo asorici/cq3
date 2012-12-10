@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.TreeSet;
 
 import org.aimas.craftingquest.state.objects.ICrafted;
 import org.aimas.craftingquest.state.objects.IStrategic;
@@ -58,6 +59,12 @@ public class CellState implements Serializable {
 	 * declared <code>transient</code> and thus will not be serialized.
 	 */
 	public transient HashMap<ResourceType, Integer> resources = new HashMap<ResourceType, Integer>();
+	
+	/**
+	 * the list of resources present in this cell. No quantity information is available. That can
+	 * only be determined by doing a <code><b>dig<b></code> action in this cell.
+	 */
+	public TreeSet<ResourceType> resourceTypes = new TreeSet<ResourceType>();
 	
 	public CellState() {
 	}

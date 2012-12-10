@@ -238,7 +238,7 @@ public class EditorInterface extends JFrame implements ActionListener, ItemListe
 			for (int i = 0; i < height; i++) {
 				for (int j = 0; j < width / 2; j++) {
 					terrain[i][width - 1 - j].cellType = terrain[i][j].cellType;
-					terrain[i][width - 1 - j].cellResources = terrain[i][j].cellResources;
+					terrain[i][width - 1 - j].cellResources.putAll(terrain[i][j].cellResources);
 				}
 			}
 			

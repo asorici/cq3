@@ -382,7 +382,22 @@ public class EditorCanvas extends Canvas implements MouseListener, MouseMotionLi
 		    int xcoord = (x - offsetX) / CELL_DIM;
 	    	int ycoord = (y - offsetY) / CELL_DIM;
 	    	
-	    	cells[ycoord][xcoord].cellType = CellType.Grass;
+	    	//cells[ycoord][xcoord].cellType = CellType.Grass;
+	    	if (selectionType == SelectionType.TERRAIN) {
+	    		cells[ycoord][xcoord].cellType = selectedTerrainType;
+	    	}
+	    	else if (selectionType == SelectionType.RESOURCE) {
+	    		// otherwise we are in resource selection mode
+				Map<ResourceType, Integer> cellResources = cells[ycoord][xcoord].cellResources; 
+				
+				if (cellResources.get(selectedResourceType) == null) {
+					cellResources.put(selectedResourceType, selectedResourceQuantity);
+				}
+				else {
+					int prevQuantity = cellResources.get(selectedResourceType);
+					cellResources.put(selectedResourceType, prevQuantity + selectedResourceQuantity);
+				}
+	    	}
 	    	
 	    	repaint();
 	    	miniMap.repaint();
