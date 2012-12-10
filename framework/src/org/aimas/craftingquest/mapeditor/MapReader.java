@@ -1,46 +1,67 @@
 package org.aimas.craftingquest.mapeditor;
 
-import java.io.DataInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.util.HashMap;
 
-import org.aimas.craftingquest.state.CellState;
-import org.aimas.craftingquest.state.CellState.CellType;
+import org.aimas.craftingquest.state.Point2i;
+import org.aimas.craftingquest.state.resources.ResourceType;
 
 public class MapReader {
 	public static int mapWidth;
 	public static int mapHeight;
-	public static int nrTurns;
 	public static MapCell[][] cells;
 	
 	public static void readMap(File mapFile) {
+		FileInputStream fis = null;
+		ObjectInputStream objin = null;
+		
 		try {
-			FileInputStream fis = new FileInputStream(mapFile);
-			DataInputStream dis = new DataInputStream(fis);
+			fis = new FileInputStream(mapFile);
+			objin = new ObjectInputStream(fis); 
 			
-			// read general info
-			mapHeight = dis.readInt();
-			mapWidth = dis.readInt();
-			nrTurns = dis.readInt();
+			// read terrain data
+			cells = (MapCell[][])objin.readObject();
 			
-			// read terrain info
-			cells = new MapCell[mapHeight][mapWidth];
-			for (int i = 0; i < mapHeight; i++) {
-				for (int j = 0; j < mapWidth; j++) {
-					int cellTypeOrdinal = dis.readByte();
-					CellType ct = CellState.getCellTypeByOrdinal(cellTypeOrdinal);
-					cells[i][j] = new MapCell(ct, null);
-				}
+			// set general info
+			mapHeight = cells.length;
+			mapWidth = cells[0].length;
+			
+			// read resources map and set resources in cells
+			HashMap<Point2i, HashMap<ResourceType, Integer>> cellResourceMap = 
+					(HashMap<Point2i, HashMap<ResourceType, Integer>>)objin.readObject();
+			
+			for (Point2i p : cellResourceMap.keySet()) {
+				int x = p.x;
+				int y = p.y;
+				
+				System.out.println("pos: " + p + " -- " + cellResourceMap.get(p));
+				
+				cells[y][x].cellResources = cellResourceMap.get(p);
 			}
 			
-			dis.close();
-			fis.close();
 		} catch(FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} finally{
+			//Close the ObjectInputStream
+            try {
+                if (objin != null) {
+                    objin.close();
+                }
+                
+                if (fis != null) {
+                	fis.close();
+                }
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
 		}
 	}
 }

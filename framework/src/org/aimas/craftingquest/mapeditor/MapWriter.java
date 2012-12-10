@@ -5,18 +5,18 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.io.ObjectOutputStream;
+import java.util.HashMap;
 
+import org.aimas.craftingquest.state.CellState;
 import org.aimas.craftingquest.state.Point2i;
+import org.aimas.craftingquest.state.resources.ResourceType;
 
 public class MapWriter {
 	private int mapWidth;
 	private int mapHeight;
-	private int nrTurns;
 	private MapCell[][] terrain;
 	private File file;
-	
-	private ArrayList<Point2i> merchantPositions = new ArrayList<Point2i>();
 	
 	public MapWriter(File file, MapCell[][] terrain) {
 		this.file = file;
@@ -28,73 +28,42 @@ public class MapWriter {
 		if (mapHeight != mapWidth) {
 			throw new IllegalArgumentException("Map creation error. Height and width do not match.");
 		}
-		
-		nrTurns = 160;
-		if (mapWidth > 60 && mapWidth <= 80) {
-			nrTurns = 240;
-		}
-		
-		if (mapWidth > 80) {
-			nrTurns = 320;
-		}
-		
-		for (int i = 0; i < mapHeight; i++) {
-			for (int j = 0; j < mapWidth; j++) {
-				if (terrain[i][j].strategicResType != null) {
-					merchantPositions.add(new Point2i(j, i));
-				}
-			}
-		}
 	}
 	
 	public void writeMap() {
-		FileOutputStream fos = null;
-		DataOutputStream dos = null;
+		FileOutputStream fout = null;
+		ObjectOutputStream objout = null;
 		
 		try {
-			fos = new FileOutputStream(file);
-			dos = new DataOutputStream(fos);
+			fout = new FileOutputStream(file);
+			objout = new ObjectOutputStream(fout);
 			
-			writeGeneralInfo(dos);
-			writeTerrain(dos);
-			writeMerchantPositions(dos);
+			// build resource
+			HashMap<Point2i, HashMap<ResourceType, Integer>> cellResourceMap = new HashMap<Point2i, HashMap<ResourceType,Integer>>();
 			
-			dos.close();
-			fos.close();
+			// build CellState structure
+			CellState[][] cells = new CellState[mapHeight][mapWidth];
+			for (int i = 0; i < mapHeight; i++) {
+				for(int j = 0; j < mapWidth; j++) {
+					Point2i pos = new Point2i(j, i);
+					cells[i][j] = new CellState(terrain[i][j].cellType, pos);
+					cellResourceMap.put(pos, terrain[i][j].cellResources);
+				}
+			}
 			
+			// write cell data
+			objout.writeObject(terrain);
+			
+			// write resource map
+			objout.writeObject(cellResourceMap);
+			
+			objout.flush();
+			objout.close();
+			fout.close();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
-		}
-	}
-	
-	private void writeGeneralInfo(DataOutputStream dos) throws IOException {
-		/* write map width and height */
-		dos.writeInt(mapHeight);
-		dos.writeInt(mapWidth);
-		
-		/* write number of turns */
-		dos.writeInt(nrTurns);
-		
-	}
-	
-	private void writeTerrain(DataOutputStream dos) throws IOException {
-		/* write map cell types */
-		
-		for (int i = 0; i < mapHeight; i++) {
-			for(int j = 0; j < mapWidth; j++) {
-				dos.writeByte(terrain[i][j].cellType.ordinal());
-			}
-		}
-	}
-	
-	private void writeMerchantPositions(DataOutputStream dos) throws IOException {
-		dos.writeByte(merchantPositions.size());
-		
-		for (Point2i pos : merchantPositions) {
-			dos.writeByte(pos.x);
-			dos.writeByte(pos.y);
 		}
 	}
 }

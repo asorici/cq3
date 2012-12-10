@@ -7,10 +7,12 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.HashMap;
 
 import org.aimas.craftingquest.core.energyreplenishmodels.ReplenishType;
+import org.aimas.craftingquest.mapeditor.MapCell;
 import org.aimas.craftingquest.state.CellState;
 import org.aimas.craftingquest.state.CellState.CellType;
 import org.aimas.craftingquest.state.GameState;
@@ -96,9 +98,10 @@ public class GamePolicy {
 		
 		Document paramDoc = GameUtils.readXMLDocument("GamePolicy.xml");
 		MapReader.readMap("mapdata");
+		
 		mapsize = new Point2i(MapReader.mapWidth, MapReader.mapHeight);
 		mapName = MapReader.mapName;
-		lastTurn = MapReader.nrTurns;
+		
 		if (MapReader.mapWidth >= 60 && MapReader.mapWidth < 70) {
 			lastTurn = 160;
 		}
@@ -212,14 +215,12 @@ class MapResourceWriter {
 class MapReader {
 	public static int mapWidth;
 	public static int mapHeight;
-	public static int nrTurns;
-	public static String mapName = "map_v1.cqm"; 
+	
+	public static String mapName = "map_cq3_v1.cqm"; 
 	public static CellState[][] cells;
 	
 	public static void readMap(String mapDatafilename) {
-		//Element root = (Element)paramDoc.getDocumentElement();
-		//Element parametersNode = (Element)root.getElementsByTagName("parameters").item(0);
-		//mapName = parametersNode.getElementsByTagName("mapName").item(0).getTextContent();
+		
 		BufferedReader reader = null;
 		try {
 			reader = new BufferedReader(new FileReader(mapDatafilename));
@@ -240,31 +241,55 @@ class MapReader {
 		
 		String mapFile = "maps/" + mapName;
 		
+		FileInputStream fis = null;
+		ObjectInputStream objin = null;
+		
 		try {
-			FileInputStream fis = new FileInputStream(mapFile);
-			DataInputStream dis = new DataInputStream(fis);
+			fis = new FileInputStream(mapFile);
+			objin = new ObjectInputStream(fis);
 			
-			// read general info
-			mapHeight = dis.readInt();
-			mapWidth = dis.readInt();
-			nrTurns = dis.readInt();
+			// read terrain data
+			MapCell[][] terrain = (MapCell[][])objin.readObject();
+						
+			// set general info
+			mapHeight = terrain.length;
+			mapWidth = terrain[0].length;
+			
+			// read resources map and set resources in cells
+			HashMap<Point2i, HashMap<ResourceType, Integer>> cellResourceMap = 
+				(HashMap<Point2i, HashMap<ResourceType, Integer>>)objin.readObject();
 			
 			// read terrain info
 			cells = new CellState[mapHeight][mapWidth];
 			for (int i = 0; i < mapHeight; i++) {
 				for (int j = 0; j < mapWidth; j++) {
-					int cellTypeOrdinal = dis.readByte();
-					CellType ct = CellState.getCellTypeByOrdinal(cellTypeOrdinal);
-					cells[i][j] = new CellState(ct, new Point2i(j, i));
+					Point2i pos = new Point2i(j, i);
+					cells[i][j] = new CellState(terrain[i][j].cellType, new Point2i(j, i));
+					cells[i][j].resources = cellResourceMap.get(pos);
+					
 				}
 			}
 			
-			dis.close();
-			fis.close();
+			
 		} catch(FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} finally{
+			//Close the ObjectInputStream
+            try {
+                if (objin != null) {
+                    objin.close();
+                }
+                
+                if (fis != null) {
+                	fis.close();
+                }
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
 		}
 	}
 }

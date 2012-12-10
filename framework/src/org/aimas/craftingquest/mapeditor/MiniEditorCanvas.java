@@ -15,11 +15,11 @@ import org.aimas.craftingquest.state.objects.CraftedObjectType;
 @SuppressWarnings("serial")
 public class MiniEditorCanvas extends Canvas implements MouseListener, MouseMotionListener {
 	
-	private MapCell[][] terrain;	
+	private MapCell[][] cells;	
 	private EditorCanvas map;
 	
-	private final int WIDTH = 400;
-	private final int HEIGHT;
+	private int WIDTH = 400;
+	private int HEIGHT;
 	private int CELL_DIM;
 	protected int viewAreaWidth, viewAreaHeight;
 	protected int crtX = 0, crtY = 0;
@@ -32,7 +32,7 @@ public class MiniEditorCanvas extends Canvas implements MouseListener, MouseMoti
 	private final Font font = new Font(Font.SANS_SERIF, Font.BOLD, 12);
 
 	public MiniEditorCanvas(MapCell[][] terrain, EditorCanvas map) {
-		this.terrain = terrain;
+		this.cells = terrain;
 		this.map = map;
 		
 		addMouseListener(this);
@@ -48,22 +48,24 @@ public class MiniEditorCanvas extends Canvas implements MouseListener, MouseMoti
 	}
 	
 	public void setTerrain(MapCell[][] terrain) {
-		this.terrain = terrain;
+		this.cells = terrain;
+		CELL_DIM = WIDTH / terrain[0].length;
+		HEIGHT = CELL_DIM * terrain.length;
 	}
 	
 	protected void createMiniMapImage() {
 		
 		mapImage = createImage(dim.width, dim.height);
 		Graphics g = mapImage.getGraphics();
-		for (int i = 0; i < terrain.length; i++) {
-			for (int j = 0; j < terrain[i].length; j++) {
+		for (int i = 0; i < cells.length; i++) {
+			for (int j = 0; j < cells[i].length; j++) {
 				paintGridCell(g, i, j);
 			}
 		}
 	}
 	
     public void paintGridCell(Graphics g, int i, int j) {
-    	MapCell cell = terrain[i][j];
+    	MapCell cell = cells[i][j];
     	Color terrainColor = Color.BLACK;
     	
     	switch (cell.cellType) {
@@ -73,24 +75,24 @@ public class MiniEditorCanvas extends Canvas implements MouseListener, MouseMoti
     	case Rock:
     		terrainColor = Color.DARK_GRAY;
     		break;
-    	case Water:
-    		terrainColor = Color.CYAN;
-    		break;
-    	case DeepWater:
-    		terrainColor = Color.BLUE;
-    		break;
-    	case Sand:
-    		terrainColor = Color.YELLOW;
-    		break;
-    	case Snow:
-    		terrainColor = Color.WHITE;
-    		break;
-    	case Dirt:
-    		terrainColor = Color.LIGHT_GRAY;
-    		break;
-    	case Swamp:
-    		terrainColor = Color.ORANGE;
-    		break;
+//    	case Water:
+//    		terrainColor = Color.CYAN;
+//    		break;
+//    	case DeepWater:
+//    		terrainColor = Color.BLUE;
+//    		break;
+//    	case Sand:
+//    		terrainColor = Color.YELLOW;
+//    		break;
+//    	case Snow:
+//    		terrainColor = Color.WHITE;
+//    		break;
+//    	case Dirt:
+//    		terrainColor = Color.LIGHT_GRAY;
+//    		break;
+//    	case Swamp:
+//    		terrainColor = Color.ORANGE;
+//    		break;
     	}
     	
     	
@@ -99,12 +101,12 @@ public class MiniEditorCanvas extends Canvas implements MouseListener, MouseMoti
     	
     	g.setFont(font);
     	g.setColor(Color.RED);
-    	CraftedObjectType strRes = cell.strategicResType;
-    	if (strRes != null) {
-    		if (strRes == CraftedObjectType.TOWER) {
-    			g.drawString("T", j * CELL_DIM, i * CELL_DIM); // T = observation Tower
-    		}
+    	
+    	if (!cell.cellResources.isEmpty()) {
+    		g.drawString("R", j * CELL_DIM, i * CELL_DIM); // R = resources
     	}
+    	
+    	
     }
 	
 	@Override

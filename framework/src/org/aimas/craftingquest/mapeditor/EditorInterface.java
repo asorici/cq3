@@ -1,12 +1,17 @@
 package org.aimas.craftingquest.mapeditor;
 
 import java.awt.BorderLayout;
+import java.awt.GridLayout;
 import java.awt.Scrollbar;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -14,25 +19,57 @@ import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
+import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
 import org.aimas.craftingquest.state.CellState.CellType;
+import org.aimas.craftingquest.state.resources.ResourceType;
 
 
 @SuppressWarnings("serial")
-public class EditorInterface extends JFrame implements ActionListener {
-
+public class EditorInterface extends JFrame implements ActionListener, ItemListener {
+	private static final String SMALL_MAP = "small_map";
+	private static final String MEDIUM_MAP = "medium_map";
+	private static final String BIG_MAP = "big_map";
+	
+	private static Map<String, Map<String, Integer>> mapSizes;
+	static {
+		mapSizes = new HashMap<String, Map<String,Integer>>();
+		Map<String, Integer> smallMap = new HashMap<String, Integer>();
+		smallMap.put("height", 60);
+		smallMap.put("width", 60);
+		
+		Map<String, Integer> mediumMap = new HashMap<String, Integer>();
+		mediumMap.put("height", 80);
+		mediumMap.put("width", 80);
+		
+		Map<String, Integer> bigMap = new HashMap<String, Integer>();
+		bigMap.put("height", 100);
+		bigMap.put("width", 100);
+		
+		mapSizes.put(SMALL_MAP, smallMap);
+		mapSizes.put(MEDIUM_MAP, mediumMap);
+		mapSizes.put(BIG_MAP, bigMap);
+	}
+	
 	private MapCell[][] terrain;
 	
-	private int mapHeight = 70;
-	private int mapWidth = 70;
+	private int mapHeight = 60;
+	private int mapWidth = 60;
+	
+	private JPanel mapPanel;
+	private JPanel rightPanel;
 	
 	private EditorCanvas editorCanvas;
 	private MiniEditorCanvas miniEditorCanvas;
 	private Scrollbar hs, vs;
-	private JButton mirrorBtn, openMapBtn, saveMapBtn, strategicInfoBtn, cellTypeInfoBtn;
+	private JButton mirrorBtn, openMapBtn, saveMapBtn, terrainTypeInfoBtn, resourceTypeInfoBtn;
 	private JTextArea infoArea;
+	private JComboBox mapSizeSelector;
+	
 	private JComboBox terrainSelector;
+	private JComboBox resourceSelector;
+	private JTextField resourceQuantityText;
 	
 	private JFileChooser fileChooser = new JFileChooser("maps");
 	
@@ -41,30 +78,43 @@ public class EditorInterface extends JFrame implements ActionListener {
 	
 	public EditorInterface() {
 		setLayout(new BorderLayout(10, 10));
-		setSize(WIDTH, HEIGHT);		
+		setSize(WIDTH, HEIGHT);
 		
-		JPanel mapPanel = new JPanel(new BorderLayout());
+		mapPanel = new JPanel(new BorderLayout());
 		hs = new Scrollbar(Scrollbar.HORIZONTAL, 0, 1, 0, 1);
 		vs = new Scrollbar(Scrollbar.VERTICAL, 0, 1, 0, 1);
 		
 		terrain = new MapCell[mapHeight][mapWidth];
 		for (int i = 0; i < mapHeight; i++) {
 			for (int j = 0; j < mapWidth; j++) {
-				terrain[i][j] = new MapCell(CellType.Grass, null);
+				terrain[i][j] = new MapCell(CellType.Grass);
 			}
 		}
+		
+		JPanel mapSizePanel = new JPanel(new BorderLayout());
+		mapSizeSelector = new JComboBox(new String[] {SMALL_MAP, MEDIUM_MAP, BIG_MAP});
+		mapSizeSelector.addItemListener(this);
+		mapSizePanel.add(BorderLayout.CENTER, mapSizeSelector);
 		
 		editorCanvas = new EditorCanvas(terrain, hs, vs);
 		mapPanel.add(BorderLayout.CENTER, editorCanvas);
 		mapPanel.add(BorderLayout.EAST, vs);
 		mapPanel.add(BorderLayout.SOUTH, hs);
 
-		JPanel rightPanel = new JPanel(new BorderLayout(0, 10));
+		rightPanel = new JPanel(new BorderLayout(0, 10));
 		miniEditorCanvas = new MiniEditorCanvas(terrain, editorCanvas);
 		editorCanvas.setMiniMap(miniEditorCanvas);
 		rightPanel.add(BorderLayout.NORTH, miniEditorCanvas);
 		
-		JPanel controlPanel = new JPanel(new BorderLayout());
+		
+		infoArea = new JTextArea();
+		infoArea.setEditable(false);
+		editorCanvas.setInfoArea(infoArea);
+		rightPanel.add(BorderLayout.CENTER, infoArea);
+		
+		
+		JPanel controlPanel = new JPanel(new GridLayout(4, 1));
+		
 		JPanel btnPnl = new JPanel();
 		openMapBtn = new JButton("Open Map");
 		openMapBtn.addActionListener(this);
@@ -76,29 +126,37 @@ public class EditorInterface extends JFrame implements ActionListener {
 		mirrorBtn.addActionListener(this);
 		btnPnl.add(mirrorBtn);
 		
-		JPanel selectorPanel = new JPanel();
+		JPanel terrainSelectorPanel = new JPanel();
+		JPanel resourceSelectorPanel = new JPanel();
 		
 		terrainSelector = new JComboBox(CellType.values());
 		terrainSelector.addActionListener(this);
 		
-		strategicInfoBtn = new JButton("Select strategic");
-		strategicInfoBtn.addActionListener(this);
-		cellTypeInfoBtn = new JButton("Select cell type");
-		cellTypeInfoBtn.addActionListener(this);
+		resourceSelector = new JComboBox(ResourceType.values());
+		resourceSelector.addActionListener(this);
 		
-		selectorPanel.add(strategicInfoBtn);
-		selectorPanel.add(terrainSelector);
-		selectorPanel.add(cellTypeInfoBtn);
+		resourceQuantityText = new JTextField("10", 4);
 		
-		controlPanel.add(BorderLayout.NORTH, btnPnl);
-		controlPanel.add(BorderLayout.SOUTH, selectorPanel);
+		terrainTypeInfoBtn = new JButton("Select terrain type");
+		terrainTypeInfoBtn.addActionListener(this);
+
+		resourceTypeInfoBtn = new JButton("Select resource type");
+		resourceTypeInfoBtn.addActionListener(this);
+		
+		
+		terrainSelectorPanel.add(terrainSelector);
+		terrainSelectorPanel.add(terrainTypeInfoBtn);
+		
+		resourceSelectorPanel.add(resourceSelector);
+		resourceSelectorPanel.add(resourceTypeInfoBtn);
+		resourceSelectorPanel.add(resourceQuantityText);
+		
+		controlPanel.add(mapSizePanel);
+		controlPanel.add(btnPnl);
+		controlPanel.add(terrainSelectorPanel);
+		controlPanel.add(resourceSelectorPanel);
 		
 		rightPanel.add(BorderLayout.SOUTH, controlPanel);
-
-		infoArea = new JTextArea();
-		infoArea.setEditable(false);
-		editorCanvas.setInfoArea(infoArea);
-		rightPanel.add(BorderLayout.CENTER, infoArea);
 		
 		add(BorderLayout.CENTER, mapPanel);
 		add(BorderLayout.EAST, rightPanel);
@@ -136,21 +194,15 @@ public class EditorInterface extends JFrame implements ActionListener {
                 
                 mapWidth = MapReader.mapWidth;
                 mapHeight = MapReader.mapHeight;
-                int n = mapHeight;
+                terrain = MapReader.cells;
                 
-                for (int i = 0; i < n; i++) {
-    				for (int j = 0; j < n; j++) {
-    					terrain[i][j].cellType = MapReader.cells[i][j].cellType;
-    					terrain[i][j].strategicResType = MapReader.cells[i][j].strategicResType;
-    				}
-    			}
-                
+                editorCanvas.setTerrain(terrain);
                 editorCanvas.repaint();
     			miniEditorCanvas.repaint();
             } 
 		}
 		
-		if (e.getSource().equals(cellTypeInfoBtn)) {
+		if (e.getSource().equals(terrainTypeInfoBtn)) {
 			editorCanvas.setSelectedCellType((CellType)terrainSelector.getSelectedItem());
 		}
 		
@@ -158,13 +210,35 @@ public class EditorInterface extends JFrame implements ActionListener {
 			editorCanvas.setSelectedCellType((CellType)terrainSelector.getSelectedItem());
 		}
 		
+		if (e.getSource().equals(resourceTypeInfoBtn)) {
+			int resourceQuantity = Integer.parseInt(resourceQuantityText.getText());
+			editorCanvas.setSelectedResourceType((ResourceType)resourceSelector.getSelectedItem(), resourceQuantity);
+		}
+		
+		if (e.getSource().equals(resourceSelector)) {
+			int resourceQuantity = Integer.parseInt(resourceQuantityText.getText());
+			editorCanvas.setSelectedResourceType((ResourceType)resourceSelector.getSelectedItem(), resourceQuantity);
+		}
+		
 		if (e.getSource().equals(mirrorBtn)) {
+			/*
 			int n = terrain.length;
 			
 			for (int i = 0; i < n; i++) {
 				for (int j = 0; j < n - i; j++) {
 					terrain[n - 1 - i][n - 1 - j].cellType = terrain[i][j].cellType;
-					terrain[n - 1 - i][n - 1 - j].strategicResType = terrain[i][j].strategicResType;
+					terrain[n - 1 - i][n - 1 - j].cellResources = terrain[i][j].cellResources;
+				}
+			}
+			*/
+			
+			int height = terrain.length;
+			int width = terrain[0].length;
+			
+			for (int i = 0; i < height; i++) {
+				for (int j = 0; j < width / 2; j++) {
+					terrain[i][width - 1 - j].cellType = terrain[i][j].cellType;
+					terrain[i][width - 1 - j].cellResources = terrain[i][j].cellResources;
 				}
 			}
 			
@@ -204,5 +278,39 @@ public class EditorInterface extends JFrame implements ActionListener {
 				editInterface.setVisible(true);
 			}
 		});
+	}
+
+
+	@Override
+	public void itemStateChanged(ItemEvent event) {
+		if (event.getStateChange() == ItemEvent.SELECTED) {
+			String mapSize = (String)event.getItem();
+			
+			mapWidth = mapSizes.get(mapSize).get("width");
+			mapHeight = mapSizes.get(mapSize).get("height");
+			
+			// remove old components
+			mapPanel.remove(editorCanvas);
+			rightPanel.remove(miniEditorCanvas);
+			
+			terrain = new MapCell[mapHeight][mapWidth];
+			for (int i = 0; i < mapHeight; i++) {
+				for (int j = 0; j < mapWidth; j++) {
+					terrain[i][j] = new MapCell(CellType.Grass);
+				}
+			}
+			
+			editorCanvas = new EditorCanvas(terrain, hs, vs);
+			miniEditorCanvas = new MiniEditorCanvas(terrain, editorCanvas);
+			editorCanvas.setMiniMap(miniEditorCanvas);
+			editorCanvas.setInfoArea(infoArea);
+			
+			mapPanel.add(BorderLayout.CENTER, editorCanvas);
+			rightPanel.add(BorderLayout.NORTH, miniEditorCanvas);
+			
+			//repaint();
+			mapPanel.repaint();
+			rightPanel.repaint();
+		}
 	}
 }

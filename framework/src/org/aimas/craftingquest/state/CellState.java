@@ -19,7 +19,8 @@ import org.aimas.craftingquest.state.resources.ResourceType;
 public class CellState implements Serializable {
 	
 	public static enum CellType implements Serializable {
-		Grass, Dirt, Sand, Snow, Rock, Swamp, Water, DeepWater
+		//Grass, Dirt, Sand, Snow, Rock, Swamp, Water, DeepWater
+		Grass, Rock
 	};
 	
 	/**

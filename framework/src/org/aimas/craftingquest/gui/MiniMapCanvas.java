@@ -87,24 +87,6 @@ public class MiniMapCanvas extends Canvas implements MouseListener, MouseMotionL
     	case Rock:
     		terrainColor = Color.DARK_GRAY;
     		break;
-    	case Water:
-    		terrainColor = Color.CYAN;
-    		break;
-    	case DeepWater:
-    		terrainColor = Color.BLUE;
-    		break;
-    	case Sand:
-    		terrainColor = Color.YELLOW;
-    		break;
-    	case Snow:
-    		terrainColor = Color.WHITE;
-    		break;
-    	case Dirt:
-    		terrainColor = Color.LIGHT_GRAY;
-    		break;
-    	case Swamp:
-    		terrainColor = Color.ORANGE;
-    		break;
     	}
     	
     	
@@ -119,7 +101,7 @@ public class MiniMapCanvas extends Canvas implements MouseListener, MouseMotionL
     			g.drawString("T", j * CELL_DIM, i * CELL_DIM); // T = observation Tower
     		}
     		else {
-    			g.drawString("M", j * CELL_DIM, i * CELL_DIM); // P = trading Post
+    			g.drawString("D", j * CELL_DIM, i * CELL_DIM); // D = danger of trap
     		}
     	}
     	

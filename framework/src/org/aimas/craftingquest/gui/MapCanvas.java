@@ -42,16 +42,10 @@ public class MapCanvas extends Canvas implements MouseListener, MouseMotionListe
 	
 	private Image rockTile;
 	private Image grassTile;
-	private Image waterTile;
-	private Image deepWaterTile;
-	private Image sandTile;
-	private Image snowTile;
-	private Image dirtTile;
-	private Image swampTile;
 	private Image unknown;
 	
 	private Image tower;
-	private Image merchant;
+	private Image trap;
 	private Image resource;
 	private Image standardUnitImage;	
 	
@@ -89,26 +83,14 @@ public class MapCanvas extends Canvas implements MouseListener, MouseMotionListe
 		try {
 			rockTile = ImageIO.read(new File("images/rock.jpg")).getScaledInstance(CELL_DIM, CELL_DIM, Image.SCALE_FAST);
 			grassTile = ImageIO.read(new File("images/grass.jpg")).getScaledInstance(CELL_DIM, CELL_DIM, Image.SCALE_FAST);
-			waterTile = ImageIO.read(new File("images/water.jpg")).getScaledInstance(CELL_DIM, CELL_DIM, Image.SCALE_FAST);
-			deepWaterTile = ImageIO.read(new File("images/deepWater.jpg")).getScaledInstance(CELL_DIM, CELL_DIM, Image.SCALE_FAST);
-			snowTile = ImageIO.read(new File("images/snow.jpg")).getScaledInstance(CELL_DIM, CELL_DIM, Image.SCALE_FAST);
-			sandTile = ImageIO.read(new File("images/sand.jpg")).getScaledInstance(CELL_DIM, CELL_DIM, Image.SCALE_FAST);
-			swampTile = ImageIO.read(new File("images/swamp.jpg")).getScaledInstance(CELL_DIM, CELL_DIM, Image.SCALE_FAST);
-			dirtTile = ImageIO.read(new File("images/dirt.jpg")).getScaledInstance(CELL_DIM, CELL_DIM, Image.SCALE_FAST);
 			
 			tower = ImageIO.read(new File("images/tower.jpg")).getScaledInstance(CELL_DIM, CELL_DIM, Image.SCALE_FAST);
-			merchant = ImageIO.read(new File("images/merchant.jpg")).getScaledInstance(CELL_DIM, CELL_DIM, Image.SCALE_FAST);
+			trap = ImageIO.read(new File("images/trap.png")).getScaledInstance(CELL_DIM, CELL_DIM, Image.SCALE_FAST);
 			resource = ImageIO.read(new File("images/resource.gif")).getScaledInstance(CELL_DIM / 2, CELL_DIM / 2, Image.SCALE_FAST);
 			standardUnitImage = ImageIO.read(new File("images/devil.png")).getScaledInstance(CELL_DIM, CELL_DIM, Image.SCALE_FAST);
 		
 			entityToImage.put(CellType.Grass.name(), grassTile);
-			entityToImage.put(CellType.Water.name(), waterTile);
-			entityToImage.put(CellType.DeepWater.name(), deepWaterTile);
-			entityToImage.put(CellType.Sand.name(), sandTile);
 			entityToImage.put(CellType.Rock.name(), rockTile);
-			entityToImage.put(CellType.Swamp.name(), swampTile);
-			entityToImage.put(CellType.Dirt.name(), dirtTile);
-			entityToImage.put(CellType.Snow.name(), snowTile);
 			
 			entityToImage.put("unknown", unknown);
 			entityToImage.put(CraftedObjectType.TOWER.toString(), tower);
@@ -215,7 +197,7 @@ public class MapCanvas extends Canvas implements MouseListener, MouseMotionListe
 	    			bufferGraphics.drawImage(tower, j * CELL_DIM + offsetX, i * CELL_DIM + offsetY, null);
 	    		}
 	    		else {
-	    			bufferGraphics.drawImage(merchant, j * CELL_DIM + offsetX, i * CELL_DIM + offsetY, null);
+	    			bufferGraphics.drawImage(trap, j * CELL_DIM + offsetX, i * CELL_DIM + offsetY, null);
 	    		}
 	    		return;
 	    	}

@@ -14,32 +14,51 @@ import java.awt.event.MouseMotionListener;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Map;
 
 import javax.imageio.ImageIO;
 import javax.swing.JTextArea;
 
 import org.aimas.craftingquest.state.CellState.CellType;
 import org.aimas.craftingquest.state.objects.CraftedObjectType;
+import org.aimas.craftingquest.state.resources.ResourceType;
 
 
 @SuppressWarnings("serial")
 public class EditorCanvas extends Canvas implements MouseListener, MouseMotionListener, AdjustmentListener {
 	
-	MapCell[][] terrain;
+	private static enum SelectionType {
+		TERRAIN, RESOURCE
+	}
+	
+	MapCell[][] cells;
 	private int mapWidth;
 	private int mapHeight;
 	
-	private CellType selectedCellType = CellType.Grass;
+	private CellType selectedTerrainType = CellType.Grass;
+	private ResourceType selectedResourceType = ResourceType.GOLD;
+	private int selectedResourceQuantity = 10;
+	private SelectionType selectionType = SelectionType.TERRAIN;
 	
 	private Image rockTile;
 	private Image grassTile;
-	private Image waterTile;
-	private Image deepWaterTile;
-	private Image sandTile;
-	private Image snowTile;
-	private Image dirtTile;
-	private Image swampTile;
 	private Image unknown;
+	
+//	private Image waterTile;
+//	private Image deepWaterTile;
+//	private Image sandTile;
+//	private Image snowTile;
+//	private Image dirtTile;
+//	private Image swampTile;
+	
+	
+//	private Image goldRes;
+//	private Image woodRes;
+//	private Image stoneRes;
+//	private Image leatherRes;
+//	private Image bronzeRes;
+//	private Image ironRes;
+//	private Image titaniumRes;
 	
 	private Image tower;
 //	private Image merchant;
@@ -69,7 +88,7 @@ public class EditorCanvas extends Canvas implements MouseListener, MouseMotionLi
 	HashMap<String, Image> entityToImage = new HashMap<String, Image>();
 	
 	public EditorCanvas(MapCell[][] terrain, Scrollbar hs, Scrollbar vs) {
-		this.terrain = terrain;
+		this.cells = terrain;
 		this.hs = hs;
 		this.vs = vs;
 		mapHeight = terrain.length * CELL_DIM;
@@ -83,24 +102,28 @@ public class EditorCanvas extends Canvas implements MouseListener, MouseMotionLi
 		try {
 			rockTile = ImageIO.read(new File("images/rock.jpg")).getScaledInstance(CELL_DIM, CELL_DIM, Image.SCALE_FAST);
 			grassTile = ImageIO.read(new File("images/grass.jpg")).getScaledInstance(CELL_DIM, CELL_DIM, Image.SCALE_FAST);
-			waterTile = ImageIO.read(new File("images/water.jpg")).getScaledInstance(CELL_DIM, CELL_DIM, Image.SCALE_FAST);
-			deepWaterTile = ImageIO.read(new File("images/deepWater.jpg")).getScaledInstance(CELL_DIM, CELL_DIM, Image.SCALE_FAST);
-			snowTile = ImageIO.read(new File("images/snow.jpg")).getScaledInstance(CELL_DIM, CELL_DIM, Image.SCALE_FAST);
-			sandTile = ImageIO.read(new File("images/sand.jpg")).getScaledInstance(CELL_DIM, CELL_DIM, Image.SCALE_FAST);
-			swampTile = ImageIO.read(new File("images/swamp.jpg")).getScaledInstance(CELL_DIM, CELL_DIM, Image.SCALE_FAST);
-			dirtTile = ImageIO.read(new File("images/dirt.jpg")).getScaledInstance(CELL_DIM, CELL_DIM, Image.SCALE_FAST);
+			
+//			waterTile = ImageIO.read(new File("images/water.jpg")).getScaledInstance(CELL_DIM, CELL_DIM, Image.SCALE_FAST);
+//			deepWaterTile = ImageIO.read(new File("images/deepWater.jpg")).getScaledInstance(CELL_DIM, CELL_DIM, Image.SCALE_FAST);
+//			snowTile = ImageIO.read(new File("images/snow.jpg")).getScaledInstance(CELL_DIM, CELL_DIM, Image.SCALE_FAST);
+//			sandTile = ImageIO.read(new File("images/sand.jpg")).getScaledInstance(CELL_DIM, CELL_DIM, Image.SCALE_FAST);
+//			swampTile = ImageIO.read(new File("images/swamp.jpg")).getScaledInstance(CELL_DIM, CELL_DIM, Image.SCALE_FAST);
+//			dirtTile = ImageIO.read(new File("images/dirt.jpg")).getScaledInstance(CELL_DIM, CELL_DIM, Image.SCALE_FAST);
+			
+			
 			
 			tower = ImageIO.read(new File("images/tower.jpg")).getScaledInstance(CELL_DIM, CELL_DIM, Image.SCALE_FAST);
 //			merchant = ImageIO.read(new File("images/merchant.jpg")).getScaledInstance(CELL_DIM, CELL_DIM, Image.SCALE_FAST);
 		
 			entityToImage.put(CellType.Grass.name(), grassTile);
-			entityToImage.put(CellType.Water.name(), waterTile);
-			entityToImage.put(CellType.DeepWater.name(), deepWaterTile);
-			entityToImage.put(CellType.Sand.name(), sandTile);
 			entityToImage.put(CellType.Rock.name(), rockTile);
-			entityToImage.put(CellType.Swamp.name(), swampTile);
-			entityToImage.put(CellType.Dirt.name(), dirtTile);
-			entityToImage.put(CellType.Snow.name(), snowTile);
+			
+//			entityToImage.put(CellType.Water.name(), waterTile);
+//			entityToImage.put(CellType.DeepWater.name(), deepWaterTile);
+//			entityToImage.put(CellType.Sand.name(), sandTile);
+//			entityToImage.put(CellType.Swamp.name(), swampTile);
+//			entityToImage.put(CellType.Dirt.name(), dirtTile);
+//			entityToImage.put(CellType.Snow.name(), snowTile);
 			
 			entityToImage.put("unknown", unknown);
 			entityToImage.put(CraftedObjectType.TOWER.toString(), tower);
@@ -114,7 +137,11 @@ public class EditorCanvas extends Canvas implements MouseListener, MouseMotionLi
 	}
 	
 	public void setTerrain(MapCell[][] terrain) {
-		this.terrain = terrain;
+		cells = terrain;
+		mapHeight = terrain.length * CELL_DIM;
+		mapWidth = terrain[0].length * CELL_DIM;
+		
+		miniMap.setTerrain(terrain);
 	}
 	
 	
@@ -128,12 +155,15 @@ public class EditorCanvas extends Canvas implements MouseListener, MouseMotionLi
 	
 	public String getCrtCellInfo() {
 		String info = "";
-		MapCell crtCell = terrain[crtCellY][crtCellX];
+		MapCell crtCell = cells[crtCellY][crtCellX];
+		
 		info += "Terrain type = " + crtCell.cellType + " [" + crtCellX + "," + crtCellY + "]\n";
 		
-		CraftedObjectType res = crtCell.strategicResType;
-		if (res != null) {
-			info += "Strategic resource = " + res + "\n";
+		HashMap<ResourceType, Integer> cellResources = crtCell.cellResources;
+		if (!cellResources.isEmpty()) {
+			for (ResourceType rt : cellResources.keySet()) {
+				info += "Cell resource = " + rt + "(" + cellResources.get(rt) + ")\n";
+			}
 		}
 		
 		return info;
@@ -155,8 +185,8 @@ public class EditorCanvas extends Canvas implements MouseListener, MouseMotionLi
 		
 		bufferGraphics.clearRect(0, 0, dim.width, dim.height);
 		
-		for (int i = 0; i < terrain.length; i++) {
-			for (int j = 0; j < terrain[i].length; j++) {
+		for (int i = 0; i < cells.length; i++) {
+			for (int j = 0; j < cells[i].length; j++) {
 				paintGridCell(i, j);
 			}
 		}
@@ -174,24 +204,37 @@ public class EditorCanvas extends Canvas implements MouseListener, MouseMotionLi
 	}
 		
     public void paintGridCell(int i, int j) {
-    	MapCell cell = terrain[i][j];
+    	MapCell cell = cells[i][j];
     	Image tile = grassTile;
     	
-		CraftedObjectType strRes = cell.strategicResType;
-		if (strRes != null) {
-			if (strRes == CraftedObjectType.TOWER) {
-				bufferGraphics.drawImage(tower, j * CELL_DIM + offsetX, i * CELL_DIM + offsetY, null);
+    	HashMap<ResourceType, Integer> cellResources = cell.cellResources;
+		if (!cellResources.isEmpty()) {
+			String resString = "";
+			for (ResourceType rt : cellResources.keySet()) {
+				resString += rt.name().toUpperCase().charAt(0) + "(" + cellResources.get(rt) + ") ";
 			}
-			return;
+			
+			// draw resource type - white image with text for now
+			bufferGraphics.setColor(Color.WHITE);
+			bufferGraphics.fillRect(j * CELL_DIM + offsetX, i * CELL_DIM + offsetY, CELL_DIM, CELL_DIM);
+			bufferGraphics.setColor(Color.BLACK);
+			
+			int midX = j * CELL_DIM + offsetX + CELL_DIM / 2;
+			int midY = i * CELL_DIM + offsetY + CELL_DIM / 2;
+			
+			int w2 = bufferGraphics.getFontMetrics().stringWidth(resString) / 2;
+	        int h2 = bufferGraphics.getFontMetrics().getDescent();
+	        bufferGraphics.drawString(resString, midX - w2, midY + h2);
+			
 		}
-    	
-    	// draw terrain type
-    	tile = entityToImage.get(cell.cellType.name());
-    	bufferGraphics.drawImage(tile, j * CELL_DIM + offsetX, i * CELL_DIM + offsetY, null);
-
-    	bufferGraphics.setColor(Color.BLACK);
-    	bufferGraphics.drawRect(j * CELL_DIM + offsetX, i * CELL_DIM + offsetY, CELL_DIM, CELL_DIM);
-    	
+		else {
+	    	// draw terrain type
+	    	tile = entityToImage.get(cell.cellType.name());
+	    	bufferGraphics.drawImage(tile, j * CELL_DIM + offsetX, i * CELL_DIM + offsetY, null);
+	
+	    	bufferGraphics.setColor(Color.BLACK);
+	    	bufferGraphics.drawRect(j * CELL_DIM + offsetX, i * CELL_DIM + offsetY, CELL_DIM, CELL_DIM);
+		}
     }	
     
 	@Override
@@ -286,8 +329,22 @@ public class EditorCanvas extends Canvas implements MouseListener, MouseMotionLi
 			
 			for (int yy = cellStartY; yy < cellFinalY; yy++) {
 				for (int xx = cellStartX; xx < cellFinalX; xx++) {
-					terrain[yy][xx].cellType = selectedCellType;
-					terrain[yy][xx].strategicResType = null;
+					if (selectionType == SelectionType.TERRAIN) {
+						// if we are in terrain mode set the terrain
+						cells[yy][xx].cellType = selectedTerrainType;
+					}
+					else if (selectionType == SelectionType.RESOURCE) {
+						// otherwise we are in resource selection mode
+						Map<ResourceType, Integer> cellResources = cells[yy][xx].cellResources; 
+						
+						if (cellResources.get(selectedResourceType) == null) {
+							cellResources.put(selectedResourceType, selectedResourceQuantity);
+						}
+						else {
+							int prevQuantity = cellResources.get(selectedResourceType);
+							cellResources.put(selectedResourceType, prevQuantity + selectedResourceQuantity);
+						}
+					}
 				}
 			}
 			
@@ -296,7 +353,6 @@ public class EditorCanvas extends Canvas implements MouseListener, MouseMotionLi
 			
 			mouseButton2Pressed = false;
 		}
-		
 	}
 	
 	protected boolean setOffsetX(int newOffsetX) {
@@ -326,7 +382,7 @@ public class EditorCanvas extends Canvas implements MouseListener, MouseMotionLi
 		    int xcoord = (x - offsetX) / CELL_DIM;
 	    	int ycoord = (y - offsetY) / CELL_DIM;
 	    	
-	    	terrain[ycoord][xcoord].cellType = CellType.Grass;
+	    	cells[ycoord][xcoord].cellType = CellType.Grass;
 	    	
 	    	repaint();
 	    	miniMap.repaint();
@@ -346,11 +402,24 @@ public class EditorCanvas extends Canvas implements MouseListener, MouseMotionLi
 	}
 
 	public CellType getSelectedCellType() {
-		return selectedCellType;
+		return selectedTerrainType;
+	}
+	
+	public ResourceType getSelectedResourceType() {
+		return selectedResourceType;
 	}
 
-	public void setSelectedCellType(CellType selectedCellType) {
-		this.selectedCellType = selectedCellType;
+	public void setSelectedCellType(CellType selectedTerrainType) {
+		this.selectedTerrainType = selectedTerrainType;
+		
+		selectionType = SelectionType.TERRAIN;
+	}
+
+	public void setSelectedResourceType(ResourceType selectedResourceType, int quantity) {
+		this.selectedResourceType = selectedResourceType;
+		this.selectedResourceQuantity = quantity;
+		
+		selectionType = SelectionType.RESOURCE;
 	}
 
 }
