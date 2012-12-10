@@ -96,6 +96,12 @@ public class GamePolicy {
 	public static int maxLevels = 3;
 	public static int[] levelIncrease;
 	
+	/* scoring (and bonuses) */
+	public static int killingSpreeThreshold = 5;
+	public static int killingSpreeBonus = 15;
+	public static int firstBloodBonus = 10;
+	public static int buildTowerBonus = 20;
+	
 	/* blueprints */
 	public static List<Blueprint> blueprints;
 	
@@ -178,6 +184,11 @@ public class GamePolicy {
 		else
 			energyReplenishModel = null;
 		placeTrapCost = Integer.parseInt(parametersNode.getElementsByTagName("placeTrapCost").item(0).getTextContent());
+		
+		killingSpreeThreshold = Integer.parseInt(parametersNode.getElementsByTagName("killingSpreeThreshold").item(0).getTextContent());
+		killingSpreeBonus = Integer.parseInt(parametersNode.getElementsByTagName("killingSpreeBonus").item(0).getTextContent());
+		firstBloodBonus = Integer.parseInt(parametersNode.getElementsByTagName("firstBloodBonus").item(0).getTextContent());
+		buildTowerBonus = Integer.parseInt(parametersNode.getElementsByTagName("buildTowerBonus").item(0).getTextContent());
 	}
 	
 	private static void readScenarioBlueprints(Element blueprintsNode) {

@@ -46,6 +46,12 @@
 		<buildCost>0</buildCost>
 		<placeTowerCost>75</placeTowerCost>
 		<placeTrapCost>40</placeTrapCost>
+		
+		<killingSpreeThreshold>5</killingSpreeThreshold>
+		<killingSpreeBonus>15</killingSpreeBonus>
+		<firstBloodBonus>10</firstBloodBonus>
+		<buildTowerBonus>20</buildTowerBonus>
+		
 	</parameters>
 
 
