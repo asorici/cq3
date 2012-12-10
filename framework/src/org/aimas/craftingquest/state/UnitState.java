@@ -161,12 +161,14 @@ public class UnitState implements Serializable {
 	 * @return the opponent perspective of this unit
 	 */
 	public BasicUnit getOpponentPerspective() {
+		int attackLevel = (equipedSword != null)? equipedSword.getLevel() : 0;
+		int defenceLevel = (equipedSword != null)? equipedArmour.getLevel() : 0;
 		if (opponentPerspective == null) {
 			opponentPerspective = new BasicUnit();
-			opponentPerspective.set(id, playerID, energy, life);
+			opponentPerspective.set(id, playerID, energy, life, attackLevel, defenceLevel);
 		}
 		else {
-			opponentPerspective.set(id, playerID, energy, life);
+			opponentPerspective.set(id, playerID, energy, life, attackLevel, defenceLevel);
 		}
 		
 		return opponentPerspective;

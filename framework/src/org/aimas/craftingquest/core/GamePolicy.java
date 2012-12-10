@@ -9,21 +9,27 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import org.aimas.craftingquest.core.energyreplenishmodels.ReplenishType;
+
 import org.aimas.craftingquest.mapeditor.MapCell;
+
+import org.aimas.craftingquest.state.Blueprint;
+
 import org.aimas.craftingquest.state.CellState;
 import org.aimas.craftingquest.state.CellState.CellType;
 import org.aimas.craftingquest.state.GameState;
 import org.aimas.craftingquest.state.MapState;
 import org.aimas.craftingquest.state.Point2i;
+import org.aimas.craftingquest.state.objects.CraftedObjectType;
 import org.aimas.craftingquest.state.resources.ResourceType;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-//import java.util.ArrayList;
-//import java.util.List;
-//import org.aimas.craftingquest.state.UnitState.UnitType;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 public class GamePolicy {
 
@@ -65,8 +71,9 @@ public class GamePolicy {
 	public static int initialTeamGold = 300;
 	public static int initialUnitMaxLife = 150;
 	public static ReplenishType energyReplenishModel = ReplenishType.FullReplenish;
+	public static int movePenaltyWeight = 50;
 	
-	// Action costs
+	/* action costs */
 	public static int pickupCost = 5;
 	public static int dropCost = 0;
 	public static int scanCost = 10;
@@ -77,7 +84,7 @@ public class GamePolicy {
 	public static int placeTowerCost = 75;
 	public static int placeTrapCost = 40;
 
-	// Tower related
+	/* tower related */
 	public static int towerBaseRadius = 4;
 	public static int towerBaseDrain = 100;
 	public static int towerBaseEnergy = 100;
@@ -90,9 +97,18 @@ public class GamePolicy {
 	public static int titaniumWeight = 9;
 	public static int ironWeight = 5;
 	
+	/* leveling */
 	public static int maxLevels = 3;
 	public static int[] levelIncrease;
 	
+	/* scoring (and bonuses) */
+	public static int killingSpreeThreshold = 5;
+	public static int killingSpreeBonus = 15;
+	public static int firstBloodBonus = 10;
+	public static int buildTowerBonus = 20;
+	
+	/* blueprints */
+	public static List<Blueprint> blueprints;
 	
 	public static void initScenario() {
 		
@@ -128,10 +144,12 @@ public class GamePolicy {
 	public static void readParametersFrom(Document doc) {
 		Element root = (Element)doc.getDocumentElement();
 		Element parametersNode = (Element)root.getElementsByTagName("parameters").item(0);
+		Element blueprintsNode = (Element)root.getElementsByTagName("blueprints").item(0);
 		//Element ruleNode = (Element)root.getElementsByTagName("rules").item(0);
 		
 		readServerParameters(parametersNode);
 		readScenarioParameters(parametersNode);
+		readScenarioBlueprints(blueprintsNode);
 		
 		//readScenarioRules(ruleNode);
 	}
@@ -144,6 +162,7 @@ public class GamePolicy {
 		connectWaitTime = Integer.parseInt(parametersNode.getElementsByTagName("connectWaitTime").item(0).getTextContent());
 		lastTurn = Integer.parseInt(parametersNode.getElementsByTagName("nrTurns").item(0).getTextContent());
 		nrPlayerUnits = Integer.parseInt(parametersNode.getElementsByTagName("nrPlayerUnits").item(0).getTextContent());
+		movePenaltyWeight = Integer.parseInt(parametersNode.getElementsByTagName("movePenaltyWeight").item(0).getTextContent());
 		mapName = parametersNode.getElementsByTagName("mapName").item(0).getTextContent();
 	}
 	
@@ -171,6 +190,53 @@ public class GamePolicy {
 		else
 			energyReplenishModel = null;
 		placeTrapCost = Integer.parseInt(parametersNode.getElementsByTagName("placeTrapCost").item(0).getTextContent());
+		
+		killingSpreeThreshold = Integer.parseInt(parametersNode.getElementsByTagName("killingSpreeThreshold").item(0).getTextContent());
+		killingSpreeBonus = Integer.parseInt(parametersNode.getElementsByTagName("killingSpreeBonus").item(0).getTextContent());
+		firstBloodBonus = Integer.parseInt(parametersNode.getElementsByTagName("firstBloodBonus").item(0).getTextContent());
+		buildTowerBonus = Integer.parseInt(parametersNode.getElementsByTagName("buildTowerBonus").item(0).getTextContent());
+	}
+	
+	private static void readScenarioBlueprints(Element blueprintsNode) {
+		blueprints = new ArrayList<Blueprint>();
+		
+		System.out.println("Reading blueprints");
+		NodeList blueprintNodeList = blueprintsNode.getElementsByTagName("blueprint");
+		System.out.println(blueprintNodeList.getLength() + " blueprints found in GamePolicy.xml");
+		for (int i = 0; i < blueprintNodeList.getLength(); i++) {
+			Node blueprintNode = blueprintNodeList.item(i);
+			
+			// Get object type
+			CraftedObjectType craftedObjectType = CraftedObjectType.valueOf(blueprintNode.getAttributes().getNamedItem("type").getTextContent().toUpperCase());
+			
+			// Get object level
+			int level = Integer.parseInt(blueprintNode.getAttributes().getNamedItem("level").getTextContent());
+			
+			// Get object upgradeCost (if available)
+			int upgradeCost = 0;
+			Node upgradeCostNode = blueprintNode.getAttributes().getNamedItem("upgradeCost");
+			if(upgradeCostNode != null)
+				Integer.parseInt(blueprintNode.getAttributes().getNamedItem("upgradeCost").getTextContent());
+			
+			// Get object weight (if available)
+			int weight = 0;
+			Node weightNode = blueprintNode.getAttributes().getNamedItem("weight");
+			if(weightNode != null)
+				weight = Integer.parseInt(weightNode.getTextContent());
+			
+			// Get the object's required resources
+			HashMap<ResourceType, Integer> requiredResources = new HashMap<ResourceType, Integer>();
+			NodeList resourceNodeList = blueprintNode.getChildNodes();
+			for (int j = 0; j < resourceNodeList.getLength(); j++) {
+				ResourceType resourceType = ResourceType.valueOf(resourceNodeList.item(j).getAttributes().getNamedItem("type").getTextContent().toUpperCase());
+				int quantity = Integer.parseInt(resourceNodeList.item(j).getAttributes().getNamedItem("quantity").getTextContent());
+				requiredResources.put(resourceType, quantity);
+			}
+			
+			Blueprint readBlueprint = new Blueprint(craftedObjectType, level, weight, requiredResources, upgradeCost);
+			blueprints.add(readBlueprint);
+			System.out.println("Read blueprint: " + readBlueprint.toString());
+		}
 	}
 	
 	public static void saveMapResources(GameState state) {

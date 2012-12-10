@@ -543,6 +543,7 @@ public class ResourceGenerator {
 			int xx = x, yy = y;
 			if (map.cells[yy][xx] != null && map.cells[yy][xx].type != CellType.Rock && map.cells[yy][xx].strategicObject == null) {
 				// if nothing occupies this cell then put resources in it
+				map.cells[yy][xx].resourceTypes.add(resType);
 				Integer contents = map.cells[yy][xx].resources.get(resType);
 				if (contents == null) {
 					map.cells[yy][xx].resources.put(resType, amount);
