@@ -2,6 +2,7 @@ package org.aimas.craftingquest.core.actions;
 
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.TreeSet;
 
 import org.aimas.craftingquest.core.GamePolicy;
 import org.aimas.craftingquest.state.CellState;
@@ -66,6 +67,7 @@ public class PickupResourcesAction extends Action {
 		CellState miningCell = game.map.cells[playerUnit.pos.y][playerUnit.pos.x];
 
 		HashMap<ResourceType, Integer> cellResources = miningCell.resources;
+		TreeSet<ResourceType> cellResourceTypess = miningCell.resourceTypes;
 		HashMap<ResourceType, Integer> visibleCellResources = miningCell.visibleResources;
 		HashMap<ResourceType, Integer> carriedResources = playerUnit.carriedResources;
 
@@ -106,6 +108,10 @@ public class PickupResourcesAction extends Action {
 				} else { // otherwise take them from the ones in the soil
 					cellResources.put(res, available - required);
 				}
+			}
+			if (available != null && available ==0) {
+				cellResources.remove(res);
+				cellResourceTypess.remove(res);
 			}
 		}
 

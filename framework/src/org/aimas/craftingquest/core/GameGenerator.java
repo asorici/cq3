@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.util.HashMap;
 import java.util.List;
+import java.util.TreeSet;
 
 import org.aimas.craftingquest.state.Blueprint;
 import org.aimas.craftingquest.state.CellState;
@@ -156,6 +157,7 @@ public class GameGenerator {
 
 			for (Point2i p : cellResources.keySet()) {
 				game.map.cells[p.y][p.x].resources = new HashMap<ResourceType, Integer>(cellResources.get(p));
+				game.map.cells[p.y][p.x].resourceTypes = new TreeSet<ResourceType>(cellResources.get(p).keySet());
 			}
 			
 		}catch (EOFException ex) { 
