@@ -12,7 +12,12 @@
 		<nrTurns>180</nrTurns>		
 		<mapName>map_v1.cqm</mapName>
 	
-	
+		<initialPlayerPositions>
+			<initialPlayerPosition playerID="0" x="5" y="5"/>
+			<initialPlayerPosition playerID="1" x="55" y="5"/>
+			<initialPlayerPosition playerID="2" x="55" y="55"/>
+			<initialPlayerPosition playerID="3" x="5" y="55"/>
+		</initialPlayerPositions>
 	
 	    <!-- scenario specific configurations -->
 	

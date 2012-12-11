@@ -45,27 +45,27 @@ public class GameGenerator {
 			/* setup initial player states - there should be only 2 players */
 			for (int i = 0; i < GamePolicy.noPlayers; i++) {
 				if (i % 4 == 0) {
-					PlayerState player = setupPlayerState(i + 1, GamePolicy.nrPlayerUnits, new Point2i(5, 5), game.map);
+					PlayerState player = setupPlayerState(i + 1, GamePolicy.nrPlayerUnits, GamePolicy.initialPlayerPositions.get(0), game.map);
 					player.availableBlueprints = GamePolicy.blueprints;	// all available blueprints are known at the start
 					//game.playerStates.add(player);
 					game.playerStates.put(player.id, player);
 				}
 				else if (i % 4 == 1) {
-					PlayerState player = setupPlayerState(i + 1, GamePolicy.nrPlayerUnits, new Point2i(GamePolicy.mapsize.x - 5, 5), game.map);
+					PlayerState player = setupPlayerState(i + 1, GamePolicy.nrPlayerUnits, GamePolicy.initialPlayerPositions.get(1), game.map);
 					player.availableBlueprints = GamePolicy.blueprints;	// all available blueprints are known at the start
 					//game.playerStates.add(player);
 					game.playerStates.put(player.id, player);
 				} else if (i % 4 == 2) {
-					PlayerState player = setupPlayerState(i + 1, GamePolicy.nrPlayerUnits, new Point2i(5, GamePolicy.mapsize.y - 5), game.map);
+					PlayerState player = setupPlayerState(i + 1, GamePolicy.nrPlayerUnits, GamePolicy.initialPlayerPositions.get(2), game.map);
 					player.availableBlueprints = GamePolicy.blueprints;	// all available blueprints are known at the start
 					//game.playerStates.add(player);
 					game.playerStates.put(player.id, player);
 				}
 				else {
-					PlayerState player = setupPlayerState(i + 1, GamePolicy.nrPlayerUnits, new Point2i(GamePolicy.mapsize.x - 5, GamePolicy.mapsize.y - 5), game.map);
+					PlayerState player = setupPlayerState(i + 1, GamePolicy.nrPlayerUnits, GamePolicy.initialPlayerPositions.get(3), game.map);
 					player.availableBlueprints = GamePolicy.blueprints;	// all available blueprints are known at the start
 					//game.playerStates.add(player);
-					game.playerStates.put(player.id, player);
+											game.playerStates.put(player.id, player);
 				}
 			}
 			

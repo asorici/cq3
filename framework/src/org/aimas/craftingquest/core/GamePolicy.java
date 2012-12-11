@@ -59,6 +59,9 @@ public class GamePolicy {
 	public static String mapName = "map_cq3_v1.cqm";
 	public static MapState map;
 	
+	/* initial player positions */
+	public static HashMap<Integer, Point2i> initialPlayerPositions;
+	
 	/* general */
 	public static Point2i mapsize = new Point2i(80, 80);
 	public static int moveBase = 20;
@@ -190,12 +193,23 @@ public class GamePolicy {
 		killingSpreeBonus = Integer.parseInt(parametersNode.getElementsByTagName("killingSpreeBonus").item(0).getTextContent());
 		firstBloodBonus = Integer.parseInt(parametersNode.getElementsByTagName("firstBloodBonus").item(0).getTextContent());
 		buildTowerBonus = Integer.parseInt(parametersNode.getElementsByTagName("buildTowerBonus").item(0).getTextContent());
+		
+		initialPlayerPositions = new HashMap<Integer, Point2i>();
+		NodeList initialPlayerPositionNodeList = parametersNode.getElementsByTagName("initialPlayerPositions").item(0).getChildNodes();
+		for (int i = 0; i < initialPlayerPositionNodeList.getLength(); i++) {
+			Node initialPlayerPositionNode = initialPlayerPositionNodeList.item(i);
+			
+			int playerID = Integer.parseInt(initialPlayerPositionNode.getAttributes().getNamedItem("playerID").getTextContent());
+			int x = Integer.parseInt(initialPlayerPositionNode.getAttributes().getNamedItem("x").getTextContent());
+			int y = Integer.parseInt(initialPlayerPositionNode.getAttributes().getNamedItem("y").getTextContent());
+			initialPlayerPositions.put(playerID, new Point2i(x, y));
+		}
+		System.out.println("Initial player positions: " + initialPlayerPositions);
 	}
 	
 	private static void readScenarioBlueprints(Element blueprintsNode) {
 		blueprints = new ArrayList<Blueprint>();
 		
-		System.out.println("Reading blueprints");
 		NodeList blueprintNodeList = blueprintsNode.getElementsByTagName("blueprint");
 		System.out.println(blueprintNodeList.getLength() + " blueprints found in GamePolicy.xml");
 		for (int i = 0; i < blueprintNodeList.getLength(); i++) {
@@ -230,7 +244,6 @@ public class GamePolicy {
 			
 			Blueprint readBlueprint = new Blueprint(craftedObjectType, level, weight, requiredResources, upgradeCost);
 			blueprints.add(readBlueprint);
-			System.out.println("Read blueprint: " + readBlueprint.toString());
 		}
 	}
 	
@@ -317,6 +330,7 @@ class MapReader {
 			mapWidth = terrain[0].length;
 			
 			// read resources map and set resources in cells
+			@SuppressWarnings("unchecked")
 			HashMap<Point2i, HashMap<ResourceType, Integer>> cellResourceMap = 
 				(HashMap<Point2i, HashMap<ResourceType, Integer>>)objin.readObject();
 			

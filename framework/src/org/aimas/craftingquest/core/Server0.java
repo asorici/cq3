@@ -399,9 +399,8 @@ public class Server0 implements IServer {
 				carriedObjects.remove(obj);
 			}
 			
-			int respawn_x = 0;
-			int respawn_y = 0;
-			removedUnit.pos = new Point2i(respawn_x, respawn_y);
+			Point2i respawnPoint = GamePolicy.initialPlayerPositions.get(playerID);
+			removedUnit.pos = respawnPoint;
 			player.units.add(removedUnit);
 		}
 		
