@@ -67,7 +67,8 @@ public class AttackAction extends Action {
 
 		// do retaliate
 		if (attackedUnit.life > 0 && attackedUnit.retaliateEnergy >= 0 &&
-				attackedUnit.retaliateEnergy >= attackedUnit.retaliateThreshold &&
+				//attackedUnit.retaliateEnergy >= attackedUnit.retaliateThreshold &&
+				attackedUnit.energy >= attackedUnit.retaliateThreshold &&
 				attackedUnit.retaliateEnergy <= attackedUnit.energy) {
 			int retaliateValue = computeAttackPower(
 					attackedUnit.retaliateEnergy,
@@ -77,10 +78,10 @@ public class AttackAction extends Action {
 		}
 
 		// check for dead units and update scores
-		if (attackedUnit.life < 0)
+		if (attackedUnit.life <= 0)
 			player.killOne(false);
 
-		if (playerUnit.life < 0) {
+		if (playerUnit.life <= 0) {
 			attackedPlayer.killOne(true);
 			player.die();
 		}

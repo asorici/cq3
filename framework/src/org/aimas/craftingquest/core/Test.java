@@ -20,7 +20,7 @@ public class Test {
 	
 	private static long[] getSecrets(){
 		Random rnd = new Random();
-		long[] secrets = new long[GamePolicy.noPlayers];
+		long[] secrets = new long[GamePolicy.nrPlayers];
 		
 		for(int i=0; i < secrets.length; i++) {
 		    secrets[i] = rnd.nextLong();
@@ -66,7 +66,7 @@ public class Test {
 			e.printStackTrace();
 		}
 		
-		Thread[] clients = new Thread[GamePolicy.noPlayers];
+		Thread[] clients = new Thread[GamePolicy.nrPlayers];
 		for (int i = 0; i < clients.length; i++) {
 			final int holdi = i + 1;
 			clients[i] = new Thread(new Runnable() {

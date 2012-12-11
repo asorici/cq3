@@ -324,7 +324,7 @@ public final class Client0 implements IClient, IPlayerActions {
 	 * <p>The attacked unit had the possibility of preparing for
 	 * retaliation. In this case and if the unit survives the attack and it
 	 * has enough energy then a retaliation is done, using the same formula
-	 * as above</p>.
+	 * as above.</p>
 	 * <p>In case of an error, the returned player state will not be
 	 * different from the current one.  It will also contain a
 	 * <code>TransitionResult</code> which gives the reason for the

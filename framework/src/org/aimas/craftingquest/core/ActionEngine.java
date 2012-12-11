@@ -63,10 +63,9 @@ public class ActionEngine {
 	private void refresh(PlayerState player) {
 		player.response = null;							// reset player transition response
 
-		for (UnitState unit : player.units) {			// reset each unit's dig and scan results
+		for (UnitState unit : player.units) {			// reset each unit's dig results
 			unit.currentCellResources.clear();
-			unit.scannedResourceAttributes = null;
-			unit.retaliateEnergy = 0;
+			unit.retaliateEnergy = 0;					// and retaliateEnergy points
 			unit.retaliateThreshold = 0;
 		}
 	}

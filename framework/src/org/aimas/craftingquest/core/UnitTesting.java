@@ -15,7 +15,9 @@ import org.aimas.craftingquest.state.Transition.ActionType;
 import org.aimas.craftingquest.state.TransitionResult;
 import org.aimas.craftingquest.state.TransitionResult.TransitionError;
 import org.aimas.craftingquest.state.UnitState;
+import org.aimas.craftingquest.state.objects.ArmourObject;
 import org.aimas.craftingquest.state.objects.CraftedObjectType;
+import org.aimas.craftingquest.state.objects.SwordObject;
 import org.aimas.craftingquest.state.resources.ResourceType;
 import org.junit.Assert;
 import org.junit.Before;
@@ -122,7 +124,7 @@ public class UnitTesting {
 		assertEquals("MoveResult", transitionResult.errorType, TransitionError.NoError);
 		assertEquals("MoveEnergyConsumption", unit.energy, GamePolicy.initialUnitMaxLife - GamePolicy.moveBase);
 		assertEquals("prevCellContents", game.map.cells[fromPos.y][fromPos.x].cellUnits.size(), 0);
-		assertEquals("prevCellContents", game.map.cells[toPos.y][toPos.x].cellUnits.size(), 1);
+		assertEquals("nextCellContents", game.map.cells[toPos.y][toPos.x].cellUnits.size(), 1);
 	}
 	
 	
@@ -202,7 +204,7 @@ public class UnitTesting {
 		// build transition object
 		Transition transition = new Transition(ActionType.Dig, new Object[] { unit.id, pos });
 		
-		// perform move
+		// perform dig
 		TransitionResult transitionResult = actionEngine.process(player1, transition);
 		
 		// assertions - this move should have succeeded
@@ -213,7 +215,7 @@ public class UnitTesting {
 	}
 	
 	// ================================ CRAFT ACTION TESTS =================================== //
-	@Test
+	//@Test
 	public void testCraft() {
 		Point2i pos = new Point2i(15, 15);
 
@@ -247,7 +249,7 @@ public class UnitTesting {
 		Transition transition = new Transition(ActionType.CraftObject, 
 				new Object[] {unit.id, sword2Blueprint });
 
-		// perform move
+		// perform craft
 		TransitionResult transitionResult = actionEngine.process(player1,transition);
 
 		// assertions - this move should have succeeded
@@ -257,9 +259,133 @@ public class UnitTesting {
 		assertEquals("CraftResultResources", unit.carriedResources.get(ResourceType.IRON), new Integer(0));
 		assertEquals("CraftResultResources", unit.carriedResources.get(ResourceType.STONE), new Integer(0));
 		assertEquals("CraftResultResources", unit.carriedResources.get(ResourceType.WOOD), new Integer(0));
+	}
+
+	// ================================ ATTACK ACTION TESTS =================================== //
+	@Test
+	public void testAttack() {
+		Point2i posAttacker = new Point2i(15, 15);
+		Point2i posDefender = new Point2i(16, 15);
+		
+		HashMap<ResourceType, Integer> unitResources = new HashMap<ResourceType, Integer>();
+		
+		// find blueprints for attack and defense
+		Blueprint swordBlueprint = null;
+		Blueprint armourBlueprint = null;
+		
+		for (Blueprint bp : GamePolicy.blueprints) {
+			if (bp.getType() == CraftedObjectType.SWORD && bp.getLevel() == 2) {
+				swordBlueprint = bp;
+				break;
+			}
+		}
+		
+		for (Blueprint bp : GamePolicy.blueprints) {
+			if (bp.getType() == CraftedObjectType.ARMOUR && bp.getLevel() == 2) {
+				armourBlueprint = bp;
+				break;
+			}
+		}
+		
+		SwordObject sword = new SwordObject(swordBlueprint);
+		ArmourObject armour = new ArmourObject(armourBlueprint);
 		
 		
-	}	
-
-
+		// setup units
+		UnitState unitAttacker = setupUnit(0, player1.id, posAttacker, GamePolicy.initialUnitMaxLife, unitResources);
+		unitAttacker.carriedObjects.put(sword, 1);
+		unitAttacker.equipedSword = sword;
+		
+		UnitState unitDefender = setupUnit(1, player2.id, posDefender, GamePolicy.initialUnitMaxLife / 2, unitResources);
+		unitDefender.carriedObjects.put(armour, 1);
+		//unitDefender.equipedArmour = armour;
+		
+		// add unit to player
+		player1.units.add(unitAttacker);
+		player2.units.add(unitDefender);
+		
+		// build transition object
+		Transition transition = new Transition(ActionType.Attack, new Object[] {
+				unitAttacker.id, unitDefender.playerID, unitDefender.id, unitAttacker.energy / 2});
+		
+		// perform attack
+		TransitionResult transitionResult = actionEngine.process(player1, transition);
+		
+		// interpret
+		assertEquals("AttackResult", TransitionError.NoError, transitionResult.errorType);
+		assertEquals("attackerLife", GamePolicy.initialUnitMaxLife / 2, unitAttacker.energy);
+		
+		int defenderLife = GamePolicy.initialUnitMaxLife / 2 - (int)Math.round((GamePolicy.initialUnitMaxLife / 2) * (1 + sword.getAttack() / 100.0));  
+		
+		assertEquals("defenderLife", defenderLife, player2.units.get(0).life, 0.001);
+		assertEquals("attackerKills", 1, player1.getKills());
+	}
+	
+	@Test
+	public void testAttackWithRetaliate() {
+		Point2i posAttacker = new Point2i(15, 15);
+		Point2i posDefender = new Point2i(16, 15);
+		
+		HashMap<ResourceType, Integer> unitResources = new HashMap<ResourceType, Integer>();
+		
+		// find blueprints for attack and defense
+		Blueprint swordBlueprint = null;
+		Blueprint armourBlueprint = null;
+		
+		for (Blueprint bp : GamePolicy.blueprints) {
+			if (bp.getType() == CraftedObjectType.SWORD && bp.getLevel() == 2) {
+				swordBlueprint = bp;
+				break;
+			}
+		}
+		
+		for (Blueprint bp : GamePolicy.blueprints) {
+			if (bp.getType() == CraftedObjectType.ARMOUR && bp.getLevel() == 2) {
+				armourBlueprint = bp;
+				break;
+			}
+		}
+		
+		SwordObject sword = new SwordObject(swordBlueprint);
+		ArmourObject armour = new ArmourObject(armourBlueprint);
+		
+		// setup units
+		UnitState unitAttacker = setupUnit(0, player1.id, posAttacker, GamePolicy.initialUnitMaxLife, unitResources);
+		unitAttacker.carriedObjects.put(sword, 1);
+		unitAttacker.equipedSword = sword;
+		
+		UnitState unitDefender = setupUnit(1, player2.id, posDefender, GamePolicy.initialUnitMaxLife, unitResources);
+		unitDefender.carriedObjects.put(armour, 1);
+		unitDefender.equipedArmour = armour;
+		
+		
+		// add unit to player
+		player1.units.add(unitAttacker);
+		player2.units.add(unitDefender);
+		
+		// build attack transition object
+		Transition transitionAttack = new Transition(ActionType.Attack, new Object[] {
+				unitAttacker.id, unitDefender.playerID, unitDefender.id, unitAttacker.energy / 2});
+		
+		// build prepare transition object
+		Transition transitionDefend = new Transition(ActionType.Prepare,
+				new Object[] { unitDefender.id, unitDefender.energy / 2, unitDefender.energy / 4});
+		
+		// perform prepare
+		TransitionResult transitionResultDefend = actionEngine.process(player2, transitionDefend);
+		
+		// perform attack
+		TransitionResult transitionResultAttack = actionEngine.process(player1, transitionAttack);
+		
+		// interpret
+		assertEquals("AttackResult", TransitionError.NoError, transitionResultAttack.errorType);
+		assertEquals("attackerLife", 
+				GamePolicy.initialUnitMaxLife - (GamePolicy.initialUnitMaxLife / 2), 
+				unitAttacker.life);
+		
+		int defenderLife = GamePolicy.initialUnitMaxLife - (int)Math.round((GamePolicy.initialUnitMaxLife / 2) * (1 + sword.getAttack() / 100.0) * (1 - armour.getDefence() / 100.0));  
+		
+		assertEquals("defenderLife", defenderLife, player2.units.get(0).life, 0.001);
+		assertEquals("attackerKills", 0, player1.getKills());
+	}
 }

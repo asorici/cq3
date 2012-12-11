@@ -35,7 +35,8 @@ public class GamePolicy {
     public static int initializationWaitTime = 3000;
 	
 	/* number of players */
-	public static int noPlayers = 2;
+    public static int maxPlayers = 4;
+	public static int nrPlayers = 2;
 	public static int nrPlayerUnits = 3;
 
 	/* durations associated with a player */
@@ -134,7 +135,7 @@ public class GamePolicy {
 		readParametersFrom(paramDoc);
 		
 		playerTotalTime = playerActionTime + playerLateTime;
-		PLAYERSTotalTime = noPlayers * playerTotalTime;
+		PLAYERSTotalTime = nrPlayers * playerTotalTime;
 		roundTime = PLAYERSTotalTime + updateTime;
 	}
 	
@@ -153,7 +154,8 @@ public class GamePolicy {
 	}
 	
 	private static void readServerParameters(Element parametersNode) {
-		noPlayers = Integer.parseInt(parametersNode.getElementsByTagName("nrPlayers").item(0).getTextContent());
+		maxPlayers = Integer.parseInt(parametersNode.getElementsByTagName("maxPlayers").item(0).getTextContent());
+		nrPlayers = Integer.parseInt(parametersNode.getElementsByTagName("nrPlayers").item(0).getTextContent());
 		playerActionTime = Integer.parseInt(parametersNode.getElementsByTagName("playerActionTime").item(0).getTextContent());
 		playerLateTime = Integer.parseInt(parametersNode.getElementsByTagName("playerLateTime").item(0).getTextContent());
 		updateTime = Integer.parseInt(parametersNode.getElementsByTagName("updateTime").item(0).getTextContent());
@@ -180,6 +182,22 @@ public class GamePolicy {
 		towerBaseRadius = Integer.parseInt(parametersNode.getElementsByTagName("towerBaseRadius").item(0).getTextContent());
 		towerBaseDrain = Integer.parseInt(parametersNode.getElementsByTagName("towerBaseDrain").item(0).getTextContent());
 		towerBaseEnergy = Integer.parseInt(parametersNode.getElementsByTagName("towerBaseEnergy").item(0).getTextContent());
+		
+		// level increments
+		Element levelsElement = (Element)parametersNode.getElementsByTagName("levels").item(0);
+		maxLevels = Integer.parseInt(levelsElement.getAttribute("max"));
+		levelIncrease = new int[maxLevels];
+		
+		NodeList levelInfoList = levelsElement.getElementsByTagName("level");
+		for (int i = 0; i < levelInfoList.getLength(); i++) {
+			Element level = (Element)levelInfoList.item(i);
+			int levelIndex = Integer.parseInt(level.getAttribute("value"));
+			int levelIncrement = Integer.parseInt(level.getAttribute("percentage"));
+			
+			levelIncrease[levelIndex - 1] = levelIncrement;
+		}
+		
+		// energy repleneshing
 		String replenishType = parametersNode.getElementsByTagName("energyReplenishModel").item(0).getTextContent();
 		if (replenishType.equals("FullReplenish"))
 			energyReplenishModel = ReplenishType.FullReplenish;

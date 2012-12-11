@@ -78,11 +78,6 @@ public class UnitState implements Serializable {
 	 */
 	public int life;
 
-	// must be cleared before each transition
-	/**
-	 * the last scanned resource attributes. the field will be reset to null before each action attempt
-	 */
-	public List<int[]>[][] scannedResourceAttributes = null;
 	
 	/**
 	 * the last dug up soil resources. the field will be reset to null before each action attempt

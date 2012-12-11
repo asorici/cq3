@@ -35,8 +35,7 @@
 		<towerBaseDrain>60</towerBaseDrain>
 		<towerBaseEnergy>250</towerBaseEnergy>
 		
-	    <levels>
-	      <maxLevels>3</maxLevels>
+	    <levels max="3">
 	      <level value="1" percentage="10" />
 	      <level value="2" percentage="30" />
 	      <level value="3" percentage="50" />
