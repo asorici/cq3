@@ -13,6 +13,7 @@ import org.aimas.craftingquest.state.Point2i;
 import org.aimas.craftingquest.state.Transition;
 import org.aimas.craftingquest.state.UnitState;
 //import org.aimas.craftingquest.state.CellState.CellType;
+import org.aimas.craftingquest.state.CellState.CellType;
 import org.aimas.craftingquest.state.Transition.ActionType;
 import org.aimas.craftingquest.state.objects.ICrafted;
 import org.aimas.craftingquest.state.objects.Tower;
@@ -32,8 +33,7 @@ public class MoveAction extends Action {
 		// check allowed distance
 		Point2i toPos = (Point2i) transition.operands[1];
 		Point2i fromPos = playerUnit.pos;
-		if (Math.abs(toPos.x - fromPos.x) > 1
-				|| Math.abs(toPos.y - fromPos.y) > 1) {
+		if (Math.abs(toPos.x - fromPos.x) > 1 || Math.abs(toPos.y - fromPos.y) > 1) {
 			TransitionResult res = new TransitionResult(transition.id);
 			res.errorType = TransitionResult.TransitionError.MoveError;
 			res.errorReason = "Move allowed only to neighboring cells";
@@ -48,11 +48,18 @@ public class MoveAction extends Action {
 			res.errorReason = "Move allowed only within map bounds";
 			return res;
 		}
-
+		
+		// check terrain type
+		if(game.map.cells[toPos.y][toPos.x].type == CellType.Rock) {
+			TransitionResult res = new TransitionResult(transition.id);
+			res.errorType = TransitionResult.TransitionError.TerrainError;
+			res.errorReason = "Move not allowed to cells with rocky terrain.";
+			return res;
+		}
+		
 		// check no object is there
 		if (game.map.cells[toPos.y][toPos.x].strategicObject != null
-				&& game.map.cells[toPos.y][toPos.x].strategicObject instanceof Tower
-				) {
+				&& game.map.cells[toPos.y][toPos.x].strategicObject instanceof Tower) {
 			TransitionResult res = new TransitionResult(transition.id);
 			res.errorType = TransitionResult.TransitionError.ObstacleError;
 			res.errorReason = "Move not allowed to cells containing strategic structures.";
@@ -89,8 +96,7 @@ public class MoveAction extends Action {
 		updateUnitSight(game, playerUnit, toPos);
 
 		// update cells with new unit position
-		Iterator<BasicUnit> it = game.map.cells[fromPos.y][fromPos.x].cellUnits
-				.iterator();
+		Iterator<BasicUnit> it = game.map.cells[fromPos.y][fromPos.x].cellUnits.iterator();
 		while (it.hasNext()) {
 			BasicUnit u = it.next();
 			if (u.playerID == playerUnit.playerID) {

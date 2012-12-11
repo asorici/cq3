@@ -5,5 +5,6 @@
 	<classpathentry kind="lib" path="lib/cajo.jar"/>
 	<classpathentry kind="lib" path="lib/log4j.jar"/>
 	<classpathentry kind="lib" path="lib/java-json.jar"/>
+	<classpathentry kind="lib" path="lib/junit-4.11.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

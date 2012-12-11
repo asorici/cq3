@@ -340,8 +340,8 @@ class MapReader {
 				for (int j = 0; j < mapWidth; j++) {
 					Point2i pos = new Point2i(j, i);
 					cells[i][j] = new CellState(terrain[i][j].cellType, new Point2i(j, i));
-					cells[i][j].resources = cellResourceMap.get(pos);
-					
+					cells[i][j].resources.putAll(cellResourceMap.get(pos));
+					cells[i][j].resourceTypes.addAll(cellResourceMap.get(pos).keySet()); 
 				}
 			}
 			

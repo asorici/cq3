@@ -40,10 +40,6 @@ public class PlayerState implements Serializable {
 	 */
 	public List<Blueprint> availableBlueprints;		// list of all available blueprints in the game - set at game start 
 	
-	/**
-	 * the list of blueprints bought by this player
-	 */
-	public List<Blueprint> boughtBlueprints;		// blueprints that have been bought by the player
 	
 	/**
 	 * the list of active player towers
@@ -93,7 +89,6 @@ public class PlayerState implements Serializable {
 		units = new ArrayList<UnitState>();
 		frozenUnits = new HashMap<UnitState, Integer>();
 		//responces = new ArrayList<TransitionResult>();
-		boughtBlueprints = new ArrayList<Blueprint>();
 		availableBlueprints = new ArrayList<Blueprint>();
 		availableTowers = new ArrayList<Tower>();
 		
@@ -115,10 +110,10 @@ public class PlayerState implements Serializable {
 		String info = "";
 		info += "PlayerState: \n";
 		info += "    id:" + id + "\n";
-		info += "    credit:" + gold + "\n";
+		info += "    gold:" + gold + "\n";
 		info += "    round:" + round.currentRound + " of " + round.noRounds + "\n";
 		info += "    Blueprints: \n";
-		for (Blueprint bp: boughtBlueprints) {
+		for (Blueprint bp: availableBlueprints) {
 			info += "        " + bp + "\n";
 		}
 		

@@ -38,34 +38,32 @@ public class GameGenerator {
 			/* game.merchantList = setupMerchantList(game.map); */
 			
 			/* set map resources */
-			HashMap<ResourceType, Integer> resourceAmountsByType = ResourceGenerator.placeResources(game.map);
-			GamePolicy.blueprints = ResourceGenerator.generateBlueprints(resourceAmountsByType);		// generate blueprints
-			game.resourceAmountsByType = resourceAmountsByType;
+//			HashMap<ResourceType, Integer> resourceAmountsByType = ResourceGenerator.placeResources(game.map);
+//			GamePolicy.blueprints = ResourceGenerator.generateBlueprints(resourceAmountsByType);		// generate blueprints
+//			game.resourceAmountsByType = resourceAmountsByType;
 			
 			/* setup initial player states - there should be only 2 players */
 			for (int i = 0; i < GamePolicy.noPlayers; i++) {
 				if (i % 4 == 0) {
 					PlayerState player = setupPlayerState(i + 1, GamePolicy.nrPlayerUnits, GamePolicy.initialPlayerPositions.get(0), game.map);
 					player.availableBlueprints = GamePolicy.blueprints;	// all available blueprints are known at the start
-					//game.playerStates.add(player);
 					game.playerStates.put(player.id, player);
 				}
 				else if (i % 4 == 1) {
 					PlayerState player = setupPlayerState(i + 1, GamePolicy.nrPlayerUnits, GamePolicy.initialPlayerPositions.get(1), game.map);
 					player.availableBlueprints = GamePolicy.blueprints;	// all available blueprints are known at the start
-					//game.playerStates.add(player);
 					game.playerStates.put(player.id, player);
 				} else if (i % 4 == 2) {
 					PlayerState player = setupPlayerState(i + 1, GamePolicy.nrPlayerUnits, GamePolicy.initialPlayerPositions.get(2), game.map);
 					player.availableBlueprints = GamePolicy.blueprints;	// all available blueprints are known at the start
-					//game.playerStates.add(player);
 					game.playerStates.put(player.id, player);
 				}
 				else {
 					PlayerState player = setupPlayerState(i + 1, GamePolicy.nrPlayerUnits, GamePolicy.initialPlayerPositions.get(3), game.map);
 					player.availableBlueprints = GamePolicy.blueprints;	// all available blueprints are known at the start
-					//game.playerStates.add(player);
-											game.playerStates.put(player.id, player);
+
+					game.playerStates.put(player.id, player);
+
 				}
 			}
 			

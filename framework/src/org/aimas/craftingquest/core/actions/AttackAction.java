@@ -99,7 +99,8 @@ public class AttackAction extends Action {
 		float swordMod = 1, shieldMod = 1;
 
 		if (attacker.equipedSword != null)
-			swordMod += attacker.equipedSword.getDefence() / 100.0;
+			//swordMod += attacker.equipedSword.getDefence() / 100.0;
+			swordMod += attacker.equipedSword.getAttack() / 100.0;
 
 		if (defender.equipedArmour != null)
 			shieldMod -= defender.equipedArmour.getDefence() / 100.0;
