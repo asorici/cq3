@@ -24,7 +24,7 @@ public class UpgradeAction extends Action {
 		} else {
 			TransitionResult res = new TransitionResult(transition.id);
 			res.errorType = TransitionResult.TransitionError.BlueprintError;
-			res.errorReason = "Wrong blueprint for trap.";
+			res.errorReason = "Wrong blueprint for object.";
 			return res;
 		}
 		
@@ -60,10 +60,8 @@ public class UpgradeAction extends Action {
 	@Override
 	protected boolean validOperands(Transition transition) {
 		Blueprint bp = null;
-		int a;
 		try {
 			bp = (Blueprint) transition.operands[1];
-			a = (Integer) transition.operands[2];
 			if (bp == null) {
 				return false;
 			}

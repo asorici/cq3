@@ -82,21 +82,25 @@ public class ActionEngine {
 			List<Tower> opponentTowers = state.getOpponentTowers(playerID);
 			
 			for (Tower oppTower : opponentTowers) {
-				if (Math.abs(oppTower.getPosition().x - unit.pos.x) <= GamePolicy.towerBaseRadius && 
-					Math.abs(oppTower.getPosition().y - unit.pos.y) <= GamePolicy.towerBaseRadius) {
+				if (Math.abs(oppTower.getPosition().x - unit.pos.x) <= oppTower.getRange() && 
+					Math.abs(oppTower.getPosition().y - unit.pos.y) <= oppTower.getRange()) {
 					
 					int distance = Math.min( Math.abs(oppTower.getPosition().x - unit.pos.x), Math.abs(oppTower.getPosition().y - unit.pos.y) );
 					if (distance == 0) {	// can happen if a player constructs a tower in a cell
 						distance = 1;		// that contains an opponents unit
 					}
-					int drainAmount = GamePolicy.towerBaseDrain / distance;
+					int drainAmount = oppTower.getDrain() / distance;
 					
 					unit.energy -= drainAmount;						// drain unit energy
 					oppTower.weakenTower(drainAmount);				// and also weaken tower with the same amount
-					state.playerStates.get(oppTower.getPlayerID()).availableTowers.remove(oppTower);
-					gui_logger.info(state.round.currentRound + " RemoveTower " + oppTower.getPosition().x + " " + oppTower.getPosition().y);
-					/*
+					
 					if (oppTower.getRemainingStrength() <= 0) {		// if the tower has been weakened enough => destroy it
+						state.playerStates.get(oppTower.getPlayerID()).availableTowers.remove(oppTower);
+						gui_logger.info(state.round.currentRound + " RemoveTower " + oppTower.getPosition().x + " " + oppTower.getPosition().y);
+					}
+					
+					/*
+					if (oppTower.getRemainingStrength() <= 0) {		
 						List<Integer> playerIds = state.getPlayerIds();
 						for (Integer pId : playerIds) {
 							boolean foundTower = false;
@@ -137,12 +141,11 @@ public class ActionEngine {
 		PlayerState playerState = state.playerStates.get(playerID);
 		
 		for (Tower tower : playerState.availableTowers) {
-			int towerLevel = tower.getLevel();
-			int sightRadius = (int) (GamePolicy.towerBaseRadius * 
-					(1 + GamePolicy.levelIncrease[towerLevel - 1] / 100.0));
-			
-			CellState[][] towerSight = tower.sight;
+			int sightRadius = tower.getRange();
 			Point2i towerPos = tower.getPosition();
+			
+			int len = 2 * sightRadius + 1;
+			CellState[][] towerSight = new CellState[len][len];
 			
 			for (int i = 0, y = towerPos.y - sightRadius; y <= towerPos.y + sightRadius; y++, i++) {
 				for (int j = 0, x = towerPos.x - sightRadius; x <= towerPos.x + sightRadius; x++, j++) {
@@ -152,6 +155,9 @@ public class ActionEngine {
 					}
 				}
 			}
+			
+			// update tower sight
+			tower.sight = towerSight;
 		}
 	}
 	

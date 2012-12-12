@@ -23,6 +23,8 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.sun.xml.internal.ws.api.streaming.XMLStreamReaderFactory.Woodstox;
+
 public class UnitTesting {
 	static GameState game;
 	static ActionEngine actionEngine;
@@ -47,7 +49,6 @@ public class UnitTesting {
 		/* create game state */
 		game = new GameState();
 		game.map = GamePolicy.map;
-		game.initializeTowerTrapLists();
 		
 		actionEngine = new ActionEngine(game);
 		
@@ -71,7 +72,7 @@ public class UnitTesting {
 		pState.mapHeight = map.mapHeight;
 		pState.mapWidth = map.mapWidth;
 		
-		pState.availableBlueprints.addAll(playerBlueprints);
+		//pState.availableBlueprints.addAll(playerBlueprints);
 		
 		return pState;
 	}
@@ -96,8 +97,8 @@ public class UnitTesting {
 		return unit;
 	}
 	
-	// ====================================== TESTS ========================================= //
 	
+	// ======================================================================================== //
 	// ================================ MOVE ACTION TESTS =================================== //
 	//@Test
 	public void testMove() {
@@ -185,6 +186,8 @@ public class UnitTesting {
 		assertEquals("prevCellContents", game.map.cells[toPos.y][toPos.x].cellUnits.size(), 0);
 	}
 	
+	
+	// ======================================================================================== //
 	// ================================ DIG ACTION TESTS =================================== //
 	//@Test
 	public void testDig() {
@@ -214,6 +217,8 @@ public class UnitTesting {
 		
 	}
 	
+	
+	// ======================================================================================== //
 	// ================================ CRAFT ACTION TESTS =================================== //
 	//@Test
 	public void testCraft() {
@@ -261,8 +266,9 @@ public class UnitTesting {
 		assertEquals("CraftResultResources", unit.carriedResources.get(ResourceType.WOOD), new Integer(0));
 	}
 
+	// ======================================================================================== //
 	// ================================ ATTACK ACTION TESTS =================================== //
-	@Test
+	//@Test
 	public void testAttack() {
 		Point2i posAttacker = new Point2i(15, 15);
 		Point2i posDefender = new Point2i(16, 15);
@@ -321,7 +327,7 @@ public class UnitTesting {
 		assertEquals("attackerKills", 1, player1.getKills());
 	}
 	
-	@Test
+	//@Test
 	public void testAttackWithRetaliate() {
 		Point2i posAttacker = new Point2i(15, 15);
 		Point2i posDefender = new Point2i(16, 15);
@@ -387,5 +393,201 @@ public class UnitTesting {
 		
 		assertEquals("defenderLife", defenderLife, player2.units.get(0).life, 0.001);
 		assertEquals("attackerKills", 0, player1.getKills());
+	}
+	
+	// ======================================================================================== //
+	// ================================ UPGRADE ACTION TESTS ================================== //
+	
+	//@Test
+	public void testUpgrade() {
+		Point2i pos= new Point2i(15, 15);
+		HashMap<ResourceType, Integer> unitResources = new HashMap<ResourceType, Integer>();
+		
+		// find blueprints for attack
+		Blueprint swordBlueprint = null;
+		
+		for (Blueprint bp : GamePolicy.blueprints) {
+			if (bp.getType() == CraftedObjectType.SWORD && bp.getLevel() == 2) {
+				swordBlueprint = bp;
+				break;
+			}
+		}
+		
+		// add blueprint to player
+		player1.availableBlueprints.add(swordBlueprint);
+		player1.gold = swordBlueprint.getUpgradeCost();
+		
+		SwordObject sword = new SwordObject(swordBlueprint);
+		
+		
+		// setup units
+		UnitState unit = setupUnit(0, player1.id, pos, GamePolicy.initialUnitMaxLife, unitResources);
+		unit.carriedObjects.put(sword, 1);
+		unit.equipedSword = sword;
+		
+		
+		// add unit to player
+		player1.units.add(unit);
+		
+		
+		// build transition object
+		Transition transition = new Transition(ActionType.Upgrade, new Object[] {
+				unit.id, swordBlueprint});
+		
+		// perform attack
+		TransitionResult transitionResult = actionEngine.process(player1, transition);
+		
+		// interpret
+		assertEquals("UpgradeResult", TransitionError.NoError, transitionResult.errorType);
+		assertEquals("UpgradeGoldRemaining", 0, player1.gold);
+		
+		// get a level 3 blueprint to see if its in the player's list
+		Blueprint bp3 = null;
+		for (Blueprint bp : GamePolicy.blueprints) {
+			if (bp.getType() == CraftedObjectType.SWORD && bp.getLevel() == 3) {
+				bp3 = bp;
+				break;
+			}
+		}
+		
+		System.out.println(player1.availableBlueprints);
+		
+		Assert.assertTrue("UpgradeBlueprintExists", player1.availableBlueprints.contains(bp3));
+	}
+	
+	
+	// ======================================================================================== //
+	// ================================= EQUIP ACTION TESTS =================================== //
+	
+	//@Test
+	public void testEquip() {
+		Point2i pos= new Point2i(15, 15);
+		HashMap<ResourceType, Integer> unitResources = new HashMap<ResourceType, Integer>();
+		
+		// find blueprints for attack
+		Blueprint swordBlueprint = null;
+		
+		for (Blueprint bp : GamePolicy.blueprints) {
+			if (bp.getType() == CraftedObjectType.SWORD && bp.getLevel() == 2) {
+				swordBlueprint = bp;
+				break;
+			}
+		}
+		
+		// add blueprint to player
+		player1.availableBlueprints.add(swordBlueprint);
+		player1.gold = swordBlueprint.getUpgradeCost();
+		
+		SwordObject sword = new SwordObject(swordBlueprint);
+		
+		
+		// setup units
+		UnitState unit = setupUnit(0, player1.id, pos, GamePolicy.initialUnitMaxLife, unitResources);
+		unit.carriedObjects.put(sword, 1);
+		
+		// add unit to player
+		player1.units.add(unit);
+		
+		
+		// build transition object
+		Transition transition = new Transition(ActionType.Equip, new Object[] {
+				unit.id, sword});
+		
+		// perform attack
+		TransitionResult transitionResult = actionEngine.process(player1, transition);
+		
+		// interpret
+		assertEquals("EquipResult", TransitionError.NoError, transitionResult.errorType);
+		assertEquals("EquipWeapon", sword, unit.equipedSword);
+	}
+	
+	@Test
+	public void testPlaceTower() {
+		Point2i pos= new Point2i(14, 15);
+		HashMap<ResourceType, Integer> unitResources = new HashMap<ResourceType, Integer>();
+		
+		// find blueprints for tower
+		Blueprint towerBlueprint = null;
+		
+		for (Blueprint bp : GamePolicy.blueprints) {
+			if (bp.getType() == CraftedObjectType.TOWER && bp.getLevel() == 2) {
+				towerBlueprint = bp;
+				break;
+			}
+		}
+		
+		// add blueprint to player
+		player1.availableBlueprints.add(towerBlueprint);
+		
+		// setup unit resources
+		unitResources.put(ResourceType.STONE, 60);
+		unitResources.put(ResourceType.IRON, 40);
+		unitResources.put(ResourceType.WOOD, 40);
+		
+		// setup units
+		UnitState unit = setupUnit(0, player1.id, pos, GamePolicy.initialUnitMaxLife, unitResources);
+		
+		// add unit to player
+		player1.units.add(unit);
+		
+		
+		// build transition object
+		Transition transition = new Transition(ActionType.PlaceTower, new Object[] {
+				unit.id, towerBlueprint});
+		
+		// perform attack
+		TransitionResult transitionResult = actionEngine.process(player1, transition);
+		
+		// interpret
+		assertEquals("PlaceTowerResult", TransitionError.NoError, transitionResult.errorType);
+		Assert.assertTrue("PlaceTowerExists", player1.availableTowers.contains(towerBlueprint.craft(player1.id, unit.pos)));
+		assertEquals("RemainingResources", new Integer(0), unit.carriedResources.get(ResourceType.WOOD));
+		Assert.assertTrue("PlaceTowerExists", game.map.cells[unit.pos.y][unit.pos.x].strategicObject.equals(towerBlueprint.craft(player1.id, unit.pos)));
+	}
+	
+	@Test
+	public void testPlaceTrap() {
+		Point2i pos= new Point2i(16, 15);
+		HashMap<ResourceType, Integer> unitResources = new HashMap<ResourceType, Integer>();
+		
+		// find blueprints for tower
+		Blueprint trapBlueprint = null;
+		
+		for (Blueprint bp : GamePolicy.blueprints) {
+			if (bp.getType() == CraftedObjectType.TRAP && bp.getLevel() == 2) {
+				trapBlueprint = bp;
+				break;
+			}
+		}
+		
+		// add blueprint to player
+		player1.availableBlueprints.add(trapBlueprint);
+		
+		// setup unit resources
+		unitResources.put(ResourceType.LEATHER, 20);
+		unitResources.put(ResourceType.IRON, 20);
+		unitResources.put(ResourceType.WOOD, 10);
+		
+		// setup units
+		UnitState unit = setupUnit(0, player1.id, pos, GamePolicy.initialUnitMaxLife, unitResources);
+		
+		// add unit to player
+		player1.units.add(unit);
+		
+		
+		// build transition object
+		Transition transition = new Transition(ActionType.PlaceTrap, new Object[] {
+				unit.id, trapBlueprint});
+		
+		// perform attack
+		TransitionResult transitionResult = actionEngine.process(player1, transition);
+		
+		// interpret
+		assertEquals("PlaceTrapResult", TransitionError.NoError, transitionResult.errorType);
+		Assert.assertTrue("PlaceTrapExists", player1.availableTraps.contains(trapBlueprint.craft(player1.id, unit.pos)));
+		assertEquals("RemainingResources", new Integer(0), unit.carriedResources.get(ResourceType.WOOD));
+		assertEquals("RemainingResources", new Integer(0), unit.carriedResources.get(ResourceType.IRON));
+		assertEquals("RemainingResources", new Integer(0), unit.carriedResources.get(ResourceType.LEATHER));
+		Assert.assertTrue("PlaceTrapExists", game.map.cells[unit.pos.y][unit.pos.x].strategicObject.equals(trapBlueprint.craft(player1.id, unit.pos)));
 	}
 }

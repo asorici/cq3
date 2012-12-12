@@ -20,9 +20,11 @@ import org.aimas.craftingquest.state.objects.Tower;
 import org.aimas.craftingquest.state.objects.TrapObject;
 import org.aimas.craftingquest.state.resources.ResourceType;
 import org.aimas.craftingquest.state.TransitionResult;
+import org.apache.log4j.Logger;
 
 public class MoveAction extends Action {
-
+	private static Logger gui_logger = Logger.getLogger("org.aimas.craftingquest.core.guilogger");
+	
 	public MoveAction(ActionType type) {
 		super(type);
 	}
@@ -104,24 +106,21 @@ public class MoveAction extends Action {
 				break;
 			}
 		}
-		game.map.cells[toPos.y][toPos.x].cellUnits.add(playerUnit
-				.getOpponentPerspective());
+		game.map.cells[toPos.y][toPos.x].cellUnits.add(playerUnit.getOpponentPerspective());
 		
 		
-		// check no object is there
+		// check if there is a trap in the new position - if so mark the opponent unit as frozen
 		if (game.map.cells[toPos.y][toPos.x].strategicObject != null
-				&& game.map.cells[toPos.y][toPos.x].strategicObject instanceof TrapObject
-				) {
+				&& game.map.cells[toPos.y][toPos.x].strategicObject instanceof TrapObject) {
 			TrapObject trap = (TrapObject) game.map.cells[toPos.y][toPos.x].strategicObject;
 			playerUnit.energy = 0;
-			player.freeze(playerUnit, trap.getLevel()+1);
+			player.freeze(playerUnit, trap.getLevel() + 1);
 
-			List<Tower> pTraps = game.playerTowers.get(trap.getPlayerID());
 			PlayerState opponentState = game.playerStates.get(trap.getPlayerID());
-			opponentState.availableTraps.add(trap);	// trap is no longer available
-			pTraps.remove(trap);			// the weakened tower and remove it
-			//game.gui_logger.info(state.round.currentRound + " RemoveTrap " + trap.getPosition().x + " " + trap.getPosition().y);
-			game.playerStates.get(trap.getPlayerID()).triggerTrap();
+			opponentState.availableTraps.remove(trap);	// trap is no longer available
+			opponentState.triggerTrap();
+			
+			gui_logger.info(game.round.currentRound + " RemoveTrap " + trap.getPosition().x + " " + trap.getPosition().y);
 		}
 		
 		TransitionResult moveres = new TransitionResult(transition.id);

@@ -67,8 +67,8 @@ public class GamePolicy {
 	public static Point2i mapsize = new Point2i(80, 80);
 	public static int moveBase = 20;
 	public static int resourceMoveCost = 1;
-	public static int initialTeamGold = 300;
-	public static int initialUnitMaxLife = 150;
+	public static int initialTeamGold = 200;
+	public static int initialUnitMaxLife = 200;
 	public static ReplenishType energyReplenishModel = ReplenishType.FullReplenish;
 	public static int movePenaltyWeight = 50;
 	
@@ -80,13 +80,13 @@ public class GamePolicy {
 	public static int buildCost = 0;
 	public static int scanRadius = 7;
 	public static int sightRadius = 5;
-	public static int placeTowerCost = 75;
+	public static int placeTowerCost = 50;
 	public static int placeTrapCost = 40;
 
 	/* tower related */
 	public static int towerBaseRadius = 4;
 	public static int towerBaseDrain = 100;
-	public static int towerBaseEnergy = 100;
+	public static int towerBaseEnergy = 250;
 	
 	public static int maxResourceSpots = 5;
 	public static int leatherWeight = 1;

@@ -91,6 +91,7 @@ public class PlayerState implements Serializable {
 		//responces = new ArrayList<TransitionResult>();
 		availableBlueprints = new ArrayList<Blueprint>();
 		availableTowers = new ArrayList<Tower>();
+		availableTraps = new ArrayList<TrapObject>();
 		
 		round = new RoundState();
 
@@ -195,13 +196,6 @@ public class PlayerState implements Serializable {
 	}
 	
 	public boolean validLastTransition() {
-		/*
-		if (!responces.isEmpty()) {
-			TransitionResult tr = responces.get(responces.size() - 1);	// there should always be only one
-			return tr.valid();											// pertaining to the last transition
-		}
-		*/
-		
 		if (response != null) {
 			return response.valid();
 		}
@@ -210,13 +204,6 @@ public class PlayerState implements Serializable {
 	}
 	
 	public String getLastTransitionError() {
-		/*
-		if (!responces.isEmpty()) {
-			TransitionResult tr = responces.get(responces.size() - 1);	// there should always be only one
-			return tr.toString();										// pertaining to the last transition
-		}
-		*/
-		
 		if (response != null) {
 			return response.toString();
 		}

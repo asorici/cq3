@@ -39,6 +39,9 @@ public class PlaceTowerAction extends Action {
 		}
 
 		// check to see if any resources are left in the cell
+		/* the tower can be placed even in cells with resources; they don't go anywhere, but no one can access them
+		 * whilst the tower is active
+		 
 		boolean emptyCell = true;
 		for (ResourceType restype : unitCell.resources.keySet()) { // first soil resources
 			if (unitCell.resources.get(restype) > 0) {
@@ -73,6 +76,7 @@ public class PlaceTowerAction extends Action {
 		}
 		
 		// Map cell is clear ...
+		*/
 		
 		Blueprint playerBlueprint = (Blueprint) transition.operands[1];
 		Blueprint blueprint; // the real one
@@ -113,15 +117,6 @@ public class PlaceTowerAction extends Action {
 		unitCell.strategicObject = tower; // place tower in cell
 		
 		player.availableTowers.add(tower);
-//		List<Tower> playerTowers = game.playerTowers.get(player.id); // add in global list of towers
-//		if (playerTowers == null) {
-//			playerTowers = new ArrayList<Tower>();
-//			playerTowers.add(tower);
-//			game.playerTowers.put(player.id, playerTowers);
-//			player.availableTowers.put(tower, true); // this tower is newly
-//		} else {
-//			playerTowers.add(tower);
-//		}
 
 		// consume energy to build the tower
 		playerUnit.energy -= GamePolicy.placeTowerCost; 

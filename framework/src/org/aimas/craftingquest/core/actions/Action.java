@@ -64,18 +64,20 @@ public abstract class Action {
 				return new DropResourcesAction(type);
 			case DropObjects:
 				return new DropObjectAction(type);
-			case PlaceTrap:
-				return new PlaceTrapAction(type);
 			case CraftObject:
 				return new CraftObjectAction(type);
 			case Equip:
 				return new EquipAction(type);
 			case PlaceTower:
 				return new PlaceTowerAction(type);
+			case PlaceTrap:
+				return new PlaceTrapAction(type);
 			case Prepare:
 				return new PrepareAction(type);
 			case Attack:
 				return new AttackAction(type);
+			case Upgrade:
+				return new UpgradeAction(type);
 			default: return null;
 		}
 	}

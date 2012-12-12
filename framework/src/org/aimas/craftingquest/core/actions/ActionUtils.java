@@ -7,8 +7,7 @@ import org.aimas.craftingquest.state.UnitState;
 import org.aimas.craftingquest.state.resources.ResourceType;
 
 public class ActionUtils {
-	protected static boolean checkCraftingRequirements(UnitState playerUnit,
-			Blueprint blueprint) {
+	protected static boolean checkCraftingRequirements(UnitState playerUnit, Blueprint blueprint) {
 
 		/**
 		 *  Check if resources are available

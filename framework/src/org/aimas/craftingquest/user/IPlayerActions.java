@@ -174,17 +174,16 @@ public interface IPlayerActions {
     public PlayerState attack(UnitState unit, BasicUnit attackedUnit, int energyBackup);
     
     /**
-	 * Performs an upgrade for the given <code>craftedObject</code> by paying <code>goldAmount</code> 
-	 * gold nuggets.
+	 * Performs an upgrade for the given crafted object described by the <code>blueprint</code> by paying the
+	 * required upgrade cost (available by calling <code>blueprint.getUpgradeCost()</code>) in gold nuggets.
 	 * <p> If successful, the PlayerState returned will contain an additional blueprint describing the requirements
-	 * for the next level of the crafted object submitted.
+	 * for the next level of the crafted object.
 	 * <p>In case of an error, the returned player state will not be different from the current one. 
 	 * It will also contain a <code>TransitionResult</code> which gives the reason for the failure.</p>
 	 * @param unit   the unit performing the upgrade
-	 * @param blueprint  the blueprint that is upgraded
-	 * @param goldAmount  the amount of gold nuggets required for the upgrade  
+	 * @param blueprint  the blueprint that is upgraded  
 	 * @return the new player state or null if the player attempts to move outside his turn.
 	 */
-    public PlayerState upgrade(UnitState unit, Blueprint blueprint, int goldAmount);
+    public PlayerState upgrade(UnitState unit, Blueprint blueprint);
     
 }

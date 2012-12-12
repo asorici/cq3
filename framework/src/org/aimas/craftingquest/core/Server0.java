@@ -419,7 +419,7 @@ public class Server0 implements IServer {
 	}
 	
 	private boolean allowedPlayer(int clientID) {
-		int factor = clientID % 4;
+		int factor = clientID % GamePolicy.maxPlayers;
 		long currentTime = System.currentTimeMillis();
 		int currentRound = state.round.currentRound;
 		

@@ -65,28 +65,57 @@ public class Blueprint implements Serializable {
 		return upgradeCost;
 	}
 
+	
+	/*
+	 *  ============================ tower specific methods ============================
+	 */
 	public int getInitialStrength() {
 		if (type != CraftedObjectType.TOWER)
 			return 0;
+		
 		return GamePolicy.towerBaseEnergy * (100 + GamePolicy.levelIncrease[level]) / 100;
 	}
-
+	
+	
+	public int getRange() {
+		if (type != CraftedObjectType.TOWER) 
+			return 0;
+		
+		return GamePolicy.towerBaseRadius * (100 + GamePolicy.levelIncrease[level]) / 100;
+	}
+	
+	
+	public int getDrain() {
+		if (type != CraftedObjectType.TOWER) 
+			return 0;
+		
+		return GamePolicy.towerBaseDrain * (100 + GamePolicy.levelIncrease[level]) / 100;
+	}
+	
+	
 	public int getWeight() {
 		return weight;
 	}
-
+	
+	/*
+	 * ============================ Sword specific method ============================
+	 */
 	public int getAttack() {
 		if (type != CraftedObjectType.SWORD)
 			return 0;
 		return GamePolicy.levelIncrease[level];
 	}
-
+	
+	/*
+	 * ============================ Armour specific method ============================
+	 */
 	public int getDefence() {
 		if (type != CraftedObjectType.ARMOUR)
 			return 0;
 		return GamePolicy.levelIncrease[level];
 	}
-
+	
+	
 	public CraftedObjectType getType() {
 		return type;
 	}	

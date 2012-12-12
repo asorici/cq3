@@ -23,8 +23,8 @@
 	
 	    <nrPlayers>4</nrPlayers>
 	    <nrPlayerUnits>10</nrPlayerUnits>
-	    <initialTeamGold>100</initialTeamGold>
-	    <unitEnergy>150</unitEnergy>
+	    <initialTeamGold>200</initialTeamGold>
+	    <unitEnergy>200</unitEnergy>
 		<sightRadius>5</sightRadius>
 		<energyReplenishModel>ExponentialReplenish</energyReplenishModel>
 	
@@ -32,13 +32,13 @@
 	    <defenseBaseValue>10</defenseBaseValue>
 	
 		<towerBaseRadius>4</towerBaseRadius>
-		<towerBaseDrain>60</towerBaseDrain>
+		<towerBaseDrain>100</towerBaseDrain>
 		<towerBaseEnergy>250</towerBaseEnergy>
 		
 	    <levels max="3">
-	      <level value="1" percentage="10" />
-	      <level value="2" percentage="30" />
-	      <level value="3" percentage="50" />
+	      <level value="1" percentage="25" />
+	      <level value="2" percentage="50" />
+	      <level value="3" percentage="75" />
 	    </levels>
 		
 		<moveBaseCost>20</moveBaseCost>
@@ -64,150 +64,78 @@
         <!-- Resources stone, wood, bronze, iron, titanium, leather, gold -->
 
         <blueprints>
-          <blueprint type="sword" level="1" upgradeCost="5" weight="5">
+          <blueprint type="sword" level="1" upgradeCost="200" weight="5">
             <resource type="iron" quantity="10"/>
-            <resource type="stone" quantity="2"/>
-            <resource type="wood" quantity="2"/>
+            <resource type="stone" quantity="4"/>
+            <resource type="wood" quantity="4"/>
           </blueprint>
           
-          <blueprint type="sword" level="2" upgradeCost="5" weight="7">
+          <blueprint type="sword" level="2" upgradeCost="300" weight="7">
             <resource type="iron" quantity="20"/>
-            <resource type="stone" quantity="5"/>
-            <resource type="wood" quantity="5"/>
+            <resource type="stone" quantity="10"/>
+            <resource type="wood" quantity="10"/>
           </blueprint>
           
           <blueprint type="sword" level="3" weight="10">
-            <resource type="titanium" quantity="20"/>
+            <resource type="titanium" quantity="40"/>
+            <resource type="stone" quantity="20"/>
+            <resource type="wood" quantity="20"/>
+          </blueprint>
+          
+          <blueprint type="armour" level="1" upgradeCost="200" weight="10">
+            <resource type="leather" quantity="20"/>
+            <resource type="stone" quantity="4"/>
+            <resource type="wood" quantity="4"/>
+          </blueprint>
+          
+          <blueprint type="armour" level="2" upgradeCost="300" weight="15">
+            <resource type="bronze" quantity="20"/>
             <resource type="stone" quantity="10"/>
             <resource type="wood" quantity="10"/>
-            <resource type="gold" quantity="10"/>
-          </blueprint>
-          
-          <blueprint type="armour" level="1" upgradeCost="5" weight="10">
-            <resource type="leather" quantity="20"/>
-            <resource type="stone" quantity="2"/>
-            <resource type="wood" quantity="2"/>
-          </blueprint>
-          
-          <blueprint type="armour" level="2" upgradeCost="5" weight="15">
-            <resource type="bronze" quantity="20"/>
-            <resource type="stone" quantity="5"/>
-            <resource type="wood" quantity="5"/>
           </blueprint>
           
           <blueprint type="armour" level="3" weight="20">
             <resource type="iron" quantity="20"/>
-            <resource type="stone" quantity="10"/>
-            <resource type="wood" quantity="10"/>
-            <resource type="gold" quantity="10"/>
-          </blueprint>
-		
-          <blueprint type="tower" level="1" upgradeCost="5">
-            <resource type="iron" quantity="30"/>
-            <resource type="stone" quantity="50"/>
+            <resource type="stone" quantity="20"/>
             <resource type="wood" quantity="20"/>
+            <resource type="titanium" quantity="40"/>
           </blueprint>
 		
-          <blueprint type="tower" level="2" upgradeCost="5">
-            <resource type="iron" quantity="40"/>
-            <resource type="stone" quantity="60"/>
+          <blueprint type="tower" level="1" upgradeCost="100">
+            <resource type="iron" quantity="30"/>
+            <resource type="stone" quantity="30"/>
             <resource type="wood" quantity="30"/>
+          </blueprint>
+		
+          <blueprint type="tower" level="2" upgradeCost="200">
+            <resource type="iron" quantity="40"/>
+            <resource type="stone" quantity="40"/>
+            <resource type="wood" quantity="40"/>
           </blueprint>
 		
           <blueprint type="tower" level="3">
             <resource type="iron" quantity="50"/>
-            <resource type="stone" quantity="80"/>
-            <resource type="wood" quantity="30"/>
+            <resource type="stone" quantity="50"/>
+            <resource type="wood" quantity="50"/>
           </blueprint>
 		
-          <blueprint type="trap" level="1" upgradeCost="5">
+          <blueprint type="trap" level="1" upgradeCost="50">
             <resource type="bronze" quantity="10"/>
             <resource type="leather" quantity="10"/>
             <resource type="wood" quantity="10"/>
           </blueprint>
 		
-          <blueprint type="trap" level="2" upgradeCost="5">
-            <resource type="iron" quantity="10"/>
+          <blueprint type="trap" level="2" upgradeCost="100">
+            <resource type="iron" quantity="20"/>
             <resource type="leather" quantity="20"/>
-            <resource type="wood" quantity="20"/>
+            <resource type="wood" quantity="10"/>
           </blueprint>
 		
-          <blueprint type="trap" level="3" upgradeCost="5">
+          <blueprint type="trap" level="3">
             <resource type="iron" quantity="20"/>
-            <resource type="stone" quantity="30"/>
+            <resource type="stone" quantity="20"/>
             <resource type="wood" quantity="20"/>
           </blueprint>
 		
         </blueprints>
-
-
-        <!-- Rules we don't need anymore!! :)
-	<rules>
-		<movePenalties>
-			<penalty>
-				<terrain>Grass</terrain>
-				<value>0.0</value>
-			</penalty>
-			<penalty>
-				<terrain>Dirt</terrain>
-				<value>0.2</value>
-			</penalty>
-			<penalty>
-				<terrain>Sand</terrain>
-				<value>0.1</value>
-			</penalty>
-			<penalty>
-				<terrain>Snow</terrain>
-				<value>0.25</value>
-			</penalty>
-			<penalty>
-				<terrain>Rock</terrain>
-				<value>-1</value>
-			</penalty>
-			<penalty>
-				<terrain>Swamp</terrain>
-				<value>0.25</value>
-			</penalty>
-			<penalty>
-				<terrain>Water</terrain>
-				<value>0.0</value>
-			</penalty>
-			<penalty>
-				<terrain>DeepWater</terrain>
-				<value>0.1</value>
-			</penalty>
-		</movePenalties>
-		
-		<abilities>
-			<movement>
-				<unit>Any</unit>
-				<terrain>Grass</terrain>
-			</movement>
-			<movement>
-				<unit>Any</unit>
-				<terrain>Sand</terrain>
-			</movement>
-			<movement>
-				<unit>Any</unit>
-				<terrain>Swamp</terrain>
-			</movement>
-			<movement>
-				<unit>Tazmanian</unit>
-				<terrain>Dirt</terrain>
-			</movement>
-			<movement>
-				<unit>Fox</unit>
-				<terrain>Snow</terrain>
-			</movement>
-			<movement>
-				<unit>Crocodile</unit>
-				<terrain>Water</terrain>
-			</movement>
-			<movement>
-				<unit>Crocodile</unit>
-				<terrain>DeepWater</terrain>
-			</movement>
-		</abilities>
-        </rules>
-        -->
 </Root>

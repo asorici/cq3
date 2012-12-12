@@ -51,8 +51,25 @@ public class Tower implements IStrategic, ICrafted, Serializable {
 		this.position = position;
 		this.blueprint = blueprint;
 	}
-
-
+	
+	/**
+	 * Get the range for this tower. The range increases with the level of the tower.
+	 * @return the range for this tower
+	 */
+	public int getRange() {
+		return blueprint.getRange();
+	}
+	
+	/**
+	 * Get the amount of energy points this tower is able to drain from an enemy unit which is standing 
+	 * right next to the tower. The actual drained energy decreases as the unit moves further away from the 
+	 * tower's center position. 
+	 * @return The amount of energy points this tower is able to drain from an enemy unit in its immediate vicinity
+	 */
+	public int getDrain() {
+		return blueprint.getDrain();
+	}
+	
 	public int getRemainingStrength() {
 		return remainingStrength;
 	}
