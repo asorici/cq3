@@ -5,6 +5,7 @@ import java.util.Random;
 
 import org.aimas.craftingquest.state.PlayerState;
 import org.aimas.craftingquest.state.UnitState;
+import org.aimas.craftingquest.user.AIThread;
 import org.apache.log4j.Level;
 
 public class MonkeyAI extends AIThread {
@@ -35,18 +36,30 @@ public class MonkeyAI extends AIThread {
 		int nrUnits = state.units.size();
 		
 		for (int i = 0; i < nrUnits; i++) {
-			UnitState unit = state.units.get(i);
-			log("[AI]unit state: " + unit.toString(), Level.INFO);
-			
-			Behavior unitBehavior = unitBehaviors.get(unit.id);
-			state = unitBehavior.nextAction(state);
-			
-			if (state.validLastTransition()) {
-				System.out.println(" ==== Last transition valid ==== ");
+			if (state != null) {
+				UnitState unit = state.units.get(i);
+				log("[AI]unit state: " + unit.toString(), Level.INFO);
+				
+				Behavior unitBehavior = unitBehaviors.get(unit.id);
+				state = unitBehavior.nextAction(state);
 			}
 			else {
-				System.out.println(" ==== Last transition NOT valid ==== ");
-				System.out.println(state.getLastTransitionError());
+				System.out.println(" ==== Last transition OUT OF SYNC ==== ");
+				break;
+			}
+			
+			if (state != null) {
+				if (state.validLastTransition()) {
+					System.out.println(" ==== Last transition valid ==== ");
+				}
+				else {
+					System.out.println(" ==== Last transition NOT valid ==== ");
+					System.out.println(state.getLastTransitionError());
+				}
+			}
+			else {
+				System.out.println(" ==== Last transition OUT OF SYNC ==== ");
+				break;
 			}
 		}
 	}

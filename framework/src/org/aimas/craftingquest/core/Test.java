@@ -62,7 +62,6 @@ public class Test {
 		try {
 			Thread.sleep(2000);
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -73,7 +72,7 @@ public class Test {
 
 				public void run() {
 					try {
-						MainAI.main(new String[]{"org.aimas.craftingquest.user.DummyAI", "localhost", "1198", "CraftingQuest", "" + holdi});
+						MainAI.main(new String[]{"org.aimas.craftingquest.user.MonkeyAI", "localhost", "1198", "CraftingQuest", "" + holdi});
 					} catch (Exception ex) {
 						Logger.getLogger(Test.class.getName()).log(Level.SEVERE, null, ex);
 					}

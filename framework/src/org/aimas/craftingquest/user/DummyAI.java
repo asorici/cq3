@@ -1,5 +1,4 @@
 package org.aimas.craftingquest.user;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -8,6 +7,7 @@ import org.aimas.craftingquest.state.CellState;
 import org.aimas.craftingquest.state.PlayerState;
 import org.aimas.craftingquest.state.Point2i;
 import org.aimas.craftingquest.state.UnitState;
+import org.aimas.craftingquest.user.AIThread;
 import org.apache.log4j.Level;
 
 public class DummyAI extends AIThread {
@@ -34,12 +34,19 @@ public class DummyAI extends AIThread {
 			log("unit state: " + unit.toString(), Level.INFO);
 			
 			player = getCmd().move(unit, smartChoiceDst(getValidPoints(unit)));
-			if (player.validLastTransition()) {
-				log(" ==== Last transition valid ==== ", Level.INFO);
+			
+			if (player != null) {
+				if (player.validLastTransition()) {
+					log(" ==== Last transition valid ==== ", Level.INFO);
+				}
+				else {
+					log(" ==== Last transition NOT valid ==== ", Level.INFO);
+					log(player.getLastTransitionError(), Level.INFO);
+				}
 			}
 			else {
-				log(" ==== Last transition NOT valid ==== ", Level.INFO);
-				log(player.getLastTransitionError(), Level.INFO);
+				log(" ==== Last transition out of sync ==== ", Level.INFO);
+				break;
 			}
 		}
 

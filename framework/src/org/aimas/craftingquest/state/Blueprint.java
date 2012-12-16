@@ -151,7 +151,7 @@ public class Blueprint implements Serializable {
 	 * Creates an instance of the object described by the blueprint.
 	 * @param playerID
 	 * @param position
-	 * @return
+	 * @return the object crafted according to the descriptions of this blueprint
 	 */
 	public ICrafted craft(int playerID, Point2i position) {
 		switch (type) {

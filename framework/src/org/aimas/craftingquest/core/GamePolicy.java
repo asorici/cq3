@@ -54,7 +54,7 @@ public class GamePolicy {
 	public static long roundTime;
 
 	/* number of turns */
-	public static int lastTurn = 160;
+	public static int lastTurn = 150;
 	
 	/* game map */
 	public static String mapName = "map_cq3_v1.cqm";
@@ -117,15 +117,15 @@ public class GamePolicy {
 		mapsize = new Point2i(MapReader.mapWidth, MapReader.mapHeight);
 		mapName = MapReader.mapName;
 		
-		if (MapReader.mapWidth >= 60 && MapReader.mapWidth < 70) {
-			lastTurn = 160;
-		}
-		if (MapReader.mapWidth >= 70 && MapReader.mapWidth < 80) {
-			lastTurn = 180;
-		}
-		if (MapReader.mapWidth >= 80) {
-			lastTurn = 200;
-		}
+//		if (MapReader.mapWidth >= 60 && MapReader.mapWidth < 70) {
+//			lastTurn = 160;
+//		}
+//		if (MapReader.mapWidth >= 70 && MapReader.mapWidth < 80) {
+//			lastTurn = 180;
+//		}
+//		if (MapReader.mapWidth >= 80) {
+//			lastTurn = 200;
+//		}
 		
 		map = new MapState();
 		map.cells = MapReader.cells;

@@ -229,6 +229,13 @@ public class MapCanvas extends Canvas implements MouseListener, MouseMotionListe
     		}
     	}
     	
+    	for (Integer quant : cell.visibleResources.values()) {
+    		if (quant > 0) {
+    			noResources = false;
+    			break;
+    		}
+    	}
+    	
     	if (!selectedResource.equals("NONE") && !noResources) {
     		if (selectedResource.equals("ALL")) {
     			bufferGraphics.drawImage(resource, j * CELL_DIM + offsetX, i * CELL_DIM + offsetY, null);

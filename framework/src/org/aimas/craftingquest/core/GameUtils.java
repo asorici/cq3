@@ -38,8 +38,7 @@ public class GameUtils {
     }
 }
 
-/** This class is a filter that rejects any <i>ignorable whitespaces</i>. It
- * is used by {@link AIWOGPUtils}
+/** This class is a filter that rejects any <i>ignorable whitespaces</i>.
  */
 class NoWhitespaceFilter implements LSParserFilter{
 

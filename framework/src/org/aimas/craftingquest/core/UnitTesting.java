@@ -23,8 +23,6 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.sun.xml.internal.ws.api.streaming.XMLStreamReaderFactory.Woodstox;
-
 public class UnitTesting {
 	static GameState game;
 	static ActionEngine actionEngine;

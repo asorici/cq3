@@ -7,6 +7,7 @@ import org.aimas.craftingquest.state.PlayerState;
 import org.aimas.craftingquest.state.Point2i;
 import org.aimas.craftingquest.state.UnitState;
 import org.aimas.craftingquest.state.resources.ResourceType;
+import org.aimas.craftingquest.user.IPlayerActions;
 
 public class Behavior {
 	IPlayerActions cmd;
@@ -47,20 +48,30 @@ public class Behavior {
 			performPickUp(state);
 			performDrop(state);
 			performBuildObject(state);
-			performSellObject(state);
 			performBuildTower(state);
+			
+			performBuildTrap(state);
+			performEquip(state);
+			performAttack(state);
 		}
 		
 		for(int i = 0; i < 3; i++) {
-			UnitState unit = getBehaviorUnit(state);
-			Point2i newPos = smartChoiceDst(unit);
-			System.out.println("Attempted new position: " + newPos);
-			state = cmd.move(unit, newPos);
+			if (state != null) {
+				UnitState unit = getBehaviorUnit(state);
+				Point2i newPos = smartChoiceDst(unit);
+				System.out.println("Attempted new position: " + newPos);
+				state = cmd.move(unit, newPos);
+			}
 		}
 		return state;
 	}
-	
+
 	private UnitState getBehaviorUnit(PlayerState state) {
+		if (state == null) {
+			// it is not our turn we have moved too fast or too slow
+			return null;
+		}
+		
 		for (UnitState unit : state.units) {
 			if (unit.id == unitId) {
 				return unit;
@@ -72,7 +83,6 @@ public class Behavior {
 	}
 	
 	private void performDig(PlayerState state) {
-		// TODO Auto-generated method stub
 		UnitState unit = getBehaviorUnit(state);
 		if (unit == null) return;
 		
@@ -80,11 +90,12 @@ public class Behavior {
 			dugUpResources = null;
 			
 			state = cmd.dig(unit);
-			
-			System.out.println(" ++++ Dig result ++++ ");
-			dugUpResources = getBehaviorUnit(state).currentCellResources;
-			if (dugUpResources != null) {
-				System.out.println(dugUpResources);
+			if (state != null) {
+				System.out.println(" ++++ Dig result ++++ ");
+				dugUpResources = getBehaviorUnit(state).currentCellResources;
+				if (dugUpResources != null) {
+					System.out.println(dugUpResources);
+				}
 			}
 		}
 	}
@@ -96,8 +107,10 @@ public class Behavior {
 		if (unit.energy > 20 && dugUpResources != null && !dugUpResources.isEmpty()) {
 			state = cmd.pickupResources(unit, dugUpResources);
 			
-			System.out.println(" ++++ Pick Up result ++++ ");
-			System.out.println(getBehaviorUnit(state).carriedResources);
+			if (state != null) {
+				System.out.println(" ++++ Pick Up result ++++ ");
+				System.out.println(getBehaviorUnit(state).carriedResources);
+			}
 		}
 	}
 	
@@ -119,11 +132,14 @@ public class Behavior {
 			System.out.println(" ++++ Dropping ++++ ");
 			System.out.println(aux);
 			state = cmd.dropResources(unit, aux);
-			unit = getBehaviorUnit(state);
 			
-			int ii = unit.sight.length / 2;
-			if (unit.sight[ii][ii] != null) {
-				System.out.println("Visible resources: " + unit.sight[ii][ii].visibleResources);
+			if (state != null) {
+				unit = getBehaviorUnit(state);
+				
+				int ii = unit.sight.length / 2;
+				if (unit.sight[ii][ii] != null) {
+					System.out.println("Visible resources: " + unit.sight[ii][ii].visibleResources);
+				}
 			}
 		}
 	}
@@ -134,30 +150,25 @@ public class Behavior {
 	}
 	
 	private void performBuildTower(PlayerState state) {
-		/*
-		UnitState unit = getBehaviorUnit(state);
-		if (unit == null) return;
-		
-		if (state.credit > 75) {
-			state = cmd.placeTower(unit);
-			if (state.validLastTransition()) {
-				System.out.println(" ==== Last transition valid ==== ");
-			}
-			else {
-				System.out.println(" ==== Last transition NOT valid ==== ");
-				System.out.println(state.getLastTransitionError());
-			}
-			System.out.println("Available towers: " + state.availableTowers);
-		}
-		*/
+		// TODO Auto-generated method stub
+	
 	}
-		
-
-	private void performSellObject(PlayerState state) {
+	
+	private void performBuildTrap(PlayerState state) {
 		// TODO Auto-generated method stub
 		
-	}	
+	}
 	
+	private void performAttack(PlayerState state) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private void performEquip(PlayerState state) {
+		// TODO Auto-generated method stub
+		
+	}
+
 	
 	private boolean allowedTerrain(UnitState unit, CellState cell) {
 		return true;		// this is very optimistic - the unit might get stuck for a while

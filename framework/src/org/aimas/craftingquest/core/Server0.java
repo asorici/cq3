@@ -115,7 +115,7 @@ public class Server0 implements IServer {
 		Server0 server = null;
 		
 		// să ruleze cu GUI
-		System.setProperty("gui", "true");
+		//System.setProperty("gui", "true");
 		
 		if(args == null || args.length != 3) {
 			server = new Server0("CraftingQuest", 1198, "secrets.txt");

@@ -22,7 +22,11 @@ import org.aimas.craftingquest.state.resources.ResourceType;
 
 
 public class GameGenerator {
-
+	public static final int SMALL_ROUND = 150;
+	public static final int MEDIUM_ROUND = 180;
+	public static final int BIG_ROUND = 200;
+	
+	
 	public static GameState setupGame() {
 		/* initialize scenario */
 		GamePolicy.initScenario();
@@ -34,9 +38,6 @@ public class GameGenerator {
 		if (game == null) {
 			game = new GameState();
 			game.map = GamePolicy.map;
-			
-			/* set merchant list */
-			/* game.merchantList = setupMerchantList(game.map); */
 			
 			/* set map resources */
 //			HashMap<ResourceType, Integer> resourceAmountsByType = ResourceGenerator.placeResources(game.map);
@@ -65,16 +66,16 @@ public class GameGenerator {
 		}
 		else {
 			/*reset number of turns according to map size*/
-			if (game.map.mapWidth >= 60 && game.map.mapWidth < 70) {
-				game.round.noRounds = 160;
+			if (game.map.mapWidth >= 60 && game.map.mapWidth < 80) {
+				game.round.noRounds = SMALL_ROUND;
 			}
 			
-			if (game.map.mapWidth >= 70 && game.map.mapWidth < 80) {
-				game.round.noRounds = 180;
+			if (game.map.mapWidth >= 80 && game.map.mapWidth < 100) {
+				game.round.noRounds = MEDIUM_ROUND;
 			}
 			
-			if (MapReader.mapWidth >= 80) {
-				game.round.noRounds = 200;
+			if (MapReader.mapWidth >= 100) {
+				game.round.noRounds = BIG_ROUND;
 			}
 			
 			/* setup initial player states - there should be only 2 players */
@@ -107,7 +108,7 @@ public class GameGenerator {
 			}
 		}
 		
-		printResourceStatistics(game.resourceAmountsByType, GamePolicy.blueprints);
+		//printResourceStatistics(game.resourceAmountsByType, GamePolicy.blueprints);
 		
 		return game;
 	}
@@ -204,11 +205,11 @@ public class GameGenerator {
 			}
 
 			if (unitPos == null) { // it should never come to this
-				throw new NullPointerException("Unit initial position error for player: " + playerID/*utype.name()*/);
+				throw new NullPointerException("Unit initial position error for player: " + playerID);
 			}
 			
 			int unitID = playerID * nrUnits + i;
-			UnitState unit = new UnitState(unitID, playerID, /*utype,*/ unitPos, GamePolicy.initialUnitMaxLife);
+			UnitState unit = new UnitState(unitID, playerID, unitPos, GamePolicy.initialUnitMaxLife);
 			
 			// set unit's sight
 			for (int ii = 0, y = unit.pos.y - GamePolicy.sightRadius; y <= unit.pos.y + GamePolicy.sightRadius; y++, ii++) {
@@ -228,11 +229,11 @@ public class GameGenerator {
 		return pState;
 	}
 	
-	private static Point2i setUnitInitialPosition1(MapState map,/* UnitType utype,*/ int xmin, int xmax, int ymin, int ymax) {
+	private static Point2i setUnitInitialPosition1(MapState map, int xmin, int xmax, int ymin, int ymax) {
 		for(int y = ymin; y < ymax; y++) {
 			for(int x = xmin; x < xmax; x++) {
 				CellState cell = map.cells[y][x];
-				if (cell.cellUnits.isEmpty() /*&& GamePolicy.terrainMovePossibilities.get(cell.type).contains(utype)*/) {
+				if (cell.cellUnits.isEmpty() && cell.type == CellType.Grass) {
 					return new Point2i(x, y);
 				}
 			}
@@ -254,7 +255,7 @@ public class GameGenerator {
 		return null;
 	}
 	
-	private static void printResourceStatistics(HashMap<ResourceType, Integer> resourceAmountsByType,
+	private static void printResourceStatistics(HashMap<ResourceType, Integer> resourceAmountsByType, 
 			List<Blueprint> blueprints) {
 		try {
 			FileWriter fw = new FileWriter("resource-stats.txt");

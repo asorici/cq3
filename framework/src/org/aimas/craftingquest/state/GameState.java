@@ -8,7 +8,6 @@ import java.util.List;
 
 import org.aimas.craftingquest.core.GamePolicy;
 import org.aimas.craftingquest.state.objects.Tower;
-import org.aimas.craftingquest.state.objects.TrapObject;
 import org.aimas.craftingquest.state.resources.ResourceType;
 
 /**
@@ -49,7 +48,7 @@ public class GameState implements Serializable {
 	}
 
 	/**
-	 * @param gameStartTime the gameStartTime to set
+	 * @param gameRoundStartTime the start time to set for the current round
 	 */
 	public synchronized void setGameRoundStartTime(long gameRoundStartTime) {
 		round.startTime = gameRoundStartTime;
