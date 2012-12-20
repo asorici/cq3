@@ -48,7 +48,14 @@ public class ActionEngine {
 				return new TransitionResult(transition.id, TransitionError.UnknownActionError, "Unknown Action");
 			}
 			else {
-				return playerAction.doAction(game, player, transition);
+				TransitionResult res = playerAction.doAction(game, player, transition);
+				
+				// if no error then log the action for GUI
+				if (res.valid()) {
+					playerAction.printToGuiLog(game, player, transition);
+				}
+				
+				return res;
 			}
 		}
 		

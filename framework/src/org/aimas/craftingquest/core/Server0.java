@@ -404,9 +404,6 @@ public class Server0 implements IServer {
 			player.units.add(removedUnit);
 		}
 		
-		
-		printToGuiLog(player, action);
-		
 		return player;
 	}
 
@@ -541,34 +538,6 @@ public class Server0 implements IServer {
 					gui_logger.info(state.round.currentRound + " " + action.operator.name() + " " + player.id + " " 
 							+ u.pos.x + " " + u.pos.y + " " + player.gold + " " + u.energy);
 				}
-				
-				return;
-			}
-			
-			Integer unitID = (Integer)action.operands[0];
-			
-			UnitState playerUnit = null;
-			for (UnitState u : player.units) {
-				if (u.id == unitID && u.playerID == player.id) {
-					playerUnit = u;
-					break;
-				}
-			}
-			
-			if (playerUnit == null) {
-				return;
-			}
-			
-			if (action.operator == ActionType.CraftObject) {
-				Blueprint target = (Blueprint)action.operands[1];
-
-				gui_logger.info(state.round.currentRound + " " + action.operator.name() + " " + player.id + " " 
-						+ playerUnit.pos.x + " " + playerUnit.pos.y + " " + player.gold + " " + playerUnit.energy + " " 
-						+ target.getType() + " " + target.getLevel());
-			}
-			else {
-				gui_logger.info(state.round.currentRound + " " + action.operator.name() + " " + player.id + " " 
-						+ playerUnit.pos.x + " " + playerUnit.pos.y + " " + player.gold + " " + playerUnit.energy);
 			}
 		}
 	}

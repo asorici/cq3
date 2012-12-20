@@ -43,7 +43,6 @@
 		
 		<moveBaseCost>20</moveBaseCost>
 		<movePenaltyWeight>50</movePenaltyWeight>
-		<resourceMoveCost>1</resourceMoveCost>
 		<pickupCost>5</pickupCost>
 		<dropCost>0</dropCost>
 		<digCost>10</digCost>

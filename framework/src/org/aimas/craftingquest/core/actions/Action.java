@@ -6,8 +6,11 @@ import org.aimas.craftingquest.state.Transition;
 import org.aimas.craftingquest.state.Transition.ActionType;
 import org.aimas.craftingquest.state.TransitionResult;
 import org.aimas.craftingquest.state.UnitState;
+import org.apache.log4j.Logger;
 
 public abstract class Action {
+	protected static Logger gui_logger = Logger.getLogger("org.aimas.craftingquest.core.guilogger");
+	
 	protected ActionType type;
 	protected UnitState playerUnit;
 	
@@ -44,7 +47,11 @@ public abstract class Action {
 	}
 	
 	protected abstract TransitionResult handle(GameState game, PlayerState player, Transition transition);
+	
 	protected abstract boolean validOperands(Transition transition);
+	
+	public abstract void printToGuiLog(GameState game, PlayerState player, Transition transition);
+	
 	
 	public static Action getInstance(ActionType type) {
 		if (type == null) {

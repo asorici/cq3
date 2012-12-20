@@ -71,5 +71,16 @@ public class UpgradeAction extends Action {
 
 		return true;
 	}
-
+	
+	
+	@Override
+	public void printToGuiLog(GameState game, PlayerState player, Transition transition) {
+		if (playerUnit != null) {
+			Blueprint playerBlueprint = (Blueprint) transition.operands[1];
+			
+			gui_logger.info(game.round.currentRound + " " + transition.operator.name() + " " + player.id + " " 
+					+ playerUnit.id + " " + playerUnit.pos.x + " " + playerUnit.pos.y + " " + player.gold + " " 
+					+ playerUnit.energy + " " + playerBlueprint.getType().name() + " " + (playerBlueprint.getLevel() + 1));
+		}
+	}
 }

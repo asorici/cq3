@@ -66,7 +66,6 @@ public class GamePolicy {
 	/* general */
 	public static Point2i mapsize = new Point2i(80, 80);
 	public static int moveBase = 20;
-	public static int resourceMoveCost = 1;
 	public static int initialTeamGold = 200;
 	public static int initialUnitMaxLife = 200;
 	public static ReplenishType energyReplenishModel = ReplenishType.FullReplenish;
@@ -88,13 +87,12 @@ public class GamePolicy {
 	public static int towerBaseDrain = 100;
 	public static int towerBaseEnergy = 250;
 	
-	public static int maxResourceSpots = 5;
 	public static int leatherWeight = 1;
-	public static int stoneWeight = 2;
+	public static int stoneWeight = 1;
 	public static int woodWeight = 1;
-	public static int bronzeWeight = 3;
-	public static int titaniumWeight = 9;
-	public static int ironWeight = 5;
+	public static int bronzeWeight = 1;
+	public static int titaniumWeight = 1;
+	public static int ironWeight = 1;
 	
 	/* leveling */
 	public static int maxLevels = 3;
@@ -171,7 +169,6 @@ public class GamePolicy {
 		initialTeamGold = Integer.parseInt(parametersNode.getElementsByTagName("initialTeamGold").item(0).getTextContent());
 		
 		moveBase = Integer.parseInt(parametersNode.getElementsByTagName("moveBaseCost").item(0).getTextContent());
-		resourceMoveCost = Integer.parseInt(parametersNode.getElementsByTagName("resourceMoveCost").item(0).getTextContent());
 		pickupCost = Integer.parseInt(parametersNode.getElementsByTagName("pickupCost").item(0).getTextContent());
 		dropCost = Integer.parseInt(parametersNode.getElementsByTagName("dropCost").item(0).getTextContent());
 		digCost = Integer.parseInt(parametersNode.getElementsByTagName("digCost").item(0).getTextContent());

@@ -1,25 +1,23 @@
 package org.aimas.craftingquest.core.actions;
 
 import java.util.Iterator;
-import java.util.List;
 
 import org.aimas.craftingquest.core.GamePolicy;
 import org.aimas.craftingquest.state.BasicUnit;
 import org.aimas.craftingquest.state.CellState;
+import org.aimas.craftingquest.state.CellState.CellType;
 import org.aimas.craftingquest.state.GameState;
 import org.aimas.craftingquest.state.ICarriable;
 import org.aimas.craftingquest.state.PlayerState;
 import org.aimas.craftingquest.state.Point2i;
 import org.aimas.craftingquest.state.Transition;
-import org.aimas.craftingquest.state.UnitState;
-//import org.aimas.craftingquest.state.CellState.CellType;
-import org.aimas.craftingquest.state.CellState.CellType;
 import org.aimas.craftingquest.state.Transition.ActionType;
+import org.aimas.craftingquest.state.TransitionResult;
+import org.aimas.craftingquest.state.UnitState;
 import org.aimas.craftingquest.state.objects.ICrafted;
 import org.aimas.craftingquest.state.objects.Tower;
 import org.aimas.craftingquest.state.objects.TrapObject;
 import org.aimas.craftingquest.state.resources.ResourceType;
-import org.aimas.craftingquest.state.TransitionResult;
 import org.apache.log4j.Logger;
 
 public class MoveAction extends Action {
@@ -30,8 +28,7 @@ public class MoveAction extends Action {
 	}
 
 	@Override
-	protected TransitionResult handle(GameState game, PlayerState player,
-			Transition transition) {
+	protected TransitionResult handle(GameState game, PlayerState player, Transition transition) {
 		// check allowed distance
 		Point2i toPos = (Point2i) transition.operands[1];
 		Point2i fromPos = playerUnit.pos;
@@ -82,7 +79,8 @@ public class MoveAction extends Action {
 			carriedResourcesWeight += rt.getWeight() * playerUnit.carriedResources.get(rt);
 		}
 		
-		int requiredEnergy = (int) (GamePolicy.moveBase * (1 + GamePolicy.movePenaltyWeight/100));
+		int requiredEnergy = (int) (GamePolicy.moveBase * (1 + 
+				GamePolicy.movePenaltyWeight * carriedResourcesWeight / 100.0 ));
 
 		if (playerUnit.energy < requiredEnergy) {
 			TransitionResult res = new TransitionResult(transition.id);
@@ -133,6 +131,17 @@ public class MoveAction extends Action {
 		return true;
 	}
 
+	
+	@Override
+	public void printToGuiLog(GameState game, PlayerState player, Transition transition) {
+		if (playerUnit != null) {
+			gui_logger.info(game.round.currentRound + " " + transition.operator.name() + " " + player.id + " " 
+					+ playerUnit.id + " " + playerUnit.pos.x + " " + playerUnit.pos.y + " " + player.gold + " " 
+					+ playerUnit.energy);
+		}
+	}
+	
+	
 	private void updateUnitSight(GameState game, UnitState playerUnit, Point2i pos) {
 		int sightRadius = GamePolicy.sightRadius;
 

@@ -60,12 +60,18 @@ public class AttackAction extends Action {
 			return res;
 		}
 
-		// do attack
+		// ======== do attack ========
 		int attackValue = computeAttackPower(energy, playerUnit, attackedUnit);
 		attackedUnit.life -= attackValue;
+		if (attackedUnit.energy > attackedUnit.life) {
+			// keep attacked unit energy consistent with its life (maximum energy)
+			attackedUnit.energy = attackedUnit.life;
+		}
+		
 		playerUnit.energy -= energy;
 
-		// do retaliate
+		
+		// ======== do retaliate ========
 		if (attackedUnit.life > 0 && attackedUnit.retaliateEnergy >= 0 &&
 				//attackedUnit.retaliateEnergy >= attackedUnit.retaliateThreshold &&
 				attackedUnit.energy >= attackedUnit.retaliateThreshold &&
@@ -73,14 +79,21 @@ public class AttackAction extends Action {
 			int retaliateValue = computeAttackPower(
 					attackedUnit.retaliateEnergy,
 					attackedUnit, playerUnit);
+			
 			playerUnit.life -= retaliateValue;
+			if (playerUnit.energy > playerUnit.life) {
+				// keep attacking unit energy consistent with its life (maximum energy)
+				playerUnit.energy = playerUnit.life;
+			}
+			
 			attackedUnit.energy -= attackedUnit.retaliateEnergy;
 		}
 
 		// check for dead units and update scores
-		if (attackedUnit.life <= 0)
+		if (attackedUnit.life <= 0) {
 			player.killOne(false);
-
+		}
+		
 		if (playerUnit.life <= 0) {
 			attackedPlayer.killOne(true);
 			player.die();
@@ -107,5 +120,40 @@ public class AttackAction extends Action {
 			shieldMod -= defender.equipedArmour.getDefence() / 100.0;
 
 		return (int)Math.round(baseAttack * swordMod * shieldMod);
+	}
+
+	@Override
+	public void printToGuiLog(GameState game, PlayerState player, Transition transition) {
+		if (playerUnit != null) {
+			int attackedPlayerID = (Integer)transition.operands[1];
+			int attackedUnitID = (Integer)transition.operands[2];
+			int energy = (Integer)transition.operands[3];
+			
+			// get data for attacked unit
+			PlayerState attackedPlayer = game.playerStates.get(attackedPlayerID);
+			UnitState attackedUnit = null;
+			for (UnitState u : attackedPlayer.units) {
+				if (u.id == attackedUnitID && u.playerID == attackedPlayerID) {
+					attackedUnit = u;
+					break;
+				}
+			}
+			
+			gui_logger.info(game.round.currentRound + " " + transition.operator.name() + " " + player.id + " " 
+				+ playerUnit.id + " " + playerUnit.pos.x + " " + playerUnit.pos.y + " " + player.gold + " " 
+				+ playerUnit.energy + " " + attackedPlayerID + " " + attackedUnitID + " "
+				+ attackedUnit.pos.x + " " + attackedUnit.pos.y + " " + energy);
+			
+			// see if anyone died to log the event
+			if (playerUnit.life <= 0) {
+				gui_logger.info(game.round.currentRound + " " + "Die" + " " + player.id + " " 
+					+ playerUnit.id + " " + playerUnit.pos.x + " " + playerUnit.pos.y);
+			}
+			
+			if (attackedUnit.life <= 0) {
+				gui_logger.info(game.round.currentRound + " " + "Die" + " " + attackedPlayer.id + " " 
+					+ attackedUnit.id + " " + attackedUnit.pos.x + " " + attackedUnit.pos.y);
+			}
+		}
 	}
 }

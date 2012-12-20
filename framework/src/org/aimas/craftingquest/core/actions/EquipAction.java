@@ -1,5 +1,6 @@
 package org.aimas.craftingquest.core.actions;
 
+import org.aimas.craftingquest.state.Blueprint;
 import org.aimas.craftingquest.state.GameState;
 import org.aimas.craftingquest.state.PlayerState;
 import org.aimas.craftingquest.state.Transition;
@@ -63,5 +64,16 @@ public class EquipAction extends Action {
 				return false;
 		}
 		return true;
+	}
+	
+	@Override
+	public void printToGuiLog(GameState game, PlayerState player, Transition transition) {
+		if (playerUnit != null) {
+			ICrafted target = (ICrafted)transition.operands[1];
+			
+			gui_logger.info(game.round.currentRound + " " + transition.operator.name() + " " + player.id + " " 
+					+ playerUnit.id + " " + playerUnit.pos.x + " " + playerUnit.pos.y + " " + player.gold + " " 
+					+ playerUnit.energy + " " + target.getType().name() + " " + target.getLevel());
+		}
 	}
 }

@@ -81,5 +81,14 @@ public class DropResourcesAction extends Action {
 		}
 		return true;
 	}
-
+	
+	
+	@Override
+	public void printToGuiLog(GameState game, PlayerState player, Transition transition) {
+		if (playerUnit != null) {
+			gui_logger.info(game.round.currentRound + " " + transition.operator.name() + " " + player.id + " " 
+					+ playerUnit.id + " " + playerUnit.pos.x + " " + playerUnit.pos.y + " " + player.gold + " " 
+					+ playerUnit.energy);
+		}
+	}
 }
