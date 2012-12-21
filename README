@@ -1,22 +1,7 @@
 ============================================================================
-                AI-MAS WINTER OLYMPICS 2011 - Crafting Quest 2
+                AI-MAS WINTER OLYMPICS 2013 - Crafting Quest 3
 ============================================================================
                                                           www.aiolympics.ro
 
-Version: R1
-Release date: December 6, 2010.
-
-Fixes from last version:
-	- fixed defense tower building conditions (if any other towers, visible resources or objects lie in the cell a tower cannot be constructed)
-	- fixed tower drain error (it was previosly possible to obtain a Division by Zero error for units lying in the cell in which a tower is being
-	  constructed)
-
-Added functionalities:
-	- the Client0 class contains a new method called requestState() which returns the player state as stored by the server application.
-	  It might be usefull to call this method at the beginning of a round (before any other actions) to find out if your units have suffered
-	  from adversary tower drains, or to check the status of your own towers
-	  
-	- added log4j logging functionality. Both cqclient and cqserver archives now contain a file called logging.properties which sets customizable
-	  directives for message logging.
-	
-
+Version: R0
+Release date: December 17, 2012.

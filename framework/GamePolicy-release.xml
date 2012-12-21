@@ -9,7 +9,7 @@
 		<playerLateTime>100</playerLateTime>
 		<updateTime>0</updateTime>
 		<connectWaitTime>5000</connectWaitTime>
-		<nrTurns>150</nrTurns>	
+		<nrTurns>150</nrTurns>		
 		<mapName>map_v1.cqm</mapName>
 	
 		<initialPlayerPositions>
@@ -21,7 +21,7 @@
 	
 	    <!-- scenario specific configurations -->
 	
-	    <nrPlayers>4</nrPlayers>
+	    <nrPlayers>2</nrPlayers>
 	    <nrPlayerUnits>10</nrPlayerUnits>
 	    <initialTeamGold>200</initialTeamGold>
 	    <unitEnergy>200</unitEnergy>
