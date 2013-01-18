@@ -32,6 +32,7 @@ public class PickupResourcesAction extends Action {
 			res.errorReason = "Not enough energy points left for picking up resources";
 			return res;
 		}
+		
 		/**
 		 * Am renuntat la asta
 
@@ -75,6 +76,7 @@ public class PickupResourcesAction extends Action {
 		while (it.hasNext()) {
 			ResourceType res = it.next();
 			Integer required = requiredResources.get(res);
+			
 			Integer available = cellResources.get(res);
 			Integer availableVisible = visibleCellResources.get(res);
 			Integer total = new Integer(0);
@@ -87,29 +89,32 @@ public class PickupResourcesAction extends Action {
 			}
 
 			if (required <= total) {
-				Integer carried = carriedResources.get(res);
-				if (carried == null) {
-					carriedResources.put(res, required);
-				} else {
-					carriedResources.put(res, carried + required);
+				if (res == ResourceType.GOLD) {		// gold gets added to the player
+					player.gold += required;
 				}
-
-				if (availableVisible != null) { // first try and take all
-												// resources from
-					if (required <= availableVisible) { // the visible ones
-						visibleCellResources.put(res, availableVisible
-								- required);
+				else {								// all other resources will be carried by the unit
+					Integer carried = carriedResources.get(res);
+					if (carried == null) {
+						carriedResources.put(res, required);
 					} else {
-						visibleCellResources.put(res, 0); // consume all visible
-															// resources
-						cellResources.put(res, available
-								- (required - availableVisible));
+						carriedResources.put(res, carried + required);
 					}
-				} else { // otherwise take them from the ones in the soil
+				}
+				
+				if (availableVisible != null) { // first try and take all resources from the visible ones
+					if (required <= availableVisible) { 
+						visibleCellResources.put(res, availableVisible - required);
+					} else {
+						visibleCellResources.put(res, 0); // consume all visible resources
+						cellResources.put(res, available - (required - availableVisible));
+					}
+				} 
+				else { // otherwise take them from the ones in the soil
 					cellResources.put(res, available - required);
 				}
 			}
-			if (available != null && available ==0) {
+			
+			if (available != null && available == 0) {
 				cellResources.remove(res);
 				cellResourceTypes.remove(res);
 			}

@@ -8,8 +8,8 @@ public class Transition implements Serializable {
 	// public enum ActionType implements Serializable{
 	public enum ActionType implements Serializable {
 		Nothing, PlayerReady, EndTurn, RequestState, Move, Dig, PickupResources, 
-		PickupObjects, DropResources, DropObjects, RequestBlueprints, CraftObject, 
-		PlaceTower, PlaceTrap, Trade, Attack, Prepare, Equip, Upgrade
+		PickupObjects, DropResources, DropObjects, CraftObject, 
+		PlaceTower, PlaceTrap, Attack, Prepare, Equip, Upgrade
 	}
 
 	// static int count;

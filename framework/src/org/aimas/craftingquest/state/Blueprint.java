@@ -61,6 +61,10 @@ public class Blueprint implements Serializable {
 		return level;
 	}
 	
+	public int getMaxLevel() {
+		return GamePolicy.maxLevels;
+	}
+	
 	public int getUpgradeCost() {
 		return upgradeCost;
 	}

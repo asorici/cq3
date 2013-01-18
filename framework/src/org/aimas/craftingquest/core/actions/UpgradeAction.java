@@ -15,10 +15,11 @@ public class UpgradeAction extends Action {
 	}
 
 	@Override
-	protected TransitionResult handle(GameState game, PlayerState player,
-			Transition transition) {
+	protected TransitionResult handle(GameState game, PlayerState player, Transition transition) {
+		
 		Blueprint playerBlueprint = (Blueprint) transition.operands[1];
 		Blueprint blueprint; // the real one
+		
 		if (GamePolicy.blueprints.contains(playerBlueprint)) {
 			blueprint = GamePolicy.blueprints.get(GamePolicy.blueprints.indexOf(playerBlueprint));
 		} else {
@@ -35,10 +36,16 @@ public class UpgradeAction extends Action {
 			return res;
 		}
 		
+		if (blueprint.getLevel() == GamePolicy.maxLevels) {
+			TransitionResult res = new TransitionResult(transition.id);
+			res.errorType = TransitionResult.TransitionError.NoUpgradeError;
+			res.errorReason = "No additional upgrade available for this blueprint.";
+			return res;
+		}
+		
 		Blueprint upbp = game.getNextLevel(blueprint);
 		
-		//check if he has goldeanu
-		
+		//check if he has gold
 		Integer required = blueprint.getUpgradeCost();
 		Integer available = player.getGold();
 		if (available < required) {

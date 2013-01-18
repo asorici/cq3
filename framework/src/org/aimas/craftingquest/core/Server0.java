@@ -527,12 +527,6 @@ public class Server0 implements IServer {
 	
 	private void printToGuiLog(PlayerState player, Transition action) {
 		if (player.validLastTransition()) {
-			// first check if the operator is of Nothing or RequestState type
-			// these are just for filling up and synchronization - so return
-			if(action.operator == ActionType.Nothing || action.operator == ActionType.RequestState) {
-				return;
-			}
-			
 			if (action.operator == ActionType.PlayerReady) {
 				for (UnitState u : player.units) {
 					gui_logger.info(state.round.currentRound + " " + action.operator.name() + " " + player.id + " " 

@@ -335,7 +335,7 @@ public final class Client0 implements IClient, IPlayerActions {
 	 * attack and retaliation.</p>
 	 * @param unit   the unit doing the attack
 	 * @param attackedUnit  the enemy unit being attacked
-	 * @param energyBackup  the amount of energy points used for damage
+	 * @param energy  the amount of energy points used for damage
 	 * @return the new player state or null if the player attempts to move outside his turn.
 	 */
 	public PlayerState attack(UnitState unit, BasicUnit attackedUnit, int energy) {
