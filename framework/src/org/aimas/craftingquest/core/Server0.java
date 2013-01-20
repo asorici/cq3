@@ -163,7 +163,7 @@ public class Server0 implements IServer {
 		
 		int clientNo = allowedSecret(secret);
 		
-		if(clientNo == -1){
+		if(clientNo == -1) {
 		    logger.warn("[srv][register] - newclient not authorized: secret = " + secret);
 		    return -1;
 		}
@@ -467,6 +467,8 @@ public class Server0 implements IServer {
 	}
 	
 	private void declareWinner() {
+		//System.out.println("PRINTING RESULTS");
+		
 		class PlayerScore {
 			public PlayerState player;
 			public float score;
@@ -493,10 +495,14 @@ public class Server0 implements IServer {
 		
 		for (Integer playerID : playerIDs) {
 			PlayerState ps = state.playerStates.get(playerID);
-			float score = (float)ps.getKills() *
-					(1.0f + (float)ps.getPlacedTowers()/(float)GamePolicy.buildTowerBonus) *
-					((float)(ps.getSuccessfulTraps() * ps.getPlacedTraps())/
-							(float)(ps.getSuccessfulTraps() + ps.getPlacedTraps()));
+			float score = (float)ps.getKills() * 
+					(1.0f + (float)ps.getPlacedTowers() / (float)GamePolicy.buildTowerBonus);
+			
+			if (ps.getPlacedTraps() > 0) {
+				score *= ((float)(ps.getSuccessfulTraps() * ps.getPlacedTraps()) /
+						  (float)(ps.getSuccessfulTraps() + ps.getPlacedTraps()));
+			}
+			
 			score += ps.getKillingSprees() * GamePolicy.killingSpreeBonus +
 					ps.getFirstBlood() * GamePolicy.firstBloodBonus;
 			scores.add(new PlayerScore(ps, score));
@@ -504,7 +510,7 @@ public class Server0 implements IServer {
 		
 		Collections.sort(scores, new Comparator<PlayerScore>() {
 			public int compare (PlayerScore a, PlayerScore b) {
-				return Float.compare(a.score, b.score);
+				return Float.compare(b.score, a.score);
 			}
 		});
 		
@@ -519,6 +525,7 @@ public class Server0 implements IServer {
 				bw.newLine();
 				logger.info(ps.toString());
 			}
+			bw.flush();
 			bw.close();
 		} catch (IOException e) {
 			e.printStackTrace();

@@ -1,0 +1,30 @@
+#!/bin/csh
+
+# begin config section
+set SERVERNAME = "CraftingQuest"
+set SERVERHOST = "localhost"
+set SERVERPORT = "1198"
+set SECRETSFILE = "secrets.txt"
+set MAINCLASS = "class.not.Set"
+set JAR = "nojar.jar"
+set SECRETID = "invalid"
+set OURMAINCLASS = "org.aimas.craftingquest.user.MainAI"
+set POLICYFILE = "cq.policy"
+
+source config
+# end config section
+
+set ROOT = "$HOME/aiwo"
+#set JAVA = "$ROOT/jre1.6.0_18/bin/java"
+set JAVA = "/usr/bin/java"
+set FRAMEWORK = "$ROOT/cqframework"
+setenv CLASSPATH "$FRAMEWORK/cqclient/lib/cajo.jar:$FRAMEWORK/cqclient/lib/log4j.jar:$FRAMEWORK/cqclient/lib/cqclient.jar:./playerdist.jar"
+
+echo "[`date '+%F %T'`]: Agent started on $SERVERHOST, $SERVERNAME"
+echo "======================================================================"
+echo "[`date '+%F %T'`]: Battle round"
+
+$JAVA $OURMAINCLASS $MAINCLASS $SERVERHOST $SERVERPORT $SERVERNAME $SECRETID > /dev/null
+
+echo "======================================================================"
+echo "[`date '+%F %T'`]: Job completed"

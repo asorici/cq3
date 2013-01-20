@@ -6,4 +6,5 @@ framework/resource-stats.txt
 framework/server_gui_log.log
 framework/someFile.txt
 *.log
+.pydevproject
 *~

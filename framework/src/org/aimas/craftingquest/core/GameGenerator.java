@@ -44,23 +44,27 @@ public class GameGenerator {
 //			GamePolicy.blueprints = ResourceGenerator.generateBlueprints(resourceAmountsByType);		// generate blueprints
 //			game.resourceAmountsByType = resourceAmountsByType;
 			
-			/* setup initial player states - there should be only 2 players */
-			for (int i = 0; i < GamePolicy.nrPlayers; i++) {
-				if (i % GamePolicy.maxPlayers == 0) {
-					PlayerState player = setupPlayerState(i + 1, GamePolicy.nrPlayerUnits, GamePolicy.initialPlayerPositions.get(0), game.map);
+			/* setup initial player states - there should be a maximum of 4 players */
+			for (int i = 1; i <= GamePolicy.nrPlayers; i++) {
+				if (i % GamePolicy.maxPlayers == 1) {
+					PlayerState player = setupPlayerState(i, GamePolicy.nrPlayerUnits, GamePolicy.initialPlayerPositions.get(0), game.map);
 					game.playerStates.put(player.id, player);
+					game.playerIds.add(player.id);
 				}
-				else if (i % GamePolicy.maxPlayers == 1) {
-					PlayerState player = setupPlayerState(i + 1, GamePolicy.nrPlayerUnits, GamePolicy.initialPlayerPositions.get(1), game.map);
-					game.playerStates.put(player.id, player);
-				} 
 				else if (i % GamePolicy.maxPlayers == 2) {
-					PlayerState player = setupPlayerState(i + 1, GamePolicy.nrPlayerUnits, GamePolicy.initialPlayerPositions.get(2), game.map);
+					PlayerState player = setupPlayerState(i, GamePolicy.nrPlayerUnits, GamePolicy.initialPlayerPositions.get(1), game.map);
 					game.playerStates.put(player.id, player);
+					game.playerIds.add(player.id);
+				} 
+				else if (i % GamePolicy.maxPlayers == 3) {
+					PlayerState player = setupPlayerState(i, GamePolicy.nrPlayerUnits, GamePolicy.initialPlayerPositions.get(2), game.map);
+					game.playerStates.put(player.id, player);
+					game.playerIds.add(player.id);
 				}
 				else {
-					PlayerState player = setupPlayerState(i + 1, GamePolicy.nrPlayerUnits, GamePolicy.initialPlayerPositions.get(3), game.map);
+					PlayerState player = setupPlayerState(i, GamePolicy.nrPlayerUnits, GamePolicy.initialPlayerPositions.get(3), game.map);
 					game.playerStates.put(player.id, player);
+					game.playerIds.add(player.id);
 				}
 			}
 		}
@@ -87,23 +91,26 @@ public class GameGenerator {
 				}
 			}
 			
-			for (int i = 0; i < GamePolicy.nrPlayers; i++) {
-				if (i % GamePolicy.maxPlayers == 0) {
-					PlayerState player = setupPlayerState(i + 1, GamePolicy.nrPlayerUnits, new Point2i(5, 5), game.map);
+			for (int i = 1; i <= GamePolicy.nrPlayers; i++) {
+				if (i % GamePolicy.maxPlayers == 1) {
+					PlayerState player = setupPlayerState(i, GamePolicy.nrPlayerUnits, GamePolicy.initialPlayerPositions.get(0), game.map);
 					game.playerStates.put(player.id, player);
-				}
-				else if (i % GamePolicy.maxPlayers == 1) {
-					PlayerState player = setupPlayerState(i + 1, GamePolicy.nrPlayerUnits, new Point2i(5, GamePolicy.mapsize.y - 5), game.map);
-					game.playerStates.put(player.id, player);
+					game.playerIds.add(player.id);
 				}
 				else if (i % GamePolicy.maxPlayers == 2) {
-					PlayerState player = setupPlayerState(i + 1, GamePolicy.nrPlayerUnits, new Point2i(GamePolicy.mapsize.x - 5, 5), game.map);
+					PlayerState player = setupPlayerState(i, GamePolicy.nrPlayerUnits, GamePolicy.initialPlayerPositions.get(1), game.map);
 					game.playerStates.put(player.id, player);
+					game.playerIds.add(player.id);
+				}
+				else if (i % GamePolicy.maxPlayers == 3) {
+					PlayerState player = setupPlayerState(i, GamePolicy.nrPlayerUnits, GamePolicy.initialPlayerPositions.get(2), game.map);
+					game.playerStates.put(player.id, player);
+					game.playerIds.add(player.id);
 				}
 				else {
-					PlayerState player = setupPlayerState(i + 1, GamePolicy.nrPlayerUnits, 
-							new Point2i(GamePolicy.mapsize.x - 5, GamePolicy.mapsize.y - 5), game.map);
+					PlayerState player = setupPlayerState(i, GamePolicy.nrPlayerUnits, GamePolicy.initialPlayerPositions.get(3), game.map);
 					game.playerStates.put(player.id, player);
+					game.playerIds.add(player.id);
 				}
 			}
 		}

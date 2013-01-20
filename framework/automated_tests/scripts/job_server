@@ -1,0 +1,26 @@
+#!/bin/csh
+
+# begin configuration
+set SERVERNAME = "CraftingQuest"
+set SERVERHOST = "localhost"
+set SERVERPORT = "1198"
+set SECRETSFILE = "secrets.txt"
+source config
+# end configuration
+
+set ROOT = "$HOME/aiwo"
+#set JAVA = "$ROOT/jre1.6.0_18/bin/java"
+set JAVA = "/usr/bin/java"
+set FRAMEWORK = "$ROOT/cqframework"
+setenv CLASSPATH "$FRAMEWORK/cqserver/lib/cajo.jar:$FRAMEWORK/lib/log4j.jar"
+
+echo "Start game."
+echo "[`date '+%F %T'`]: Battle round"
+
+echo "java is, "$JAVA
+$JAVA -jar cqserver.jar $SERVERNAME $SERVERPORT $SECRETSFILE
+
+echo "======================================================================"
+echo "[`date '+%F %T'`]: Job completed"
+/bin/sleep 1
+

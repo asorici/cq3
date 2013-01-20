@@ -22,6 +22,7 @@ public class GameState implements Serializable {
 	public RoundState round;
 	
 	public HashMap<Integer, PlayerState> playerStates;
+	public ArrayList<Integer> playerIds;
 	public HashMap<ResourceType, Integer> resourceAmountsByType;
 	
 	public int lastKiller;
@@ -30,6 +31,7 @@ public class GameState implements Serializable {
 	
 	public GameState() {
 		playerStates = new HashMap<Integer, PlayerState>();
+		playerIds = new ArrayList<Integer>();
 		
 		lastKiller = -1;
 		somebodyDied = false;
@@ -64,10 +66,12 @@ public class GameState implements Serializable {
 	
 	
 	public List<Integer> getPlayerIds() {
+		/*
 		List<Integer> playerIds = new ArrayList<Integer>();
 		for (PlayerState ps : playerStates.values()) {
 			playerIds.add(ps.id);
 		}
+		*/
 		
 		return playerIds;
 	}
