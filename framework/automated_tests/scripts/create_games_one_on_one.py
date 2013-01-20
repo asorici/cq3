@@ -254,7 +254,6 @@ def main(num_players_on_map):
 def collect_score(current_server_dir, game):
     os.chdir(current_server_dir)
     
-    
     try:
         f = open("winner.txt", "r")
         filecontents = map(lambda x: string.strip(x), f.readlines())
@@ -313,7 +312,7 @@ def generate_team_stats():
             
             if team_id in team_stats:
                 team_stats[team_id]['total_points'] += game.teams[player_id].points
-                team_stats[team_id]['games'][player_id].append(match_details)
+                team_stats[team_id]['games'][game.map_name][player_id].append(match_details)
             else:
                 team_games = {}
                 for idx in range(1, game.num_players + 1):
@@ -323,7 +322,7 @@ def generate_team_stats():
                 
                 team_stats[team_id] = {'team_name': game.teams[player_id].team_name,
                                        'total_points': game.teams[player_id].points,
-                                       'games': team_games
+                                       'games': {game.map_name: team_games}
                                        }
     
     import simplejson

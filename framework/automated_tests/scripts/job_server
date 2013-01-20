@@ -10,7 +10,8 @@ source config
 
 set ROOT = "$HOME/aiwo"
 #set JAVA = "$ROOT/jre1.6.0_18/bin/java"
-set JAVA = "/usr/bin/java"
+#set JAVA = "/usr/bin/java"
+set JAVA = "/usr/lib/jvm/jdk1.7.0/bin/java"
 set FRAMEWORK = "$ROOT/cqframework"
 setenv CLASSPATH "$FRAMEWORK/cqserver/lib/cajo.jar:$FRAMEWORK/lib/log4j.jar"
 

@@ -495,16 +495,7 @@ public class Server0 implements IServer {
 		
 		for (Integer playerID : playerIDs) {
 			PlayerState ps = state.playerStates.get(playerID);
-			float score = (float)ps.getKills() * 
-					(1.0f + (float)ps.getPlacedTowers() / (float)GamePolicy.buildTowerBonus);
-			
-			if (ps.getPlacedTraps() > 0) {
-				score *= ((float)(ps.getSuccessfulTraps() * ps.getPlacedTraps()) /
-						  (float)(ps.getSuccessfulTraps() + ps.getPlacedTraps()));
-			}
-			
-			score += ps.getKillingSprees() * GamePolicy.killingSpreeBonus +
-					ps.getFirstBlood() * GamePolicy.firstBloodBonus;
+			float score = ps.getScore();
 			scores.add(new PlayerScore(ps, score));
 		}
 		

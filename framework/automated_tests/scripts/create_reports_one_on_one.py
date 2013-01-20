@@ -1,6 +1,7 @@
 import sys, os, string, time
 
-ROOT = os.path.expanduser('~') + "/aiwo"
+#ROOT = os.path.expanduser('~') + "/aiwo/wo-crafting-quest/framework/automated_tests"
+RESULT_DUMP_FILE = "result_dump.txt"
 SCRIPTS = ROOT + "/scripts"
 SUBSFILE = SCRIPTS + "/submissions_file"
 SUBS = ROOT + "/submissions"

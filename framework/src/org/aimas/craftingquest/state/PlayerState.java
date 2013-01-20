@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
 
+import org.aimas.craftingquest.core.GamePolicy;
 import org.aimas.craftingquest.state.objects.Tower;
 import org.aimas.craftingquest.state.objects.TrapObject;
 
@@ -186,7 +187,19 @@ public class PlayerState implements Serializable {
 	public void setGold(int credit) {
 		this.gold = credit;
 	}
-
+	
+	public float getScore() {
+		float score = (float) kills * (1.0f + (float) placedTowers / (float)GamePolicy.buildTowerBonus);
+		
+		if (placedTraps > 0) {
+			score *= ((float)(successfulTraps * placedTraps) / (float)(successfulTraps + placedTraps));
+		}
+		
+		score += killingSprees * GamePolicy.killingSpreeBonus + firstBlood * GamePolicy.firstBloodBonus;
+		
+		return score;
+	}
+	
 	public int getCurentTurn() {
 		return round.currentRound;
 	}

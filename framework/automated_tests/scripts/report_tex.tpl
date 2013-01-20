@@ -11,7 +11,7 @@
 
 \par Section \ref{sec:overview} presents a general overview of the results and your team's position on the board. The score in Table \ref{table:overview} is computed by the following rules:
 \begin{itemize}
-	\item Each win is worth 2 points. A game is won by the team obtaining the highest score.
+	\item Each win is worth 1 points. A game is won by the team obtaining the highest score.
 	\item Each draw is worth 1 point. A game is considered a draw if both teams obtain the same score.
 	\item Each lost game is worth 0 points, the loosing team being the one obtaining the lowest score.
 \end{itemize}

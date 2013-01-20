@@ -33,16 +33,6 @@ public abstract class AIThread implements Runnable {
 
 	@Override
 	public final void run() {
-		try {
-			FileWriter fw = new FileWriter("someFile.txt");
-			fw.write("policy test succeded.");
-			fw.close();
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		
-		
 		while (true) {
 			// wait for new round
 			synchronized (roundSync) {
@@ -60,18 +50,24 @@ public abstract class AIThread implements Runnable {
 				actIntelligently();
 			} 
 			catch(AccessControlException s) {
-				log("CQ POLICY VIOLATION. SOLUTION WILL BE DISQUALIFIED.", Level.FATAL);
-				s.printStackTrace();
+				log("CQ POLICY VIOLATION. SOLUTION WILL BE DISQUALIFIED.", Level.FATAL, s);
 				System.exit(-1);
 			}
 			catch(SecurityException s) {
-				log("CQ POLICY VIOLATION. SOLUTION WILL BE DISQUALIFIED.", Level.FATAL);
-				s.printStackTrace();
+				log("CQ POLICY VIOLATION. SOLUTION WILL BE DISQUALIFIED.", Level.FATAL, s);
+				System.exit(-1);
+			}
+			catch(Exception ex) {
+				log("RUNTIME EXCEPTION. SOLUTION STOPPED.", Level.FATAL, ex);
 				System.exit(-1);
 			}
 		}
 	}
-
+	
+	protected void log(String message, Level level, Throwable throwable) {
+		logger.log(level, "[AI]: " + message, throwable);
+	}
+	
 	protected void log(String message, Level level) {
 		logger.log(level, "[AI]: " + message);
 	}
