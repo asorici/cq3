@@ -61,6 +61,8 @@ public class AttackAction extends Action {
 		}
 
 		// ======== do attack ========
+		boolean attackedUnitAlreadyDead = attackedUnit.life <= 0;
+		
 		int attackValue = computeAttackPower(energy, playerUnit, attackedUnit);
 		attackedUnit.life -= attackValue;
 		if (attackedUnit.energy > attackedUnit.life) {
@@ -90,15 +92,18 @@ public class AttackAction extends Action {
 		}
 
 		// check for dead units and update scores
-		if (attackedUnit.life <= 0) {
-			player.killOne(false);
+		if (!attackedUnitAlreadyDead) {
+			if (attackedUnit.life <= 0) {
+				player.killOne(false);
+				attackedPlayer.die();
+			}
+			
+			if (playerUnit.life <= 0) {
+				attackedPlayer.killOne(true);
+				player.die();
+			}
 		}
 		
-		if (playerUnit.life <= 0) {
-			attackedPlayer.killOne(true);
-			player.die();
-		}
-
 		TransitionResult res = new TransitionResult(transition.id);
 		res.errorType = TransitionResult.TransitionError.NoError;
 		return res;

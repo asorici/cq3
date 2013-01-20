@@ -1,1 +1,10 @@
 org.aimas.craftingquest.core
+org.aimas.craftingquest.core.actions
+org.aimas.craftingquest.core.energyreplenishmodels
+org.aimas.craftingquest.core.pathfinding
+org.aimas.craftingquest.gui
+org.aimas.craftingquest.mapeditor
+org.aimas.craftingquest.state
+org.aimas.craftingquest.state.objects
+org.aimas.craftingquest.state.resources
+org.aimas.craftingquest.user

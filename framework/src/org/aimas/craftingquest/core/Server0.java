@@ -346,7 +346,6 @@ public class Server0 implements IServer {
 			return null;
 		}
 		
-		logger.info("[srv]Executing action [" + action.operator.name() + "] for client: " + clientID);
 		
 		if (player.round.currentRound < state.round.currentRound) {
 			player.round.currentRound = state.round.currentRound;
@@ -355,7 +354,14 @@ public class Server0 implements IServer {
 		}
 		
 		player.response = actionEngine.process(player, action);
-
+		
+		if (player.response.valid()) {
+			logger.info("[srv]Executed action [" + action.operator.name() + "] for client: " + clientID);
+		}
+		else {
+			logger.info("[srv]Failed action [" + action.operator.name() + "] for client: " + clientID);
+		}
+		
 		List<UnitState> unitsToRemove = new ArrayList<UnitState>();
 		for (UnitState unit : player.units) {
 			if (unit.life <= 0)
