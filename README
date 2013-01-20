@@ -5,3 +5,18 @@
 
 Version: R0
 Release date: December 17, 2012.
+
+Version: R1
+Release date: January 21, 2013.
+
+Changes from version R0
+
+- fixed energy consumption error for Move action. The weight of carried objects and resources is now taken into account.
+- fixed upgrade error. Units can no longer upgrade past the maximum level of a blueprint. A NoUpgradeError transition result is returned when such
+  an attempt is made. A method to check the maximum upgrade level for each blueprint has been added.
+- fixed Gold pickup issue. When a unit picks up Gold it is now added to the player in the `gold' field of the PlayerState.
+- updated javadoc folder in the archive
+- corrected `deadUnits' count in PlayerState
+- server now logs different messages for successful and failed actions
+- updated CraftingQuest3 Rulebook
+
