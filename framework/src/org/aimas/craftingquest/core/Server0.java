@@ -139,18 +139,6 @@ public class Server0 implements IServer {
 		server.gameLoop();
 	}
 
-	void sendEvent(int clientID, Object client, Event event) {
-		try {
-			if (!unresponsive[clientID]) {
-				Remote.invoke(client, "onEvent", event);
-			}
-		} catch (Exception ex) {
-			// mark client as unresponsive
-			unresponsive[clientID] = true;
-			logger.fatal("Could not send event to client " + clientID, ex);
-		}
-	}
-
 	
 	/* communication */
 	public synchronized int addRemoteClient(Object client) {
@@ -177,7 +165,21 @@ public class Server0 implements IServer {
 		return clientNo;	
 	}
 	
-	void updateGame() {
+	
+	private void sendEvent(int clientID, Object client, Event event) {
+		try {
+			if (!unresponsive[clientID]) {
+				Remote.invoke(client, "onEvent", event);
+			}
+		} catch (Exception ex) {
+			// mark client as unresponsive
+			unresponsive[clientID] = true;
+			logger.fatal("Could not send event to client " + clientID, ex);
+		}
+	}
+	
+	
+	private void updateGame() {
 		// check if we still have a connected client
 		boolean responsiveClients = false;
 		for (int i = 0; i < unresponsive.length; i++) {
@@ -212,7 +214,7 @@ public class Server0 implements IServer {
 		}
 	}
 
-	void endGame() {
+	private void endGame() {
 		//for (Object client : clients) {
 		for (int cID = 0; cID < clients.length; cID++) {
 			sendEvent(cID, clients[cID], new Event(Event.EventType.GameEnd));
@@ -283,6 +285,9 @@ public class Server0 implements IServer {
 					// then subtract specific energy amount if the player is near some towers
 					actionEngine.doTowerDrain(state, state.getPlayerIds().get(clientID));
 
+					// update the view of the player's own units before the start of the new round
+					actionEngine.updatePlayerSight(state, state.getPlayerIds().get(clientID));
+					
 					// update the view of the player's own towers before the start of the new round
 					actionEngine.updateTowerSight(state, state.getPlayerIds().get(clientID));
 
@@ -320,11 +325,11 @@ public class Server0 implements IServer {
 				endGame();
 			}
 		}, GamePolicy.roundTime * state.round.noRounds);
-
 	}
 
+	
+	@Override
 	public synchronized PlayerState process(Transition action) {
-		// Logger2.log("srv", "process", "");
 		int clientID = allowedSecret(action.secret);
 		if (clientID == -1) {
 			return null;
@@ -405,22 +410,22 @@ public class Server0 implements IServer {
 				carriedObjects.remove(obj);
 			}
 			
-			Point2i respawnPoint = GamePolicy.initialPlayerPositions.get(playerID);
-			removedUnit.pos = respawnPoint;
+			removedUnit.reset(GamePolicy.initialUnitMaxLife, GamePolicy.initialUnitMaxLife, 
+					GamePolicy.initialPlayerPositions.get(playerID));
+			
 			player.units.add(removedUnit);
 		}
+		
+		// update the view of the player's own units after the execution of an action
+		actionEngine.updatePlayerSight(state, state.getPlayerIds().get(clientID));
+		
+		// update the view of the player's own towers after the execution of an action
+		actionEngine.updateTowerSight(state, state.getPlayerIds().get(clientID));
 		
 		return player;
 	}
 
-	public String getServername() {
-		return servername;
-	}
-
-	public int getPortNumber() {
-		return portNumber;
-	}
-	
+		
 	private boolean allowedPlayer(int clientID) {
 		int factor = clientID % GamePolicy.maxPlayers;
 		long currentTime = System.currentTimeMillis();
@@ -539,4 +544,13 @@ public class Server0 implements IServer {
 			}
 		}
 	}
+	
+	public String getServername() {
+		return servername;
+	}
+
+	public int getPortNumber() {
+		return portNumber;
+	}
+
 }

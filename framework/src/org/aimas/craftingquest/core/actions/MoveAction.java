@@ -93,7 +93,7 @@ public class MoveAction extends Action {
 		// points
 		playerUnit.pos = toPos;
 		playerUnit.energy -= requiredEnergy;
-		updateUnitSight(game, playerUnit, toPos);
+		// updateUnitSight(game, playerUnit, toPos);
 
 		// update cells with new unit position
 		Iterator<BasicUnit> it = game.map.cells[fromPos.y][fromPos.x].cellUnits.iterator();
@@ -138,21 +138,6 @@ public class MoveAction extends Action {
 			gui_logger.info(game.round.currentRound + " " + transition.operator.name() + " " + player.id + " " 
 					+ playerUnit.id + " " + playerUnit.pos.x + " " + playerUnit.pos.y + " " + player.gold + " " 
 					+ playerUnit.energy);
-		}
-	}
-	
-	
-	private void updateUnitSight(GameState game, UnitState playerUnit, Point2i pos) {
-		int sightRadius = GamePolicy.sightRadius;
-
-		CellState[][] unitSight = playerUnit.sight;
-		for (int i = 0, y = pos.y - sightRadius; y <= pos.y + sightRadius; y++, i++) {
-			for (int j = 0, x = pos.x - sightRadius; x <= pos.x + sightRadius; x++, j++) {
-				unitSight[i][j] = null;
-				if (x >= 0 && x < GamePolicy.mapsize.x && y >= 0 && y < GamePolicy.mapsize.y) {
-					unitSight[i][j] = game.map.cells[y][x];
-				}
-			}
 		}
 	}
 }

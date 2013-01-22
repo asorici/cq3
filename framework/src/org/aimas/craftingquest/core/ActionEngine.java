@@ -106,45 +106,36 @@ public class ActionEngine {
 						gui_logger.info(state.round.currentRound + " RemoveTower " + oppTower.getPosition().x + " " + oppTower.getPosition().y);
 					}
 					
-					/*
-					if (oppTower.getRemainingStrength() <= 0) {		
-						List<Integer> playerIds = state.getPlayerIds();
-						for (Integer pId : playerIds) {
-							boolean foundTower = false;
-							
-							if (pId != playerID) {
-								//List<Tower> pTowers = state.playerTowers.get(pId);	// get opponent tower list
-								List<Tower> pTowers = state.playerStates.get(pId).availableTowers;	// get opponent tower list
-								
-								for (Tower t : pTowers) {			// see if it contains 
-									if (t.getPosition().isEqual(oppTower.getPosition())) {
-										PlayerState opponentState = state.playerStates.get(pId);
-										opponentState.availableTowers.remove(t); // tower is no longer available
-										
-//										opponentState.availableTowers.put(t, false);	
-//										pTowers.remove(t);			// the weakened tower and remove it
-										foundTower = true;
-										
-										// log tower destruction
-										gui_logger.info(state.round.currentRound + " RemoveTower " + t.getPosition().x + " " + t.getPosition().y);
-										break;
-									}
-								}
-							}
-							
-							if (foundTower) {		// there can't be more than one tower in that position
-								break;
-							}
-						}
-					}
-					*/
 				}
 			}
 				
 		}
 	}
 	
-	public void updateTowerSight(GameState state, Integer playerID) {
+	
+	protected void updatePlayerSight(GameState state, Integer playerID) {
+		PlayerState playerState = state.playerStates.get(playerID);
+		for (UnitState unit : playerState.units) {
+			updateUnitSight(state, unit);
+		}
+	}
+	
+	private void updateUnitSight(GameState game, UnitState playerUnit) {
+		int sightRadius = GamePolicy.sightRadius;
+		Point2i pos = playerUnit.pos;
+		
+		CellState[][] unitSight = playerUnit.sight;
+		for (int i = 0, y = pos.y - sightRadius; y <= pos.y + sightRadius; y++, i++) {
+			for (int j = 0, x = pos.x - sightRadius; x <= pos.x + sightRadius; x++, j++) {
+				unitSight[i][j] = null;
+				if (x >= 0 && x < GamePolicy.mapsize.x && y >= 0 && y < GamePolicy.mapsize.y) {
+					unitSight[i][j] = game.map.cells[y][x];
+				}
+			}
+		}
+	}
+	
+	protected void updateTowerSight(GameState state, Integer playerID) {
 		PlayerState playerState = state.playerStates.get(playerID);
 		
 		for (Tower tower : playerState.availableTowers) {

@@ -36,7 +36,7 @@ zip -9 -q -r cqclient.zip cqclient/
 
 ## Step 5: Create source archive - we need to remove filter out some files
 echo "CREATING source archive ... "
-zip -9 -q -r cqsources.zip framework/ -x '*.settings*' '*dist*' '*bin*' '*build*' '*-release*' '*server_gui_log*' '*.project*' '*.classpath*' '*.gitignore*'
+zip -9 -q -r cqsources.zip framework/ -x '*.settings*' '*dist*' '*bin*' '*build*' '*automated_tests*' '*-release*' '*server_gui_log*' '*.project*' '*.pydevproject*' '*.classpath*' '*.gitignore*'
 
 ## Step 6: Create the release archive -- include the above created archives, the rulebook, the tutorial, the README and the license file
 echo "CREATING release archive ... "

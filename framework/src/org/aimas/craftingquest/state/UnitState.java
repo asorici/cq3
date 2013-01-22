@@ -128,6 +128,26 @@ public class UnitState implements Serializable {
 		retaliateThreshold = 0;
 	}
 
+	
+	public void reset(int life, int energy, Point2i pos) {
+		// reset stats
+		this.life = life;
+		this.energy = energy;
+		
+		// reset position
+		this.pos = pos;
+		
+		// reset all carried objects/resources and equiped armour/sword
+		carriedResources.clear();
+		carriedObjects.clear();
+		equipedSword = null;
+		equipedArmour = null;
+		
+		retaliateEnergy = 0;
+		retaliateThreshold = 0;
+	}
+	
+	
 	@Override
 	public String toString() {
 		String info = "";
