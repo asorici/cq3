@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.aimas.craftingquest.core.actions.Action;
 import org.aimas.craftingquest.core.energyreplenishmodels.EnergyReplenishModel;
+import org.aimas.craftingquest.state.BasicUnit;
 import org.aimas.craftingquest.state.CellState;
 import org.aimas.craftingquest.state.GameState;
 import org.aimas.craftingquest.state.PlayerState;
@@ -129,12 +130,33 @@ public class ActionEngine {
 			for (int j = 0, x = pos.x - sightRadius; x <= pos.x + sightRadius; x++, j++) {
 				unitSight[i][j] = null;
 				if (x >= 0 && x < GamePolicy.mapsize.x && y >= 0 && y < GamePolicy.mapsize.y) {
+					// update opponent perspective before updating unit sight
+					updateOpponentPerspective(game.map.cells[y][x]);
 					unitSight[i][j] = game.map.cells[y][x];
 				}
 			}
 		}
 	}
 	
+	private void updateOpponentPerspective(CellState cellState) {
+		// update the BasicUnit opponent perspective with the stats of the actual
+		// UnitState units that are situated in this cell
+		for (BasicUnit bu : cellState.cellUnits) {
+			PlayerState player = game.playerStates.get(bu.playerID);
+			
+			for (UnitState unit : player.units) {
+				if (unit.id == bu.unitId) {
+					int attackLevel = (unit.equipedSword != null)? unit.equipedSword.getLevel() : 0;
+					int defenceLevel = (unit.equipedSword != null)? unit.equipedArmour.getLevel() : 0;
+					bu.updateStats(unit.energy, unit.life, attackLevel, defenceLevel);
+					
+					break;
+				}
+			}
+		}
+	}
+
+
 	protected void updateTowerSight(GameState state, Integer playerID) {
 		PlayerState playerState = state.playerStates.get(playerID);
 		

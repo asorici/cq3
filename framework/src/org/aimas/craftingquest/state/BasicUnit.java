@@ -47,4 +47,11 @@ public class BasicUnit implements Serializable {
 		this.attackLevel = attackLevel;
 		this.defenceLevel = defenceLevel;
 	}
+	
+	public void updateStats(int energy, int life, int attackLevel, int defenceLevel) {
+		this.energy = energy;
+		this.life = life;
+		this.attackLevel = attackLevel;
+		this.defenceLevel = defenceLevel;
+	}
 }
