@@ -15,7 +15,6 @@ import org.aimas.craftingquest.state.objects.TrapObject;
  */
 @SuppressWarnings("serial")
 public class PlayerState implements Serializable {
-
 	/* state */
 	/**
 	 * the unique player identifier 

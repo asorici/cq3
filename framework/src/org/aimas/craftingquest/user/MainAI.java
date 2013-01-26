@@ -22,11 +22,6 @@ public class MainAI implements IPlayerHooks {
 	/* logging */
 	private static Logger logger = Logger.getLogger(MainAI.class);
 	
-	public MainAI(String playerClassName, IPlayerActions cmd) {
-		this.playerClassName = playerClassName;
-		this.cmd = cmd;
-		cmd.addArtificialIntelligence(this);
-	}
 
 	public MainAI(String playerClassName, String host, int port, String serverName, long secret) throws Exception {
 		this.playerClassName = playerClassName;
@@ -37,12 +32,13 @@ public class MainAI implements IPlayerHooks {
 	@Override
 	public void initGame() {
 		logger.info("[AI][initGame]");
-
+		
 		try {
 			aiThread = (AIThread) Class.forName(playerClassName).newInstance();
 			aiThread.init(roundSync, cmd);
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.fatal("[AI][initGame] Error initializing client", e);
+			System.exit(-1);
 		}
 	}
 
@@ -59,6 +55,10 @@ public class MainAI implements IPlayerHooks {
 			}
 			catch(SecurityException s) {
 				logger.fatal("CQ POLICY VIOLATION. SOLUTION WILL BE DISQUALIFIED.", s);
+				System.exit(-1);
+			}
+			catch(Exception e) {
+				logger.fatal("[AI][initPlayer] Error initializing client player", e);
 				System.exit(-1);
 			}
 			

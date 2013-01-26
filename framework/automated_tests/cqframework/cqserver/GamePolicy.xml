@@ -9,14 +9,14 @@
 		<playerLateTime>100</playerLateTime>
 		<updateTime>0</updateTime>
 		<connectWaitTime>2500</connectWaitTime>
-		<nrTurns>80</nrTurns>
+		<nrTurns>2</nrTurns>
 		<mapName>map_cq3_v1.cqm</mapName>
 	
 		<initialPlayerPositions>
-			<initialPlayerPosition playerID="0" x="5" y="5"/>
-            <initialPlayerPosition playerID="1" x="55" y="55"/>
-			<initialPlayerPosition playerID="2" x="55" y="5"/>
-			<initialPlayerPosition playerID="3" x="5" y="55"/>
+			<initialPlayerPosition playerID="1" x="5" y="5"/>
+            <initialPlayerPosition playerID="2" x="55" y="55"/>
+			<initialPlayerPosition playerID="3" x="55" y="5"/>
+			<initialPlayerPosition playerID="4" x="5" y="55"/>
 		</initialPlayerPositions>
 	
 	    <!-- scenario specific configurations -->

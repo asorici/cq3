@@ -20,7 +20,6 @@ public class MonkeyAI extends AIThread {
 	@Override
 	protected void initPlayer() {
 		unitBehaviors = new HashMap<Integer, Behavior>();
-		
 		for (UnitState unit : getPlayerState().units) {
 			unitBehaviors.put(unit.id, new Behavior(unit.id, getCmd()));
 		}

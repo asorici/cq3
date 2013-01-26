@@ -47,22 +47,22 @@ public class GameGenerator {
 			/* setup initial player states - there should be a maximum of 4 players */
 			for (int i = 1; i <= GamePolicy.nrPlayers; i++) {
 				if (i % GamePolicy.maxPlayers == 1) {
-					PlayerState player = setupPlayerState(i, GamePolicy.nrPlayerUnits, GamePolicy.initialPlayerPositions.get(0), game.map);
+					PlayerState player = setupPlayerState(i, GamePolicy.nrPlayerUnits, GamePolicy.initialPlayerPositions.get(i), game.map);
 					game.playerStates.put(player.id, player);
 					game.playerIds.add(player.id);
 				}
 				else if (i % GamePolicy.maxPlayers == 2) {
-					PlayerState player = setupPlayerState(i, GamePolicy.nrPlayerUnits, GamePolicy.initialPlayerPositions.get(1), game.map);
+					PlayerState player = setupPlayerState(i, GamePolicy.nrPlayerUnits, GamePolicy.initialPlayerPositions.get(i), game.map);
 					game.playerStates.put(player.id, player);
 					game.playerIds.add(player.id);
 				} 
 				else if (i % GamePolicy.maxPlayers == 3) {
-					PlayerState player = setupPlayerState(i, GamePolicy.nrPlayerUnits, GamePolicy.initialPlayerPositions.get(2), game.map);
+					PlayerState player = setupPlayerState(i, GamePolicy.nrPlayerUnits, GamePolicy.initialPlayerPositions.get(i), game.map);
 					game.playerStates.put(player.id, player);
 					game.playerIds.add(player.id);
 				}
 				else {
-					PlayerState player = setupPlayerState(i, GamePolicy.nrPlayerUnits, GamePolicy.initialPlayerPositions.get(3), game.map);
+					PlayerState player = setupPlayerState(i, GamePolicy.nrPlayerUnits, GamePolicy.initialPlayerPositions.get(i), game.map);
 					game.playerStates.put(player.id, player);
 					game.playerIds.add(player.id);
 				}

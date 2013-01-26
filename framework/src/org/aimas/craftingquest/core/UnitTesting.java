@@ -103,7 +103,10 @@ public class UnitTesting {
 		return unit;
 	}
 
-	private static void afterProcess(PlayerState player, Integer playerID) {
+	private static void afterProcess(PlayerState player) {
+		Integer playerID = player.id;
+		
+		/*
 		List<UnitState> unitsToRemove = new ArrayList<UnitState>();
 		for (UnitState unit : player.units) {
 			if (unit.life <= 0)
@@ -152,9 +155,9 @@ public class UnitTesting {
 			
 			player.units.add(removedUnit);
 		}
+		*/
 		
 		// update the view of the player's own units after the execution of an action
-		PlayerState playerState = game.playerStates.get(playerID);
 		actionEngine.updatePlayerSight(game, playerID);
 		
 		// update the view of the player's own towers after the execution of an action
@@ -384,15 +387,16 @@ public class UnitTesting {
 		
 		int defenderLife = GamePolicy.initialUnitMaxLife / 2 - (int)Math.round((GamePolicy.initialUnitMaxLife / 2) * (1 + sword.getAttack() / 100.0));  
 		
-		assertEquals("defenderLife", defenderLife, player2.units.get(0).life, 0.001);
+		// defenderLife should now be that of the respawned unit, so maximum
+		assertEquals("defenderLife", GamePolicy.initialUnitMaxLife, player2.units.get(0).life, 0.001);
 		assertEquals("attackerKills", 1, player1.getKills());
 	}
 	
 	@Test
 	public void testAttackAndUpdateStats() {
-		Point2i posAttacker = new Point2i(15, 15);
-		Point2i posDefender = new Point2i(16, 15);
-		Point2i posObserver = new Point2i(5, 5);
+		Point2i posAttacker = posPlayer1;
+		Point2i posDefender = posPlayer2;
+		Point2i posObserver = GamePolicy.initialPlayerPositions.get(player2.id);
 
 		HashMap<ResourceType, Integer> unitResources = new HashMap<ResourceType, Integer>();
 
@@ -444,7 +448,7 @@ public class UnitTesting {
 
 		// perform attack
 		TransitionResult transitionResult = actionEngine.process(player1, transition);
-		afterProcess(player1, player1.id);
+		afterProcess(player1);
 
 		// interpret
 		int defenderLife = GamePolicy.initialUnitMaxLife - (int)Math.round(att * (1 + sword.getAttack() / 100.0));
@@ -452,6 +456,7 @@ public class UnitTesting {
 		int sightRadius = GamePolicy.sightRadius;
 		Point2i pos = unitAttacker.pos;
 		Point2i epos = unitDefender.pos;
+		
 		CellState[][] unitSight = unitAttacker.sight;
 		for (BasicUnit bu : unitSight[epos.y - pos.y + sightRadius][epos.x - pos.x + sightRadius].cellUnits) {
 			Assert.assertTrue("Only one unit should be there", once);
@@ -466,42 +471,60 @@ public class UnitTesting {
 
 		// perform attack
 		transitionResult = actionEngine.process(player1, transition);
-		afterProcess(player1, player1.id);
+		afterProcess(player1);
 
 		// interpret
 		defenderLife = defenderLife - (int)Math.round(att * (1 + sword.getAttack() / 100.0));
-		once = true;
+		once = false;
 		unitSight = unitAttacker.sight;
-		/*
-		for (BasicUnit bu : unitSight[epos.y - pos.y + sightRadius][epos.x - pos.x + sightRadius].cellUnits) {
-			Assert.assertTrue("Only one unit should be there", once);
-			once = !once;
-			Assert.assertEquals("Unit life is seen as expected", defenderLife, bu.life);
-		}
-		Assert.assertFalse("Exactly one unit should be there", once);
-		*/
-		System.out.println(GamePolicy.initialUnitMaxLife + " " + defenderLife);
-		{
-		sightRadius = GamePolicy.sightRadius;
-		pos = unitAttacker.pos;
 		
-		unitSight = unitAttacker.sight;
+		for (BasicUnit bu : unitSight[epos.y - pos.y + sightRadius][epos.x - pos.x + sightRadius].cellUnits) {
+			once = !once;
+		}
+		Assert.assertFalse("No unit should be at dead unit position", once);
+		
+		System.out.println("defender life as reason for death: " + defenderLife);
+		
+		{
+			sightRadius = GamePolicy.sightRadius;
+			pos = unitAttacker.pos;
+			
+			unitSight = unitAttacker.sight;
+			System.out.println("###### Attacker sight after kill #######");
+			for (int i = 0, y = pos.y - sightRadius; y <= pos.y + sightRadius; y++, i++) {
+				for (int j = 0, x = pos.x - sightRadius; x <= pos.x + sightRadius; x++, j++) {
+					System.out.println(i + " " + j + " " + x + " " + y + " " + unitSight[i][j].cellUnits);
+				}
+			}
+			
+			epos = unitDefender.pos;
+			System.out.println("attackerPos: " + pos + " <--> respawned defender pos: " + epos);
+			System.out.println(sightRadius);
+			
+			//System.out.println(unitSight[epos.y - pos.y + sightRadius][epos.x - pos.x + sightRadius].cellUnits);
+		}
+		
+		CellState[][] observerSight = unitObserver.sight; 
+		int numUnits = 0;
+		for (BasicUnit bu : observerSight[sightRadius][sightRadius].cellUnits) {
+			numUnits++;
+		}
+		Assert.assertTrue("Two units must be at the observer position", numUnits == 2);
+		Assert.assertEquals("Two units must be at the observer position", 2, numUnits);
+		
+		pos = unitObserver.pos;
+		System.out.println("###### Observer sight after kill #######");
 		for (int i = 0, y = pos.y - sightRadius; y <= pos.y + sightRadius; y++, i++) {
 			for (int j = 0, x = pos.x - sightRadius; x <= pos.x + sightRadius; x++, j++) {
-				System.out.println(i + " " + j + " " + x + " " + y + " " + unitSight[i][j].cellUnits);
+				if (observerSight[i][j] != null) {
+					System.out.println(i + " " + j + " " + x + " " + y + " " + observerSight[i][j].cellUnits);
+				}
 			}
 		}
-		epos = unitDefender.pos;
-		System.out.println(pos + " " + epos);
-		System.out.println(sightRadius);
-		System.out.println(unitSight[epos.y - pos.y + sightRadius]
-				[epos.x - pos.x + sightRadius].cellUnits);
-		}
-		System.out.println(unitAttacker.sight);
+		
 		/*
 		assertEquals("AttackResult", TransitionError.NoError, transitionResult.errorType);
 		assertEquals("attackerLife", GamePolicy.initialUnitMaxLife / 2, unitAttacker.energy);
-
 
 		assertEquals("defenderLife", defenderLife, player2.units.get(0).life, 0.001);
 		assertEquals("attackerKills", 1, player1.getKills());

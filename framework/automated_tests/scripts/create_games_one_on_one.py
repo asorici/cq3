@@ -1,8 +1,7 @@
 import sys, os, string, time
 from subprocess import call, Popen, PIPE
 
-ROOT = os.path.expanduser('~') + "/aiwo/wo-crafting-quest/framework/automated_tests"
-#ROOT = ".."
+ROOT = os.path.abspath(os.getcwd() + "/../")
 SCRIPTS = ROOT + "/scripts"
 SUBSFILE = SCRIPTS + "/submissions_file"
 SUBS = ROOT + "/submissions"
@@ -11,12 +10,12 @@ JOBS = ROOT + "/jobs"
 RESULTS_DUMP_FILE = ROOT + "/result_dump.txt"
 
 
-
 # maps
 maplist = ['map_cq3_v1.cqm']
 
-# secrets - must match the order in secrets.txt !!!!!!!
-secrets = {1 : 1, 2 : 2}
+# secrets - the mapping to the player IDs must match the order in secrets.txt !!!!!!!
+secrets = {1 : 1, 
+           2 : 2}
 
 # scoring criteria
 scoring_criteria = ['total_score', 'kills', 'retaliation_kills', 'dead_units', 'placed_towers', 
@@ -25,7 +24,7 @@ scoring_criteria = ['total_score', 'kills', 'retaliation_kills', 'dead_units', '
 # competitor data and game structure
 competitorData = []
 gamestruct = {}
-team_stats = {}
+team_stats_by_map = {}
 
 class Game(object):
     server_name = "CraftingQuest"
@@ -66,6 +65,20 @@ class TeamDataInGame(object):
         self.placed_traps = placed_traps
         self.killing_sprees = killing_sprees
         self.first_blood = first_blood
+    
+    def serialize_results(self):
+        results_dict = {
+                        'team_id' : self.team_id,
+                        'team_name': self.team_name,
+                        'finish_position': self.finish_position,
+                        'points': self.points
+                        }
+        
+        for stat in scoring_criteria:
+            results_dict[stat] = getattr(self, stat, None)
+            
+        return results_dict
+
        
     def __repr__(self):
         return  self.team_name + "<" + str(self.team_secret) + ">"   
@@ -81,14 +94,14 @@ def num(s):
         return float(s)
 
 
-def main(num_players_on_map):
+def main():
     # read team data and generate game structure
     subf = open(SUBSFILE, 'r')
     competitorDataStrings  = map(lambda x: string.strip(x), subf.readlines())
     
     for competitorstring in competitorDataStrings:
         data = competitorstring.split()
-        datadict = {'teamname': data[0], 'teamid': data[1], 'teamjar': data[2], 'teamclass': data[3]}
+        datadict = {'teamname': data[0], 'teamid': int(data[1]), 'teamjar': data[2], 'teamclass': data[3]}
         competitorData.append(datadict)
         
     
@@ -260,136 +273,87 @@ def collect_score(current_server_dir, game):
         
         ## the lines are sorted such that the player ids are in order of their result in the game
         num_lines = len(filecontents)
-        player_points = []
         
-        for i in range(num_lines):
-            content_line = filecontents[i]
-            results = content_line.split(",")
-            player_id = int(results[0])
-            player_score = float(results[1])
-            
-            player_results = {'finish_position' : (i + 1)}
-            
-            if i > 0:
-                prev_player_score = float(filecontents[i - 1].split(",")[1])
-                if player_score == prev_player_score:
-                    player_results['points'] = player_points[i - 1]
-                else:
-                    player_points.append(game.num_players - (i + 1))
-                    player_results['points'] = game.num_players - (i + 1)
-            else:
-                player_points.append(game.num_players - (i + 1))
-                player_results['points'] = game.num_players - (i + 1)
-            
-            # other scoring criteria
-            for idx in range(len(scoring_criteria)):
-                scoring_item = scoring_criteria[idx]
-                player_results[scoring_item] = num(results[idx + 1])
-            
-            game.set_team_game_results(player_id, player_results)
+        ## we know there are only two lines - one for each player
+        winner_game_results = filecontents[0].split(",")
+        loser_game_results = filecontents[1].split(",")
+        
+        ## process winner
+        winner_player_id = int(winner_game_results[0])
+        winner_results = {'finish_position' : 1}
+        if float(winner_game_results[1]) == float(loser_game_results[1]):
+            winner_results['points'] =  1
+        else:
+            winner_results['points'] =  2
+        
+        for idx in range(len(scoring_criteria)):
+            scoring_item = scoring_criteria[idx]
+            winner_results[scoring_item] = num(winner_game_results[idx + 1])
+        
+        game.set_team_game_results(winner_player_id, winner_results)
+        
+        ## process loser
+        loser_player_id = int(loser_game_results[0])
+        loser_results = {'finish_position' : 2}
+        if float(winner_game_results[1]) == float(loser_game_results[1]):
+            loser_results['points'] = 1
+        else:
+            loser_results['points'] = 0
+        
+        for idx in range(len(scoring_criteria)):
+            scoring_item = scoring_criteria[idx]
+            loser_results[scoring_item] = num(loser_game_results[idx + 1])
+        
+        game.set_team_game_results(loser_player_id, loser_results)
+        
     except Exception, ex:
         print "Score collect failed for " + game.teams[1].team_name + " vs " + game.teams[2].team_name + ". Reason: ", ex
 
 
 def generate_team_stats():
+    ## generate team stats by map
+    
+    for map_name in maplist:
+        team_stats_by_map[map_name] = {}
+    
     for matchid, game in gamestruct.items():
         for player_id in range(1, (game.num_players + 1)):
             team_id = game.teams[player_id].team_id
-            opponent_data = map(lambda x: (x[0], int(x[1].team_id), x[1].team_name), filter(lambda x: x[1].team_id != team_id, game.teams.items()))
-            match_details = {'oponent_data': opponent_data,
-                                 'finish_position': game.teams[player_id].finish_position,
-                                 'points': game.teams[player_id].points,
-                                 'total_score': game.teams[player_id].total_score,
-                                 'kills': game.teams[player_id].kills,
-                                 'retaliation_kills': game.teams[player_id].retaliation_kills,
-                                 'dead_units': game.teams[player_id].dead_units,
-                                 'placed_towers': game.teams[player_id].placed_towers,
-                                 'successful_traps': game.teams[player_id].successful_traps,
-                                 'placed_traps': game.teams[player_id].placed_traps,
-                                 'killing_sprees': game.teams[player_id].killing_sprees,
-                                 'first_blood': game.teams[player_id].first_blood
-                                 }
+            opponent_data = map(lambda tuple: dict(tuple[1].serialize_results(), player_id = tuple[0]), 
+                                filter(lambda pID_team_tuple: pID_team_tuple[1].team_id != team_id, game.teams.items()))
             
-            if team_id in team_stats:
-                team_stats[team_id]['total_points'] += game.teams[player_id].points
-                team_stats[team_id]['games'][game.map_name][player_id].append(match_details)
+            match_details = {   'oponent_data': opponent_data,
+                                'player_id': player_id,
+                                'finish_position': game.teams[player_id].finish_position,
+                                'points': game.teams[player_id].points,
+                                'total_score': game.teams[player_id].total_score,
+                                'kills': game.teams[player_id].kills,
+                                'retaliation_kills': game.teams[player_id].retaliation_kills,
+                                'dead_units': game.teams[player_id].dead_units,
+                                'placed_towers': game.teams[player_id].placed_towers,
+                                'successful_traps': game.teams[player_id].successful_traps,
+                                'placed_traps': game.teams[player_id].placed_traps,
+                                'killing_sprees': game.teams[player_id].killing_sprees,
+                                'first_blood': game.teams[player_id].first_blood
+                            }
+            
+            if team_id in team_stats_by_map[game.map_name]:
+                team_stats_by_map[game.map_name][team_id]['total_points'] += game.teams[player_id].points
+                team_stats_by_map[game.map_name][team_id]['games'].append(match_details)
             else:
-                team_games = {}
-                for idx in range(1, game.num_players + 1):
-                    team_games[idx] = []
+                team_games = []
+                team_games.append(match_details)
                 
-                team_games[player_id].append(match_details)
-                
-                team_stats[team_id] = {'team_name': game.teams[player_id].team_name,
-                                       'total_points': game.teams[player_id].points,
-                                       'games': {game.map_name: team_games}
-                                       }
+                team_stats_by_map[game.map_name][team_id] = {'team_name': game.teams[player_id].team_name,
+                                                            'total_points': game.teams[player_id].points,
+                                                            'games': team_games
+                                                            }
     
     import simplejson
     f = open(RESULTS_DUMP_FILE, 'w')
-    print >>f, simplejson.dumps(team_stats, indent=1)
+    print >>f, simplejson.dumps(team_stats_by_map, indent=1)
     f.close()
 
 
-def generate_reports():
-    from django.conf import settings
-    
-    settings.configure()
-    os.chdir(SCRIPTS)
-    
-    ### build teamlist
-    teamscoringlist = []
-    
-    n = len(team_stats.keys())
-    nrgames = len(maplist) * 2 * (n - 1)
-    
-    
-    for cdata in competitorData:
-        teamid = cdata['teamid']
-        scoredata = team_stats[teamid]
-        
-        scoredata['averagescore'] /= nrgames
-        d = dict(scoredata)
-        d['id'] = teamid
-        teamscoringlist.append(d)
-    
-    
-    for i in range(len(teamscoringlist)):
-        scoredata = teamscoringlist[i]
-        
-        for amap in maplist:
-            mapentry = amap.split(".")[0]
-            scoredata['games'][mapentry].insert(i, {})
-    
-    for teamitem in teamscoringlist:
-        gen_report_per_team(teamitem, teamscoringlist)
-    
-
-def gen_report_per_team(teamitem, teamscoringlist):
-    from django.template import Template, Context
-    
-    tplf = open("report_tex.tpl", "r")
-    tpl_string = ""
-    for line in tplf.readlines():
-        tpl_string += line
-    tplf.close()
-    
-    thisteamid = teamitem['id']
-    thisteamname = teamitem['name']
-    
-    t = Template(tpl_string)
-    c = Context({'thisteamid': thisteamid, 'thisteamname': thisteamname, 'teamscores': teamscoringlist})
-    texreport = t.render(c)
-    
-    f = open(thisteamname + "_report.tex", "w")
-    print >>f, texreport
-    f.close()
-    
 if __name__ == '__main__':
-    try:
-        num_players_on_map = sys.argv[1]
-    except:
-        print "Usage: python create_games <num_players_on_map>"
-        exit(1)
-    
-    main(num_players_on_map)
+    main()

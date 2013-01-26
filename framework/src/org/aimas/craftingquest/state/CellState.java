@@ -88,4 +88,9 @@ public class CellState implements Serializable {
 		
 		throw new IllegalArgumentException("No existing CellType for given ordinal.");
 	}
+	
+	@Override
+	public String toString() {
+		return cellUnits.toString();
+	}
 }

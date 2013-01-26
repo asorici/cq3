@@ -47,6 +47,8 @@ public final class Client0 implements IClient, IPlayerActions {
 		client = new Remote(this);
 		
 		id = (Integer) Remote.invoke(server, "addRemoteClient", client);
+		logger.info("received client id: " + id);
+		
 		PropertyConfigurator.configure("logging.properties");
 	}
 

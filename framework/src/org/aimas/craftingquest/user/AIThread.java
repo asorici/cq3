@@ -1,7 +1,5 @@
 package org.aimas.craftingquest.user;
 
-import java.io.FileWriter;
-import java.io.IOException;
 import java.security.AccessControlException;
 
 import org.aimas.craftingquest.state.PlayerState;

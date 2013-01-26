@@ -68,4 +68,29 @@ public class BasicUnit implements Serializable {
 
 		return info;
 	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (!(obj instanceof BasicUnit)) {
+			return false;
+		}
+		
+		final BasicUnit other = (BasicUnit)obj;
+		
+		if (playerID != other.playerID) {
+			return false;
+		}
+		
+		if (unitId != other.unitId) {
+			return false;
+		}
+		
+		return true;
+	}
+	
+	
+	@Override
+	public int hashCode() {
+		return (playerID + "_" + unitId).hashCode();
+	}
 }

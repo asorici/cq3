@@ -14,7 +14,9 @@ set POLICYFILE = "cq.policy"
 source config
 # end config section
 
-set ROOT = "$HOME/aiwo"
+set PWD =  `pwd`
+set ROOT = `readlink -f $PWD/../../../`
+
 #set JAVA = "$ROOT/jre1.6.0_18/bin/java"
 #set JAVA = "/usr/bin/java"
 set JAVA = "/usr/lib/jvm/jdk1.7.0/bin/java"

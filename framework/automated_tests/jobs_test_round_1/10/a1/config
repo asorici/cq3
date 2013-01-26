@@ -1,0 +1,6 @@
+set SERVERNAME = "CraftingQuest"
+set SERVERHOST = "localhost"
+set SERVERPORT = "1198"
+set MAINCLASS = "PyostAI"
+set JAR = "22_1_1_27_solution.jar"
+set SECRETID = "1"

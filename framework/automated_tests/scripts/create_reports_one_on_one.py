@@ -1,151 +1,53 @@
 import sys, os, string, time
 
-#ROOT = os.path.expanduser('~') + "/aiwo/wo-crafting-quest/framework/automated_tests"
-RESULT_DUMP_FILE = "result_dump.txt"
+ROOT = os.path.abspath(os.getcwd() + "/../")
 SCRIPTS = ROOT + "/scripts"
-SUBSFILE = SCRIPTS + "/submissions_file"
-SUBS = ROOT + "/submissions"
-FRAMEWORK = ROOT + "/cqframework"
-JOBS = ROOT + "/jobs"
-GROUP_FOLDER = "group"
+RESULT_DUMP_FILE = ROOT + "/result_dump.txt"
 
 # maps
-maplist = ['map.cqm']
+maplist = ['map_cq3_v1.cqm']
 
-# competitor data and game structure
-competitorData = []
-gamestruct = {}
-teamscoring = {}
+# starting position dictionary
+positions_dict = {1: "ULC", 
+                  2: "URC", 
+                  3: "LLC", 
+                  4: "LRC"}
+
+# point results dictionary
+point_result_dict = {0: "L",
+                     1: "D",
+                     2: "W"}
 
 
-def main(subsfilename, jobs_folder):
-    # read team data and generate game structure
-    SUBSFILE = SCRIPTS + "/" + subsfilename
-    JOBS = ROOT + "/" + jobs_folder
+## sorted list (from best to worst) of general overview results (w, d, l, total_score) for each team
+team_overview_scores_list = []
+
+
+def main():
+    import simplejson
     
-    subf = open(SUBSFILE, 'r')
-    competitorDataStrings  = map(lambda x: string.strip(x), subf.readlines())
+    # read result dump and load team statistics
+    dumpf = open(RESULT_DUMP_FILE, 'r')
+    team_stats_by_map = simplejson.load(dumpf)
+    dumpf.close()
     
-    for competitorstring in competitorDataStrings:
-        data = competitorstring.split()
-        datadict = {'teamname': data[0], 'teamid': data[1], 'teamjar': data[2], 'teamclass': data[3]}
-        competitorData.append(datadict)
-        teamscoring[ data[1] ] = {'name': data[0], 'w': 0, 'd': 0, 'l': 0, 's':0, 'averagescore': 0}
-        
-        teamscoring[ data[1] ]['games'] = {}
-        for amap in maplist:
-            mapentry = amap.split(".")[0]
-            teamscoring[ data[1] ]['games'][mapentry] = []
-
-    #### generate match structure
-    matchid = 0
-    for mapp in maplist:
-        for i in range(len(competitorData)):
-            for j in range(len(competitorData)):
-                if (i != j):
-                    gamestruct[matchid] = {}
-                    matchData = {}
-                    
-                    # team 1 data
-                    matchData['teamid1'] = competitorData[i]['teamid']
-                    matchData['teamname1'] = competitorData[i]['teamname']
-                    matchData['teamjar1'] = competitorData[i]['teamjar']
-                    matchData['teamclass1'] = competitorData[i]['teamclass']
-                    matchData['teamsecret1'] = 100
-                    
-                    # team 2 data
-                    matchData['teamid2'] = competitorData[j]['teamid']
-                    matchData['teamname2'] = competitorData[j]['teamname']
-                    matchData['teamjar2'] = competitorData[j]['teamjar']
-                    matchData['teamclass2'] = competitorData[j]['teamclass']
-                    matchData['teamsecret2'] = 200
-                    
-                    # general match data
-                    matchData['servername'] = "CraftingQuest"
-                    matchData['serverhost'] = "localhost"
-                    matchData['serverport'] = "1198"
-                    
-                    gamestruct[matchid][mapp] = matchData
-                    
-                    matchid += 1
     
-    for matchid, mapMatchData in gamestruct.items():
-        for mapp, matchData in mapMatchData.items():
-            current_server_dir = JOBS + "/" + str(matchid) + "/s"
-            collect_score(current_server_dir, mapp.split(".")[0], matchData)
-
     print "#### Generating reports ####"
-    generate_reports()
-            
-def collect_score(current_server_dir, mapp, matchData):
-    os.chdir(current_server_dir)
-    
-    try:
-        f = open("winner.txt", "r")
-        filecontents = map(lambda x: string.strip(x), f.readlines())
-        
-        if filecontents[0] == "winner":
-            winnerContents = filecontents[1].split()
-            winnerSecret = int(winnerContents[1])
-            winnerPoints = int(winnerContents[2])
-            
-            loserContents = filecontents[3].split()
-            loserSecret = int(loserContents[1])
-            loserPoints = int(loserContents[2])
-            
-            matchData['result'] = "win"
-            
-            if matchData['teamsecret1'] == winnerSecret:
-                matchData['winnername'] = matchData['teamname1']
-                matchData['winnerid'] = matchData['teamid1']
-                matchData['losername'] = matchData['teamname2']
-                matchData['loserid'] = matchData['teamid2']
-                
-                teamscoring[ matchData['teamid1'] ]['games'][mapp].append({'me': winnerPoints, 'op': loserPoints})
-                
-            else:
-                matchData['winnername'] = matchData['teamname2']
-                matchData['winnerid'] = matchData['teamid2']
-                matchData['losername'] = matchData['teamname1']
-                matchData['loserid'] = matchData['teamid1']
-                
-                teamscoring[ matchData['teamid1'] ]['games'][mapp].append({'me': loserPoints, 'op': winnerPoints})
-            
-            teamscoring[ matchData['winnerid'] ]['w'] += 1
-            teamscoring[ matchData['winnerid'] ]['s'] += 2
-            teamscoring[ matchData['winnerid'] ]['averagescore'] += winnerPoints
-            teamscoring[ matchData['loserid'] ]['l'] += 1
-            teamscoring[ matchData['loserid'] ]['averagescore'] += loserPoints
-            
-            matchData['winnerpoints'] = winnerPoints
-            matchData['loserpoints'] = loserPoints
-        else:
-            tiepoints = int(filecontents[1])
-            matchData['result'] = "tie"
-            matchData['tiepoints'] = tiepoints
-            
-            teamscoring[ matchData['teamid1'] ]['d'] += 1
-            teamscoring[ matchData['teamid1'] ]['s'] += 1
-            teamscoring[ matchData['teamid1'] ]['averagescore'] += tiepoints
-            teamscoring[ matchData['teamid2'] ]['d'] += 1
-            teamscoring[ matchData['teamid2'] ]['s'] += 1
-            teamscoring[ matchData['teamid2'] ]['averagescore'] += tiepoints
-            
-            teamscoring[ matchData['teamid1'] ]['games'][mapp].append({'me': tiepoints, 'op': tiepoints})
-             
-    except Exception, ex:
-        print "Score collect failed for " + matchData['teamname1'] + " vs " + matchData['teamname2'] + ". Reason: ", ex
+    generate_reports(team_stats_by_map)
 
 
-def generate_reports():
+def generate_reports(team_stats_by_map):
     from django.conf import settings
     
     settings.configure()
     os.chdir(SCRIPTS)
     
-    ### build teamlist
-    teamscoringlist = []
+    ### build general overview list
+    team_overview_scores_list = build_overview_list(team_stats_by_map)
     
+    print team_overview_scores_list
+    
+    """
     n = len(teamscoring.keys())
     nrgames = len(maplist) * 2 * (n - 1)
     
@@ -168,7 +70,7 @@ def generate_reports():
     
     for teamitem in teamscoringlist:
         gen_report_per_team(teamitem, teamscoringlist)
-    
+    """
 
 def gen_report_per_team(teamitem, teamscoringlist):
     from django.template import Template, Context
@@ -191,11 +93,48 @@ def gen_report_per_team(teamitem, teamscoringlist):
     f.close()
                 
 
-if __name__ == '__main__':
-    try:
-        subsfile = sys.argv[1]
-        jobs_folder = sys.argv[2]
-    except:
-        print "No jobs folder given. Usage python create_reports.py <subsfile> <jobs_folder>"
+def build_overview_list(team_stats_by_map):
+    team_overview_scores = {}
     
-    main(subsfile, jobs_folder)
+    for map_name, all_team_stats in team_stats_by_map.items():
+        team_map_overview_scores = build_map_overview_dict(all_team_stats)
+        
+        for team_id, team_overview in team_map_overview_scores.items():
+            if team_id in team_overview_scores:
+                team_overview_scores[team_id]['total_points'] += team_overview['total_points']
+                team_overview_scores[team_id]['w'] += team_overview['w']
+                team_overview_scores[team_id]['d'] += team_overview['d']
+                team_overview_scores[team_id]['l'] += team_overview['l']
+            else:
+                team_overview_scores[team_id] = dict(**team_overview) 
+    
+    sorted_overview = sorted(team_overview_scores.values(), key = lambda d: d['total_points'], reverse = True)
+    return sorted_overview
+        
+
+def build_map_overview_dict(all_team_stats):
+    team_map_overview_scores = {}
+    
+    for team_id, team_stats in all_team_stats.items():
+        team_overview_dict = {'team_id': int(team_id),
+                              'team_name': team_stats['team_name'], 
+                              'total_points' : team_stats['total_points'],
+                              'w': 0,
+                              'd': 0,
+                              'l': 0
+                              }
+        
+        for game in team_stats['games']:
+            if game['points'] == 0:
+                team_overview_dict['l'] += 1
+            elif game['points'] == 1:
+                team_overview_dict['d'] += 1
+            elif game['points'] == 2:
+                team_overview_dict['w'] += 1
+        
+        team_map_overview_scores[int(team_id)] = team_overview_dict
+    
+    return team_map_overview_scores
+
+if __name__ == '__main__':
+    main()

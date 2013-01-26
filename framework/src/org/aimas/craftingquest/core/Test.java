@@ -18,7 +18,7 @@ public class Test {
 		startTime = System.currentTimeMillis();
 	}
 	
-	private static long[] getSecrets(){
+	private static long[] getSecrets() {
 		Random rnd = new Random();
 		long[] secrets = new long[GamePolicy.nrPlayers];
 		

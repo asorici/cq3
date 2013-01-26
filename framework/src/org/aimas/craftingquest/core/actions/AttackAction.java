@@ -1,9 +1,15 @@
 package org.aimas.craftingquest.core.actions;
 
+import java.util.HashMap;
+import java.util.Iterator;
+
+import org.aimas.craftingquest.core.GamePolicy;
 import org.aimas.craftingquest.state.GameState;
 import org.aimas.craftingquest.state.PlayerState;
 import org.aimas.craftingquest.state.Transition;
 import org.aimas.craftingquest.state.Transition.ActionType;
+import org.aimas.craftingquest.state.objects.ICrafted;
+import org.aimas.craftingquest.state.resources.ResourceType;
 import org.aimas.craftingquest.state.TransitionResult;
 import org.aimas.craftingquest.state.UnitState;
 
@@ -96,11 +102,13 @@ public class AttackAction extends Action {
 			if (attackedUnit.life <= 0) {
 				game.killOne(player, false);
 				attackedPlayer.die();
+				respawnUnit(game, attackedUnit);
 			}
 	
 			if (playerUnit.life <= 0) {
 				game.killOne(attackedPlayer, true);
 				player.die();
+				respawnUnit(game, playerUnit);
 			}
 		}
 		
@@ -126,7 +134,57 @@ public class AttackAction extends Action {
 
 		return (int)Math.round(baseAttack * swordMod * shieldMod);
 	}
-
+	
+	
+	private void respawnUnit(GameState game, UnitState unit) {
+		HashMap<ResourceType, Integer> visibleCellResources = game.map.cells[unit.pos.y][unit.pos.x].visibleResources;
+		HashMap<ResourceType, Integer> carriedResources = unit.carriedResources;
+		
+		// drop all resources
+		Iterator<ResourceType> rit = carriedResources.keySet().iterator();
+		while(rit.hasNext()) {
+			ResourceType res = rit.next();
+			Integer existing = visibleCellResources.get(res);
+			Integer carried = carriedResources.get(res);
+			if (existing == null) {
+				visibleCellResources.put(res, carried);
+			} else {
+				visibleCellResources.put(res, existing + carried);
+			}
+			carriedResources.remove(res);
+		}
+		
+		// drop all objects
+		HashMap<ICrafted, Integer> cellObjects = game.map.cells[unit.pos.y][unit.pos.x].craftedObjects;
+		HashMap<ICrafted, Integer> carriedObjects = unit.carriedObjects;
+	
+		Iterator<ICrafted> oit = carriedObjects.keySet().iterator();
+		while(oit.hasNext()) {
+			ICrafted obj = oit.next();
+			Integer existing = cellObjects.get(obj);
+			Integer carried = carriedObjects.get(obj);
+			if (existing == null) {
+				cellObjects.put(obj, carried);
+			} else {
+				cellObjects.put(obj, existing + carried);
+			}
+			carriedObjects.remove(obj);
+		}
+		
+		//System.out.println("######## Life of dead unit: " + unit.life + " ########"); 
+		
+		// remove unit from current position
+		game.map.cells[unit.pos.y][unit.pos.x].cellUnits.remove(unit.getOpponentPerspective());
+		
+		// reset the unit stats and position
+		unit.reset(GamePolicy.initialUnitMaxLife, GamePolicy.initialUnitMaxLife, 
+				GamePolicy.initialPlayerPositions.get(unit.playerID));
+		
+		// add it to re-spawned place
+		game.map.cells[unit.pos.y][unit.pos.x].cellUnits.add(unit.getOpponentPerspective());
+	}
+	
+	
 	@Override
 	public void printToGuiLog(GameState game, PlayerState player, Transition transition) {
 		if (playerUnit != null) {

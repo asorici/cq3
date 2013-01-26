@@ -367,6 +367,7 @@ public class Server0 implements IServer {
 			logger.info("[srv]Failed action [" + action.operator.name() + "] for client: " + clientID);
 		}
 		
+		/*
 		List<UnitState> unitsToRemove = new ArrayList<UnitState>();
 		for (UnitState unit : player.units) {
 			if (unit.life <= 0)
@@ -415,12 +416,13 @@ public class Server0 implements IServer {
 			
 			player.units.add(removedUnit);
 		}
+		*/
 		
 		// update the view of the player's own units after the execution of an action
-		actionEngine.updatePlayerSight(state, state.getPlayerIds().get(clientID));
+		actionEngine.updatePlayerSight(state, playerID);
 		
 		// update the view of the player's own towers after the execution of an action
-		actionEngine.updateTowerSight(state, state.getPlayerIds().get(clientID));
+		actionEngine.updateTowerSight(state, playerID);
 		
 		return player;
 	}
