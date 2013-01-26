@@ -2,6 +2,9 @@ package org.aimas.craftingquest.state;
 
 import java.io.Serializable;
 
+import org.aimas.craftingquest.state.objects.ICrafted;
+import org.aimas.craftingquest.state.resources.ResourceType;
+
 /**
  * The class describes the way in which a player's unit is seen by an opponent
  *
@@ -53,5 +56,16 @@ public class BasicUnit implements Serializable {
 		this.life = life;
 		this.attackLevel = attackLevel;
 		this.defenceLevel = defenceLevel;
+	}
+	
+	@Override
+	public String toString() {
+		String info = "";
+		info += "playerID=" + playerID + " unitId=" + unitId + " energy=" + energy + " life=" + life + 
+				" attackLevel=" + attackLevel + " defenceLevel=" + defenceLevel;
+		
+		
+
+		return info;
 	}
 }

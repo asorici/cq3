@@ -177,7 +177,7 @@ public class UnitState implements Serializable {
 	 */
 	public BasicUnit getOpponentPerspective() {
 		int attackLevel = (equipedSword != null)? equipedSword.getLevel() : 0;
-		int defenceLevel = (equipedSword != null)? equipedArmour.getLevel() : 0;
+		int defenceLevel = (equipedArmour != null)? equipedArmour.getLevel() : 0;
 		if (opponentPerspective == null) {
 			opponentPerspective = new BasicUnit();
 			opponentPerspective.set(id, playerID, energy, life, attackLevel, defenceLevel);
