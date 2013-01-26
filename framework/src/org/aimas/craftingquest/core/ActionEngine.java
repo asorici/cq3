@@ -147,7 +147,7 @@ public class ActionEngine {
 			for (UnitState unit : player.units) {
 				if (unit.id == bu.unitId) {
 					int attackLevel = (unit.equipedSword != null)? unit.equipedSword.getLevel() : 0;
-					int defenceLevel = (unit.equipedSword != null)? unit.equipedArmour.getLevel() : 0;
+					int defenceLevel = (unit.equipedArmour != null)? unit.equipedArmour.getLevel() : 0;
 					bu.updateStats(unit.energy, unit.life, attackLevel, defenceLevel);
 					
 					break;
