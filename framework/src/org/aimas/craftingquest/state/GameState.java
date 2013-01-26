@@ -98,22 +98,27 @@ public class GameState implements Serializable {
 				return nextbp;
 			}
 		}
+		
 		return null;
 	}
 	
-	public void killOne(int playerID) {
+	public void killOne(PlayerState player, boolean retaliationKill) {
+		player.killOne(retaliationKill);
+		
 		if (somebodyDied == false) {
 			somebodyDied = true;
-			playerStates.get(playerID).setFirstBlood(1);
+			player.setFirstBlood(1);
 		}
-		if (playerID == lastKiller) {
+		
+		if (player.id == lastKiller) {
 			consecutiveKills++;
 			if (consecutiveKills == GamePolicy.killingSpreeThreshold) {
-				playerStates.get(playerID).addKillingSpree();
+				player.addKillingSpree();
 				consecutiveKills = 0;
 			}
-		} else {
-			lastKiller = playerID;
+		} 
+		else {
+			lastKiller = player.id;
 			consecutiveKills = 0;
 		}
 	}

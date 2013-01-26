@@ -63,43 +63,43 @@ public class AttackAction extends Action {
 		// ======== do attack ========
 		boolean attackedUnitAlreadyDead = attackedUnit.life <= 0;
 		
-		int attackValue = computeAttackPower(energy, playerUnit, attackedUnit);
-		attackedUnit.life -= attackValue;
-		if (attackedUnit.energy > attackedUnit.life) {
-			// keep attacked unit energy consistent with its life (maximum energy)
-			attackedUnit.energy = attackedUnit.life;
-		}
-		
-		playerUnit.energy -= energy;
-
-		
-		// ======== do retaliate ========
-		if (attackedUnit.life > 0 && attackedUnit.retaliateEnergy >= 0 &&
-				//attackedUnit.retaliateEnergy >= attackedUnit.retaliateThreshold &&
-				attackedUnit.energy >= attackedUnit.retaliateThreshold &&
-				attackedUnit.retaliateEnergy <= attackedUnit.energy) {
-			int retaliateValue = computeAttackPower(
-					attackedUnit.retaliateEnergy,
-					attackedUnit, playerUnit);
-			
-			playerUnit.life -= retaliateValue;
-			if (playerUnit.energy > playerUnit.life) {
-				// keep attacking unit energy consistent with its life (maximum energy)
-				playerUnit.energy = playerUnit.life;
+		if (!attackedUnitAlreadyDead) {
+			int attackValue = computeAttackPower(energy, playerUnit, attackedUnit);
+			attackedUnit.life -= attackValue;
+			if (attackedUnit.energy > attackedUnit.life) {
+				// keep attacked unit energy consistent with its life (maximum energy)
+				attackedUnit.energy = attackedUnit.life;
 			}
 			
-			attackedUnit.energy -= attackedUnit.retaliateEnergy;
-		}
-
-		// check for dead units and update scores
-		if (!attackedUnitAlreadyDead) {
+			playerUnit.energy -= energy;
+	
+			
+			// ======== do retaliate ========
+			if (attackedUnit.life > 0 && attackedUnit.retaliateEnergy >= 0 &&
+					//attackedUnit.retaliateEnergy >= attackedUnit.retaliateThreshold &&
+					attackedUnit.energy >= attackedUnit.retaliateThreshold &&
+					attackedUnit.retaliateEnergy <= attackedUnit.energy) {
+				int retaliateValue = computeAttackPower(
+						attackedUnit.retaliateEnergy,
+						attackedUnit, playerUnit);
+				
+				playerUnit.life -= retaliateValue;
+				if (playerUnit.energy > playerUnit.life) {
+					// keep attacking unit energy consistent with its life (maximum energy)
+					playerUnit.energy = playerUnit.life;
+				}
+				
+				attackedUnit.energy -= attackedUnit.retaliateEnergy;
+			}
+	
+	
 			if (attackedUnit.life <= 0) {
-				player.killOne(false);
+				game.killOne(player, false);
 				attackedPlayer.die();
 			}
-			
+	
 			if (playerUnit.life <= 0) {
-				attackedPlayer.killOne(true);
+				game.killOne(attackedPlayer, true);
 				player.die();
 			}
 		}

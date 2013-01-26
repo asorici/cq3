@@ -149,9 +149,9 @@ public class PlayerState implements Serializable {
 		return retaliationKills;
 	}
 
-	public void killOne(boolean retaliation) {
+	public void killOne(boolean retaliationKill) {
 		kills++;
-		if (retaliation) {
+		if (retaliationKill) {
 			retaliationKills++;
 		}
 	}
