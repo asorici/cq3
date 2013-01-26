@@ -34,7 +34,7 @@
 			<test name="org.aimas.craftingquest.core.UnitTesting"/>
 		</junit>
 		-->
-		<exec executable="java">
+		<exec executable="java" failonerror="true">
 			<arg value="-classpath"/>
 			<arg value="lib/*:build/"/>
 			<arg value="org.aimas.craftingquest.core.UnitTesting"/>

@@ -594,8 +594,13 @@ public class UnitTesting {
 
 	public static void main(String[] args) {
 		Result result = JUnitCore.runClasses(UnitTesting.class);
-		for (Failure failure : result.getFailures()) {
-			System.out.println(failure.toString());
+		if (!result.wasSuccessful()) {
+			for (Failure failure : result.getFailures()) {
+				System.out.println("FAILED!! " + failure.toString());
+			}
+			System.exit(-1);
+		} else {
+			System.out.println("All tests passed!");
 		}
 	}
 }
