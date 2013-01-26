@@ -22,6 +22,9 @@ import org.aimas.craftingquest.state.resources.ResourceType;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.JUnitCore;
+import org.junit.runner.Result;
+import org.junit.runner.notification.Failure;
 
 public class UnitTesting {
 	static GameState game;
@@ -587,5 +590,12 @@ public class UnitTesting {
 		assertEquals("RemainingResources", new Integer(0), unit.carriedResources.get(ResourceType.IRON));
 		assertEquals("RemainingResources", new Integer(0), unit.carriedResources.get(ResourceType.LEATHER));
 		Assert.assertTrue("PlaceTrapExists", game.map.cells[unit.pos.y][unit.pos.x].strategicObject.equals(trapBlueprint.craft(player1.id, unit.pos)));
+	}
+
+	public static void main(String[] args) {
+		Result result = JUnitCore.runClasses(UnitTesting.class);
+		for (Failure failure : result.getFailures()) {
+			System.out.println(failure.toString());
+		}
 	}
 }

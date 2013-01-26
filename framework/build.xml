@@ -27,6 +27,20 @@
 		</javac>
 	</target>
 
+	<target name="test" depends="compile" description="run the unit tests">
+		<!--- Does not work :(
+		<junit fork="true" dir="${build}">
+			<formatter type="plain" usefile="false"/>
+			<test name="org.aimas.craftingquest.core.UnitTesting"/>
+		</junit>
+		-->
+		<exec executable="java">
+			<arg value="-classpath"/>
+			<arg value="lib/*:build/"/>
+			<arg value="org.aimas.craftingquest.core.UnitTesting"/>
+		</exec>
+	</target>
+
 	<target name="dist" depends="compile" description="generate the distribution">
 		<!-- Create the distribution directory -->
 		<mkdir dir="${dist}" />
