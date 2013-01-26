@@ -9,7 +9,7 @@
 		<playerLateTime>100</playerLateTime>
 		<updateTime>0</updateTime>
 		<connectWaitTime>2500</connectWaitTime>
-		<nrTurns>2</nrTurns>
+		<nrTurns>80</nrTurns>
 		<mapName>map_cq3_v1.cqm</mapName>
 	
 		<initialPlayerPositions>
