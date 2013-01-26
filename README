@@ -20,3 +20,16 @@ Changes from version R0
 - server now logs different messages for successful and failed actions
 - updated CraftingQuest3 Rulebook
 
+
+Version R2
+Release date: January 27, 2013.
+
+Changes from version R1
+
+- corrected update of unit and tower sight after action execution
+- fixed re-spawn behavior: a unit is now correctly re-spawned to its starting position after it has been killed
+- fixed score computation on the server side: killing sprees and first blood are now taken into account; server does not count kills for units that
+  are already dead
+
+
+
