@@ -1,12 +1,14 @@
 package org.aimas.craftingquest.core;
 
 import static org.junit.Assert.assertEquals;
-import org.aimas.craftingquest.state.CellState;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Iterator;
+import java.util.ArrayList;
 
 import org.aimas.craftingquest.state.Blueprint;
+import org.aimas.craftingquest.state.BasicUnit;
 import org.aimas.craftingquest.state.GameState;
 import org.aimas.craftingquest.state.MapState;
 import org.aimas.craftingquest.state.PlayerState;
@@ -20,6 +22,8 @@ import org.aimas.craftingquest.state.objects.ArmourObject;
 import org.aimas.craftingquest.state.objects.CraftedObjectType;
 import org.aimas.craftingquest.state.objects.SwordObject;
 import org.aimas.craftingquest.state.resources.ResourceType;
+import org.aimas.craftingquest.state.CellState;
+import org.aimas.craftingquest.state.objects.ICrafted;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -97,6 +101,64 @@ public class UnitTesting {
 		}
 		
 		return unit;
+	}
+
+	private static void afterProcess(PlayerState player, Integer playerID) {
+		List<UnitState> unitsToRemove = new ArrayList<UnitState>();
+		for (UnitState unit : player.units) {
+			if (unit.life <= 0)
+				unitsToRemove.add(unit);
+		}
+		player.units.removeAll(unitsToRemove);
+		
+		// clean & respawn units
+		for (UnitState removedUnit : unitsToRemove) {
+			HashMap<ResourceType, Integer> visibleCellResources = game.map.cells[removedUnit.pos.y][removedUnit.pos.x].visibleResources;
+			HashMap<ResourceType, Integer> carriedResources = removedUnit.carriedResources;
+			
+			// drop all resources
+			Iterator<ResourceType> rit = carriedResources.keySet().iterator();
+			while(rit.hasNext()) {
+				ResourceType res = rit.next();
+				Integer existing = visibleCellResources.get(res);
+				Integer carried = carriedResources.get(res);
+				if (existing == null) {
+					visibleCellResources.put(res, carried);
+				} else {
+					visibleCellResources.put(res, existing + carried);
+				}
+				carriedResources.remove(res);
+			}
+			
+			// drop all objects
+			HashMap<ICrafted, Integer> cellObjects = game.map.cells[removedUnit.pos.y][removedUnit.pos.x].craftedObjects;
+			HashMap<ICrafted, Integer> carriedObjects = removedUnit.carriedObjects;
+		
+			Iterator<ICrafted> oit = carriedObjects.keySet().iterator();
+			while(oit.hasNext()) {
+				ICrafted obj = oit.next();
+				Integer existing = cellObjects.get(obj);
+				Integer carried = carriedObjects.get(obj);
+				if (existing == null) {
+					cellObjects.put(obj, carried);
+				} else {
+					cellObjects.put(obj, existing + carried);
+				}
+				carriedObjects.remove(obj);
+			}
+			
+			removedUnit.reset(GamePolicy.initialUnitMaxLife, GamePolicy.initialUnitMaxLife, 
+					GamePolicy.initialPlayerPositions.get(playerID));
+			
+			player.units.add(removedUnit);
+		}
+		
+		// update the view of the player's own units after the execution of an action
+		PlayerState playerState = game.playerStates.get(playerID);
+		actionEngine.updatePlayerSight(game, playerID);
+		
+		// update the view of the player's own towers after the execution of an action
+		actionEngine.updateTowerSight(game, playerID);
 	}
 	
 	
@@ -382,20 +444,58 @@ public class UnitTesting {
 
 		// perform attack
 		TransitionResult transitionResult = actionEngine.process(player1, transition);
+		afterProcess(player1, player1.id);
 
 		// interpret
 		int defenderLife = GamePolicy.initialUnitMaxLife - (int)Math.round(att * (1 + sword.getAttack() / 100.0));
-		System.out.println(GamePolicy.initialUnitMaxLife + " " + defenderLife);
-		{
+		boolean once = true;
 		int sightRadius = GamePolicy.sightRadius;
 		Point2i pos = unitAttacker.pos;
-		
+		Point2i epos = unitDefender.pos;
 		CellState[][] unitSight = unitAttacker.sight;
+		for (BasicUnit bu : unitSight[epos.y - pos.y + sightRadius][epos.x - pos.x + sightRadius].cellUnits) {
+			Assert.assertTrue("Only one unit should be there", once);
+			once = !once;
+			Assert.assertEquals("Unit life is seen as expected", defenderLife, bu.life);
+		}
+		Assert.assertFalse("Exactly one unit should be there", once);
+
+		// atack again and kill it
+		transition = new Transition(ActionType.Attack, new Object[] {
+			unitAttacker.id, unitDefender.playerID, unitDefender.id, att});
+
+		// perform attack
+		transitionResult = actionEngine.process(player1, transition);
+		afterProcess(player1, player1.id);
+
+		// interpret
+		defenderLife = defenderLife - (int)Math.round(att * (1 + sword.getAttack() / 100.0));
+		once = true;
+		unitSight = unitAttacker.sight;
+		/*
+		for (BasicUnit bu : unitSight[epos.y - pos.y + sightRadius][epos.x - pos.x + sightRadius].cellUnits) {
+			Assert.assertTrue("Only one unit should be there", once);
+			once = !once;
+			Assert.assertEquals("Unit life is seen as expected", defenderLife, bu.life);
+		}
+		Assert.assertFalse("Exactly one unit should be there", once);
+		*/
+		System.out.println(GamePolicy.initialUnitMaxLife + " " + defenderLife);
+		{
+		sightRadius = GamePolicy.sightRadius;
+		pos = unitAttacker.pos;
+		
+		unitSight = unitAttacker.sight;
 		for (int i = 0, y = pos.y - sightRadius; y <= pos.y + sightRadius; y++, i++) {
 			for (int j = 0, x = pos.x - sightRadius; x <= pos.x + sightRadius; x++, j++) {
-				System.out.println(x + " " + y + " " + unitSight[i][j].cellUnits);
+				System.out.println(i + " " + j + " " + x + " " + y + " " + unitSight[i][j].cellUnits);
 			}
 		}
+		epos = unitDefender.pos;
+		System.out.println(pos + " " + epos);
+		System.out.println(sightRadius);
+		System.out.println(unitSight[epos.y - pos.y + sightRadius]
+				[epos.x - pos.x + sightRadius].cellUnits);
 		}
 		System.out.println(unitAttacker.sight);
 		/*
