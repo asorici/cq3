@@ -1,6 +1,7 @@
 package org.aimas.craftingquest.core;
 
 import static org.junit.Assert.assertEquals;
+import org.aimas.craftingquest.state.CellState;
 
 import java.util.HashMap;
 import java.util.List;
@@ -101,7 +102,7 @@ public class UnitTesting {
 	
 	// ======================================================================================== //
 	// ================================ MOVE ACTION TESTS =================================== //
-	//@Test
+	@Test
 	public void testMove() {
 		Point2i fromPos = new Point2i(15, 15);
 		Point2i toPos = new Point2i(16, 15);
@@ -129,8 +130,7 @@ public class UnitTesting {
 		assertEquals("nextCellContents", game.map.cells[toPos.y][toPos.x].cellUnits.size(), 1);
 	}
 	
-	
-	//@Test
+	@Test
 	public void testNoEnergyMove() {
 		Point2i fromPos = new Point2i(15, 15);
 		Point2i toPos = new Point2i(16, 15);
@@ -158,8 +158,7 @@ public class UnitTesting {
 		assertEquals("prevCellContents", game.map.cells[toPos.y][toPos.x].cellUnits.size(), 0);
 	}
 	
-	
-	//@Test
+	@Test
 	public void testIllegalTerrainMove() {
 		Point2i fromPos = new Point2i(15, 15);
 		Point2i toPos = new Point2i(15, 16);
@@ -187,10 +186,9 @@ public class UnitTesting {
 		assertEquals("prevCellContents", game.map.cells[toPos.y][toPos.x].cellUnits.size(), 0);
 	}
 	
-	
 	// ======================================================================================== //
 	// ================================ DIG ACTION TESTS =================================== //
-	//@Test
+	@Test
 	public void testDig() {
 		Point2i pos = new Point2i(15, 15);
 		
@@ -221,7 +219,7 @@ public class UnitTesting {
 	
 	// ======================================================================================== //
 	// ================================ CRAFT ACTION TESTS =================================== //
-	//@Test
+	@Test
 	public void testCraft() {
 		Point2i pos = new Point2i(15, 15);
 
@@ -269,7 +267,7 @@ public class UnitTesting {
 
 	// ======================================================================================== //
 	// ================================ ATTACK ACTION TESTS =================================== //
-	//@Test
+	@Test
 	public void testAttack() {
 		Point2i posAttacker = new Point2i(15, 15);
 		Point2i posDefender = new Point2i(16, 15);
@@ -328,7 +326,86 @@ public class UnitTesting {
 		assertEquals("attackerKills", 1, player1.getKills());
 	}
 	
-	//@Test
+	@Test
+	public void testAttackAndUpdateStats() {
+		Point2i posAttacker = new Point2i(15, 15);
+		Point2i posDefender = new Point2i(16, 15);
+		Point2i posObserver = new Point2i(5, 5);
+
+		HashMap<ResourceType, Integer> unitResources = new HashMap<ResourceType, Integer>();
+
+		// find blueprints for attack and defense
+		Blueprint swordBlueprint = null;
+		Blueprint armourBlueprint = null;
+
+		for (Blueprint bp : GamePolicy.blueprints) {
+			if (bp.getType() == CraftedObjectType.SWORD && bp.getLevel() == 1) {
+				swordBlueprint = bp;
+				break;
+			}
+		}
+
+		for (Blueprint bp : GamePolicy.blueprints) {
+			if (bp.getType() == CraftedObjectType.ARMOUR && bp.getLevel() == 1) {
+				armourBlueprint = bp;
+				break;
+			}
+		}
+
+		SwordObject sword = new SwordObject(swordBlueprint);
+		ArmourObject armour = new ArmourObject(armourBlueprint);
+
+		// setup units
+		UnitState unitAttacker = setupUnit(0, player1.id, posAttacker, GamePolicy.initialUnitMaxLife, unitResources);
+		unitAttacker.carriedObjects.put(sword, 1);
+		unitAttacker.equipedSword = sword;
+
+		UnitState unitDefender = setupUnit(1, player2.id, posDefender, GamePolicy.initialUnitMaxLife, unitResources);
+		unitDefender.carriedObjects.put(armour, 1);
+		//unitDefender.equipedArmour = armour;
+
+		UnitState unitObserver = setupUnit(2, player2.id, posObserver, GamePolicy.initialUnitMaxLife, unitResources);
+
+		// add unit to player
+		player1.units.add(unitAttacker);
+		player2.units.add(unitDefender);
+		player2.units.add(unitObserver);
+
+		// build transition object
+		int att = unitAttacker.energy / 2;
+		Transition transition = new Transition(ActionType.Attack, new Object[] {
+		unitAttacker.id, unitDefender.playerID, unitDefender.id, att});
+
+		// perform attack
+		TransitionResult transitionResult = actionEngine.process(player1, transition);
+
+		// interpret
+		int defenderLife = GamePolicy.initialUnitMaxLife - (int)Math.round(att * (1 + sword.getAttack() / 100.0));
+		System.out.println(GamePolicy.initialUnitMaxLife + " " + defenderLife);
+		{
+		int sightRadius = GamePolicy.sightRadius;
+		Point2i pos = unitAttacker.pos;
+		
+		CellState[][] unitSight = unitAttacker.sight;
+		for (int i = 0, y = pos.y - sightRadius; y <= pos.y + sightRadius; y++, i++) {
+			for (int j = 0, x = pos.x - sightRadius; x <= pos.x + sightRadius; x++, j++) {
+				System.out.println(x + " " + y + " " +
+						unitSight[i][j].cellUnits);
+			}
+		}
+		}
+		System.out.println(unitAttacker.sight);
+		/*
+		assertEquals("AttackResult", TransitionError.NoError, transitionResult.errorType);
+		assertEquals("attackerLife", GamePolicy.initialUnitMaxLife / 2, unitAttacker.energy);
+
+
+		assertEquals("defenderLife", defenderLife, player2.units.get(0).life, 0.001);
+		assertEquals("attackerKills", 1, player1.getKills());
+		 */
+	}
+
+	@Test
 	public void testAttackWithRetaliate() {
 		Point2i posAttacker = new Point2i(15, 15);
 		Point2i posDefender = new Point2i(16, 15);
@@ -399,7 +476,7 @@ public class UnitTesting {
 	// ======================================================================================== //
 	// ================================ UPGRADE ACTION TESTS ================================== //
 	
-	//@Test
+	@Test
 	public void testUpgrade() {
 		Point2i pos= new Point2i(15, 15);
 		HashMap<ResourceType, Integer> unitResources = new HashMap<ResourceType, Integer>();
@@ -460,7 +537,7 @@ public class UnitTesting {
 	// ======================================================================================== //
 	// ================================= EQUIP ACTION TESTS =================================== //
 	
-	//@Test
+	@Test
 	public void testEquip() {
 		Point2i pos= new Point2i(15, 15);
 		HashMap<ResourceType, Integer> unitResources = new HashMap<ResourceType, Integer>();
