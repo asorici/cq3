@@ -191,7 +191,8 @@ public class PlayerState implements Serializable {
 		float score = (float) kills * (1.0f + (float) placedTowers / (float)GamePolicy.buildTowerBonus);
 		
 		if (placedTraps > 0) {
-			score *= ((float)(successfulTraps * placedTraps) / (float)(successfulTraps + placedTraps));
+			float trapScore = ((float)(successfulTraps * placedTraps) / (float)(successfulTraps + placedTraps));
+			score = (trapScore == 0) ? score : score * trapScore;
 		}
 		
 		score += killingSprees * GamePolicy.killingSpreeBonus + firstBlood * GamePolicy.firstBloodBonus;

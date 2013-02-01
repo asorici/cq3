@@ -56,7 +56,15 @@ public class AttackAction extends Action {
 			res.errorReason = "Cannot attack non-existing unit";
 			return res;
 		}
-
+		
+		// if one attacks its own units - return an error
+		if (attackedUnit.playerID == player.id) {
+			TransitionResult res = new TransitionResult(transition.id);
+			res.errorType = TransitionResult.TransitionError.FriendlyFireError;
+			res.errorReason = "Cannot attack one of your own units";
+			return res;
+		}
+		
 		// check neighbouring conditions
 		if (Math.abs(attackedUnit.pos.x - playerUnit.pos.x) > 1 ||
 				Math.abs(attackedUnit.pos.y - playerUnit.pos.y) > 1) {

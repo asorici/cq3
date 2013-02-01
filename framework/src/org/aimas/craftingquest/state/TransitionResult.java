@@ -14,7 +14,7 @@ public class TransitionResult implements Serializable {
 		TerrainError, ObstacleError, NoEnergyError, PickupError, BuildError, CraftingError, 
 		ResourceMissingError, NoCreditError, BuyRequestError, SellRequestError, GuardError,
 		EquipmentMissingError, TrapMisssingError, BlueprintError, NoUpgradeError,
-		MissingBlueprintError, Frozen, PlayerIdError, ProximityError,
+		MissingBlueprintError, Frozen, PlayerIdError, ProximityError, FriendlyFireError
 	};
 
 	public int id; // egal cu cel trimis
