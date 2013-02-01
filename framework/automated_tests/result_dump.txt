@@ -1,40 +1,40 @@
 {
  "map_cq3_v1.cqm": {
-  "28": {
-   "total_points": 2, 
-   "team_name": "Untrue", 
+  "91": {
+   "total_points": 6, 
+   "team_name": "RAF_AI", 
    "games": [
     {
-     "dead_units": 0, 
-     "kills": 0, 
-     "total_score": 0.0, 
+     "dead_units": 1, 
+     "kills": 8, 
+     "total_score": 23.0, 
      "placed_traps": 0, 
      "oponent_data": [
       {
-       "dead_units": 0, 
-       "first_blood": 0, 
+       "dead_units": 8, 
+       "first_blood": 1, 
        "retaliation_kills": 0, 
-       "kills": 0, 
-       "total_score": 0.0, 
-       "team_id": 22, 
-       "finish_position": 1, 
+       "kills": 1, 
+       "total_score": 11.0, 
+       "team_id": 28, 
+       "finish_position": 2, 
        "placed_traps": 0, 
-       "points": 1, 
+       "points": 0, 
        "placed_towers": 0, 
        "killing_sprees": 0, 
-       "player_id": 1, 
-       "team_name": "nbozidarevic", 
+       "player_id": 2, 
+       "team_name": "Untrue", 
        "successful_traps": 0
       }
      ], 
      "placed_towers": 0, 
-     "killing_sprees": 0, 
-     "player_id": 2, 
+     "killing_sprees": 1, 
+     "player_id": 1, 
      "successful_traps": 0, 
      "first_blood": 0, 
      "retaliation_kills": 0, 
-     "finish_position": 2, 
-     "points": 1
+     "finish_position": 1, 
+     "points": 2
     }, 
     {
      "dead_units": 0, 
@@ -67,6 +67,204 @@
      "retaliation_kills": 0, 
      "finish_position": 1, 
      "points": 1
+    }, 
+    {
+     "dead_units": 4, 
+     "kills": 10, 
+     "total_score": 25.0, 
+     "placed_traps": 0, 
+     "oponent_data": [
+      {
+       "dead_units": 10, 
+       "first_blood": 1, 
+       "retaliation_kills": 0, 
+       "kills": 4, 
+       "total_score": 14.0, 
+       "team_id": 28, 
+       "finish_position": 2, 
+       "placed_traps": 0, 
+       "points": 0, 
+       "placed_towers": 0, 
+       "killing_sprees": 0, 
+       "player_id": 1, 
+       "team_name": "Untrue", 
+       "successful_traps": 0
+      }
+     ], 
+     "placed_towers": 0, 
+     "killing_sprees": 1, 
+     "player_id": 2, 
+     "successful_traps": 0, 
+     "first_blood": 0, 
+     "retaliation_kills": 0, 
+     "finish_position": 1, 
+     "points": 2
+    }, 
+    {
+     "dead_units": 0, 
+     "kills": 0, 
+     "total_score": 0.0, 
+     "placed_traps": 0, 
+     "oponent_data": [
+      {
+       "dead_units": 0, 
+       "first_blood": 0, 
+       "retaliation_kills": 0, 
+       "kills": 0, 
+       "total_score": 0.0, 
+       "team_id": 22, 
+       "finish_position": 1, 
+       "placed_traps": 0, 
+       "points": 1, 
+       "placed_towers": 0, 
+       "killing_sprees": 0, 
+       "player_id": 1, 
+       "team_name": "nbozidarevic", 
+       "successful_traps": 0
+      }
+     ], 
+     "placed_towers": 0, 
+     "killing_sprees": 0, 
+     "player_id": 2, 
+     "successful_traps": 0, 
+     "first_blood": 0, 
+     "retaliation_kills": 0, 
+     "finish_position": 2, 
+     "points": 1
+    }
+   ]
+  }, 
+  "28": {
+   "total_points": 4, 
+   "team_name": "Untrue", 
+   "games": [
+    {
+     "dead_units": 8, 
+     "kills": 1, 
+     "total_score": 11.0, 
+     "placed_traps": 0, 
+     "oponent_data": [
+      {
+       "dead_units": 1, 
+       "first_blood": 0, 
+       "retaliation_kills": 0, 
+       "kills": 8, 
+       "total_score": 23.0, 
+       "team_id": 91, 
+       "finish_position": 1, 
+       "placed_traps": 0, 
+       "points": 2, 
+       "placed_towers": 0, 
+       "killing_sprees": 1, 
+       "player_id": 1, 
+       "team_name": "RAF_AI", 
+       "successful_traps": 0
+      }
+     ], 
+     "placed_towers": 0, 
+     "killing_sprees": 0, 
+     "player_id": 2, 
+     "successful_traps": 0, 
+     "first_blood": 1, 
+     "retaliation_kills": 0, 
+     "finish_position": 2, 
+     "points": 0
+    }, 
+    {
+     "dead_units": 10, 
+     "kills": 4, 
+     "total_score": 14.0, 
+     "placed_traps": 0, 
+     "oponent_data": [
+      {
+       "dead_units": 4, 
+       "first_blood": 0, 
+       "retaliation_kills": 0, 
+       "kills": 10, 
+       "total_score": 25.0, 
+       "team_id": 91, 
+       "finish_position": 1, 
+       "placed_traps": 0, 
+       "points": 2, 
+       "placed_towers": 0, 
+       "killing_sprees": 1, 
+       "player_id": 2, 
+       "team_name": "RAF_AI", 
+       "successful_traps": 0
+      }
+     ], 
+     "placed_towers": 0, 
+     "killing_sprees": 0, 
+     "player_id": 1, 
+     "successful_traps": 0, 
+     "first_blood": 1, 
+     "retaliation_kills": 0, 
+     "finish_position": 2, 
+     "points": 0
+    }, 
+    {
+     "dead_units": 0, 
+     "kills": 1, 
+     "total_score": 11.0, 
+     "placed_traps": 0, 
+     "oponent_data": [
+      {
+       "dead_units": 1, 
+       "first_blood": 0, 
+       "retaliation_kills": 0, 
+       "kills": 0, 
+       "total_score": 0.0, 
+       "team_id": 22, 
+       "finish_position": 2, 
+       "placed_traps": 0, 
+       "points": 0, 
+       "placed_towers": 0, 
+       "killing_sprees": 0, 
+       "player_id": 2, 
+       "team_name": "nbozidarevic", 
+       "successful_traps": 0
+      }
+     ], 
+     "placed_towers": 0, 
+     "killing_sprees": 0, 
+     "player_id": 1, 
+     "successful_traps": 0, 
+     "first_blood": 1, 
+     "retaliation_kills": 0, 
+     "finish_position": 1, 
+     "points": 2
+    }, 
+    {
+     "dead_units": 0, 
+     "kills": 50, 
+     "total_score": 195.0, 
+     "placed_traps": 0, 
+     "oponent_data": [
+      {
+       "dead_units": 50, 
+       "first_blood": 0, 
+       "retaliation_kills": 0, 
+       "kills": 0, 
+       "total_score": 0.0, 
+       "team_id": 22, 
+       "finish_position": 2, 
+       "placed_traps": 0, 
+       "points": 0, 
+       "placed_towers": 0, 
+       "killing_sprees": 0, 
+       "player_id": 1, 
+       "team_name": "nbozidarevic", 
+       "successful_traps": 0
+      }
+     ], 
+     "placed_towers": 0, 
+     "killing_sprees": 9, 
+     "player_id": 2, 
+     "successful_traps": 0, 
+     "first_blood": 1, 
+     "retaliation_kills": 0, 
+     "finish_position": 1, 
+     "points": 2
     }
    ]
   }, 
@@ -86,42 +284,42 @@
        "retaliation_kills": 0, 
        "kills": 0, 
        "total_score": 0.0, 
-       "team_id": 28, 
-       "finish_position": 2, 
+       "team_id": 91, 
+       "finish_position": 1, 
        "placed_traps": 0, 
        "points": 1, 
        "placed_towers": 0, 
        "killing_sprees": 0, 
-       "player_id": 2, 
-       "team_name": "Untrue", 
+       "player_id": 1, 
+       "team_name": "RAF_AI", 
        "successful_traps": 0
       }
      ], 
      "placed_towers": 0, 
      "killing_sprees": 0, 
-     "player_id": 1, 
+     "player_id": 2, 
      "successful_traps": 0, 
      "first_blood": 0, 
      "retaliation_kills": 0, 
-     "finish_position": 1, 
+     "finish_position": 2, 
      "points": 1
     }, 
     {
-     "dead_units": 0, 
+     "dead_units": 1, 
      "kills": 0, 
      "total_score": 0.0, 
      "placed_traps": 0, 
      "oponent_data": [
       {
        "dead_units": 0, 
-       "first_blood": 0, 
+       "first_blood": 1, 
        "retaliation_kills": 0, 
-       "kills": 0, 
-       "total_score": 0.0, 
+       "kills": 1, 
+       "total_score": 11.0, 
        "team_id": 28, 
        "finish_position": 1, 
        "placed_traps": 0, 
-       "points": 1, 
+       "points": 2, 
        "placed_towers": 0, 
        "killing_sprees": 0, 
        "player_id": 1, 
@@ -136,7 +334,71 @@
      "first_blood": 0, 
      "retaliation_kills": 0, 
      "finish_position": 2, 
+     "points": 0
+    }, 
+    {
+     "dead_units": 0, 
+     "kills": 0, 
+     "total_score": 0.0, 
+     "placed_traps": 0, 
+     "oponent_data": [
+      {
+       "dead_units": 0, 
+       "first_blood": 0, 
+       "retaliation_kills": 0, 
+       "kills": 0, 
+       "total_score": 0.0, 
+       "team_id": 91, 
+       "finish_position": 2, 
+       "placed_traps": 0, 
+       "points": 1, 
+       "placed_towers": 0, 
+       "killing_sprees": 0, 
+       "player_id": 2, 
+       "team_name": "RAF_AI", 
+       "successful_traps": 0
+      }
+     ], 
+     "placed_towers": 0, 
+     "killing_sprees": 0, 
+     "player_id": 1, 
+     "successful_traps": 0, 
+     "first_blood": 0, 
+     "retaliation_kills": 0, 
+     "finish_position": 1, 
      "points": 1
+    }, 
+    {
+     "dead_units": 50, 
+     "kills": 0, 
+     "total_score": 0.0, 
+     "placed_traps": 0, 
+     "oponent_data": [
+      {
+       "dead_units": 0, 
+       "first_blood": 1, 
+       "retaliation_kills": 0, 
+       "kills": 50, 
+       "total_score": 195.0, 
+       "team_id": 28, 
+       "finish_position": 1, 
+       "placed_traps": 0, 
+       "points": 2, 
+       "placed_towers": 0, 
+       "killing_sprees": 9, 
+       "player_id": 2, 
+       "team_name": "Untrue", 
+       "successful_traps": 0
+      }
+     ], 
+     "placed_towers": 0, 
+     "killing_sprees": 0, 
+     "player_id": 1, 
+     "successful_traps": 0, 
+     "first_blood": 0, 
+     "retaliation_kills": 0, 
+     "finish_position": 2, 
+     "points": 0
     }
    ]
   }

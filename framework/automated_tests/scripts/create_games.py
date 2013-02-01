@@ -1,22 +1,24 @@
-import sys, os, string, time
+import sys, os, string, time, shutil, random, itertools
 from subprocess import call, Popen, PIPE
 
-ROOT = os.path.expanduser('~') + "/aiwo/wo-crafting-quest/framework/automated_tests"
-#ROOT = ".."
+ROOT = os.path.abspath(os.getcwd() + "/../")
 SCRIPTS = ROOT + "/scripts"
 SUBSFILE = SCRIPTS + "/submissions_file"
 SUBS = ROOT + "/submissions"
 FRAMEWORK = ROOT + "/cqframework"
 JOBS = ROOT + "/jobs"
-RESULTS_DUMP_FILE = ROOT + "/result_dump.txt"
 
+RESULTS_DUMP_FILE_PREFIX = "result_dump_general"
+RESULTS_DUMP_FILE = ROOT + "/result_dump.txt"
 
 # maps
 maplist = ['map_cq3_v1.cqm']
 
 # secrets - the mapping to the player IDs must match the order in secrets.txt !!!!!!!
 secrets = {1 : 1, 
-           2 : 2}
+           2 : 2,
+           3 : 3,
+           4 : 4}
 
 # scoring criteria
 scoring_criteria = ['total_score', 'kills', 'retaliation_kills', 'dead_units', 'placed_towers', 
@@ -25,7 +27,7 @@ scoring_criteria = ['total_score', 'kills', 'retaliation_kills', 'dead_units', '
 # competitor data and game structure
 competitorData = []
 gamestruct = {}
-team_stats = {}
+team_stats_by_map = {}
 
 class Game(object):
     server_name = "CraftingQuest"
@@ -81,47 +83,59 @@ def num(s):
         return float(s)
 
 
-def main(num_players_on_map):
-    # read team data and generate game structure
+def main(submissions_filename, num_players_on_map):
+    SUBSFILE = SCRIPTS + "/" + submissions_filename
+    RESULTS_DUMP_FILE = ROOT + "/" + RESULTS_DUMP_FILE_PREFIX + "_" + submissions_filename + ".txt"
+    
+    if num_players_on_map > 4:
+        raise ValueError("Maximum number (4) of players exceeded.")
+    
+    ''' read team data and generate game structure '''
     subf = open(SUBSFILE, 'r')
     competitorDataStrings  = map(lambda x: string.strip(x), subf.readlines())
+    
     
     for competitorstring in competitorDataStrings:
         data = competitorstring.split()
         datadict = {'teamname': data[0], 'teamid': data[1], 'teamjar': data[2], 'teamclass': data[3]}
         competitorData.append(datadict)
+    
+    
+    ''' generate match structure - all combinations of <num_players_on_map> teams will be generated, 
+        a random ordering will be determined and a match will be played '''
         
-    
-    #### generate match structure
     matchid = 0
+    num_competitors = len(competitorData)
+    competitor_indexes = range(num_competitors)
+    
     for mapp in maplist:
-        for i in range(len(competitorData)):
-            for j in range(len(competitorData)):
-                if i != j:
-                    gamestruct[matchid] = Game(2, mapp)
-                    
-                    # team i will be player 1
-                    teamI = TeamDataInGame(competitorData[i]['teamname'], 
-                                           competitorData[i]['teamid'], 
-                                           competitorData[i]['teamjar'], 
-                                           competitorData[i]['teamclass'], 
-                                           secrets[1])
-                    gamestruct[matchid].add_team_data(1, teamI)
-                    
-                    
-                    # team j will be player 2
-                    teamJ = TeamDataInGame(competitorData[j]['teamname'], 
-                                           competitorData[j]['teamid'], 
-                                           competitorData[j]['teamjar'], 
-                                           competitorData[j]['teamclass'], 
-                                           secrets[2])
-                    gamestruct[matchid].add_team_data(2, teamJ)
-                    
-                    matchid += 1
-    
-    
+        for index_combination in itertools.combinations(competitor_indexes, num_players_on_map):
+            gamestruct[matchid] = Game(num_players_on_map, mapp)
+            
+            ## generate random permutation of player ids 1 - 4
+            rand_player_ids = range(1, num_players_on_map + 1)
+            random.shuffle(rand_player_ids)
+            
+            for i in range(num_players_on_map):
+                team_idx = index_combination[i]
                 
-    #### create physical dir structure from gamestructure
+                player_id = rand_player_ids[i]
+                team = TeamDataInGame(competitorData[team_idx]['teamname'], 
+                                   competitorData[team_idx]['teamid'], 
+                                   competitorData[team_idx]['teamjar'], 
+                                   competitorData[team_idx]['teamclass'], 
+                                   secrets[player_id])
+            
+            gamestruct[matchid].add_team_data(player_id, team)
+            
+            matchid += 1
+    
+    
+    ''' create physical dir structure from gamestructure '''
+    ## cleanup any existing jobs
+    shutil.rmtree(JOBS)
+    
+    ## create new directory structure
     for matchid, game in gamestruct.items():
             
             os.makedirs(JOBS + "/" + str(matchid) + "/s")
@@ -184,7 +198,7 @@ def main(num_players_on_map):
             print >>f, 'set SECRETID = "' + str(game.teams[2].team_secret) + '"'
             f.close()
             
-    #### begin running of matches
+    ''' begin running of matches '''
     try:
         for matchid, game in gamestruct.items():
                 print "Running match " + game.teams[1].team_name + " vs " + game.teams[2].team_name \
@@ -248,7 +262,7 @@ def main(num_players_on_map):
         
     
     print "#### Generating team stats and dumping json output ####"
-    generate_team_stats()
+    generate_team_stats(RESULTS_DUMP_FILE)
 
 
 def collect_score(current_server_dir, game):
@@ -261,6 +275,7 @@ def collect_score(current_server_dir, game):
         ## the lines are sorted such that the player ids are in order of their result in the game
         num_lines = len(filecontents)
         player_points = []
+        player_position = []
         
         for i in range(num_lines):
             content_line = filecontents[i]
@@ -268,18 +283,17 @@ def collect_score(current_server_dir, game):
             player_id = int(results[0])
             player_score = float(results[1])
             
-            player_results = {'finish_position' : (i + 1)}
+            player_results = {'finish_position' : (i + 1),
+                              'points': game.num_players - (i + 1)}
             
             if i > 0:
                 prev_player_score = float(filecontents[i - 1].split(",")[1])
                 if player_score == prev_player_score:
                     player_results['points'] = player_points[i - 1]
-                else:
-                    player_points.append(game.num_players - (i + 1))
-                    player_results['points'] = game.num_players - (i + 1)
-            else:
-                player_points.append(game.num_players - (i + 1))
-                player_results['points'] = game.num_players - (i + 1)
+                    player_results['finish_position'] = player_position[i - 1]
+            
+            player_points.append(player_results['points'])
+            player_position.append(player_results['finish_position'])
             
             # other scoring criteria
             for idx in range(len(scoring_criteria)):
@@ -288,46 +302,51 @@ def collect_score(current_server_dir, game):
             
             game.set_team_game_results(player_id, player_results)
     except Exception, ex:
-        print "Score collect failed for " + game.teams[1].team_name + " vs " + game.teams[2].team_name + ". Reason: ", ex
+        print "Score collect failed for match: ", [game.teams[i].team_name for i in range(1, game.num_players + 1)], ". Reason: ", ex
 
 
-def generate_team_stats():
+def generate_team_stats(results_dump_file):
+    ## generate team stats by map
+    
+    for map_name in maplist:
+        team_stats_by_map[map_name] = {}
+    
     for matchid, game in gamestruct.items():
         for player_id in range(1, (game.num_players + 1)):
             team_id = game.teams[player_id].team_id
-            opponent_data = map(lambda x: (x[0], int(x[1].team_id), x[1].team_name), filter(lambda x: x[1].team_id != team_id, game.teams.items()))
-            match_details = {'oponent_data': opponent_data,
-                                 'finish_position': game.teams[player_id].finish_position,
-                                 'points': game.teams[player_id].points,
-                                 'total_score': game.teams[player_id].total_score,
-                                 'kills': game.teams[player_id].kills,
-                                 'retaliation_kills': game.teams[player_id].retaliation_kills,
-                                 'dead_units': game.teams[player_id].dead_units,
-                                 'placed_towers': game.teams[player_id].placed_towers,
-                                 'successful_traps': game.teams[player_id].successful_traps,
-                                 'placed_traps': game.teams[player_id].placed_traps,
-                                 'killing_sprees': game.teams[player_id].killing_sprees,
-                                 'first_blood': game.teams[player_id].first_blood
-                                 }
+            opponent_data = map(lambda tuple: dict(tuple[1].serialize_results(), player_id = tuple[0]), 
+                                filter(lambda pID_team_tuple: pID_team_tuple[1].team_id != team_id, game.teams.items()))
             
-            if team_id in team_stats:
-                team_stats[team_id]['total_points'] += game.teams[player_id].points
-                team_stats[team_id]['games'][game.map_name][player_id].append(match_details)
+            match_details = {   'oponent_data': opponent_data,
+                                'player_id': player_id,
+                                'finish_position': game.teams[player_id].finish_position,
+                                'points': game.teams[player_id].points,
+                                'total_score': game.teams[player_id].total_score,
+                                'kills': game.teams[player_id].kills,
+                                'retaliation_kills': game.teams[player_id].retaliation_kills,
+                                'dead_units': game.teams[player_id].dead_units,
+                                'placed_towers': game.teams[player_id].placed_towers,
+                                'successful_traps': game.teams[player_id].successful_traps,
+                                'placed_traps': game.teams[player_id].placed_traps,
+                                'killing_sprees': game.teams[player_id].killing_sprees,
+                                'first_blood': game.teams[player_id].first_blood
+                            }
+            
+            if team_id in team_stats_by_map[game.map_name]:
+                team_stats_by_map[game.map_name][team_id]['total_points'] += game.teams[player_id].points
+                team_stats_by_map[game.map_name][team_id]['games'].append(match_details)
             else:
-                team_games = {}
-                for idx in range(1, game.num_players + 1):
-                    team_games[idx] = []
+                team_games = []
+                team_games.append(match_details)
                 
-                team_games[player_id].append(match_details)
-                
-                team_stats[team_id] = {'team_name': game.teams[player_id].team_name,
-                                       'total_points': game.teams[player_id].points,
-                                       'games': {game.map_name: team_games}
-                                       }
+                team_stats_by_map[game.map_name][team_id] = {'team_name': game.teams[player_id].team_name,
+                                                            'total_points': game.teams[player_id].points,
+                                                            'games': team_games
+                                                            }
     
     import simplejson
-    f = open(RESULTS_DUMP_FILE, 'w')
-    print >>f, simplejson.dumps(team_stats, indent=1)
+    f = open(results_dump_file, 'w')
+    print >>f, simplejson.dumps(team_stats_by_map, indent=1)
     f.close()
 
 
@@ -385,11 +404,13 @@ def gen_report_per_team(teamitem, teamscoringlist):
     print >>f, texreport
     f.close()
     
+
 if __name__ == '__main__':
     try:
-        num_players_on_map = sys.argv[1]
+        submissions_filename = sys.argv[1]
+        num_players_on_map = sys.argv[2]
     except:
-        print "Usage: python create_games <num_players_on_map>"
+        print "Usage: python create_games.py <submissions_filename> <num_players_on_map>"
         exit(1)
     
-    main(num_players_on_map)
+    main(submissions_filename, num_players_on_map)

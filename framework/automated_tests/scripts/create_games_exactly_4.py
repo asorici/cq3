@@ -1,4 +1,4 @@
-import sys, os, string, time, shutil
+import sys, os, string, time, shutil, random
 from subprocess import call, Popen, PIPE
 
 ROOT = os.path.abspath(os.getcwd() + "/../")
@@ -8,7 +8,7 @@ SUBS = ROOT + "/submissions"
 FRAMEWORK = ROOT + "/cqframework"
 JOBS = ROOT + "/jobs"
 
-RESULTS_DUMP_FILE_PREFIX = "result_dump_one_on_one"
+RESULTS_DUMP_FILE_PREFIX = "result_dump_exactly_4"
 RESULTS_DUMP_FILE = ROOT + "/result_dump.txt"
 
 # maps
@@ -16,7 +16,9 @@ maplist = ['map_cq3_v1.cqm']
 
 # secrets - the mapping to the player IDs must match the order in secrets.txt !!!!!!!
 secrets = {1 : 1, 
-           2 : 2}
+           2 : 2,
+           3 : 3,
+           4 : 4}
 
 # scoring criteria
 scoring_criteria = ['total_score', 'kills', 'retaliation_kills', 'dead_units', 'placed_towers', 
@@ -66,20 +68,6 @@ class TeamDataInGame(object):
         self.placed_traps = placed_traps
         self.killing_sprees = killing_sprees
         self.first_blood = first_blood
-    
-    def serialize_results(self):
-        results_dict = {
-                        'team_id' : self.team_id,
-                        'team_name': self.team_name,
-                        'finish_position': self.finish_position,
-                        'points': self.points
-                        }
-        
-        for stat in scoring_criteria:
-            results_dict[stat] = getattr(self, stat, None)
-            
-        return results_dict
-
        
     def __repr__(self):
         return  self.team_name + "<" + str(self.team_secret) + ">"   
@@ -103,38 +91,36 @@ def main(submissions_filename):
     subf = open(SUBSFILE, 'r')
     competitorDataStrings  = map(lambda x: string.strip(x), subf.readlines())
     
+    ''' if there are more than 4 teams amongst the competitors throw an error '''
+    if len(competitorDataStrings) != 4:
+        raise ValueError("Wrong `submissions' file. Check that there are exactly 4 solutions listed.")
+    
     for competitorstring in competitorDataStrings:
         data = competitorstring.split()
-        datadict = {'teamname': data[0], 'teamid': int(data[1]), 'teamjar': data[2], 'teamclass': data[3]}
+        datadict = {'teamname': data[0], 'teamid': data[1], 'teamjar': data[2], 'teamclass': data[3]}
         competitorData.append(datadict)
-        
     
-    ''' generate match structure - a team will play against every other team except itself '''
+    
+    ''' generate match structure - a group of 4 will play 5 matches starting at random map positions each time '''
+    rand_player_ids = [1,2,3,4]
     matchid = 0
     for mapp in maplist:
-        for i in range(len(competitorData)):
-            for j in range(len(competitorData)):
-                if i != j:
-                    gamestruct[matchid] = Game(2, mapp)
-                    
-                    # team i will be player 1
-                    teamI = TeamDataInGame(competitorData[i]['teamname'], 
-                                           competitorData[i]['teamid'], 
-                                           competitorData[i]['teamjar'], 
-                                           competitorData[i]['teamclass'], 
-                                           secrets[1])
-                    gamestruct[matchid].add_team_data(1, teamI)
-                    
-                    
-                    # team j will be player 2
-                    teamJ = TeamDataInGame(competitorData[j]['teamname'], 
-                                           competitorData[j]['teamid'], 
-                                           competitorData[j]['teamjar'], 
-                                           competitorData[j]['teamclass'], 
-                                           secrets[2])
-                    gamestruct[matchid].add_team_data(2, teamJ)
-                    
-                    matchid += 1
+        gamestruct[matchid] = Game(4, mapp)
+        
+        ## generate random permutation of player ids 1 - 4
+        random.shuffle(rand_player_ids)
+        
+        for i in range(4):
+            player_id = rand_player_ids[i]
+            team = TeamDataInGame(competitorData[i]['teamname'], 
+                               competitorData[i]['teamid'], 
+                               competitorData[i]['teamjar'], 
+                               competitorData[i]['teamclass'], 
+                               secrets[player_id])
+            
+            gamestruct[matchid].add_team_data(player_id, team)
+        
+        matchid += 1
     
     
                 
@@ -281,65 +267,39 @@ def collect_score(current_server_dir, game):
         
         ## the lines are sorted such that the player ids are in order of their result in the game
         num_lines = len(filecontents)
+        player_points = []
+        player_position = []
         
-        ## we know there are only two lines - one for each player
-        winner_game_results = filecontents[0].split(",")
-        loser_game_results = filecontents[1].split(",")
-        
-        ## process winner
-        winner_player_id = int(winner_game_results[0])
-        winner_results = {'finish_position' : 1}
-        if float(winner_game_results[1]) == float(loser_game_results[1]):
-            winner_results['points'] =  1
-        else:
-            winner_results['points'] =  2
-        
-        for idx in range(len(scoring_criteria)):
-            scoring_item = scoring_criteria[idx]
-            winner_results[scoring_item] = num(winner_game_results[idx + 1])
-        
-        game.set_team_game_results(winner_player_id, winner_results)
-        
-        ## process loser
-        loser_player_id = int(loser_game_results[0])
-        loser_results = {'finish_position' : 2}
-        if float(winner_game_results[1]) == float(loser_game_results[1]):
-            loser_results['points'] = 1
-        else:
-            loser_results['points'] = 0
-        
-        for idx in range(len(scoring_criteria)):
-            scoring_item = scoring_criteria[idx]
-            loser_results[scoring_item] = num(loser_game_results[idx + 1])
-        
-        game.set_team_game_results(loser_player_id, loser_results)
-        
+        for i in range(num_lines):
+            content_line = filecontents[i]
+            results = content_line.split(",")
+            player_id = int(results[0])
+            player_score = float(results[1])
+            
+            player_results = {'finish_position' : (i + 1),
+                              'points': game.num_players - (i + 1)}
+            
+            if i > 0:
+                prev_player_score = float(filecontents[i - 1].split(",")[1])
+                if player_score == prev_player_score:
+                    player_results['points'] = player_points[i - 1]
+                    player_results['finish_position'] = player_position[i - 1]
+            
+            player_points.append(player_results['points'])
+            player_position.append(player_results['finish_position'])
+            
+            # other scoring criteria
+            for idx in range(len(scoring_criteria)):
+                scoring_item = scoring_criteria[idx]
+                player_results[scoring_item] = num(results[idx + 1])
+            
+            game.set_team_game_results(player_id, player_results)
     except Exception, ex:
-        print "Score collect failed for " + game.teams[1].team_name + " vs " + game.teams[2].team_name + ". Reason: ", ex
+        print "Score collect failed for match: ", [game.teams[i].team_name for i in range(1, game.num_players + 1)], ". Reason: ", ex
 
 
 def generate_team_stats(results_dump_file):
-    """
-    Generates team match statistics and organizes them by map. 
-    Thus the dictionary mapping will look like the following:
-    
-    map:
-        team_id:
-            team_name: name
-            total_points: total_points
-            games:    // the list of games played by the currently analyzed team
-                [{ stat1: stat1,
-                   stat2: stat2,
-                   ...
-                   opponent_data:[    // A list of dictionaries for each of the opponents in this game. 
-                       {},            // The dictionaries contain the same statistics as for the currently
-                       {}             // analyzed team.
-                   ] 
-                 },
-                 
-                 {...}
-                ]
-    """
+    ## generate team stats by map
     
     for map_name in maplist:
         team_stats_by_map[map_name] = {}
@@ -382,12 +342,12 @@ def generate_team_stats(results_dump_file):
     print >>f, simplejson.dumps(team_stats_by_map, indent=1)
     f.close()
 
-
+    
 if __name__ == '__main__':
     try:
         submissions_filename = sys.argv[1]
     except:
-        print "Usage: python create_games_one_on_one.py <submissions_filename>"
+        print "Usage: python create_games_exactly_4.py <submissions_filename>"
         exit(1)
     
     main(submissions_filename)

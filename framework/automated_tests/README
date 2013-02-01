@@ -1,0 +1,63 @@
+INSTRUCTIONS ON HOW TO LAUNCH CQ3 MATCHES AND COLLECT THEIR RESULTS
+
+========= Step 1: Creating the <submissions_file> =========
+
+The submissions file is a text file containing data taken from each team, 
+which is required in order to run that team's solution.
+Each line in the file is of the following format:
+
+<team name> <team id> <solution JAR> <fully qualified java path to the solution's MainClass>
+
+This file has to be filled in by hand (at the moment) and the data required for this will be received from
+Anca (an archive with the each team's latest solution).
+The FULLY QUALIFIED JAVA PATH to the main class can be obtained by inspecting the `MainClass:' attribute
+in the Manifest included in each team's JAR. 
+
+The submissions file will be created in the `automated_tests/scripts' folder.
+All team supplied JARs will be copied in the `automated_test/submissions' folder.
+
+
+========= Step 2: In the case of last minute adjustments =========
+
+Our own settings for the running of a match reside in the `automated_test/cqframework' folder.
+In this folder you will find two subfolders: cqserver (holding the server configuration) and
+cqclient (holding the client configuration).
+
+If you make changes to the platform BE SURE TWO RUN THE `build.xml' ant script included in the framework.
+Take the updated JARs (cqclient.jar and cqserver.jar) and copy them to their respective positions in the
+`automated_test/cqframework' folder:
+    - `automated_test/cqframework/cqserver/cqserver.jar'
+    - `automated_test/cqframework/cqclient/lib/cqclient.jar'
+    
+If you want to MAKE CHANGES TO THE GAMEPOLICY.XML file, the one to modify in order to have effects 
+in the matches is in `automated_test/cqframework/cqserver/GamePolicy.xml'
+
+
+========= Step 3: Running the matches =========
+
+Change directory to `automated_tests/scripts'.
+
+There are 3 types of scripts here:
+  - create_games_one_on_one.py <submissions_file_name>
+  - create_games_exactly_4.py <submissions_file_name>
+  - create_games <submissions_file_name> <num_players_on_map>
+  
+The names of these scripts and the parameters they take are pretty self-explanatory.
+
+Before you run any of these scripts you must open them and MAKE SURE THAT THE `secrets' DICT IN THE SCRIPT
+MATCHES THE ORDER AND VALUES IN THE `automated_test/cqframework/cqserver/secrets.txt' file.
+
+To start the matches run: python create_games_one_on_one.py <submissions_file_name>.
+Sit back and watch to not-at-all-glamorous magic :-)
+
+
+========= Step 4: Generating the reports =========
+
+Up to now (hopefully) there exists a script to automatically generate reports for one-on-one matches.
+The script is: automated_test/scripts/create_reports_one_on_one.py.
+
+It takes as argument the name of the SUBMISSIONS FILE (THE SAME NAME THAT WAS 
+SENT AS AN ARGUMENT TO create_games_one_on_one.py).
+
+Run python create_reports_one_on_one.py <submissions_file_name> to generate LaTeX reports for each team.
+The LaTeX reports will then be compiled to PDF format.

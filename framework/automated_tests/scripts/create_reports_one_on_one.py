@@ -2,7 +2,9 @@ import sys, os, string, time
 
 ROOT = os.path.abspath(os.getcwd() + "/../")
 SCRIPTS = ROOT + "/scripts"
-RESULT_DUMP_FILE = ROOT + "/result_dump.txt"
+
+RESULTS_DUMP_FILE_PREFIX = "result_dump_one_on_one"
+RESULTS_DUMP_FILE = ROOT + "/result_dump.txt"
 
 # maps
 maplist = ['map_cq3_v1.cqm']
@@ -23,8 +25,10 @@ point_result_dict = {0: "L",
 team_overview_scores_list = []
 
 
-def main():
+def main(submissions_filename):
     import simplejson
+    
+    RESULTS_DUMP_FILE = ROOT + "/" + RESULTS_DUMP_FILE_PREFIX + "_" + submissions_filename + ".txt" 
     
     # read result dump and load team statistics
     dumpf = open(RESULT_DUMP_FILE, 'r')
@@ -42,38 +46,18 @@ def generate_reports(team_stats_by_map):
     settings.configure()
     os.chdir(SCRIPTS)
     
-    ### build general overview list
+    ''' build general overview list '''
     team_overview_scores_list = build_overview_list(team_stats_by_map)
     
     print team_overview_scores_list
     
-    """
-    n = len(teamscoring.keys())
-    nrgames = len(maplist) * 2 * (n - 1)
-    
-    for cdata in competitorData:
-        teamid = cdata['teamid']
-        scoredata = teamscoring[teamid]
-        
-        scoredata['averagescore'] /= nrgames
-        d = dict(scoredata)
-        d['id'] = teamid
-        teamscoringlist.append(d)
+    ''' INSERT CONTINUATION HERE '''
     
     
-    for i in range(len(teamscoringlist)):
-        scoredata = teamscoringlist[i]
-        
-        for amap in maplist:
-            mapentry = amap.split(".")[0]
-            scoredata['games'][mapentry].insert(i, {})
-    
-    for teamitem in teamscoringlist:
-        gen_report_per_team(teamitem, teamscoringlist)
-    """
 
 def gen_report_per_team(teamitem, teamscoringlist):
     from django.template import Template, Context
+    ''' AND REPLACE THIS WITH NEW TEMPLATES '''
     
     tplf = open("report_tex_qualifications.tpl", "r")
     tpl_string = ""
@@ -94,6 +78,11 @@ def gen_report_per_team(teamitem, teamscoringlist):
                 
 
 def build_overview_list(team_stats_by_map):
+    """
+    Takes as input the de-serialized json encoding of team game statistics (organized by maps). 
+    Creates the sorted overview list for the results of a one-on-one list of matches.
+    The returned list of dictionaries contains the number of wins, draws, losses and total_points. 
+    """
     team_overview_scores = {}
     
     for map_name, all_team_stats in team_stats_by_map.items():
@@ -137,4 +126,10 @@ def build_map_overview_dict(all_team_stats):
     return team_map_overview_scores
 
 if __name__ == '__main__':
-    main()
+    try:
+        submissions_filename = sys.argv[1]
+    except:
+        print "Usage: python create_games_one_on_one.py <submissions_filename>"
+        exit(1)
+    
+    main(submissions_filename)
