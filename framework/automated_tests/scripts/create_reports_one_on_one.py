@@ -19,9 +19,9 @@ maplist = ['map_cq3_v1.cqm']
 
 # starting position dictionary
 positions_dict = {1: "ULC",
-                  2: "URC",
-                  3: "LLC",
-                  4: "LRC"}
+                  2: "LRC",
+                  3: "URC",
+                  4: "LLC"}
 
 # point results dictionary
 point_result_dict = {0: "L",

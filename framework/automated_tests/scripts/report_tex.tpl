@@ -106,8 +106,8 @@ match outcome.
     {% for g in teamitem.games %}
       {% if g.oponent_data[0].label == o %}
         \hline
-        \multirow{2}{*}{ {% if g.player_id == 1 %} ULC {% elif g.player_id == 2 %} URC
-            {% elif g.player_id == 3 %} LLC {% else %} LRC {% endif %} } &
+        \multirow{2}{*}{ {% if g.player_id == 1 %} ULC {% elif g.player_id == 2 %} LRC
+            {% elif g.player_id == 3 %} URC {% else %} LLC {% endif %} } &
               \multirow{2}{*}{ {% if g.points == 2 %} \textbf{W} {% elif g.points == 1 %} 
                   \textbf{D} {% else %} \textbf{L} {% endif %} } & 
                     \cellcolor{yellow!25} You & \cellcolor{yellow!25} {{ g.total_score }} & \cellcolor{yellow!25} {{ g.kills }} &
