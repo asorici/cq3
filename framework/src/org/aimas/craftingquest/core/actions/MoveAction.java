@@ -99,7 +99,7 @@ public class MoveAction extends Action {
 		Iterator<BasicUnit> it = game.map.cells[fromPos.y][fromPos.x].cellUnits.iterator();
 		while (it.hasNext()) {
 			BasicUnit u = it.next();
-			if (u.playerID == playerUnit.playerID) {
+			if (u.unitId == playerUnit.id) {
 				it.remove();
 				break;
 			}
