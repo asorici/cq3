@@ -32,4 +32,12 @@ Changes from version R1
   are already dead
 
 
+Version R3
+Release date: February 8, 2013
+
+Changes from version R2
+
+- fixed incorrect kill action where a player could attack his own units and increase his score
+- fixed update of unit position in move action. The BasicUnit view of a cell is now correctly identified by its unitId (instead of the playerId) 
+  when changing positions
 
