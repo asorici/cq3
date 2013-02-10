@@ -113,10 +113,13 @@ public class MoveAction extends Action {
 			TrapObject trap = (TrapObject) game.map.cells[toPos.y][toPos.x].strategicObject;
 			playerUnit.energy = 0;
 			player.freeze(playerUnit, trap.getLevel() + 1);
-
+			
+			// remove the trap from the map after it has been sprung and remove it from its owner's list
 			PlayerState opponentState = game.playerStates.get(trap.getPlayerID());
 			opponentState.availableTraps.remove(trap);	// trap is no longer available
 			opponentState.triggerTrap();
+			
+			game.map.cells[toPos.y][toPos.x].strategicObject = null;
 			
 			gui_logger.info(game.round.currentRound + " RemoveTrap " + trap.getPosition().x + " " + trap.getPosition().y);
 		}

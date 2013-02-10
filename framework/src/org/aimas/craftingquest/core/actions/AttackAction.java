@@ -1,17 +1,16 @@
 package org.aimas.craftingquest.core.actions;
 
 import java.util.HashMap;
-import java.util.Iterator;
 
 import org.aimas.craftingquest.core.GamePolicy;
 import org.aimas.craftingquest.state.GameState;
 import org.aimas.craftingquest.state.PlayerState;
 import org.aimas.craftingquest.state.Transition;
 import org.aimas.craftingquest.state.Transition.ActionType;
-import org.aimas.craftingquest.state.objects.ICrafted;
-import org.aimas.craftingquest.state.resources.ResourceType;
 import org.aimas.craftingquest.state.TransitionResult;
 import org.aimas.craftingquest.state.UnitState;
+import org.aimas.craftingquest.state.objects.ICrafted;
+import org.aimas.craftingquest.state.resources.ResourceType;
 
 public class AttackAction extends Action {
 	public AttackAction(ActionType type) {
@@ -145,39 +144,41 @@ public class AttackAction extends Action {
 	
 	
 	private void respawnUnit(GameState game, UnitState unit) {
+		
+		// drop all resources
 		HashMap<ResourceType, Integer> visibleCellResources = game.map.cells[unit.pos.y][unit.pos.x].visibleResources;
 		HashMap<ResourceType, Integer> carriedResources = unit.carriedResources;
 		
-		// drop all resources
-		Iterator<ResourceType> rit = carriedResources.keySet().iterator();
-		while(rit.hasNext()) {
-			ResourceType res = rit.next();
-			Integer existing = visibleCellResources.get(res);
+		for (ResourceType res : carriedResources.keySet()) {
 			Integer carried = carriedResources.get(res);
+			Integer existing = visibleCellResources.get(res);
+			
 			if (existing == null) {
 				visibleCellResources.put(res, carried);
-			} else {
+			} 
+			else {
 				visibleCellResources.put(res, existing + carried);
 			}
-			carriedResources.remove(res);
 		}
+		carriedResources.clear();
+		
 		
 		// drop all objects
 		HashMap<ICrafted, Integer> cellObjects = game.map.cells[unit.pos.y][unit.pos.x].craftedObjects;
 		HashMap<ICrafted, Integer> carriedObjects = unit.carriedObjects;
-	
-		Iterator<ICrafted> oit = carriedObjects.keySet().iterator();
-		while(oit.hasNext()) {
-			ICrafted obj = oit.next();
+		
+		for (ICrafted obj : carriedObjects.keySet()) {
 			Integer existing = cellObjects.get(obj);
 			Integer carried = carriedObjects.get(obj);
+			
 			if (existing == null) {
 				cellObjects.put(obj, carried);
-			} else {
+			} 
+			else {
 				cellObjects.put(obj, existing + carried);
 			}
-			carriedObjects.remove(obj);
 		}
+		carriedObjects.clear();
 		
 		//System.out.println("######## Life of dead unit: " + unit.life + " ########"); 
 		

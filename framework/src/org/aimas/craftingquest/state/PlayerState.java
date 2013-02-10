@@ -190,9 +190,14 @@ public class PlayerState implements Serializable {
 	public float getScore() {
 		float score = (float) kills * (1.0f + (float) placedTowers / (float)GamePolicy.buildTowerBonus);
 		
-		if (placedTraps > 0) {
+		if (placedTraps > 0 && successfulTraps > 0) {
+			/*
 			float trapScore = ((float)(successfulTraps * placedTraps) / (float)(successfulTraps + placedTraps));
 			score = (trapScore == 0) ? score : score * trapScore;
+			*/
+			
+			// allow a maximum of 1/3 point gain from placing gaps
+			score *= (3.0f * placedTraps + successfulTraps) / (3.0f * placedTraps);
 		}
 		
 		score += killingSprees * GamePolicy.killingSpreeBonus + firstBlood * GamePolicy.firstBloodBonus;

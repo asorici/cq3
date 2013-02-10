@@ -45,7 +45,8 @@ public class DropObjectAction extends Action {
 					// if the unit drops some, but not all objects
 					if (existing == null) {
 						cellObjects.put(res, dropped);
-					} else {
+					} 
+					else {
 						cellObjects.put(res, existing + dropped);
 					}
 					carriedObjects.put(res, carried - dropped);
@@ -53,15 +54,32 @@ public class DropObjectAction extends Action {
 					// the unit drops all such objects
 					if (existing == null) {
 						cellObjects.put(res, carried);
-					} else {
+					} 
+					else {
 						cellObjects.put(res, existing + carried);
 					}
 					carriedObjects.remove(res);
 				}
 			}
 		}
-
-		playerUnit.energy -= GamePolicy.dropCost; // update energy levels
+		
+		// after having dropped the objects, check that equipped objects still have a correspondent
+		// in the carried ones, otherwise cancel the equipment
+		if (playerUnit.equipedSword != null) {
+			if (!carriedObjects.containsKey(playerUnit.equipedSword)) {
+				playerUnit.equipedSword = null;
+			}
+		}
+		
+		if (playerUnit.equipedArmour != null) {
+			if (!carriedObjects.containsKey(playerUnit.equipedArmour)) {
+				playerUnit.equipedArmour = null;
+			}
+		}
+		
+		
+		// update energy levels and return result
+		playerUnit.energy -= GamePolicy.dropCost; 
 		TransitionResult dropres = new TransitionResult(transition.id);
 		dropres.errorType = TransitionResult.TransitionError.NoError;
 		return dropres;
