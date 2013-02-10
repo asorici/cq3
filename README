@@ -41,3 +41,14 @@ Changes from version R2
 - fixed update of unit position in move action. The BasicUnit view of a cell is now correctly identified by its unitId (instead of the playerId) 
   when changing positions
 
+
+Version R4
+Release date: February 12, 2013
+
+Changes from version R3
+
+- fixed ConcurrentModificationException error in AttackAction when dropping all objects that the killed unit had possessed.
+- fixed error where a unit could drop its crafted objects and still have some of them equipped.
+- fixed trap removal error. Once a trap is sprung, it is now removed from the game map, as well as from the player's list of traps.
+- modified the part of the scoring formula that accounts for set and sprung traps: successfully laying traps can now only increase a 
+  player's score and do so by a maximum of 33%.
