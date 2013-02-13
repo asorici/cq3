@@ -398,10 +398,17 @@ public class EditorCanvas extends Canvas implements MouseListener, MouseMotionLi
 					cellResources.put(selectedResourceType, prevQuantity + selectedResourceQuantity);
 				}
 	    	}
-	    	
-	    	repaint();
-	    	miniMap.repaint();
 	    }
+	    else if (e.getButton() == MouseEvent.BUTTON1 && e.getClickCount() == 2) {
+	    	int xcoord = (x - offsetX) / CELL_DIM;
+	    	int ycoord = (y - offsetY) / CELL_DIM;
+	    	
+	    	cells[ycoord][xcoord].cellResources.clear();
+	    	cells[ycoord][xcoord].cellType = CellType.Grass;
+	    }
+	    
+	    repaint();
+    	miniMap.repaint();
 	}
 
 	@Override
