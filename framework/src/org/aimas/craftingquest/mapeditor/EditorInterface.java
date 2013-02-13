@@ -243,6 +243,7 @@ public class EditorInterface extends JFrame implements ActionListener, ItemListe
 			for (int i = 0; i < height; i++) {
 				for (int j = 0; j < width / 2; j++) {
 					terrain[i][width - 1 - j].cellType = terrain[i][j].cellType;
+					terrain[i][width - 1 - j].cellResources.clear();
 					terrain[i][width - 1 - j].cellResources.putAll(terrain[i][j].cellResources);
 				}
 			}
@@ -270,6 +271,7 @@ public class EditorInterface extends JFrame implements ActionListener, ItemListe
 			for (int i = 0; i < height / 2; i++) {
 				for (int j = 0; j < width; j++) {
 					terrain[height - 1 - i][j].cellType = terrain[i][j].cellType;
+					terrain[height - 1 - i][j].cellResources.clear();
 					terrain[height - 1 - i][j].cellResources.putAll(terrain[i][j].cellResources);
 				}
 			}
