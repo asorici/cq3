@@ -63,7 +63,7 @@ public class EditorInterface extends JFrame implements ActionListener, ItemListe
 	private EditorCanvas editorCanvas;
 	private MiniEditorCanvas miniEditorCanvas;
 	private Scrollbar hs, vs;
-	private JButton mirrorBtn, openMapBtn, saveMapBtn, terrainTypeInfoBtn, resourceTypeInfoBtn;
+	private JButton mirrorLeftRightBtn, mirrorUpDownBtn, openMapBtn, saveMapBtn, terrainTypeInfoBtn, resourceTypeInfoBtn;
 	private JTextArea infoArea;
 	private JComboBox mapSizeSelector;
 	
@@ -122,9 +122,14 @@ public class EditorInterface extends JFrame implements ActionListener, ItemListe
 		saveMapBtn = new JButton("Save Map");
 		saveMapBtn.addActionListener(this);
 		btnPnl.add(saveMapBtn);
-		mirrorBtn = new JButton("Mirror Map");
-		mirrorBtn.addActionListener(this);
-		btnPnl.add(mirrorBtn);
+		
+		mirrorLeftRightBtn = new JButton("Mir.(Oy)");
+		mirrorLeftRightBtn.addActionListener(this);
+		btnPnl.add(mirrorLeftRightBtn);
+		
+		mirrorUpDownBtn = new JButton("Mir.(Ox)");
+		mirrorUpDownBtn.addActionListener(this);
+		btnPnl.add(mirrorUpDownBtn);
 		
 		JPanel terrainSelectorPanel = new JPanel();
 		JPanel resourceSelectorPanel = new JPanel();
@@ -220,7 +225,7 @@ public class EditorInterface extends JFrame implements ActionListener, ItemListe
 			editorCanvas.setSelectedResourceType((ResourceType)resourceSelector.getSelectedItem(), resourceQuantity);
 		}
 		
-		if (e.getSource().equals(mirrorBtn)) {
+		if (e.getSource().equals(mirrorLeftRightBtn)) {
 			/*
 			int n = terrain.length;
 			
@@ -239,6 +244,33 @@ public class EditorInterface extends JFrame implements ActionListener, ItemListe
 				for (int j = 0; j < width / 2; j++) {
 					terrain[i][width - 1 - j].cellType = terrain[i][j].cellType;
 					terrain[i][width - 1 - j].cellResources.putAll(terrain[i][j].cellResources);
+				}
+			}
+			
+			editorCanvas.repaint();
+			miniEditorCanvas.repaint();
+		}
+		
+		
+		if (e.getSource().equals(mirrorUpDownBtn)) {
+			/*
+			int n = terrain.length;
+			
+			for (int i = 0; i < n; i++) {
+				for (int j = 0; j < n - i; j++) {
+					terrain[n - 1 - i][n - 1 - j].cellType = terrain[i][j].cellType;
+					terrain[n - 1 - i][n - 1 - j].cellResources = terrain[i][j].cellResources;
+				}
+			}
+			*/
+			
+			int height = terrain.length;
+			int width = terrain[0].length;
+			
+			for (int i = 0; i < height / 2; i++) {
+				for (int j = 0; j < width; j++) {
+					terrain[height - 1 - i][j].cellType = terrain[i][j].cellType;
+					terrain[height - 1 - i][j].cellResources.putAll(terrain[i][j].cellResources);
 				}
 			}
 			
