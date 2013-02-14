@@ -52,3 +52,14 @@ Changes from version R3
 - fixed trap removal error. Once a trap is sprung, it is now removed from the game map, as well as from the player's list of traps.
 - modified the part of the scoring formula that accounts for set and sprung traps: successfully laying traps can now only increase a 
   player's score and do so by a maximum of 33%.
+
+Version R5
+
+Release date: February 14, 2013
+
+Changes from version R4
+
+- a player unit can spring its own trap but no longer gains points for doing so
+- changed Blueprint creation mode. The server now sets the specific values of each object described by the blueprint, after reading them from the
+  GamePolicy.xml file. The client receives the actual values set by the server instead of the static bindings to the client side GamePolicy class.
+- updated GamePolicy.xml with better values for client-server synchronization

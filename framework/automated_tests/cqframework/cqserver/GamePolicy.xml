@@ -6,10 +6,10 @@
 	
 		<maxPlayers>4</maxPlayers>
 		<playerActionTime>1000</playerActionTime>
-		<playerLateTime>100</playerLateTime>
-		<updateTime>0</updateTime>
-		<connectWaitTime>2500</connectWaitTime>
-		<nrTurns>80</nrTurns>
+		<playerLateTime>0</playerLateTime>
+		<updateTime>100</updateTime>
+		<connectWaitTime>5000</connectWaitTime>
+		<nrTurns>60</nrTurns>
 		<mapName>map_cq3_v1.cqm</mapName>
 	
 		<initialPlayerPositions>

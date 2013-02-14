@@ -257,7 +257,24 @@ public class GamePolicy {
 				requiredResources.put(resourceType, quantity);
 			}
 			
-			Blueprint readBlueprint = new Blueprint(craftedObjectType, level, weight, requiredResources, upgradeCost);
+			Blueprint readBlueprint = new Blueprint(craftedObjectType, level, maxLevels, weight, requiredResources, upgradeCost);
+			
+			if (craftedObjectType == CraftedObjectType.TOWER) {
+				int towerInitialStrength = towerBaseEnergy * (100 + levelIncrease[level - 1]) / 100;
+				int towerRange = towerBaseRadius * (100 + levelIncrease[level - 1]) / 100;
+				int towerDrain = towerBaseDrain * (100 + levelIncrease[level - 1]) / 100;
+				
+				readBlueprint.setSpecificValues(towerInitialStrength, towerRange, towerDrain, 0, 0);
+			}
+			else if (craftedObjectType == CraftedObjectType.SWORD) {
+				int swordAttack = levelIncrease[level - 1];
+				readBlueprint.setSpecificValues(0, 0, 0, swordAttack, 0);
+			}
+			else if (craftedObjectType == CraftedObjectType.ARMOUR) {
+				int armourDefense = levelIncrease[level - 1];
+				readBlueprint.setSpecificValues(0, 0, 0, 0, armourDefense);
+			}
+			
 			blueprints.add(readBlueprint);
 		}
 	}

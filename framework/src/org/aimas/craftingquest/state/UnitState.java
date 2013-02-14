@@ -108,21 +108,21 @@ public class UnitState implements Serializable {
 	 */
 	public CellState[][] sight;
 
-	public UnitState() {
-		int sightDim = 2 * GamePolicy.sightRadius + 1;
+	public UnitState(int sightRadius) {
+		int sightDim = 2 * sightRadius + 1;
 		sight = new CellState[sightDim][sightDim];
 		retaliateEnergy = 0;
 		retaliateThreshold = 0;
 	}
 
-	public UnitState(int id, int playerID, Point2i pos, int energy) {
+	public UnitState(int id, int playerID, Point2i pos, int energy, int sightRadius) {
 		this.id = id;
 		this.playerID = playerID;
 		this.pos = pos;
 		this.energy = energy;
 		this.life = energy;
 
-		int sightDim = 2 * GamePolicy.sightRadius + 1;
+		int sightDim = 2 * sightRadius + 1;
 		sight = new CellState[sightDim][sightDim];
 		retaliateEnergy = 0;
 		retaliateThreshold = 0;

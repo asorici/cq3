@@ -22,9 +22,9 @@ import org.aimas.craftingquest.state.resources.ResourceType;
 
 
 public class GameGenerator {
-	public static final int SMALL_ROUND = 150;
-	public static final int MEDIUM_ROUND = 180;
-	public static final int BIG_ROUND = 200;
+	public static final int SMALL_ROUND = 100;
+	public static final int MEDIUM_ROUND = 125;
+	public static final int BIG_ROUND = 150;
 	
 	
 	public static GameState setupGame() {
@@ -216,7 +216,7 @@ public class GameGenerator {
 			}
 			
 			int unitID = playerID * nrUnits + i;
-			UnitState unit = new UnitState(unitID, playerID, unitPos, GamePolicy.initialUnitMaxLife);
+			UnitState unit = new UnitState(unitID, playerID, unitPos, GamePolicy.initialUnitMaxLife, GamePolicy.sightRadius);
 			
 			// set unit's sight
 			for (int ii = 0, y = unit.pos.y - GamePolicy.sightRadius; y <= unit.pos.y + GamePolicy.sightRadius; y++, ii++) {

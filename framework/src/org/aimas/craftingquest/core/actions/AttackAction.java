@@ -85,7 +85,7 @@ public class AttackAction extends Action {
 			}
 			
 			playerUnit.energy -= energy;
-	
+			
 			
 			// ======== do retaliate ========
 			if (attackedUnit.life > 0 && attackedUnit.retaliateEnergy >= 0 &&
@@ -104,18 +104,29 @@ public class AttackAction extends Action {
 				
 				attackedUnit.energy -= attackedUnit.retaliateEnergy;
 			}
-	
+			
+			// print to gui log here, as otherwise potential deaths would appear before the actual attack
+			gui_logger.info(game.round.currentRound + " " + transition.operator.name() + " " + player.id + " " 
+					+ playerUnit.id + " " + playerUnit.pos.x + " " + playerUnit.pos.y + " " + player.gold + " " 
+					+ playerUnit.energy + " " + attackedPlayerID + " " + attackedUnitID + " "
+					+ attackedUnit.pos.x + " " + attackedUnit.pos.y + " " + energy);
 	
 			if (attackedUnit.life <= 0) {
 				game.killOne(player, false);
 				attackedPlayer.die();
 				respawnUnit(game, attackedUnit);
+				
+				gui_logger.info(game.round.currentRound + " " + "Die" + " " + attackedPlayer.id + " " 
+						+ attackedUnit.id + " " + attackedUnit.pos.x + " " + attackedUnit.pos.y);
 			}
 	
 			if (playerUnit.life <= 0) {
 				game.killOne(attackedPlayer, true);
 				player.die();
 				respawnUnit(game, playerUnit);
+				
+				gui_logger.info(game.round.currentRound + " " + "Die" + " " + player.id + " " 
+						+ playerUnit.id + " " + playerUnit.pos.x + " " + playerUnit.pos.y);
 			}
 		}
 		
@@ -196,6 +207,7 @@ public class AttackAction extends Action {
 	
 	@Override
 	public void printToGuiLog(GameState game, PlayerState player, Transition transition) {
+		/*
 		if (playerUnit != null) {
 			int attackedPlayerID = (Integer)transition.operands[1];
 			int attackedUnitID = (Integer)transition.operands[2];
@@ -227,5 +239,6 @@ public class AttackAction extends Action {
 					+ attackedUnit.id + " " + attackedUnit.pos.x + " " + attackedUnit.pos.y);
 			}
 		}
+		*/
 	}
 }

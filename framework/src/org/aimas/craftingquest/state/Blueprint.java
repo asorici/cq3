@@ -3,7 +3,6 @@ package org.aimas.craftingquest.state;
 import java.io.Serializable;
 import java.util.HashMap;
 
-import org.aimas.craftingquest.core.GamePolicy;
 import org.aimas.craftingquest.state.objects.ArmourObject;
 import org.aimas.craftingquest.state.objects.CraftedObjectType;
 import org.aimas.craftingquest.state.objects.ICrafted;
@@ -19,9 +18,15 @@ import org.aimas.craftingquest.state.resources.ResourceType;
 @SuppressWarnings("serial")
 public class Blueprint implements Serializable {
 	/**
-	 * (Tech) level of the object described by the blue print
+	 * (Tech) level of the object described by the blueprint
 	 */
 	int level;
+	
+	/**
+	 * (Tech) the maximum level available for the object described by the blueprint
+	 */
+	int maxLevels;
+	
 	/**
 	 * the weight of the object (just for swords and armours)
 	 */
@@ -41,17 +46,58 @@ public class Blueprint implements Serializable {
 	 */
 	int upgradeCost;
 	
-	public Blueprint(CraftedObjectType type, int level, int weight, HashMap<ResourceType, 
+	
+	/*
+	 *  ============================ tower specific fields ============================
+	 */
+	int towerInitialStrength;
+	int towerRange;
+	int towerDrain;
+	
+	
+	/*
+	 *  ============================ sword specific fields ============================
+	 */
+	int swordAttack;
+	
+	/*
+	 *  ============================ armour specific fields ============================
+	 */
+	int armourDefense;
+	
+	
+	public Blueprint(CraftedObjectType type, int level, int maxLevels, int weight, HashMap<ResourceType, 
 			Integer> requiredResources, int upgradeCost) {
 		this.level = level;
+		this.maxLevels = maxLevels;
 		this.weight = weight;
 		this.type = type;
 		this.requiredResources = requiredResources;
 		this.upgradeCost = upgradeCost;
 	}
-
-	public HashMap<ResourceType, Integer> getResourcesNeeded()
-	{
+	
+	/**
+	 * Auxiliary method used on the server side to set the specific scenario values 
+	 * for each type of object crafted object. The ones not specific to the object described by this
+	 * blueprint will be 0.
+	 * 
+	 * @param towerInitialStrength
+	 * @param towerRange
+	 * @param towerDrain
+	 * @param swordAttack
+	 * @param armourDefense
+	 */
+	public void setSpecificValues(int towerInitialStrength, int towerRange, 
+			int towerDrain, int swordAttack, int armourDefense) {
+		this.towerInitialStrength = towerInitialStrength;
+		this.towerRange = towerRange;
+		this.towerDrain = towerDrain;
+		this.swordAttack = swordAttack;
+		this.armourDefense = armourDefense;
+	}
+	
+	
+	public HashMap<ResourceType, Integer> getResourcesNeeded() {
 		return this.requiredResources;
 	}
 	
@@ -62,7 +108,8 @@ public class Blueprint implements Serializable {
 	}
 	
 	public int getMaxLevel() {
-		return GamePolicy.maxLevels;
+		return maxLevels;
+		//return GamePolicy.maxLevels;
 	}
 	
 	public int getUpgradeCost() {
@@ -77,7 +124,8 @@ public class Blueprint implements Serializable {
 		if (type != CraftedObjectType.TOWER)
 			return 0;
 		
-		return GamePolicy.towerBaseEnergy * (100 + GamePolicy.levelIncrease[level]) / 100;
+		return towerInitialStrength;
+		//return GamePolicy.towerBaseEnergy * (100 + GamePolicy.levelIncrease[level]) / 100;
 	}
 	
 	
@@ -85,7 +133,8 @@ public class Blueprint implements Serializable {
 		if (type != CraftedObjectType.TOWER) 
 			return 0;
 		
-		return GamePolicy.towerBaseRadius * (100 + GamePolicy.levelIncrease[level]) / 100;
+		return towerRange;
+		//return GamePolicy.towerBaseRadius * (100 + GamePolicy.levelIncrease[level]) / 100;
 	}
 	
 	
@@ -93,7 +142,8 @@ public class Blueprint implements Serializable {
 		if (type != CraftedObjectType.TOWER) 
 			return 0;
 		
-		return GamePolicy.towerBaseDrain * (100 + GamePolicy.levelIncrease[level]) / 100;
+		return towerDrain;
+		//return GamePolicy.towerBaseDrain * (100 + GamePolicy.levelIncrease[level]) / 100;
 	}
 	
 	
@@ -107,7 +157,9 @@ public class Blueprint implements Serializable {
 	public int getAttack() {
 		if (type != CraftedObjectType.SWORD)
 			return 0;
-		return GamePolicy.levelIncrease[level];
+		
+		return swordAttack;
+		//return GamePolicy.levelIncrease[level];
 	}
 	
 	/*
@@ -116,7 +168,9 @@ public class Blueprint implements Serializable {
 	public int getDefence() {
 		if (type != CraftedObjectType.ARMOUR)
 			return 0;
-		return GamePolicy.levelIncrease[level];
+		
+		return armourDefense;
+		//return GamePolicy.levelIncrease[level];
 	}
 	
 	

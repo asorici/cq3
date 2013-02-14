@@ -106,6 +106,10 @@ public class MoveAction extends Action {
 		}
 		game.map.cells[toPos.y][toPos.x].cellUnits.add(playerUnit.getOpponentPerspective());
 		
+		// print to gui log here, as otherwise a potential trap springing would appear before the actual move
+		gui_logger.info(game.round.currentRound + " " + transition.operator.name() + " " + player.id + " " 
+				+ playerUnit.id + " " + playerUnit.pos.x + " " + playerUnit.pos.y + " " + player.gold + " " 
+				+ playerUnit.energy);
 		
 		// check if there is a trap in the new position - if so mark the opponent unit as frozen
 		if (game.map.cells[toPos.y][toPos.x].strategicObject != null
@@ -117,7 +121,11 @@ public class MoveAction extends Action {
 			// remove the trap from the map after it has been sprung and remove it from its owner's list
 			PlayerState opponentState = game.playerStates.get(trap.getPlayerID());
 			opponentState.availableTraps.remove(trap);	// trap is no longer available
-			opponentState.triggerTrap();
+			
+			// make sure that a player doesn't get credit for springing his own trap
+			if (trap.getPlayerID() != playerUnit.playerID) {
+				opponentState.triggerTrap();
+			}
 			
 			game.map.cells[toPos.y][toPos.x].strategicObject = null;
 			
@@ -137,10 +145,12 @@ public class MoveAction extends Action {
 	
 	@Override
 	public void printToGuiLog(GameState game, PlayerState player, Transition transition) {
+		/*
 		if (playerUnit != null) {
 			gui_logger.info(game.round.currentRound + " " + transition.operator.name() + " " + player.id + " " 
 					+ playerUnit.id + " " + playerUnit.pos.x + " " + playerUnit.pos.y + " " + player.gold + " " 
 					+ playerUnit.energy);
 		}
+		*/
 	}
 }

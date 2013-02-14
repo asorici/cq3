@@ -86,7 +86,7 @@ public class UnitTesting {
 	// method to "empower" a unit for everything it needs for a test
 	private static UnitState setupUnit(int id, int playerId, Point2i pos, int energy, 
 			HashMap<ResourceType, Integer> unitResources) {
-		UnitState unit = new UnitState(id, playerId, pos, energy);
+		UnitState unit = new UnitState(id, playerId, pos, energy, GamePolicy.sightRadius);
 		
 		unit.carriedResources.putAll(unitResources);
 		

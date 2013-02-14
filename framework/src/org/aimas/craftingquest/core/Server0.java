@@ -57,6 +57,9 @@ public class Server0 implements IServer {
 	private Timer timer;
 	private long[] secrets;
 	private long gameStartTime = 0;
+	
+	/* sync */
+	private Object updateSync = new Object();
 
 	/* logging */
 	private static Logger logger = Logger.getLogger(Server0.class);
@@ -174,33 +177,36 @@ public class Server0 implements IServer {
 		} catch (Exception ex) {
 			// mark client as unresponsive
 			unresponsive[clientID] = true;
-			logger.fatal("Could not send event to client " + clientID, ex);
+			logger.fatal("Could not send event " + event.type + " to client " + clientID, ex);
 		}
 	}
 	
 	
 	private void updateGame() {
-		// check if we still have a connected client
-		boolean responsiveClients = false;
-		for (int i = 0; i < unresponsive.length; i++) {
-			if (!unresponsive[i]) {
-				responsiveClients = true;
-				break;
+		
+		synchronized(updateSync) {
+			// check if we still have a connected client
+			boolean responsiveClients = false;
+			for (int i = 0; i < unresponsive.length; i++) {
+				if (!unresponsive[i]) {
+					responsiveClients = true;
+					break;
+				}
 			}
+			
+			if (!responsiveClients) {
+				declareWinner();
+				System.exit(10);
+			}
+			
+			// increment turn number
+			state.round.currentRound++;
+			
+			System.out.println("Current round: " + state.round.currentRound);
+			
+			long roundStartTime = gameStartTime + state.round.currentRound * GamePolicy.roundTime;
+			state.round.startTime = roundStartTime;
 		}
-		
-		if (!responsiveClients) {
-			declareWinner();
-			System.exit(10);
-		}
-		
-		// increment turn number
-		state.round.currentRound++;
-		
-		System.out.println("Current round: " + state.round.currentRound);
-		
-		long roundStartTime = GamePolicy.connectWaitTime + state.round.currentRound * GamePolicy.roundTime;
-		state.round.startTime = roundStartTime;
 		
 		if (guiOn) {
 			// update graphics
@@ -215,7 +221,6 @@ public class Server0 implements IServer {
 	}
 
 	private void endGame() {
-		//for (Object client : clients) {
 		for (int cID = 0; cID < clients.length; cID++) {
 			sendEvent(cID, clients[cID], new Event(Event.EventType.GameEnd));
 		}
@@ -231,7 +236,6 @@ public class Server0 implements IServer {
 		long period = GamePolicy.roundTime;
 		int connectWaitTime = GamePolicy.connectWaitTime;
 		int initializationWaitTime = GamePolicy.initializationWaitTime;
-		state.round.startTime = GamePolicy.connectWaitTime;
 		
 		try {
 			Thread.sleep(connectWaitTime);
@@ -259,6 +263,7 @@ public class Server0 implements IServer {
 		
 		// mark beginning of game
 		gameStartTime = System.currentTimeMillis() + delay;		// first action will commence after delay milliseconds
+		state.round.startTime = gameStartTime;
 		
 		// player time
 		for (int i = 0; i < clients.length; i++) {
@@ -272,14 +277,14 @@ public class Server0 implements IServer {
 				public void run() {
 					// replenish player's units with their energy supplies
 					actionEngine.replenishEnergy();
-
+					
 					// set round status: currentRound and roundStartTime
 					Integer playerID = state.getPlayerIds().get(clientID);
 					PlayerState player = state.playerStates.get(playerID);
 					int currentRound = state.round.currentRound;
 
 					player.round.currentRound = currentRound;
-					player.round.startTime = GamePolicy.connectWaitTime + 
+					player.round.startTime = gameStartTime + 
 						currentRound * GamePolicy.roundTime + clientID * GamePolicy.playerActionTime;
 
 					// then subtract specific energy amount if the player is near some towers
@@ -324,7 +329,7 @@ public class Server0 implements IServer {
 				timer.cancel();
 				endGame();
 			}
-		}, GamePolicy.roundTime * state.round.noRounds);
+		}, delay + GamePolicy.roundTime * state.round.noRounds);
 	}
 
 	
@@ -367,56 +372,6 @@ public class Server0 implements IServer {
 			logger.info("[srv]Failed action [" + action.operator.name() + "] for client: " + clientID);
 		}
 		
-		/*
-		List<UnitState> unitsToRemove = new ArrayList<UnitState>();
-		for (UnitState unit : player.units) {
-			if (unit.life <= 0)
-				unitsToRemove.add(unit);
-		}
-		player.units.removeAll(unitsToRemove);
-		
-		// clean & respawn units
-		for (UnitState removedUnit : unitsToRemove) {
-			HashMap<ResourceType, Integer> visibleCellResources = state.map.cells[removedUnit.pos.y][removedUnit.pos.x].visibleResources;
-			HashMap<ResourceType, Integer> carriedResources = removedUnit.carriedResources;
-			
-			// drop all resources
-			Iterator<ResourceType> rit = carriedResources.keySet().iterator();
-			while(rit.hasNext()) {
-				ResourceType res = rit.next();
-				Integer existing = visibleCellResources.get(res);
-				Integer carried = carriedResources.get(res);
-				if (existing == null) {
-					visibleCellResources.put(res, carried);
-				} else {
-					visibleCellResources.put(res, existing + carried);
-				}
-				carriedResources.remove(res);
-			}
-			
-			// drop all objects
-			HashMap<ICrafted, Integer> cellObjects = state.map.cells[removedUnit.pos.y][removedUnit.pos.x].craftedObjects;
-			HashMap<ICrafted, Integer> carriedObjects = removedUnit.carriedObjects;
-		
-			Iterator<ICrafted> oit = carriedObjects.keySet().iterator();
-			while(oit.hasNext()) {
-				ICrafted obj = oit.next();
-				Integer existing = cellObjects.get(obj);
-				Integer carried = carriedObjects.get(obj);
-				if (existing == null) {
-					cellObjects.put(obj, carried);
-				} else {
-					cellObjects.put(obj, existing + carried);
-				}
-				carriedObjects.remove(obj);
-			}
-			
-			removedUnit.reset(GamePolicy.initialUnitMaxLife, GamePolicy.initialUnitMaxLife, 
-					GamePolicy.initialPlayerPositions.get(playerID));
-			
-			player.units.add(removedUnit);
-		}
-		*/
 		
 		// update the view of the player's own units after the execution of an action
 		actionEngine.updatePlayerSight(state, playerID);
@@ -429,18 +384,20 @@ public class Server0 implements IServer {
 
 		
 	private boolean allowedPlayer(int clientID) {
-		int factor = clientID % GamePolicy.maxPlayers;
-		long currentTime = System.currentTimeMillis();
-		int currentRound = state.round.currentRound;
-		
-		long diff = currentTime - gameStartTime - currentRound * GamePolicy.roundTime;
-		//System.out.println("diff for allowedPlayer is: " + diff);
-		
-		if (diff >= factor * GamePolicy.playerTotalTime && diff < (factor + 1) * GamePolicy.playerTotalTime) {
-			return true;
+		synchronized (updateSync) {
+			int factor = clientID % GamePolicy.nrPlayers;
+			long currentTime = System.currentTimeMillis();
+			int currentRound = state.round.currentRound;
+			
+			long diff = currentTime - gameStartTime - currentRound * GamePolicy.roundTime;
+			//System.out.println("diff for allowedPlayer is: " + diff);
+			
+			if (diff >= factor * GamePolicy.playerTotalTime && diff < (factor + 1) * GamePolicy.playerTotalTime) {
+				return true;
+			}
+			
+			return false;
 		}
-		
-		return false;
 	}
 	
 	private int allowedSecret(long secret) {

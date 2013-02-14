@@ -1,0 +1,286 @@
+{
+ "map_cq3_v2.cqm": {
+  "34": {
+   "total_points": 0, 
+   "team_name": "TasmanianDevils", 
+   "games": [
+    {
+     "dead_units": 18, 
+     "kills": 19, 
+     "total_score": 19.0, 
+     "placed_traps": 0, 
+     "oponent_data": [
+      {
+       "dead_units": 19, 
+       "first_blood": 1, 
+       "retaliation_kills": 0, 
+       "kills": 18, 
+       "total_score": 28.0, 
+       "team_id": 28, 
+       "finish_position": 1, 
+       "placed_traps": 0, 
+       "points": 2, 
+       "placed_towers": 0, 
+       "killing_sprees": 0, 
+       "player_id": 2, 
+       "team_name": "Untrue", 
+       "successful_traps": 0
+      }
+     ], 
+     "placed_towers": 0, 
+     "killing_sprees": 0, 
+     "player_id": 1, 
+     "successful_traps": 0, 
+     "first_blood": 0, 
+     "retaliation_kills": 0, 
+     "finish_position": 2, 
+     "points": 0
+    }, 
+    {
+     "dead_units": 7, 
+     "kills": 5, 
+     "total_score": 5.0, 
+     "placed_traps": 0, 
+     "oponent_data": [
+      {
+       "dead_units": 5, 
+       "first_blood": 1, 
+       "retaliation_kills": 0, 
+       "kills": 7, 
+       "total_score": 32.0, 
+       "team_id": 28, 
+       "finish_position": 1, 
+       "placed_traps": 0, 
+       "points": 2, 
+       "placed_towers": 0, 
+       "killing_sprees": 1, 
+       "player_id": 1, 
+       "team_name": "Untrue", 
+       "successful_traps": 0
+      }
+     ], 
+     "placed_towers": 0, 
+     "killing_sprees": 0, 
+     "player_id": 2, 
+     "successful_traps": 0, 
+     "first_blood": 0, 
+     "retaliation_kills": 0, 
+     "finish_position": 2, 
+     "points": 0
+    }
+   ]
+  }, 
+  "28": {
+   "total_points": 4, 
+   "team_name": "Untrue", 
+   "games": [
+    {
+     "dead_units": 19, 
+     "kills": 18, 
+     "total_score": 28.0, 
+     "placed_traps": 0, 
+     "oponent_data": [
+      {
+       "dead_units": 18, 
+       "first_blood": 0, 
+       "retaliation_kills": 0, 
+       "kills": 19, 
+       "total_score": 19.0, 
+       "team_id": 34, 
+       "finish_position": 2, 
+       "placed_traps": 0, 
+       "points": 0, 
+       "placed_towers": 0, 
+       "killing_sprees": 0, 
+       "player_id": 1, 
+       "team_name": "TasmanianDevils", 
+       "successful_traps": 0
+      }
+     ], 
+     "placed_towers": 0, 
+     "killing_sprees": 0, 
+     "player_id": 2, 
+     "successful_traps": 0, 
+     "first_blood": 1, 
+     "retaliation_kills": 0, 
+     "finish_position": 1, 
+     "points": 2
+    }, 
+    {
+     "dead_units": 5, 
+     "kills": 7, 
+     "total_score": 32.0, 
+     "placed_traps": 0, 
+     "oponent_data": [
+      {
+       "dead_units": 7, 
+       "first_blood": 0, 
+       "retaliation_kills": 0, 
+       "kills": 5, 
+       "total_score": 5.0, 
+       "team_id": 34, 
+       "finish_position": 2, 
+       "placed_traps": 0, 
+       "points": 0, 
+       "placed_towers": 0, 
+       "killing_sprees": 0, 
+       "player_id": 2, 
+       "team_name": "TasmanianDevils", 
+       "successful_traps": 0
+      }
+     ], 
+     "placed_towers": 0, 
+     "killing_sprees": 1, 
+     "player_id": 1, 
+     "successful_traps": 0, 
+     "first_blood": 1, 
+     "retaliation_kills": 0, 
+     "finish_position": 1, 
+     "points": 2
+    }
+   ]
+  }
+ }, 
+ "map_cq3_v1.cqm": {
+  "34": {
+   "total_points": 0, 
+   "team_name": "TasmanianDevils", 
+   "games": [
+    {
+     "dead_units": 24, 
+     "kills": 22, 
+     "total_score": 22.0, 
+     "placed_traps": 0, 
+     "oponent_data": [
+      {
+       "dead_units": 22, 
+       "first_blood": 1, 
+       "retaliation_kills": 0, 
+       "kills": 24, 
+       "total_score": 34.0, 
+       "team_id": 28, 
+       "finish_position": 1, 
+       "placed_traps": 0, 
+       "points": 2, 
+       "placed_towers": 0, 
+       "killing_sprees": 0, 
+       "player_id": 2, 
+       "team_name": "Untrue", 
+       "successful_traps": 0
+      }
+     ], 
+     "placed_towers": 0, 
+     "killing_sprees": 0, 
+     "player_id": 1, 
+     "successful_traps": 0, 
+     "first_blood": 0, 
+     "retaliation_kills": 0, 
+     "finish_position": 2, 
+     "points": 0
+    }, 
+    {
+     "dead_units": 27, 
+     "kills": 19, 
+     "total_score": 19.0, 
+     "placed_traps": 0, 
+     "oponent_data": [
+      {
+       "dead_units": 19, 
+       "first_blood": 1, 
+       "retaliation_kills": 0, 
+       "kills": 27, 
+       "total_score": 37.0, 
+       "team_id": 28, 
+       "finish_position": 1, 
+       "placed_traps": 0, 
+       "points": 2, 
+       "placed_towers": 0, 
+       "killing_sprees": 0, 
+       "player_id": 1, 
+       "team_name": "Untrue", 
+       "successful_traps": 0
+      }
+     ], 
+     "placed_towers": 0, 
+     "killing_sprees": 0, 
+     "player_id": 2, 
+     "successful_traps": 0, 
+     "first_blood": 0, 
+     "retaliation_kills": 0, 
+     "finish_position": 2, 
+     "points": 0
+    }
+   ]
+  }, 
+  "28": {
+   "total_points": 4, 
+   "team_name": "Untrue", 
+   "games": [
+    {
+     "dead_units": 22, 
+     "kills": 24, 
+     "total_score": 34.0, 
+     "placed_traps": 0, 
+     "oponent_data": [
+      {
+       "dead_units": 24, 
+       "first_blood": 0, 
+       "retaliation_kills": 0, 
+       "kills": 22, 
+       "total_score": 22.0, 
+       "team_id": 34, 
+       "finish_position": 2, 
+       "placed_traps": 0, 
+       "points": 0, 
+       "placed_towers": 0, 
+       "killing_sprees": 0, 
+       "player_id": 1, 
+       "team_name": "TasmanianDevils", 
+       "successful_traps": 0
+      }
+     ], 
+     "placed_towers": 0, 
+     "killing_sprees": 0, 
+     "player_id": 2, 
+     "successful_traps": 0, 
+     "first_blood": 1, 
+     "retaliation_kills": 0, 
+     "finish_position": 1, 
+     "points": 2
+    }, 
+    {
+     "dead_units": 19, 
+     "kills": 27, 
+     "total_score": 37.0, 
+     "placed_traps": 0, 
+     "oponent_data": [
+      {
+       "dead_units": 27, 
+       "first_blood": 0, 
+       "retaliation_kills": 0, 
+       "kills": 19, 
+       "total_score": 19.0, 
+       "team_id": 34, 
+       "finish_position": 2, 
+       "placed_traps": 0, 
+       "points": 0, 
+       "placed_towers": 0, 
+       "killing_sprees": 0, 
+       "player_id": 2, 
+       "team_name": "TasmanianDevils", 
+       "successful_traps": 0
+      }
+     ], 
+     "placed_towers": 0, 
+     "killing_sprees": 0, 
+     "player_id": 1, 
+     "successful_traps": 0, 
+     "first_blood": 1, 
+     "retaliation_kills": 0, 
+     "finish_position": 1, 
+     "points": 2
+    }
+   ]
+  }
+ }
+}
