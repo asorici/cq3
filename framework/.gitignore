@@ -1,5 +1,4 @@
 ./bin
 ./build
-*.jar
 *.log
 winner.txt
