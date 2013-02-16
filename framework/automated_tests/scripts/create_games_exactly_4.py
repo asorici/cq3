@@ -12,7 +12,7 @@ RESULTS_DUMP_FILE_PREFIX = "result_dump_exactly_4"
 RESULTS_DUMP_FILE = ROOT + "/result_dump.txt"
 
 # maps
-maplist = ['map_cq3_v1.cqm']
+maplist = ['map_cq3_v1.cqm', 'map_cq3_v2.cqm', 'map_cq3_v3.cqm']
 
 # secrets - the mapping to the player IDs must match the order in secrets.txt !!!!!!!
 secrets = {1 : 1, 
@@ -140,10 +140,15 @@ def main(submissions_filename):
             os.symlink(FRAMEWORK + "/cqserver/maps/", current_server_dir + "/maps")
             os.symlink(FRAMEWORK + "/cqserver/lib/", current_server_dir + "/lib")
             #os.symlink(FRAMEWORK + "/cqserver/images/", current_server_dir + "/images")
-            os.symlink(FRAMEWORK + "/cqserver/GamePolicy.xml", current_server_dir + "/GamePolicy.xml")
+            
+            # copy the correct GamePolicy file
+            policyFile = FRAMEWORK + "/cqserver/" + "GamePolicy_" + game.map_name.split(".")[0] + ".xml"
+            os.symlink(policyFile, current_server_dir + "/GamePolicy.xml")
             os.symlink(FRAMEWORK + "/cqserver/logging.properties", current_server_dir + "/logging.properties")
             os.symlink(FRAMEWORK + "/cqserver/cqserver.jar", current_server_dir + "/cqserver.jar")
-            os.symlink(FRAMEWORK + "/cqserver/secrets.txt", current_server_dir + "/secrets.txt")
+            
+            # copy appropriate secrets file
+            os.symlink(FRAMEWORK + "/cqserver/secrets_exactly_4.txt", current_server_dir + "/secrets.txt")
             os.symlink(SCRIPTS + "/job_server", current_server_dir + "/job_server")
             
             f = open(current_server_dir + "/mapdata", 'a')

@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Root xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="aiwogp.framework">
+	<parameters>
+
+		<!-- general server configurations -->		
+	
+		<maxPlayers>4</maxPlayers>
+		<playerActionTime>1000</playerActionTime>
+		<playerLateTime>0</playerLateTime>
+		<updateTime>100</updateTime>
+		<connectWaitTime>3000</connectWaitTime>
+		<nrTurns>100</nrTurns>
+		<mapName>map_cq3_v2.cqm</mapName>
+	
+		<initialPlayerPositions>
+			<initialPlayerPosition playerID="1" x="5" y="5"/>
+            <initialPlayerPosition playerID="2" x="55" y="55"/>
+			<initialPlayerPosition playerID="3" x="55" y="5"/>
+			<initialPlayerPosition playerID="4" x="5" y="55"/>
+		</initialPlayerPositions>
+	
+	    <!-- scenario specific configurations -->
+	
+	    <nrPlayers>2</nrPlayers>
+	    <nrPlayerUnits>10</nrPlayerUnits>
+	    <initialTeamGold>200</initialTeamGold>
+	    <unitEnergy>200</unitEnergy>
+		<sightRadius>5</sightRadius>
+		<energyReplenishModel>ExponentialReplenish</energyReplenishModel>
+	
+	    <attackBaseValue>30</attackBaseValue>
+	    <defenseBaseValue>10</defenseBaseValue>
+	
+		<towerBaseRadius>4</towerBaseRadius>
+		<towerBaseDrain>100</towerBaseDrain>
+		<towerBaseEnergy>250</towerBaseEnergy>
+		
+	    <levels max="3">
+	      <level value="1" percentage="25" />
+	      <level value="2" percentage="50" />
+	      <level value="3" percentage="75" />
+	    </levels>
+		
+		<moveBaseCost>20</moveBaseCost>
+		<movePenaltyWeight>50</movePenaltyWeight>
+		<pickupCost>5</pickupCost>
+		<dropCost>0</dropCost>
+		<digCost>10</digCost>
+		<buildCost>0</buildCost>
+		<placeTowerCost>75</placeTowerCost>
+		<placeTrapCost>40</placeTrapCost>
+		
+		<killingSpreeThreshold>5</killingSpreeThreshold>
+		<killingSpreeBonus>15</killingSpreeBonus>
+		<firstBloodBonus>10</firstBloodBonus>
+		<buildTowerBonus>20</buildTowerBonus>
+		
+	</parameters>
+
+
+        
+        <!-- generating blueprints for each object type -->
+        <!-- Resources stone, wood, bronze, iron, titanium, leather, gold -->
+
+        <blueprints>
+          <blueprint type="sword" level="1" upgradeCost="200" weight="5">
+            <resource type="iron" quantity="10"/>
+            <resource type="stone" quantity="4"/>
+            <resource type="wood" quantity="4"/>
+          </blueprint>
+          
+          <blueprint type="sword" level="2" upgradeCost="300" weight="7">
+            <resource type="iron" quantity="20"/>
+            <resource type="stone" quantity="10"/>
+            <resource type="wood" quantity="10"/>
+          </blueprint>
+          
+          <blueprint type="sword" level="3" weight="10">
+            <resource type="titanium" quantity="40"/>
+            <resource type="stone" quantity="20"/>
+            <resource type="wood" quantity="20"/>
+          </blueprint>
+          
+          <blueprint type="armour" level="1" upgradeCost="200" weight="10">
+            <resource type="leather" quantity="20"/>
+            <resource type="stone" quantity="4"/>
+            <resource type="wood" quantity="4"/>
+          </blueprint>
+          
+          <blueprint type="armour" level="2" upgradeCost="300" weight="15">
+            <resource type="bronze" quantity="20"/>
+            <resource type="stone" quantity="10"/>
+            <resource type="wood" quantity="10"/>
+          </blueprint>
+          
+          <blueprint type="armour" level="3" weight="20">
+            <resource type="iron" quantity="20"/>
+            <resource type="stone" quantity="20"/>
+            <resource type="wood" quantity="20"/>
+            <resource type="titanium" quantity="40"/>
+          </blueprint>
+		
+          <blueprint type="tower" level="1" upgradeCost="100">
+            <resource type="iron" quantity="30"/>
+            <resource type="stone" quantity="30"/>
+            <resource type="wood" quantity="30"/>
+          </blueprint>
+		
+          <blueprint type="tower" level="2" upgradeCost="200">
+            <resource type="iron" quantity="40"/>
+            <resource type="stone" quantity="40"/>
+            <resource type="wood" quantity="40"/>
+          </blueprint>
+		
+          <blueprint type="tower" level="3">
+            <resource type="iron" quantity="50"/>
+            <resource type="stone" quantity="50"/>
+            <resource type="wood" quantity="50"/>
+          </blueprint>
+		
+          <blueprint type="trap" level="1" upgradeCost="50">
+            <resource type="bronze" quantity="10"/>
+            <resource type="leather" quantity="10"/>
+            <resource type="wood" quantity="10"/>
+          </blueprint>
+		
+          <blueprint type="trap" level="2" upgradeCost="100">
+            <resource type="iron" quantity="20"/>
+            <resource type="leather" quantity="20"/>
+            <resource type="wood" quantity="10"/>
+          </blueprint>
+		
+          <blueprint type="trap" level="3">
+            <resource type="iron" quantity="20"/>
+            <resource type="stone" quantity="20"/>
+            <resource type="wood" quantity="20"/>
+          </blueprint>
+		
+        </blueprints>
+</Root>
