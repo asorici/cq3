@@ -1,6 +1,0 @@
-set SERVERNAME = "CraftingQuest"
-set SERVERHOST = "localhost"
-set SERVERPORT = "1198"
-set MAINCLASS = "com.craftquest.client.SmartAI"
-set JAR = "116_1_1_29_solution.jar"
-set SECRETID = "2"

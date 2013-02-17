@@ -37,7 +37,7 @@ public class GamePolicy {
 	/* number of players */
     public static int maxPlayers = 4;
 	public static int nrPlayers = 2;
-	public static int nrPlayerUnits = 3;
+	public static int nrPlayerUnits = 10;
 
 	/* durations associated with a player */
 	public static long playerActionTime = 1000;
@@ -64,7 +64,7 @@ public class GamePolicy {
 	public static HashMap<Integer, Point2i> initialPlayerPositions;
 	
 	/* general */
-	public static Point2i mapsize = new Point2i(80, 80);
+	public static Point2i mapsize = new Point2i(60, 60);
 	public static int moveBase = 20;
 	public static int initialTeamGold = 200;
 	public static int initialUnitMaxLife = 200;

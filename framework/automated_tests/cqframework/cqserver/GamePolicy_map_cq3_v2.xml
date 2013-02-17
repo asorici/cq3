@@ -14,9 +14,9 @@
 	
 		<initialPlayerPositions>
 			<initialPlayerPosition playerID="1" x="5" y="5"/>
-            <initialPlayerPosition playerID="2" x="55" y="55"/>
-			<initialPlayerPosition playerID="3" x="55" y="5"/>
-			<initialPlayerPosition playerID="4" x="5" y="55"/>
+            <initialPlayerPosition playerID="2" x="74" y="74"/>
+			<initialPlayerPosition playerID="3" x="74" y="1"/>
+			<initialPlayerPosition playerID="4" x="5" y="78"/>
 		</initialPlayerPositions>
 	
 	    <!-- scenario specific configurations -->

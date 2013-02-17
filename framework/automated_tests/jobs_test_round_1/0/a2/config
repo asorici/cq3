@@ -1,6 +1,0 @@
-set SERVERNAME = "CraftingQuest"
-set SERVERHOST = "localhost"
-set SERVERPORT = "1198"
-set MAINCLASS = "HumanAI"
-set JAR = "38_1_1_22_solution.jar"
-set SECRETID = "2"

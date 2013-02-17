@@ -1,6 +1,0 @@
-set SERVERNAME = "CraftingQuest"
-set SERVERHOST = "localhost"
-set SERVERPORT = "1198"
-set MAINCLASS = "RafAI"
-set JAR = "91_1_1_33_solution.jar"
-set SECRETID = "2"

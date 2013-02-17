@@ -1,6 +1,0 @@
-set SERVERNAME = "CraftingQuest"
-set SERVERHOST = "localhost"
-set SERVERPORT = "1198"
-set MAINCLASS = "ai.Devil"
-set JAR = "34_1_1_34_solution.jar"
-set SECRETID = "2"
