@@ -12,7 +12,7 @@ RESULTS_DUMP_FILE_PREFIX = "result_dump_general"
 RESULTS_DUMP_FILE = ROOT + "/result_dump.txt"
 
 # maps
-maplist = ['map_cq3_v1.cqm']
+maplist = ['map_cq3_v1.cqm', 'map_cq3_v2.cqm', 'map_cq3_v3.cqm']
 
 # secrets - the mapping to the player IDs must match the order in secrets.txt !!!!!!!
 secrets = {1 : 1, 
@@ -133,7 +133,8 @@ def main(submissions_filename, num_players_on_map):
     
     ''' create physical dir structure from gamestructure '''
     ## cleanup any existing jobs
-    shutil.rmtree(JOBS)
+    if os.path.isdir(JOBS):
+        shutil.rmtree(JOBS)
     
     ## create new directory structure
     for matchid, game in gamestruct.items():

@@ -126,7 +126,8 @@ def main(submissions_filename):
                 
     ''' create physical dir structure from gamestructure '''
     ## cleanup any existing jobs
-    shutil.rmtree(JOBS)
+    if os.path.isdir(JOBS):
+        shutil.rmtree(JOBS)
     
     ## create new directory structure
     for matchid, game in gamestruct.items():
