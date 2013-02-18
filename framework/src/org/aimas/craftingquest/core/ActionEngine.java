@@ -93,14 +93,32 @@ public class ActionEngine {
 				if (Math.abs(oppTower.getPosition().x - unit.pos.x) <= oppTower.getRange() && 
 					Math.abs(oppTower.getPosition().y - unit.pos.y) <= oppTower.getRange()) {
 					
-					int distance = Math.min( Math.abs(oppTower.getPosition().x - unit.pos.x), Math.abs(oppTower.getPosition().y - unit.pos.y) );
-					if (distance == 0) {	// can happen if a player constructs a tower in a cell
-						distance = 1;		// that contains an opponents unit
-					}
-					int drainAmount = oppTower.getDrain() / distance;
+					int distX = Math.abs(oppTower.getPosition().x - unit.pos.x);
+					int distY = Math.abs(oppTower.getPosition().y - unit.pos.y);
 					
-					unit.energy -= drainAmount;						// drain unit energy
-					oppTower.weakenTower(drainAmount);				// and also weaken tower with the same amount
+					double straightLineDistance = Math.sqrt(distX * distX + distY * distY);
+					int distance = (int)Math.round(straightLineDistance);
+					
+					if (distance == 0) {	// can happen if a player constructs a tower in a cell
+						distance = 1;		// that contains an opponent's unit
+					}
+					
+					// set drain amount
+					int drainAmount = oppTower.getDrain() / distance;
+					if (drainAmount > oppTower.getRemainingStrength()) {
+						drainAmount = oppTower.getRemainingStrength();
+					}
+					
+					// drain unit energy
+					if (unit.energy > drainAmount) {
+						unit.energy -= drainAmount;
+					}
+					else {
+						unit.energy = 0;
+					}
+					
+					// and also weaken tower with the same amount
+					oppTower.weakenTower(drainAmount);
 					
 					if (oppTower.getRemainingStrength() <= 0) {		// if the tower has been weakened enough => destroy it
 						state.playerStates.get(oppTower.getPlayerID()).availableTowers.remove(oppTower);
