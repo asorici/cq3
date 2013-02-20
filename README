@@ -63,3 +63,6 @@ Changes from version R4
 - changed Blueprint creation mode. The server now sets the specific values of each object described by the blueprint, after reading them from the
   GamePolicy.xml file. The client receives the actual values set by the server instead of the static bindings to the client side GamePolicy class.
 - updated GamePolicy.xml with better values for client-server synchronization
+- tower drain distance is now computed as a function of the straight line distance instead of the previous Manhatten style computation
+- fixed tower drain issue: the drain amount cannot exceed the tower's strength
+- fixed possible negative unit energy: a unit's energy cannot go below 0 when affected by tower drains
