@@ -21,7 +21,7 @@
 	
 	    <!-- scenario specific configurations -->
 	
-	    <nrPlayers>2</nrPlayers>
+	    <nrPlayers>4</nrPlayers>
 	    <nrPlayerUnits>10</nrPlayerUnits>
 	    <initialTeamGold>200</initialTeamGold>
 	    <unitEnergy>200</unitEnergy>
