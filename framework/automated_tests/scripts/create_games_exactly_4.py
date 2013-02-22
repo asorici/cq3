@@ -68,6 +68,20 @@ class TeamDataInGame(object):
         self.placed_traps = placed_traps
         self.killing_sprees = killing_sprees
         self.first_blood = first_blood
+    
+    def serialize_results(self):
+        results_dict = {
+                        'team_id' : self.team_id,
+                        'team_name': self.team_name,
+                        'finish_position': self.finish_position,
+                        'points': self.points
+                        }
+        
+        for stat in scoring_criteria:
+            results_dict[stat] = getattr(self, stat, None)
+            
+        return results_dict
+
        
     def __repr__(self):
         return  self.team_name + "<" + str(self.team_secret) + ">"   
@@ -106,7 +120,7 @@ def main(submissions_filename):
     matchid = 0
 
     ''' cycle through the maps 5 times '''
-    for mIdx in range(5):
+    for mIdx in range(3):
         mapp = maplist[mIdx % len(maplist)]
         gamestruct[matchid] = Game(4, mapp)
         
