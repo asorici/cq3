@@ -108,7 +108,7 @@ public class MoveAction extends Action {
 		
 		// print to gui log here, as otherwise a potential trap springing would appear before the actual move
 		gui_logger.info(game.round.currentRound + " " + transition.operator.name() + " " + player.id + " " 
-				+ playerUnit.id + " " + playerUnit.pos.x + " " + playerUnit.pos.y + " " + player.gold + " " 
+				+ playerUnit.id + " " + playerUnit.pos.x + " " + playerUnit.pos.y + " " + player.getScore() + " " 
 				+ playerUnit.energy);
 		
 		// check if there is a trap in the new position - if so mark the opponent unit as frozen

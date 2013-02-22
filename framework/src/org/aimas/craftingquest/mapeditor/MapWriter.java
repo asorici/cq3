@@ -4,6 +4,7 @@ import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.util.HashMap;
@@ -31,6 +32,11 @@ public class MapWriter {
 	}
 	
 	public void writeMap() {
+		serializeMap();
+		saveToText();
+	}
+	
+	private void serializeMap() {
 		FileOutputStream fout = null;
 		ObjectOutputStream objout = null;
 		
@@ -65,5 +71,49 @@ public class MapWriter {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	private void saveToText() {
+		// build CellState structure
+		String serializableFileName = file.getName();
+		//System.out.println("FILENAME: " + serializableFileName);
+		String textFileName =  serializableFileName + ".txt";
+		
+		FileWriter fw = null;
+		try {
+			fw = new FileWriter(textFileName);
+			
+			// write map size
+			fw.write(String.valueOf(mapHeight));
+			fw.write('\n');
+			fw.write(String.valueOf(mapWidth));
+			fw.write('\n');
+			
+			for (int i = 0; i < mapHeight; i++) {
+				for(int j = 0; j < mapWidth; j++) {
+					String terrainType = terrain[i][j].getCellType().name();
+					fw.write(j + " " + i + " " + terrainType);
+					fw.write('\n');
+				}
+			}
+			
+			fw.flush();
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		finally {
+			if (fw != null) {
+				try {
+					fw.close();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+		
+		
 	}
 }

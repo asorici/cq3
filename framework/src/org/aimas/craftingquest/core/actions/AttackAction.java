@@ -107,7 +107,7 @@ public class AttackAction extends Action {
 			
 			// print to gui log here, as otherwise potential deaths would appear before the actual attack
 			gui_logger.info(game.round.currentRound + " " + transition.operator.name() + " " + player.id + " " 
-					+ playerUnit.id + " " + playerUnit.pos.x + " " + playerUnit.pos.y + " " + player.gold + " " 
+					+ playerUnit.id + " " + playerUnit.pos.x + " " + playerUnit.pos.y + " " + player.getScore() + " " 
 					+ playerUnit.energy + " " + attackedPlayerID + " " + attackedUnitID + " "
 					+ attackedUnit.pos.x + " " + attackedUnit.pos.y + " " + energy);
 	

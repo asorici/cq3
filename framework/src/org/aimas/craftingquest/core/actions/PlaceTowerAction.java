@@ -150,7 +150,7 @@ public class PlaceTowerAction extends Action {
 			Blueprint playerBlueprint = (Blueprint) transition.operands[1];
 			
 			gui_logger.info(game.round.currentRound + " " + transition.operator.name() + " " + player.id + " " 
-					+ playerUnit.id + " " + playerUnit.pos.x + " " + playerUnit.pos.y + " " + player.gold + " " 
+					+ playerUnit.id + " " + playerUnit.pos.x + " " + playerUnit.pos.y + " " + player.getScore() + " " 
 					+ playerUnit.energy + " " + playerBlueprint.getType().name() + " " + playerBlueprint.getLevel());
 		}
 	}

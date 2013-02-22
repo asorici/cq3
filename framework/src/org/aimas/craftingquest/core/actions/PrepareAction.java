@@ -36,7 +36,7 @@ public class PrepareAction extends Action {
 			int energy = (Integer)transition.operands[1];
 			
 			gui_logger.info(game.round.currentRound + " " + transition.operator.name() + " " + player.id + " " 
-				+ playerUnit.id + " " + playerUnit.pos.x + " " + playerUnit.pos.y + " " + player.gold + " " 
+				+ playerUnit.id + " " + playerUnit.pos.x + " " + playerUnit.pos.y + " " + player.getScore() + " " 
 				+ playerUnit.energy + " " + energy);
 		}
 	}

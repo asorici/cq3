@@ -498,11 +498,11 @@ public class Server0 implements IServer {
 			if (action.operator == ActionType.PlayerReady) {
 				Point2i initPos = GamePolicy.initialPlayerPositions.get(player.id);
 				gui_logger.info(state.round.currentRound + " " + action.operator.name() + " " + player.id + " " + 
-							+ initPos.x + " " + initPos.y + " " + player.gold);
+							+ initPos.x + " " + initPos.y + " " + player.getScore());
 				
 				for (UnitState u : player.units) {
 					gui_logger.info(state.round.currentRound + " " + "UnitReady" + " " + player.id + " " + 
-							+ u.id + " " + u.pos.x + " " + u.pos.y + " " + player.gold + " " + u.energy);
+							+ u.id + " " + u.pos.x + " " + u.pos.y + " " + player.getScore() + " " + u.energy);
 				}
 			}
 		}
