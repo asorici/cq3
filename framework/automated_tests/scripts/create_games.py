@@ -28,6 +28,7 @@ scoring_criteria = ['total_score', 'kills', 'retaliation_kills', 'dead_units', '
 competitorData = []
 gamestruct = {}
 team_stats_by_map = {}
+NUM_GAMES = 5
 
 class Game(object):
     server_name = "CraftingQuest"
@@ -153,75 +154,59 @@ def main(submissions_filename, num_players_on_map):
     ## create new directory structure
     for matchid, game in gamestruct.items():
             
-            os.makedirs(JOBS + "/" + str(matchid) + "/s")
-            os.makedirs(JOBS + "/" + str(matchid) + "/a1")
-            os.makedirs(JOBS + "/" + str(matchid) + "/a2")
+        os.makedirs(JOBS + "/" + str(matchid) + "/s")
+        
+        for player_id, team_data in game.teams.items():
+            os.makedirs(JOBS + "/" + str(matchid) + "/a" + str(player_id))
             
-            # create server directory structure 
-            current_server_dir = JOBS + "/" + str(matchid) + "/s"
-            os.symlink(FRAMEWORK + "/cqserver/maps/", current_server_dir + "/maps")
-            os.symlink(FRAMEWORK + "/cqserver/lib/", current_server_dir + "/lib")
-            #os.symlink(FRAMEWORK + "/cqserver/images/", current_server_dir + "/images")
-            os.symlink(FRAMEWORK + "/cqserver/GamePolicy.xml", current_server_dir + "/GamePolicy.xml")
-            os.symlink(FRAMEWORK + "/cqserver/logging.properties", current_server_dir + "/logging.properties")
-            os.symlink(FRAMEWORK + "/cqserver/cqserver.jar", current_server_dir + "/cqserver.jar")
-            os.symlink(FRAMEWORK + "/cqserver/secrets.txt", current_server_dir + "/secrets.txt")
-            os.symlink(SCRIPTS + "/job_server", current_server_dir + "/job_server")
-            
-            f = open(current_server_dir + "/mapdata", 'a')
-            print >>f, game.map_name
-            f.close()
-            
-            f = open(current_server_dir + "/config", 'a')
-            print >>f, 'set SERVERNAME = "' + game.server_name + '"'
-            print >>f, 'set SERVERHOST = "' + game.server_host + '"'
-            print >>f, 'set SERVERPORT = "' + game.server_port + '"'
-            f.close()
-            
-            # create agent1 directory structure
-            current_client_dir = JOBS + "/" + str(matchid) + "/a1"
+        # create server directory structure 
+        current_server_dir = JOBS + "/" + str(matchid) + "/s"
+        os.symlink(FRAMEWORK + "/cqserver/maps/", current_server_dir + "/maps")
+        os.symlink(FRAMEWORK + "/cqserver/lib/", current_server_dir + "/lib")
+        #os.symlink(FRAMEWORK + "/cqserver/images/", current_server_dir + "/images")
+        os.symlink(FRAMEWORK + "/cqserver/GamePolicy.xml", current_server_dir + "/GamePolicy.xml")
+        os.symlink(FRAMEWORK + "/cqserver/logging.properties", current_server_dir + "/logging.properties")
+        os.symlink(FRAMEWORK + "/cqserver/cqserver.jar", current_server_dir + "/cqserver.jar")
+        os.symlink(FRAMEWORK + "/cqserver/secrets.txt", current_server_dir + "/secrets.txt")
+        os.symlink(SCRIPTS + "/job_server", current_server_dir + "/job_server")
+        
+        f = open(current_server_dir + "/mapdata", 'a')
+        print >>f, game.map_name
+        f.close()
+        
+        f = open(current_server_dir + "/config", 'a')
+        print >>f, 'set SERVERNAME = "' + game.server_name + '"'
+        print >>f, 'set SERVERHOST = "' + game.server_host + '"'
+        print >>f, 'set SERVERPORT = "' + game.server_port + '"'
+        f.close()
+        
+        # create client agent directory structure
+        for player_id, team_data in game.teams.items():
+            current_client_dir = JOBS + "/" + str(matchid) + "/a" + str(player_id)
             #os.symlink(FRAMEWORK + "/cqclient/lib/", current_client_dir + "/lib")
             os.symlink(FRAMEWORK + "/cqclient/logging.properties", current_client_dir + "/logging.properties")
             os.symlink(FRAMEWORK + "/cqclient/cq.policy", current_client_dir + "/cq.policy")
-            os.symlink(SUBS + "/" + game.teams[1].team_jar, current_client_dir + "/playerdist.jar")
+            os.symlink(SUBS + "/" + team_data.team_jar, current_client_dir + "/playerdist.jar")
             os.symlink(SCRIPTS + "/job_agent", current_client_dir + "/job_agent")
             
             f = open(current_client_dir + "/config", 'a')
             print >>f, 'set SERVERNAME = "' + game.server_name + '"'
             print >>f, 'set SERVERHOST = "' + game.server_host + '"'
             print >>f, 'set SERVERPORT = "' + game.server_port + '"'
-            print >>f, 'set MAINCLASS = "' + game.teams[1].team_class + '"'
-            print >>f, 'set JAR = "' + game.teams[1].team_jar + '"'
-            print >>f, 'set SECRETID = "' + str(game.teams[1].team_secret) + '"'
+            print >>f, 'set MAINCLASS = "' + team_data.team_class + '"'
+            print >>f, 'set JAR = "' + team_data.team_jar + '"'
+            print >>f, 'set SECRETID = "' + str(team_data.team_secret) + '"'
             f.close()
             
-            
-            # create agent2 directory structure
-            current_client_dir = JOBS + "/" + str(matchid) + "/a2"
-            #os.symlink(FRAMEWORK + "/cqclient/lib/", current_client_dir + "/lib")
-            os.symlink(FRAMEWORK + "/cqclient/logging.properties", current_client_dir + "/logging.properties")
-            os.symlink(FRAMEWORK + "/cqclient/cq.policy", current_client_dir + "/cq.policy")
-            os.symlink(SUBS + "/" + game.teams[2].team_jar, current_client_dir + "/playerdist.jar")
-            os.symlink(SCRIPTS + "/job_agent", current_client_dir + "/job_agent")
-            
-            f = open(current_client_dir + "/config", 'a')
-            print >>f, 'set SERVERNAME = "' + game.server_name + '"'
-            print >>f, 'set SERVERHOST = "' + game.server_host + '"'
-            print >>f, 'set SERVERPORT = "' + game.server_port + '"'
-            print >>f, 'set MAINCLASS = "' + game.teams[2].team_class + '"'
-            print >>f, 'set JAR = "' + game.teams[2].team_jar + '"'
-            print >>f, 'set SECRETID = "' + str(game.teams[2].team_secret) + '"'
-            f.close()
             
     ''' begin running of matches '''
     try:
         for matchid, game in gamestruct.items():
-                print "Running match " + game.teams[1].team_name + " vs " + game.teams[2].team_name \
+                print "Running match " + "(" + " ".join([td.team_name for td in game.teams.values()]) + ")"\
                     + " on map " + game.map_name
                 
                 serverprocess = None
-                clientprocess1 = None
-                clientprocess2 = None
+                clientprocess_list = []
                 
                 try:
                     print "#### Starting server ####"
@@ -232,26 +217,25 @@ def main(submissions_filename, num_players_on_map):
                     serverprocess = Popen(cmd)
                     time.sleep(2)
                     
-                    print "#### Starting agent 1 " + game.teams[1].team_name + " ####"
-                    current_client_dir = JOBS + "/" + str(matchid) + "/a1"
-                    os.chdir(current_client_dir)
-                    cmd  = ["./job_agent"]
-                    clientprocess1 = Popen(cmd)
-                    
-                    print "#### Starting agent 2 " + game.teams[2].team_name + " ####"
-                    current_client_dir = JOBS + "/" + str(matchid) + "/a2"
-                    os.chdir(current_client_dir)
-                    cmd  = ["./job_agent"]
-                    clientprocess2 = Popen(cmd)
+                    clientprocess_list = []
+                    for player_id, team_data in game.teams.items():
+                        print "#### Starting agent " + str(player_id) + " " + team_data.team_name + " ####"
+                        current_client_dir = JOBS + "/" + str(matchid) + "/a" + str(player_id)
+                        os.chdir(current_client_dir)
+                        cmd  = ["./job_agent"]
+                        
+                        clientprocess = Popen(cmd)
+                        clientprocess_list.append(clientprocess)
+                        
                     
                     # wait for server to stop
                     server_returncode = serverprocess.wait()
-                    clientprocess1.kill()
-                    clientprocess2.kill()
+                    for clientprocess in clientprocess_list:
+                        clientprocess.kill()
+                        clientprocess = None
                     
                     serverprocess = None
-                    clientprocess1 = None
-                    clientprocess2 = None
+                    clientprocess_list = []
                     
                     print "Server job exited with returncode: ", server_returncode
                     print ""
@@ -259,14 +243,14 @@ def main(submissions_filename, num_players_on_map):
                     collect_score(current_server_dir, game)
                     
                 except Exception, e:
-                    print "Game " + game.teams[1].team_name + " vs " + game.teams[2].team_name + " on map " + game.map_name + " failed. Reason", e
+                    print "Game " + "(" + " ".join([td.team_name for td in game.teams.values()]) + ")"\
+                    + " on map " + game.map_name + " failed. Reason", e
                     try:
                         if serverprocess:
                             serverprocess.kill()
-                        if clientprocess1:
-                            clientprocess1.kill()
-                        if clientprocess2:
-                            clientprocess2.kill()
+                        
+                        for clientprocess in clientprocess_list:
+                            clientprocess.kill()
                     except:
                         pass
         

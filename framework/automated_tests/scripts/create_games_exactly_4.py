@@ -28,6 +28,8 @@ scoring_criteria = ['total_score', 'kills', 'retaliation_kills', 'dead_units', '
 competitorData = []
 gamestruct = {}
 team_stats_by_map = {}
+NUM_GAMES = 5
+
 
 class Game(object):
     server_name = "CraftingQuest"
@@ -119,8 +121,8 @@ def main(submissions_filename):
     rand_player_ids = [1,2,3,4]
     matchid = 0
 
-    ''' cycle through the maps 5 times '''
-    for mIdx in range(3):
+    ''' cycle through the maps NUM_GAMES times '''
+    for mIdx in range(NUM_GAMES):
         mapp = maplist[mIdx % len(maplist)]
         gamestruct[matchid] = Game(4, mapp)
         
@@ -180,7 +182,6 @@ def main(submissions_filename):
         f.close()
         
         # create client agent directory structure
-        
         for player_id, team_data in game.teams.items():
             current_client_dir = JOBS + "/" + str(matchid) + "/a" + str(player_id)
             #os.symlink(FRAMEWORK + "/cqclient/lib/", current_client_dir + "/lib")
@@ -206,8 +207,7 @@ def main(submissions_filename):
                     + " on map " + game.map_name
                 
                 serverprocess = None
-                clientprocess1 = None
-                clientprocess2 = None
+                clientprocess_list = []
                 
                 try:
                     print "#### Starting server ####"
@@ -244,14 +244,14 @@ def main(submissions_filename):
                     collect_score(current_server_dir, game)
                     
                 except Exception, e:
-                    print "Game " + game.teams[1].team_name + " vs " + game.teams[2].team_name + " on map " + game.map_name + " failed. Reason", e
+                    print "Game " + "(" + " ".join([td.team_name for td in game.teams.values()]) + ")"\
+                    + " on map " + game.map_name + " failed. Reason", e
                     try:
                         if serverprocess:
                             serverprocess.kill()
-                        if clientprocess1:
-                            clientprocess1.kill()
-                        if clientprocess2:
-                            clientprocess2.kill()
+                        
+                        for clientprocess in clientprocess_list:
+                            clientprocess.kill()
                     except:
                         pass
         
