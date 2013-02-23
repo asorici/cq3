@@ -5,13 +5,13 @@ import sys, os, string, time
 ROOT = os.path.abspath(os.getcwd() + "/../")
 SCRIPTS = ROOT + "/scripts"
 
-RESULTS_DUMP_FILE_PREFIX = "result_dump_one_on_one"
+RESULTS_DUMP_FILE_PREFIX = "result_dump_exactly_4"
 # RESULTS_DUMP_FILE = ROOT + "/result_dump.txt"
 
-TEAM_REPORT_TEMPLATE = SCRIPTS + "/report_tex_q.tpl"
+TEAM_REPORT_TEMPLATE = SCRIPTS + "/report_tex_semifinal.tpl"
 
 ## TODO: get it from sysargs
-GROUP_FOLDER = ROOT +"/results_qualification_round"
+GROUP_FOLDER = ROOT +"/semifinals_round"
 
 
 # maps
@@ -53,10 +53,10 @@ def main(submissions_filename):
     dumpf.close()
 
     print "#### Generating reports ####"
-    generate_reports(team_stats_by_map)
+    generate_report(team_stats_by_map)
+    
 
-
-def generate_reports(team_stats_by_map):
+def generate_report(team_stats_by_map):
     from django.conf import settings
 
     settings.configure()
@@ -64,28 +64,8 @@ def generate_reports(team_stats_by_map):
 
     ''' build general overview list '''
     (team_overview_scores_list, tosd) = build_overview_list(team_stats_by_map)
-
-    for map_name, all_team_stats in team_stats_by_map.items():
-        for team_id, team_overview in all_team_stats.items():
-            team_overview['games'] =\
-                map(lambda g :
-                        dict(g,**{'oponent_data':
-                                      map(lambda d :
-                                              dict(d,**{'label':
-                                                            tosd[d['team_id']]['label'],
-                                                        'ename':
-                                                            tosd[d['team_id']]['ename']
-                                                            }),
-                                          g['oponent_data'])}),
-                    team_overview['games'])
-
-    print team_overview_scores_list
-    print "TO DO"
-    ''' INSERT CONTINUATION HERE '''
-    ### TUDOR BERARIU: Asta doar pentru runda asta, cand avem o singura harta
-    ### De schimbat
-    for team_id, team_overview in team_stats_by_map.values()[0].items():
-        gen_report_per_team(team_id, team_stats_by_map, team_overview_scores_list)
+    games = extract_games_per_map(team_stats_by_map)
+    gen_report(team_overview_scores_list, games)
 
 def escape_latex_text(string):
     for l, i in latex_escape.items():
@@ -95,45 +75,61 @@ def escape_latex_text(string):
 def sys_ok(string):
     return string.replace("~","_")
 
-def gen_report_per_team(team_id, team_stats_by_map, teamscoringlist):
+def gen_report(teamscoringlist, games):
     import jinja2
     t_file = open(TEAM_REPORT_TEMPLATE, "r")
     t_string = reduce(lambda s1,s2 : s1+s2, t_file.readlines())
     t_file.close()
 
-    team_name = team_stats_by_map.values()[0][team_id]["team_name"]
-    
-    ## Probabil nu va mai fi cazul atunci cand vor juca mai multi pe harta
-    for m in team_stats_by_map.keys():
-        ops = list(set(map(lambda g : g['oponent_data'][0]['ename'],
-                           team_stats_by_map[m][team_id]['games'])))
-        team_stats_by_map[m][team_id]["ops"] = ops
-    
-    team_id =\
-        filter(lambda d : d["team_name"] == team_name,
-               teamscoringlist)[0]['team_id']
+    print repr(games)
 
-    print "Generating report for " + repr(team_id) + "." +team_name
-
-    for m in maplist:
-        print team_stats_by_map[m][str(team_id)].keys() 
-        
-    print teamscoringlist[0].keys()
-        
     template = jinja2.Template(t_string)
-    tex_content = template.render(thisteamname = team_name,
-                                  escapedteamname = escape_latex_text(team_name),
-                                  thisteamid = str(team_id),
+    tex_content = template.render(
                                   teamscores = teamscoringlist,
-                                  teamstatsbymap = team_stats_by_map,
-                                  maps = maplist,
-                                  mapnames = dict(zip(maplist,map(escape_latex_text, maplist)))
+                                  gamescores = games
                                   )
     # print repr(team_item)
-    tex_file = open(GROUP_FOLDER + "/" + sys_ok(team_name) + "_report.tex", "w")
+    tex_file = open(GROUP_FOLDER + "/"  + "semifinal_report.tex", "w")
     print >>tex_file, tex_content
     tex_file.close()
 
+def extract_games_per_map(team_stats_by_map):
+    games_per_map = {}
+    for map_name, all_team_stats in team_stats_by_map.items():
+        games_per_map[map_name] = {}
+        m = games_per_map[map_name]
+        m['ename'] = escape_latex_text(map_name)
+        m['games'] = {}
+        first_team = all_team_stats.values()[0]
+        print first_team.keys()
+        i = 0
+        for g in first_team['games']:
+            z = 0
+            m['games'][i] = {}
+            m['games'][i][g['points'] * -10 + z] = {}
+            ft = m['games'][i][g['points'] * -10 + z]
+            
+            ft['ename'] = escape_latex_text(first_team['team_name'])
+            ks = ['dead_units', 'kills', 'total_score', 'placed_traps',\
+                      'placed_traps', 'dead_units', 'first_blood',\
+                      'retaliation_kills', 'placed_towers', 'killing_sprees',\
+                      'successful_traps', 'finish_position', 'points',\
+                      'finish_position', 'player_id']
+            for k in ks:
+                ft[k] = g[k]
+            print len(g['oponent_data'])
+            for o in g['oponent_data']:
+                z += 1
+                m['games'][i][o['points'] * -10 + z] = {}
+                t = m['games'][i][o['points'] * -10 + z]
+                t['ename'] = escape_latex_text(o['team_name'])
+                for k in ks:
+                    t[k] = o[k]
+            print m['games'][i].keys()
+            i += 1
+    return games_per_map
+                                           
+                                           
 def build_overview_list(team_stats_by_map):
     """
     Takes as input the de-serialized json encoding of team game statistics
@@ -151,9 +147,10 @@ def build_overview_list(team_stats_by_map):
             if team_id in team_overview_scores:
                 team_overview_scores[team_id]['total_points'] +=\
                     team_overview['total_points']
-                team_overview_scores[team_id]['w'] += team_overview['w']
-                team_overview_scores[team_id]['d'] += team_overview['d']
-                team_overview_scores[team_id]['l'] += team_overview['l']
+                team_overview_scores[team_id]['p1'] += team_overview['p1']
+                team_overview_scores[team_id]['p2'] += team_overview['p2']
+                team_overview_scores[team_id]['p3'] += team_overview['p3']
+                team_overview_scores[team_id]['p4'] += team_overview['p4']
             else:
                 team_overview_scores[team_id] = dict(**team_overview)
     i = 0
@@ -174,18 +171,21 @@ def build_map_overview_dict(all_team_stats):
         team_overview_dict = {'team_id': str(team_id),
                               'team_name': team_stats['team_name'],
                               'total_points' : team_stats['total_points'],
-                              'w': 0,
-                              'd': 0,
-                              'l': 0
+                              'p1': 0,
+                              'p2': 0,
+                              'p3': 0,
+                              'p4': 0
                               }
 
         for game in team_stats['games']:
             if game['points'] == 0:
-                team_overview_dict['l'] += 1
+                team_overview_dict['p4'] += 1
             elif game['points'] == 1:
-                team_overview_dict['d'] += 1
+                team_overview_dict['p3'] += 1
             elif game['points'] == 2:
-                team_overview_dict['w'] += 1
+                team_overview_dict['p2'] += 1
+            elif game['points'] == 3:
+                team_overview_dict['p1'] += 1
 
         team_map_overview_scores[int(team_id)] = team_overview_dict
 

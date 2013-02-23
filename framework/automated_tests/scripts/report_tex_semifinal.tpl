@@ -10,7 +10,7 @@
 
 \begin{center}
   {\huge \textbf{AI-MAS Winter Olympics: Crafting Quest 3}} \\
-  {\huge Final Round Report}
+  {\huge Semi-final Round Report}
 \end{center}
 
 
@@ -27,12 +27,12 @@ Section \ref{sec:general} shows
 you the general placement.  Section \ref{sec:all} gives you the detailed results of each
 match outcome.
 
-\section{Finals Overview}
+\section{Semifinals Overview}
 \label{sec:general}
 
 \begin{table}[H]
   \centering
-  \caption{Finals Overview}
+  \caption{Semi-finals Overview}
   \begin{tabular}{|c|c|c|c|c|c|}
     \hline
       \textbf{Team Name} & \textbf{1} & \textbf{2} & \textbf{3} & \textbf{4} & \textbf{Score} \\
