@@ -55,7 +55,7 @@ public class DigAction extends Action {
 	public void printToGuiLog(GameState game, PlayerState player, Transition transition) {
 		if (playerUnit != null) {
 			gui_logger.info(game.round.currentRound + " " + transition.operator.name() + " " + player.id + " " 
-					+ playerUnit.id + " " + playerUnit.pos.x + " " + playerUnit.pos.y + " " + player.gold + " " 
+					+ playerUnit.id + " " + playerUnit.pos.x + " " + playerUnit.pos.y + " " + player.getScore() + " " 
 					+ playerUnit.energy);
 		}
 	}

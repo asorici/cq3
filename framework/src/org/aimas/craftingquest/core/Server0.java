@@ -118,7 +118,7 @@ public class Server0 implements IServer {
 		Server0 server = null;
 		
 		// să ruleze cu GUI
-		System.setProperty("gui", "true");
+		//System.setProperty("gui", "true");
 		
 		if(args == null || args.length != 3) {
 			server = new Server0("CraftingQuest", 1198, "secrets.txt");
@@ -496,9 +496,13 @@ public class Server0 implements IServer {
 	private void printToGuiLog(PlayerState player, Transition action) {
 		if (player.validLastTransition()) {
 			if (action.operator == ActionType.PlayerReady) {
+				Point2i initPos = GamePolicy.initialPlayerPositions.get(player.id);
+				gui_logger.info(state.round.currentRound + " " + action.operator.name() + " " + player.id + " " + 
+							+ initPos.x + " " + initPos.y + " " + player.getScore());
+				
 				for (UnitState u : player.units) {
-					gui_logger.info(state.round.currentRound + " " + action.operator.name() + " " + player.id + " " 
-							+ u.pos.x + " " + u.pos.y + " " + player.gold + " " + u.energy);
+					gui_logger.info(state.round.currentRound + " " + "UnitReady" + " " + player.id + " " + 
+							+ u.id + " " + u.pos.x + " " + u.pos.y + " " + player.getScore() + " " + u.energy);
 				}
 			}
 		}
